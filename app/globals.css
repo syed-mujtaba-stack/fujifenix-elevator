@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+/* =============================================
+   FUJI FENIX — Global Design System
+   Premium Architectural / Editorial
+============================================= */
+
+@layer base {
+  :root {
+    --font-sans: var(--font-inter), system-ui, sans-serif;
+    --font-display: var(--font-outfit), system-ui, sans-serif;
+    --ff-blue: #2563eb;
+    --ff-blue-deep: #1e40af;
+    --ff-blue-light: #3b82f6;
+    --ff-navy: #071324;
+    --ff-text: #0f172a;
+    --ff-text-soft: #475569;
+    --ff-bg: #ffffff;
+    --ff-bg-soft: #f8fafc;
+    --ff-bg-alt: #f1f5f9;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--ff-bg);
+    color: var(--ff-text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection { background: #2563eb; color: #fff; }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 2px; }
+}
+
+/* =============================================
+   TYPOGRAPHY UTILITIES
+============================================= */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.subheading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.0;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.body-text {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #475569;
+}
+
+/* =============================================
+   ARCHITECTURAL GRID PATTERN
+============================================= */
+.arch-grid {
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.arch-grid-dark {
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* =============================================
+   CLIP-PATH ANIMATIONS
+============================================= */
+.clip-left  { clip-path: inset(0 100% 0 0); }
+.clip-right { clip-path: inset(0 0 0 100%); }
+.clip-top   { clip-path: inset(0 0 100% 0); }
+.clip-open  { clip-path: inset(0 0% 0 0%); }
+
+/* =============================================
+   IMAGE UTILITIES
+============================================= */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =============================================
+   SECTION SPACING
+============================================= */
+.section-gap {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+@media (max-width: 768px) {
+  .section-gap {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+/* =============================================
+   HORIZONTAL SCROLL (no horizontal overflow)
+============================================= */
+.h-scroll-track {
+  display: flex;
+  will-change: transform;
+}
+
+section, div {
+  max-width: 100vw;
+}
+
+/* =============================================
+   FORM FIELD RESET (CTA + Contact)
+============================================= */
+.ff-field {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(241, 245, 249, 1);
+  padding: 1rem 1.25rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+  font-size: 15px;
+}
+
+.ff-field::placeholder {
+  color: #94a3b8;
+}
+
+.ff-field:focus {
+  border-color: #2563eb;
+}
+
+.ff-field-dark {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.ff-field-dark::placeholder {
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.ff-field-dark:focus {
+  border-color: #3b82f6;
+}
+
+/* =============================================
+   REDUCED MOTION
+============================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =============================================
+   GOOGLE TRANSLATE WIDGET
+============================================= */
+
+.ff-translate {
+  position: relative;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* Hide only the Google logo/icon and branding text */
+.goog-te-gadget .goog-te-gadget-icon,
+.goog-te-gadget .goog-te-gadget-brand,
+.goog-te-gadget .goog-te-gadget-text,
+.goog-te-gadget .goog-te-gadget-msg {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Wrapper — reset Google defaults, hide "Select Language" label text */
+.goog-te-gadget {
+  font-family: var(--font-sans) !important;
+  font-size: 0 !important;
+  border: none !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0 !important;
+  vertical-align: middle !important;
+}
+
+/* Simple wrapper — do NOT set font-size:0 here, it kills the dropdown */
+.goog-te-gadget-simple {
+  border: none !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
+}
+
+.goog-te-gadget-simple .goog-te-combo-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* The actual <a> and <select> — must have explicit font-size to override parent */
+a.goog-te-combo,
+.goog-te-combo {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 6px 30px 6px 12px;
+  font-size: 11px !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #475569;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.25s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3.5l3 3 3-3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  line-height: 1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a.goog-te-combo:hover,
+.goog-te-combo:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+a.goog-te-combo:focus,
+.goog-te-combo:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Hide the Google Translate banner bar */
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
