@@ -174,7 +174,7 @@ export default function AboutContent() {
             </div>
             <div className="lg:w-[46%]">
               <ImageReveal
-                src="/building-exterior.jpg"
+                src="/hero-elevator.jpg"
                 alt="Fuji Fenix architectural elevator installation project"
                 className="w-full min-h-[420px]"
                 sizes="46vw"

@@ -34,7 +34,7 @@ export default async function ProductDetailPage({ params }: Props) {
         title={[product.name.toUpperCase()]}
         highlight={product.name.toUpperCase()}
         description={product.description}
-        image={product.image ?? "/building-exterior.jpg"}
+        image={product.image ?? "/hero-elevator.jpg"}
         breadcrumb="PRODUCTS"
         breadcrumbHref="/products"
       />

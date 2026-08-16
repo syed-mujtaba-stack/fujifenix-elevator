@@ -106,8 +106,8 @@ export const PRODUCTS: Product[] = [
     description:
       "Ultra-fast systems engineered for skyscrapers and landmark towers — traveling at up to 6m/s with precision floor-leveling.",
     features: ["Up to 6m/s", "Vibration Control", "AI Traffic Mgmt", "Safety First"],
-    image: "/building-exterior.jpg",
-    imageAlt: "High-rise tower served by a high-speed Fuji Fenix elevator",
+    image: "/escalator.jpg",
+    imageAlt: "Fuji Fenix high-speed elevator",
   },
   {
     slug: "panoramic-elevators",
@@ -116,7 +116,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Full-glass observation elevators creating dramatic visual statements in hotel lobbies, malls, and commercial landmarks.",
     features: ["Full Glass Cabin", "Curved Track", "LED Lighting", "Custom Shapes"],
-    image: "/panoramic.jpg",
+    image: "/hero-elevator.jpg",
     imageAlt: "Panoramic glass Fuji Fenix elevator",
   },
   {
@@ -310,7 +310,7 @@ export const SOLUTIONS: SolutionSegment[] = [
     description:
       "Heavy-duty escalators and moving walkways built for continuous high-traffic operation in airports, transit hubs, and large-scale public facilities.",
     points: ["Escalators", "Moving Walks", "Continuous High-Traffic Operation"],
-    image: "/building-exterior.jpg",
+    image: "/escalator.jpg",
   },
 ] as const;
 
@@ -329,7 +329,7 @@ export const PROJECTS: Project[] = [
     location: "COMMERCIAL AND RESIDENTIAL",
     type: "PASSENGER ELEVATORS",
     floors: "28 FLOORS",
-    img: "/building-exterior.jpg",
+    img: "/hero-elevator.jpg",
     size: "large",
   },
   {
@@ -345,7 +345,7 @@ export const PROJECTS: Project[] = [
     location: "COMMERCIAL OFFICE",
     type: "PANORAMIC GLASS LIFTS",
     floors: "18 FLOORS",
-    img: "/panoramic.jpg",
+    img: "/escalator.jpg",
     size: "small",
   },
   {

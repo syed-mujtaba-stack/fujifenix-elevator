@@ -15,7 +15,7 @@ export default function SolutionsPage() {
         eyebrow="INDUSTRY SOLUTIONS"
         title={["SOLUTIONS"]}
         description="From high-rise towers to shopping centers, private villas to transit hubs, hospitals to dumbwaiters — we deliver end-to-end vertical transportation solutions tailored to every environment."
-        image="/building-exterior.jpg"
+        image="/hero-elevator.jpg"
         breadcrumb="SOLUTIONS"
         titleBlue
       />

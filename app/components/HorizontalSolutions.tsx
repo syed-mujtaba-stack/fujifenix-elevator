@@ -15,9 +15,9 @@ export default function HorizontalSolutions() {
   const SOLUTIONS = [
     { num: "01", title: "PASSENGER\nELEVATORS", desc: "High-capacity systems engineered for commercial towers, offices, and high-rise residential buildings — 2 to 30+ floors.", img: "/hero-elevator.jpg", imgAlt: "Fuji Passenger Elevator" },
     { num: "02", title: "HOME\nELEVATORS", desc: "Silent, compact, and architecturally refined residential lift systems for premium villas and private residences.", img: "/home-elevator.jpg", imgAlt: "Fuji Home Elevator" },
-    { num: "03", title: "HIGH-SPEED\nELEVATORS", desc: "Ultra-fast systems engineered for skyscrapers and landmark towers — traveling at up to 6m/s with precision floor-leveling.", img: "/building-exterior.jpg", imgAlt: "Fuji High-Speed Elevator" },
-    { num: "04", title: "PANORAMIC\nELEVATORS", desc: "Full-glass observation elevators creating dramatic visual statements in hotel lobbies, malls, and commercial landmarks.", img: "/panoramic.jpg", imgAlt: "Fuji Panoramic Elevator" },
-    { num: "05", title: "ESCALATORS", desc: "Heavy-duty escalator systems built for continuous high-traffic operation in airports, retail malls, and transport hubs.", img: "/escalator.jpg", imgAlt: "Fuji Escalator" },
+    { num: "03", title: "HIGH-SPEED\nELEVATORS", desc: "Ultra-fast systems engineered for skyscrapers and landmark towers — traveling at up to 6m/s with precision floor-leveling.", img: "/escalator.jpg", imgAlt: "Fuji High-Speed Elevator" },
+    { num: "04", title: "PANORAMIC\nELEVATORS", desc: "Full-glass observation elevators creating dramatic visual statements in hotel lobbies, malls, and commercial landmarks.", img: "/hero-elevator.jpg", imgAlt: "Fuji Panoramic Elevator" },
+    { num: "05", title: "ESCALATORS", desc: "Heavy-duty escalator systems built for continuous high-traffic operation in airports, retail malls, and transport hubs.", img: "/home-elevator.jpg", imgAlt: "Fuji Escalator" },
     { num: "06", title: "MOVING\nWALKS", desc: "Flat moving walkway systems designed for seamless passenger circulation in airports, transit stations, and large public spaces.", img: "/escalator.jpg", imgAlt: "Fuji Moving Walk" },
   ];
 

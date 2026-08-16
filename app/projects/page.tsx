@@ -15,7 +15,7 @@ export default function ProjectsPage() {
         eyebrow="OUR PROJECTS"
         title={["FEATURED PROJECTS"]}
         description="A selection of vertical transportation installations across residential, commercial, healthcare, and infrastructure projects."
-        image="/building-exterior.jpg"
+        image="/hero-elevator.jpg"
         breadcrumb="PROJECTS"
         titleBlue
       />

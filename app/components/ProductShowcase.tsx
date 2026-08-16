@@ -14,8 +14,8 @@ export default function ProductShowcase() {
   const PRODUCTS = [
     { num: "01", slug: "passenger-elevators", title: "FUJI PASSENGER\nELEVATOR SERIES", desc: "Our flagship passenger elevator series delivers smooth, whisper-quiet performance for commercial towers and high-rises across 2 to 30+ floors.", specs: ["2–30+ Floors", "MRL Technology", "Smart Controls", "Custom Finishes"], img: "/hero-elevator.jpg", imgAlt: "Fuji Passenger Elevator" },
     { num: "02", slug: "home-elevators", title: "HOME ELEVATOR\nSERIES", desc: "Quiet, compact, and meticulously designed for the modern luxury home.", specs: ["2–6 Floors", "Compact Design", "Silent Operation", "Custom Interiors"], img: "/home-elevator.jpg", imgAlt: "Fuji Home Elevator" },
-    { num: "03", slug: "high-speed-elevators", title: "HIGH-SPEED\nELEVATOR SERIES", desc: "Engineered for skyscrapers and landmark towers — our high-speed systems travel at up to 6m/s.", specs: ["Up to 6m/s", "Vibration Control", "AI Traffic Mgmt", "Safety First"], img: "/building-exterior.jpg", imgAlt: "Fuji High-Speed Elevator" },
-    { num: "04", slug: "panoramic-elevators", title: "PANORAMIC\nELEVATOR SERIES", desc: "Transform vertical movement into an architectural highlight.", specs: ["Full Glass Cabin", "Curved Track", "LED Lighting", "Custom Shapes"], img: "/panoramic.jpg", imgAlt: "Fuji Panoramic Elevator" },
+    { num: "03", slug: "high-speed-elevators", title: "HIGH-SPEED\nELEVATOR SERIES", desc: "Engineered for skyscrapers and landmark towers — our high-speed systems travel at up to 6m/s.", specs: ["Up to 6m/s", "Vibration Control", "AI Traffic Mgmt", "Safety First"], img: "/escalator.jpg", imgAlt: "Fuji High-Speed Elevator" },
+    { num: "04", slug: "panoramic-elevators", title: "PANORAMIC\nELEVATOR SERIES", desc: "Transform vertical movement into an architectural highlight.", specs: ["Full Glass Cabin", "Curved Track", "LED Lighting", "Custom Shapes"], img: "/hero-elevator.jpg", imgAlt: "Fuji Panoramic Elevator" },
   ];
 
   useEffect(() => {

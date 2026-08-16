@@ -72,9 +72,9 @@ export default function ProjectsShowcase() {
   const ref = useRef<HTMLElement>(null);
 
   const PROJECTS = [
-    { title: "Shanghai Tower", location: "Shanghai, China", type: "Commercial", floors: "128", img: "/building-exterior.jpg", size: "large" },
+    { title: "Shanghai Tower", location: "Shanghai, China", type: "Commercial", floors: "128", img: "/hero-elevator.jpg", size: "large" },
     { title: "Dubai Marina Tower", location: "Dubai, UAE", type: "Residential", floors: "85", img: "/escalator.jpg", size: "small" },
-    { title: "Cairo Medical Center", location: "Cairo, Egypt", type: "Healthcare", floors: "35", img: "/panoramic.jpg", size: "small" },
+    { title: "Cairo Medical Center", location: "Cairo, Egypt", type: "Healthcare", floors: "35", img: "/hero-elevator.jpg", size: "small" },
     { title: "Moscow Business Park", location: "Moscow, Russia", type: "Commercial", floors: "42", img: "/home-elevator.jpg", size: "large" },
   ];
 

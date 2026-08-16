@@ -69,7 +69,7 @@ export default function ProductDetailContent({ product }: { product: Product }) 
             </div>
             <div className="lg:w-[48%]">
               <ImageReveal
-                src={product.image ?? "/building-exterior.jpg"}
+                src={product.image ?? "/hero-elevator.jpg"}
                 alt={product.imageAlt ?? product.name}
                 className="w-full min-h-[480px]"
                 sizes="48vw"
