@@ -27,7 +27,7 @@ export default function Footer() {
     { label: "Our Products", href: "/products" },
     { label: "Services", href: "/services" },
     { label: "Solutions", href: "/solutions" },
-    { label: "Projects", href: "/projects" },
+    { label: "Projects", href: "/project" },
   ];
 
   return (
