@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/app/components/PageHero";
 import SolutionsContent from "./SolutionsContent";
-
 export const metadata: Metadata = {
   title: "Solutions",
   description:
