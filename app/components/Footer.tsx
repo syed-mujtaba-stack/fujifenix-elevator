@@ -99,7 +99,7 @@ export default function Footer() {
         <div>
           <div className="eyebrow text-[#2563EB] mb-6">CAPABILITIES</div>
           <ul className="space-y-3">
-            {["Comprehensive Solutions", "Safety First", "Energy Efficiency", "After Sales Support"].map(
+            {["Comprehensive Solutions", "Safety First", "Energy Efficiency", "After-Sales Support"].map(
               (label) => (
                 <li key={label}>
                   <Link

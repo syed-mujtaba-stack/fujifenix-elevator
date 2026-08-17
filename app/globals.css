@@ -18,6 +18,8 @@
     --ff-bg: #ffffff;
     --ff-bg-soft: #f8fafc;
     --ff-bg-alt: #f1f5f9;
+    /* Navbar height — overridden at runtime by Navbar.tsx via JS */
+    --nav-h: 68px;
   }
 
   * { box-sizing: border-box; }

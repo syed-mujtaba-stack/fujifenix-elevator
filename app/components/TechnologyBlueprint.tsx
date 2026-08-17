@@ -4,20 +4,12 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ENGINEERING_PILLARS } from "@/app/data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function TechnologyBlueprint() {
   const ref = useRef<HTMLElement>(null);
-
-  const FEATURES = [
-    { num: "01", title: "SAFETY FIRST", desc: "Built to meet the highest international safety standards." },
-    { num: "02", title: "ENERGY EFFICIENCY", desc: "Smart technologies that reduce power consumption and operating costs." },
-    { num: "03", title: "RELIABILITY", desc: "Smooth, quiet, and dependable operation you can trust." },
-    { num: "04", title: "ADVANCED TECHNOLOGY", desc: "Integration of smart controls and innovative mobility solutions." },
-    { num: "05", title: "CUSTOM DESIGN", desc: "Tailored solutions to fit residential, commercial, and industrial projects." },
-    { num: "06", title: "AFTER-SALES SUPPORT", desc: "Dedicated maintenance and emergency response services." },
-  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -113,10 +105,10 @@ export default function TechnologyBlueprint() {
 
           {/* Features — 3x2 grid, no cards */}
           <div className="tech-features lg:w-[52%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-0">
-            {FEATURES.map((f, i) => (
+            {ENGINEERING_PILLARS.map((f, i) => (
               <div
-                key={i}
-                className={`tech-feature flex gap-5 py-8 ${i < FEATURES.length - 1 ? "border-b border-slate-100" : ""}`}
+                key={f.num}
+                className={`tech-feature flex gap-5 py-8 ${i < ENGINEERING_PILLARS.length - 1 ? "border-b border-slate-100" : ""}`}
               >
                 <div className="eyebrow text-[#2563EB] flex-shrink-0 pt-1">{f.num}</div>
                 <div>

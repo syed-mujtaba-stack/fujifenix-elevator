@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PROJECTS, STATS } from "@/app/data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,13 +71,6 @@ function ProjectItem({
 
 export default function ProjectsShowcase() {
   const ref = useRef<HTMLElement>(null);
-
-  const PROJECTS = [
-    { title: "Shanghai Tower", location: "Shanghai, China", type: "Commercial", floors: "128", img: "/hero-elevator.jpg", size: "large" },
-    { title: "Dubai Marina Tower", location: "Dubai, UAE", type: "Residential", floors: "85", img: "/escalator.jpg", size: "small" },
-    { title: "Cairo Medical Center", location: "Cairo, Egypt", type: "Healthcare", floors: "35", img: "/hero-elevator.jpg", size: "small" },
-    { title: "Moscow Business Park", location: "Moscow, Russia", type: "Commercial", floors: "42", img: "/home-elevator.jpg", size: "large" },
-  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -170,24 +164,17 @@ export default function ProjectsShowcase() {
           <div className="md:col-span-7 bg-[#071324] flex flex-col justify-center px-12 md:px-16 py-14" style={{ minHeight: "260px" }}>
             <div className="eyebrow text-[#2563EB] mb-8">PROVEN TRACK RECORD</div>
             <div className="flex gap-10 md:gap-16 flex-wrap">
-              <div>
-                <div
-                  className="display text-white leading-none mb-2"
-                  style={{ fontSize: "clamp(40px, 6vw, 80px)" }}
-                >
-                  3,240<span className="text-[#2563EB]">+</span>
+              {STATS.slice(0, 2).map((stat) => (
+                <div key={stat.label}>
+                  <div
+                    className="display text-white leading-none mb-2"
+                    style={{ fontSize: "clamp(40px, 6vw, 80px)" }}
+                  >
+                    {stat.end.toLocaleString()}<span className="text-[#2563EB]">{stat.suffix}</span>
+                  </div>
+                  <div className="eyebrow text-slate-400">{stat.label}</div>
                 </div>
-                <div className="eyebrow text-slate-400">PROJECTS DONE</div>
-              </div>
-              <div>
-                <div
-                  className="display text-white leading-none mb-2"
-                  style={{ fontSize: "clamp(40px, 6vw, 80px)" }}
-                >
-                  6,847<span className="text-[#2563EB]">+</span>
-                </div>
-                <div className="eyebrow text-slate-400">HAPPY CUSTOMERS</div>
-              </div>
+              ))}
             </div>
             <div className="mt-8 h-px bg-white/10" />
             <div className="mt-5 eyebrow text-slate-500">INTERNATIONAL SAFETY STANDARDS · PRECISION ENGINEERING · SHANGHAI</div>

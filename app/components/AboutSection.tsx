@@ -5,17 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { STATS } from "@/app/data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutSection() {
   const ref = useRef<HTMLElement>(null);
-
-  const STATS = [
-    { end: 6847, suffix: "+", label: "HAPPY CUSTOMERS" },
-    { end: 100, suffix: "%", label: "CLIENT SATISFACTION" },
-    { end: 3240, suffix: "+", label: "PROJECTS DONE" },
-  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -123,7 +118,7 @@ export default function AboutSection() {
           </h2>
 
           <p className="body-text text-slate-600 mb-6 max-w-md" style={{ fontSize: "16px", lineHeight: "1.75" }}>
-            Fuji Fenix Elevators is a leading provider of innovative elevator and escalator solutions, combining advanced technology with precision engineering to deliver world-class vertical transportation systems.
+            Fuji Fenix Elevator is a leading provider of innovative elevator and escalator solutions, combining advanced technology with precision engineering to deliver world-class vertical transportation systems.
           </p>
 
           <p className="body-text text-slate-500 mb-10 max-w-md" style={{ fontSize: "15px", lineHeight: "1.7" }}>

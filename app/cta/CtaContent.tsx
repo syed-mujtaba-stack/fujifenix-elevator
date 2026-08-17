@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { CONTACT } from "@/app/data/content";
+import { submitContact } from "@/app/actions/contact";
 
 const COUNTRIES = [
   "China",
@@ -65,7 +66,8 @@ const CITIES_BY_COUNTRY: Record<string, string[]> = {
 
 export default function CtaContent() {
   const ref = useRef<HTMLElement>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
   const [country, setCountry] = useState("");
 
   useEffect(() => {
@@ -87,9 +89,34 @@ export default function CtaContent() {
     return () => ctx.revert();
   }, []);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    if (status === "submitting") return;
+
+    setStatus("submitting");
+    setErrorMsg("");
+
+    const data = new FormData(e.currentTarget);
+
+    const result = await submitContact({
+      name: data.get("name") as string,
+      email: data.get("email") as string,
+      phone: (data.get("phone") as string) || undefined,
+      company: (data.get("company") as string) || undefined,
+      country: (data.get("country") as string) || undefined,
+      city: (data.get("city") as string) || undefined,
+      projectType: (data.get("projectType") as string) || undefined,
+      floors: (data.get("floors") as string) || undefined,
+      units: (data.get("units") as string) || undefined,
+      message: data.get("message") as string,
+    });
+
+    if (result.success) {
+      setStatus("success");
+    } else {
+      setStatus("error");
+      setErrorMsg(result.error ?? "Something went wrong. Please try again.");
+    }
   }
 
   const cities = CITIES_BY_COUNTRY[country] || [];
@@ -306,18 +333,27 @@ export default function CtaContent() {
             <div className="sm:col-span-2 lg:col-span-3 flex flex-col items-start gap-4">
               <button
                 type="submit"
-                className="group inline-flex items-center gap-3 bg-[#2563EB] hover:bg-[#1d4ed8] text-white px-8 py-4 eyebrow transition-all duration-200 hover:shadow-[0_4px_16px_rgba(37,99,235,0.3)]"
+                disabled={status === "submitting"}
+                className="group inline-flex items-center gap-3 bg-[#2563EB] hover:bg-[#1d4ed8] text-white px-8 py-4 eyebrow transition-all duration-200 hover:shadow-[0_4px_16px_rgba(37,99,235,0.3)] disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                SEND INQUIRY
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                {status === "submitting" ? "SENDING…" : "SEND INQUIRY"}
+                {status !== "submitting" && (
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                )}
               </button>
 
-              {submitted && (
+              {status === "success" && (
                 <p className="eyebrow text-[#60a5fa]" style={{ fontSize: "12px" }}>
                   Thank you! We&apos;ll get back to you within 24 hours. You can also reach us at{" "}
                   <a href={CONTACT.emailHref} className="underline hover:text-white">{CONTACT.email}</a>{" "}
                   or call{" "}
                   <a href={CONTACT.phoneHref} className="underline hover:text-white">{CONTACT.phone}</a>.
+                </p>
+              )}
+
+              {status === "error" && (
+                <p className="eyebrow text-red-400" style={{ fontSize: "12px" }}>
+                  {errorMsg}
                 </p>
               )}
             </div>

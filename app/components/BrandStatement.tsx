@@ -86,7 +86,7 @@ export default function BrandStatement() {
         {/* Editorial paragraph row */}
         <div className="bs-para flex flex-col md:flex-row gap-10 md:gap-20">
           <p className="body-text max-w-lg border-l-2 border-[#2563EB]/20 pl-6 text-slate-600">
-            Fuji Fenix Elevators is a leading provider of innovative elevator and escalator solutions, combining advanced technology with precision engineering to deliver world-class vertical transportation systems.
+            Fuji Fenix Elevator is a leading provider of innovative elevator and escalator solutions, combining advanced technology with precision engineering to deliver world-class vertical transportation systems.
           </p>
           <div className="flex flex-col justify-center gap-1 md:ml-auto">
             <div className="eyebrow text-slate-400">HEADQUARTERS</div>

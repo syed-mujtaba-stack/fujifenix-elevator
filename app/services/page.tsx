@@ -13,7 +13,7 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="OUR SERVICES"
-        title={[]}
+        title={["OUR"]}
         highlight="SERVICES"
         description="Total solution for vertical transportation — manufacturing, sales, and after-sales support."
         image="/hero-elevator.jpg"

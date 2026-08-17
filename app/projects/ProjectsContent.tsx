@@ -72,6 +72,7 @@ export default function ProjectsContent() {
       <section ref={ref} className="bg-white">
         <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
           <div className="proj-grid grid grid-cols-1 md:grid-cols-12 gap-4">
+            {/* Row 1: large (7) + two small cards (5) */}
             <div className="proj-item md:col-span-7">
               <ProjectCard project={PROJECTS[0]} tall />
             </div>
@@ -79,8 +80,25 @@ export default function ProjectsContent() {
               <ProjectCard project={PROJECTS[1]} tall={false} />
               <ProjectCard project={PROJECTS[2]} tall={false} />
             </div>
+
+            {/* Row 2: small (5) + dark stats block (7) — no empty column */}
             <div className="proj-item md:col-span-5">
               <ProjectCard project={PROJECTS[3]} tall />
+            </div>
+            <div className="proj-item md:col-span-7 bg-[#071324] flex flex-col justify-center px-12 md:px-16 py-14" style={{ minHeight: "320px" }}>
+              <div className="eyebrow text-[#2563EB] mb-8">PROVEN TRACK RECORD</div>
+              <div className="flex gap-10 md:gap-16 flex-wrap">
+                {STATS.slice(0, 2).map((stat) => (
+                  <div key={stat.label}>
+                    <div className="display text-white leading-none mb-2" style={{ fontSize: "clamp(40px, 6vw, 80px)" }}>
+                      {stat.end.toLocaleString()}<span className="text-[#2563EB]">{stat.suffix}</span>
+                    </div>
+                    <div className="eyebrow text-slate-400">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 h-px bg-white/10" />
+              <div className="mt-5 eyebrow text-slate-500">INTERNATIONAL SAFETY STANDARDS · PRECISION ENGINEERING · SHANGHAI</div>
             </div>
           </div>
         </div>

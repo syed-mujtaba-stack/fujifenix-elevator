@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { PRODUCTS, getProduct } from "@/app/data/content";
+import { PRODUCTS } from "@/app/data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,12 +36,9 @@ export default function ProductsContent() {
       <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
         <div className="product-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {PRODUCTS.map((p, i) => {
-            const details = getProduct(p.slug);
-            const shortDesc = details?.description
-              ? details.description.length > 110
-                ? details.description.slice(0, 110).trimEnd() + "…"
-                : details.description
-              : undefined;
+            const shortDesc = p.description.length > 110
+              ? p.description.slice(0, 110).trimEnd() + "…"
+              : p.description;
             return (
               <Link
                 key={p.slug}
@@ -51,9 +48,9 @@ export default function ProductsContent() {
                 } ${i === 1 ? "lg:col-span-1" : ""}`}
               >
                 <div className="relative overflow-hidden aspect-[16/10] bg-[#f1f5f9]">
-                  {details?.image ? (
+                  {p.image ? (
                     <Image
-                      src={details.image}
+                      src={p.image}
                       alt={p.name}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -87,8 +84,7 @@ export default function ProductsContent() {
                     <p className="body-text text-slate-500 mt-2" style={{ fontSize: "14px", lineHeight: "1.6" }}>
                       {shortDesc}
                     </p>
-                  )}
-                </div>
+                  )}                </div>
               </Link>
             );
           })}

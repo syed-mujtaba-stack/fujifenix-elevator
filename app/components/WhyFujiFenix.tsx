@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SERVICES } from "@/app/data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,17 +45,6 @@ export default function WhyFujiFenix() {
     return () => ctx.revert();
   }, []);
 
-  const REASONS = [
-    { title: "COMPREHENSIVE\nSOLUTIONS", desc: "Manufacturing, Sales & After sales support of elevators and escalators" },
-    { title: "SAFETY FIRST", desc: "Built to meet the highest international safety standards" },
-    { title: "ENERGY EFFICIENCY", desc: "Smart technologies that reduce power consumption and operating costs" },
-    { title: "PROVEN EXPERTISE", desc: "Trusted by developers, contractors, and property managers" },
-    { title: "CUSTOM DESIGN", desc: "Tailored solutions to fit residential, commercial, and industrial projects" },
-    { title: "RELIABILITY &\nPERFORMANCE", desc: "Smooth, quiet, and dependable operation you can trust" },
-    { title: "ADVANCED\nTECHNOLOGY", desc: "Integration of smart controls and innovative mobility solutions" },
-    { title: "AFTER SALES\nSUPPORT", desc: "Dedicated maintenance and emergency response services" },
-  ];
-
   return (
     <section ref={ref} id="why-fuji-fenix" className="bg-[#f8fafc] section-gap">
       <div className="px-8 md:px-16 lg:px-24">
@@ -84,11 +74,11 @@ export default function WhyFujiFenix() {
 
           {/* Right — numbered list with dividers */}
           <div className="lg:w-[62%]">
-            {REASONS.map((reason, i) => (
-              <div key={i}>
+            {SERVICES.map((reason, i) => (
+              <div key={reason.num}>
                 <div className="h-px bg-slate-200" />
                 <div className="why-item flex gap-8 py-10 md:py-12">
-                  <div className="eyebrow text-[#2563EB] flex-shrink-0 pt-1 w-8">{String(i + 1).padStart(2, "0")}</div>
+                  <div className="eyebrow text-[#2563EB] flex-shrink-0 pt-1 w-8">{reason.num}</div>
                   <div>
                     <h3
                       className="heading text-[#0f172a] mb-4 whitespace-pre-line"

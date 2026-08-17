@@ -5,18 +5,23 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PRODUCTS } from "@/app/data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Show only the first 4 featured products on the homepage
+const FEATURED = PRODUCTS.slice(0, 4).map((p, i) => ({
+  num: String(i + 1).padStart(2, "0"),
+  slug: p.slug,
+  title: p.name.toUpperCase(),
+  desc: p.description,
+  specs: p.features,
+  img: p.image ?? "/hero-elevator.jpg",
+  imgAlt: p.imageAlt ?? p.name,
+}));
+
 export default function ProductShowcase() {
   const ref = useRef<HTMLElement>(null);
-
-  const PRODUCTS = [
-    { num: "01", slug: "passenger-elevators", title: "FUJI PASSENGER\nELEVATOR SERIES", desc: "Our flagship passenger elevator series delivers smooth, whisper-quiet performance for commercial towers and high-rises across 2 to 30+ floors.", specs: ["2–30+ Floors", "MRL Technology", "Smart Controls", "Custom Finishes"], img: "/hero-elevator.jpg", imgAlt: "Fuji Passenger Elevator" },
-    { num: "02", slug: "home-elevators", title: "HOME ELEVATOR\nSERIES", desc: "Quiet, compact, and meticulously designed for the modern luxury home.", specs: ["2–6 Floors", "Compact Design", "Silent Operation", "Custom Interiors"], img: "/home-elevator.jpg", imgAlt: "Fuji Home Elevator" },
-    { num: "03", slug: "high-speed-elevators", title: "HIGH-SPEED\nELEVATOR SERIES", desc: "Engineered for skyscrapers and landmark towers — our high-speed systems travel at up to 6m/s.", specs: ["Up to 6m/s", "Vibration Control", "AI Traffic Mgmt", "Safety First"], img: "/escalator.jpg", imgAlt: "Fuji High-Speed Elevator" },
-    { num: "04", slug: "panoramic-elevators", title: "PANORAMIC\nELEVATOR SERIES", desc: "Transform vertical movement into an architectural highlight.", specs: ["Full Glass Cabin", "Curved Track", "LED Lighting", "Custom Shapes"], img: "/hero-elevator.jpg", imgAlt: "Fuji Panoramic Elevator" },
-  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -97,7 +102,7 @@ export default function ProductShowcase() {
       </div>
 
       {/* Alternating product blocks */}
-      {PRODUCTS.map((product, i) => {
+      {FEATURED.map((product, i) => {
         const isEven = i % 2 === 0;
         return (
           <div

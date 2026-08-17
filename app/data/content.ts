@@ -212,18 +212,18 @@ export const PRODUCTS: Product[] = [
     image: null,
   },
   {
-    slug: "dumb-waiters",
-    name: "Dumb Waiters",
-    category: "Dumb Waiters",
+    slug: "dumbwaiters",
+    name: "Dumbwaiters",
+    category: "Dumbwaiters",
     description:
       "Compact goods elevator systems for efficient movement of smaller loads between floors.",
     features: [],
     image: null,
   },
   {
-    slug: "platform-starlifts",
-    name: "Platform Starlifts",
-    category: "Platform Starlifts",
+    slug: "platform-stairlifts",
+    name: "Platform Stairlifts",
+    category: "Platform Stairlifts",
     description:
       "Platform stairlift systems providing accessible vertical movement in homes and public buildings.",
     features: [],

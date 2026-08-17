@@ -14,7 +14,7 @@ export default function ProductsPage() {
     <>
       <PageHero
         eyebrow="OUR PRODUCTS"
-        title={[]}
+        title={["OUR"]}
         highlight="PRODUCTS"
         description={`Discover ${PRODUCTS.length} product lines engineered for performance, safety, and design.`}
         image="/hero-elevator.jpg"
