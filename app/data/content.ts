@@ -266,6 +266,153 @@ export function getRelatedProducts(slug: string, count = 3): Product[] {
   return related;
 }
 
+export interface ProductCategory {
+  slug: string;
+  name: string;
+  group: "elevators" | "components";
+  description: string;
+  image: string | null;
+  imageAlt?: string;
+  products: Product[];
+}
+
+export const PRODUCT_CATEGORY_GROUPS = [
+  { key: "elevators", label: "ELEVATOR SYSTEMS", description: "Complete elevator and escalator systems for every building type." },
+  { key: "components", label: "COMPONENTS & ACCESSORIES", description: "Premium cabin components and complementary accessories." },
+] as const;
+
+export const PRODUCT_CATEGORIES: ProductCategory[] = [
+  {
+    slug: "passenger-elevator",
+    name: "Passenger Elevator",
+    group: "elevators",
+    description:
+      "High-performance passenger elevators engineered for residential, commercial, and public buildings — smooth, safe, and reliable everyday vertical travel.",
+    image: "/hero-elevator.jpg",
+    imageAlt: "Fuji Fenix passenger elevator",
+    products: [],
+  },
+  {
+    slug: "bed-elevator",
+    name: "Bed Elevator",
+    group: "elevators",
+    description:
+      "Purpose-built elevators for hospitals and care facilities, sized for stretchers and patient beds with smooth, precise movement.",
+    image: null,
+    products: [],
+  },
+  {
+    slug: "sightseeing-elevator",
+    name: "Sightseeing Elevator",
+    group: "elevators",
+    description:
+      "Panoramic glass elevators that turn vertical travel into a visual experience for hotels, malls, and landmark buildings.",
+    image: "/panoramic.jpg",
+    imageAlt: "Fuji Fenix panoramic sightseeing elevator",
+    products: [],
+  },
+  {
+    slug: "home-elevator",
+    name: "Home Elevator",
+    group: "elevators",
+    description:
+      "Compact, silent, and architecturally refined lifts for premium villas and private residences.",
+    image: "/home-elevator.jpg",
+    imageAlt: "Fuji Fenix home elevator in a villa",
+    products: [],
+  },
+  {
+    slug: "freight-elevator",
+    name: "Freight Elevator",
+    group: "elevators",
+    description:
+      "Heavy-duty elevators built to move goods, materials, and machinery with durability and safety.",
+    image: null,
+    products: [],
+  },
+  {
+    slug: "car-elevator",
+    name: "Car Elevator",
+    group: "elevators",
+    description:
+      "Vertical vehicle transport systems for parking buildings, residences, and commercial projects.",
+    image: null,
+    products: [],
+  },
+  {
+    slug: "escalator",
+    name: "Escalator",
+    group: "elevators",
+    description:
+      "Escalators built for continuous high-traffic operation in airports, malls, and transit hubs.",
+    image: "/escalator.jpg",
+    imageAlt: "Fuji Fenix escalator in a shopping center",
+    products: [],
+  },
+  {
+    slug: "elevator-operation-panel",
+    name: "Elevator Operation Panel",
+    group: "components",
+    description:
+      "Modern operation panels and control fixtures combining intuitive use with premium finishes.",
+    image: null,
+    products: [],
+  },
+  {
+    slug: "elevator-ceiling",
+    name: "Elevator Ceiling",
+    group: "components",
+    description:
+      "Architectural cabin ceilings with integrated lighting, finishes, and design options.",
+    image: null,
+    products: [],
+  },
+  {
+    slug: "elevator-handrail",
+    name: "Elevator Handrail",
+    group: "components",
+    description:
+      "Elegant, durable handrails that complement cabin design while ensuring passenger safety.",
+    image: null,
+    products: [],
+  },
+  {
+    slug: "elevator-landing-door",
+    name: "Elevator Landing Door",
+    group: "components",
+    description:
+      "Landing doors and door systems engineered for safety, durability, and a flawless finish.",
+    image: null,
+    products: [],
+  },
+  {
+    slug: "elevator-floor",
+    name: "Elevator Floor",
+    group: "components",
+    description:
+      "Premium cabin flooring solutions tailored to match any interior design.",
+    image: null,
+    products: [],
+  },
+  {
+    slug: "accessories",
+    name: "Accessories",
+    group: "components",
+    description:
+      "A complete range of elevator accessories and complementary components.",
+    image: null,
+    products: [],
+  },
+];
+
+export function getCategory(slug: string): ProductCategory | undefined {
+  return PRODUCT_CATEGORIES.find((c) => c.slug === slug);
+}
+
+export function getProductsByCategory(slug: string): Product[] {
+  return getCategory(slug)?.products ?? [];
+}
+
 export interface SolutionSegment {
   slug: string;
   title: string;
