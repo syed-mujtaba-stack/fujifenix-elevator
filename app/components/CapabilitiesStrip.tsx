@@ -31,21 +31,57 @@ export default function CapabilitiesStrip() {
 
   return (
     <section ref={ref} className="bg-[#f8fafc] border-y border-slate-100">
-      <div className="px-8 md:px-16 lg:px-24 py-16 md:py-20">
+      {/*
+        Padding:
+        • px-4  (≥ 0px)   — 16px each side on smallest phones
+        • px-6  (≥ 480px) — 24px each side on wider phones
+        • px-10 (≥ 768px) — matches rest of site
+        • px-16 (≥ 1024px)
+        • px-24 (≥ 1280px)
+      */}
+      <div className="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-12 sm:py-14 md:py-20">
         <div className="flex flex-col lg:flex-row">
           {CAPABILITIES_STRIP.map((c, i) => (
             <div
               key={c.title}
-              className={`cap-item flex-1 flex items-start gap-6 py-6 lg:py-2 lg:px-10 ${
-                i > 0 ? "lg:border-l border-t lg:border-t-0 border-slate-100" : ""
-              } ${i === 0 ? "lg:pl-0" : ""} ${i === CAPABILITIES_STRIP.length - 1 ? "lg:pr-0" : ""}`}
+              className={[
+                "cap-item",
+                "flex-1 flex items-start",
+                /* gap tighter on mobile so number + text don't crowd */
+                "gap-4 sm:gap-5 lg:gap-6",
+                /* vertical padding — generous on mobile, compact on desktop */
+                "py-5 sm:py-6 lg:py-2",
+                /* horizontal padding only kicks in on desktop */
+                "lg:px-10",
+                /* separator lines */
+                i > 0 ? "border-t border-slate-100 lg:border-t-0 lg:border-l" : "",
+                /* remove outer edges on desktop */
+                i === 0 ? "lg:pl-0" : "",
+                i === CAPABILITIES_STRIP.length - 1 ? "lg:pr-0" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
             >
-              <span className="eyebrow text-[#2563EB] flex-shrink-0 pt-1">{c.num}</span>
-              <div>
-                <div className="subheading text-[#0f172a] mb-2" style={{ fontSize: "15px", letterSpacing: "0.04em" }}>
+              {/* Number badge */}
+              <span className="eyebrow text-[#2563EB] flex-shrink-0 pt-0.5 leading-none">
+                {c.num}
+              </span>
+
+              {/* Text block — min-w-0 prevents flex blowout on narrow screens */}
+              <div className="min-w-0">
+                <div
+                  className="subheading text-[#0f172a] mb-1.5 leading-snug"
+                  style={{
+                    fontSize: "clamp(12px, 3.5vw, 15px)",
+                    letterSpacing: "0.04em",
+                  }}
+                >
                   {c.title}
                 </div>
-                <p className="text-slate-500" style={{ fontSize: "14px", lineHeight: "1.6" }}>
+                <p
+                  className="text-slate-500"
+                  style={{ fontSize: "clamp(12.5px, 3.2vw, 14px)", lineHeight: "1.65" }}
+                >
                   {c.desc}
                 </p>
               </div>

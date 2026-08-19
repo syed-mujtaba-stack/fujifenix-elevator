@@ -44,7 +44,7 @@ export default function SectionHeading({
     return () => ctx.revert();
   }, []);
 
-  const titleLines = title.split("\n");
+  const titleLines = title.split(/\\n|\n/);
 
   return (
     <div
