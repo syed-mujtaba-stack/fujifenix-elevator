@@ -5,23 +5,35 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { PRODUCTS } from "@/app/data/content";
+import { urlFor } from "@/sanity/lib/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Map the first 6 products from the central data source into the horizontal-scroll card shape
-const SOLUTIONS = PRODUCTS.slice(0, 6).map((p, i) => ({
-  num: String(i + 1).padStart(2, "0"),
-  title: p.name.toUpperCase().replace(" ", "\n"),
-  desc: p.description,
-  img: p.image ?? "/hero-elevator.jpg",
-  imgAlt: p.imageAlt ?? p.name,
-  slug: p.slug,
-}));
+interface SolutionProduct {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string | null;
+  image: unknown;
+  categorySlug: string;
+}
 
-export default function HorizontalSolutions() {
+// Map the first 6 products from Sanity into the horizontal-scroll card shape
+const buildSolutions = (products: SolutionProduct[]) =>
+  products.slice(0, 6).map((p, i) => ({
+    num: String(i + 1).padStart(2, "0"),
+    title: p.title.toUpperCase().replace(" ", "\n"),
+    desc: p.description ?? "",
+    img: p.image ? urlFor(p.image).width(1600).auto("format").url() : "/hero-elevator.jpg",
+    imgAlt: p.title,
+    slug: p.slug,
+    categorySlug: p.categorySlug,
+  }));
+
+export default function HorizontalSolutions({ products }: { products: SolutionProduct[] }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const SOLUTIONS = buildSolutions(products);
 
   useEffect(() => {
     const mm = gsap.matchMedia();
@@ -144,7 +156,7 @@ export default function HorizontalSolutions() {
                   </p>
 
                   <Link
-                    href={`/products/${sol.slug}`}
+                    href={`/products/${sol.categorySlug}/${sol.slug}`}
                     className="group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
                   >
                     EXPLORE
@@ -199,7 +211,7 @@ export default function HorizontalSolutions() {
                 <p className="body-text text-slate-500 mb-6" style={{ fontSize: "14px" }}>
                   {sol.desc}
                 </p>
-                <Link href={`/products/${sol.slug}`} className="eyebrow text-[#2563EB] inline-flex items-center gap-2">
+                <Link href={`/products/${sol.categorySlug}/${sol.slug}`} className="eyebrow text-[#2563EB] inline-flex items-center gap-2">
                   EXPLORE <span>→</span>
                 </Link>
               </div>

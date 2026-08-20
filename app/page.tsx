@@ -8,6 +8,10 @@ import TechnologyBlueprint from "./components/TechnologyBlueprint";
 import ProductShowcase from "./components/ProductShowcase";
 import ProjectsShowcase from "./components/ProjectsShowcase";
 import WhyFujiFenix from "./components/WhyFujiFenix";
+import { client } from "@/sanity/lib/client";
+import { featuredProductsQuery } from "@/sanity/lib/queries";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Fuji Fenix Elevator | Elevator & Escalator Solutions",
@@ -15,16 +19,17 @@ export const metadata: Metadata = {
     "Fuji Fenix Elevator is a leading provider of elevator and escalator solutions, combining advanced technology with precision engineering for residential, commercial, healthcare, and infrastructure projects.",
 };
 
-export default function Home() {
+export default async function Home() {
+  const products = await client.fetch(featuredProductsQuery);
   return (
     <main className="min-h-screen bg-white text-[#0f172a] flex flex-col overflow-x-hidden">
       <Hero />
       <CapabilitiesStrip />
       <BrandStatement />
       <AboutSection />
-      <HorizontalSolutions />
+      <HorizontalSolutions products={products} />
       <TechnologyBlueprint />
-      <ProductShowcase />
+      <ProductShowcase products={products} />
       <ProjectsShowcase />
       <WhyFujiFenix />
     </main>

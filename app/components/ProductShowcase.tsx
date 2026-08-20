@@ -5,23 +5,36 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { PRODUCTS } from "@/app/data/content";
+import { urlFor } from "@/sanity/lib/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Show only the first 4 featured products on the homepage
-const FEATURED = PRODUCTS.slice(0, 4).map((p, i) => ({
-  num: String(i + 1).padStart(2, "0"),
-  slug: p.slug,
-  title: p.name.toUpperCase(),
-  desc: p.description,
-  specs: p.features,
-  img: p.image ?? "/hero-elevator.jpg",
-  imgAlt: p.imageAlt ?? p.name,
-}));
+interface FeaturedProduct {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string | null;
+  features: string[] | null;
+  image: unknown;
+  category: string;
+  categorySlug: string;
+}
 
-export default function ProductShowcase() {
+const FEATURED = (products: FeaturedProduct[]) =>
+  products.slice(0, 4).map((p, i) => ({
+    num: String(i + 1).padStart(2, "0"),
+    slug: p.slug,
+    categorySlug: p.categorySlug,
+    title: p.title.toUpperCase(),
+    desc: p.description ?? "",
+    specs: p.features ?? [],
+    img: p.image ? urlFor(p.image).width(1600).auto("format").url() : "/hero-elevator.jpg",
+    imgAlt: p.title,
+  }));
+
+export default function ProductShowcase({ products }: { products: FeaturedProduct[] }) {
   const ref = useRef<HTMLElement>(null);
+  const featured = FEATURED(products);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -102,7 +115,7 @@ export default function ProductShowcase() {
       </div>
 
       {/* Alternating product blocks */}
-      {FEATURED.map((product, i) => {
+      {featured.map((product, i) => {
         const isEven = i % 2 === 0;
         return (
           <div
@@ -161,7 +174,7 @@ export default function ProductShowcase() {
               </div>
 
               <Link
-                href={`/products/${product.slug}`}
+                href={`/products/${product.categorySlug}/${product.slug}`}
                 className="prod-text-el group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
               >
                 EXPLORE PRODUCT

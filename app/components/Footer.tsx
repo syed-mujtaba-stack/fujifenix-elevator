@@ -1,26 +1,42 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PRODUCTS, CONTACT } from "@/app/data/content";
+import { CONTACT } from "@/app/data/content";
+import { client } from "@/sanity/lib/client";
+import { allProductsQuery } from "@/sanity/lib/queries";
 import Logo from "./Logo";
 
-const FEATURED_PRODUCT_SLUGS = [
-  "passenger-elevators",
-  "home-elevators",
-  "high-speed-elevators",
-  "panoramic-elevators",
-  "escalators",
-  "moving-walks",
-];
+interface FooterProduct {
+  _id: string;
+  title: string;
+  slug: string;
+  categorySlug: string;
+}
+
+const FEATURED_PRODUCT_COUNT = 6;
 
 export default function Footer() {
   const pathname = usePathname();
-  if (pathname === "/cta") return null;
+  const [productLinks, setProductLinks] = useState<FooterProduct[]>([]);
 
-  const productLinks = FEATURED_PRODUCT_SLUGS.map((slug) => PRODUCTS.find((p) => p.slug === slug)).filter(
-    Boolean
-  );
+  useEffect(() => {
+    let active = true;
+    client
+      .fetch<FooterProduct[]>(allProductsQuery)
+      .then((products) => {
+        if (active) setProductLinks(products.slice(0, FEATURED_PRODUCT_COUNT));
+      })
+      .catch(() => {
+        if (active) setProductLinks([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (pathname === "/cta") return null;
 
   const companyLinks = [
     { label: "About Fuji Fenix", href: "/about" },
@@ -66,13 +82,13 @@ export default function Footer() {
           <div className="eyebrow text-[#2563EB] mb-6">PRODUCTS</div>
           <ul className="space-y-3">
             {productLinks.map((p) => (
-              <li key={p!.slug}>
+              <li key={p._id}>
                 <Link
-                  href={`/products/${p!.slug}`}
+                  href={`/products/${p.categorySlug}/${p.slug}`}
                   className="text-slate-400 hover:text-white transition-colors duration-200"
                   style={{ fontSize: "14px" }}
                 >
-                  {p!.name}
+                  {p.title}
                 </Link>
               </li>
             ))}
