@@ -73,7 +73,7 @@ export default function BrandStatement() {
             <span
               key={i}
               className={`bs-word display select-none ${blue ? "text-[#2563EB]" : "text-[#0f172a]"}`}
-              style={{ fontSize: "clamp(44px, 8vw, 104px)" }}
+              style={{ fontSize: "var(--fs-display-xl)" }}
             >
               {word}
             </span>
@@ -92,14 +92,14 @@ export default function BrandStatement() {
             <div className="eyebrow text-slate-400">HEADQUARTERS</div>
             <div
               className="display text-[#0f172a]"
-              style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}
+              style={{ fontSize: "clamp(22px, 2.5vw, 36px)" }}
             >
               SHANGHAI
             </div>
             <div className="eyebrow text-slate-400 mt-3">REGION</div>
             <div
               className="display text-[#0f172a]"
-              style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}
+              style={{ fontSize: "clamp(22px, 2.5vw, 36px)" }}
             >
               CHINA
             </div>

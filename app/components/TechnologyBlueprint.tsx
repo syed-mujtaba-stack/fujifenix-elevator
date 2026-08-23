@@ -70,7 +70,7 @@ export default function TechnologyBlueprint() {
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <h2
               className="heading text-[#0f172a] max-w-2xl"
-              style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
+              style={{ fontSize: "var(--fs-h2)" }}
             >
               THE FUJI FENIX<br />
               <span className="text-[#2563EB]">TECHNOLOGY</span><br />

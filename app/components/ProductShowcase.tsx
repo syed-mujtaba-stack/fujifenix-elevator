@@ -96,7 +96,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <h2
             className="heading text-[#0f172a]"
-            style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
+            style={{ fontSize: "var(--fs-h2)" }}
           >
             PRECISION CRAFTED<br />
             <span className="text-[#2563EB]">ELEVATOR SYSTEMS</span>
@@ -135,7 +135,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
               {/* Ghost number watermark */}
               <div
                 className="absolute bottom-4 right-6 display text-white/10 select-none leading-none pointer-events-none"
-                style={{ fontSize: "clamp(80px, 12vw, 160px)" }}
+                style={{ fontSize: "clamp(56px, 9vw, 120px)" }}
               >
                 {product.num}
               </div>
@@ -145,14 +145,14 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
             <div className="lg:w-[45%] flex flex-col justify-center px-10 md:px-14 lg:px-16 py-16 bg-white">
               <div
                 className="prod-text-el display text-slate-100 select-none leading-none mb-6"
-                style={{ fontSize: "clamp(60px, 8vw, 100px)" }}
+                style={{ fontSize: "clamp(48px, 6.5vw, 84px)" }}
               >
                 {product.num}
               </div>
 
               <h3
                 className="prod-text-el heading text-[#0f172a] mb-6 whitespace-pre-line"
-                style={{ fontSize: "clamp(28px, 3.5vw, 52px)" }}
+                style={{ fontSize: "clamp(23px, 2.5vw, 36px)" }}
               >
                 {product.title}
               </h3>

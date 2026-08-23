@@ -148,7 +148,7 @@ export default function Hero() {
           boxSizing: "border-box",
         }}
       >
-        <div style={{ maxWidth: "clamp(300px, 46vw, 620px)" }}>
+        <div style={{ maxWidth: "clamp(320px, 54vw, 760px)" }}>
           {/* Eyebrow */}
           <div className="hero-eyebrow flex items-center gap-3 mb-5">
             <div className="hero-line" aria-hidden="true" style={{ width: "28px", height: "1px", background: "#60a5fa", flexShrink: 0 }} />
@@ -165,8 +165,8 @@ export default function Hero() {
               fontFamily: "var(--font-display)",
               fontWeight: 900,
               letterSpacing: "-0.03em",
-              lineHeight: 0.92,
-              fontSize: "clamp(40px, 8vw, 92px)",
+              lineHeight: 1.05,
+              fontSize: "var(--fs-hero)",
               marginBottom: "20px",
               color: "#ffffff",
             }}

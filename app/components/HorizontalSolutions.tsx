@@ -93,7 +93,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
           <div className="flex items-end justify-between border-b border-slate-100 pb-4">
             <h2
               className="heading text-[#0f172a]"
-              style={{ fontSize: "clamp(32px, 4.5vw, 64px)" }}
+              style={{ fontSize: "var(--fs-h2)" }}
             >
               ENGINEERED SOLUTIONS <span className="text-[#2563EB]">FOR EVERY SCALE</span>
             </h2>
@@ -132,7 +132,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                   {/* Ghost number on image */}
                   <div
                     className="absolute bottom-6 left-8 display text-white/15 select-none leading-none pointer-events-none"
-                    style={{ fontSize: "clamp(60px, 10vw, 140px)" }}
+                    style={{ fontSize: "clamp(48px, 8vw, 110px)" }}
                   >
                     {sol.num}
                   </div>
@@ -144,7 +144,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
 
                   <h3
                     className="heading text-[#0f172a] mb-4 whitespace-pre-line"
-                    style={{ fontSize: "clamp(24px, 3vw, 46px)" }}
+                    style={{ fontSize: "var(--fs-h3)" }}
                   >
                     {sol.title}
                   </h3>
@@ -180,7 +180,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
           </div>
           <h2
             className="heading text-[#0f172a]"
-            style={{ fontSize: "32px" }}
+            style={{ fontSize: "clamp(26px, 7vw, 32px)" }}
           >
             ENGINEERED SOLUTIONS<br />
             <span className="text-[#2563EB]">FOR EVERY SCALE</span>
@@ -203,7 +203,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                 <div className="eyebrow text-[#2563EB] mb-3">{sol.num}</div>
                 <h3
                   className="heading text-[#0f172a] mb-3 whitespace-pre-line"
-                  style={{ fontSize: "24px" }}
+                  style={{ fontSize: "20px" }}
                 >
                   {sol.title}
                 </h3>

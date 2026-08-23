@@ -55,7 +55,7 @@ function ProjectItem({
             <div>
               <h3
                 className="heading text-white leading-tight mb-1"
-                style={{ fontSize: tall ? "clamp(18px, 2.5vw, 30px)" : "clamp(15px, 2vw, 22px)" }}
+                style={{ fontSize: tall ? "clamp(18px, 2.2vw, 28px)" : "clamp(15px, 1.8vw, 22px)" }}
               >
                 {project.title}
               </h3>
@@ -120,7 +120,7 @@ export default function ProjectsShowcase() {
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <h2
               className="heading text-[#0f172a]"
-              style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
+              style={{ fontSize: "var(--fs-h2)" }}
             >
               PROJECT<br />
               <span className="text-[#2563EB]">EXCELLENCE</span>
@@ -168,7 +168,7 @@ export default function ProjectsShowcase() {
                 <div key={stat.label}>
                   <div
                     className="display text-white leading-none mb-2"
-                    style={{ fontSize: "clamp(40px, 6vw, 80px)" }}
+                    style={{ fontSize: "var(--fs-stat-xl)" }}
                   >
                     {stat.end.toLocaleString()}<span className="text-[#2563EB]">{stat.suffix}</span>
                   </div>

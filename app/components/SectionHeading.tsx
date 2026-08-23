@@ -57,7 +57,7 @@ export default function SectionHeading({
       </div>
       <h2
         className={`sh-el heading ${dark ? "text-white" : "text-[#0f172a]"} max-w-3xl`}
-        style={{ fontSize: "clamp(34px, 5vw, 68px)" }}
+        style={{ fontSize: "var(--fs-h2)" }}
       >
         {titleLines.map((line, i) => (
           <span key={i} className="block">

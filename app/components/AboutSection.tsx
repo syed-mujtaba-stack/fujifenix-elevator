@@ -110,7 +110,7 @@ export default function AboutSection() {
 
           <h2
             className="heading text-[#0f172a] mb-8"
-            style={{ fontSize: "clamp(36px, 5vw, 64px)" }}
+            style={{ fontSize: "var(--fs-h2)" }}
           >
             WORLD-CLASS<br />
             <span className="text-[#2563EB]">VERTICAL MOBILITY</span><br />
@@ -147,7 +147,7 @@ export default function AboutSection() {
             >
               <span
                 className="display text-[#0f172a] group-hover:text-[#2563EB] transition-colors duration-300 leading-none mb-3"
-                style={{ fontSize: "clamp(52px, 7vw, 96px)" }}
+                style={{ fontSize: "var(--fs-stat-xl)" }}
                 data-stat={end}
               >
                 0{suffix}

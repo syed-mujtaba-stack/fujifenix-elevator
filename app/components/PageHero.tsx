@@ -70,7 +70,7 @@ export default function PageHero({
             </div>
             <h1
               className={`display ${titleBlue ? "text-[#2563EB]" : "text-[#0f172a]"}`}
-              style={{ fontSize: "clamp(52px, 8vw, 110px)" }}
+              style={{ fontSize: "var(--fs-hero)" }}
             >
               {lines.map((line, i) => (
                 <span key={i} className="ph-line block opacity-0 overflow-hidden">

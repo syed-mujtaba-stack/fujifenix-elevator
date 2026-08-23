@@ -1,40 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CONTACT } from "@/app/data/content";
-import { client } from "@/sanity/lib/client";
-import { allProductsQuery } from "@/sanity/lib/queries";
 import Logo from "./Logo";
-
-interface FooterProduct {
-  _id: string;
-  title: string;
-  slug: string;
-  categorySlug: string;
-}
-
-const FEATURED_PRODUCT_COUNT = 6;
 
 export default function Footer() {
   const pathname = usePathname();
-  const [productLinks, setProductLinks] = useState<FooterProduct[]>([]);
-
-  useEffect(() => {
-    let active = true;
-    client
-      .fetch<FooterProduct[]>(allProductsQuery)
-      .then((products) => {
-        if (active) setProductLinks(products.slice(0, FEATURED_PRODUCT_COUNT));
-      })
-      .catch(() => {
-        if (active) setProductLinks([]);
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
 
   if (pathname === "/cta") return null;
 
@@ -55,7 +27,7 @@ export default function Footer() {
             <Logo animate={false} />
             <div
               className="display text-white/6 select-none leading-none mt-6"
-              style={{ fontSize: "clamp(52px, 10vw, 130px)" }}
+              style={{ fontSize: "clamp(40px, 6.5vw, 88px)" }}
             >
               FUJI FENIX
             </div>
@@ -77,24 +49,7 @@ export default function Footer() {
       </div>
 
       {/* Columns */}
-      <div className="px-6 md:px-10 lg:px-14 py-14 grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/5">
-        <div>
-          <div className="eyebrow text-[#2563EB] mb-6">PRODUCTS</div>
-          <ul className="space-y-3">
-            {productLinks.map((p) => (
-              <li key={p._id}>
-                <Link
-                  href={`/products/${p.categorySlug}/${p.slug}`}
-                  className="text-slate-400 hover:text-white transition-colors duration-200"
-                  style={{ fontSize: "14px" }}
-                >
-                  {p.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
+      <div className="px-6 md:px-10 lg:px-14 py-14 grid grid-cols-2 md:grid-cols-3 gap-10 border-b border-white/5">
         <div>
           <div className="eyebrow text-[#2563EB] mb-6">COMPANY</div>
           <ul className="space-y-3">

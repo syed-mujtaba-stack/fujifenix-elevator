@@ -59,7 +59,7 @@ export default function WhyFujiFenix() {
               </div>
               <h2
                 className="heading text-[#0f172a] mb-8"
-                style={{ fontSize: "clamp(36px, 5vw, 68px)" }}
+                style={{ fontSize: "var(--fs-h2)" }}
               >
                 WHY DEVELOPERS<br />
                 & ARCHITECTS<br />
@@ -82,7 +82,7 @@ export default function WhyFujiFenix() {
                   <div>
                     <h3
                       className="heading text-[#0f172a] mb-4 whitespace-pre-line"
-                      style={{ fontSize: "clamp(20px, 2.5vw, 32px)" }}
+                      style={{ fontSize: "var(--fs-h3)" }}
                     >
                       {reason.title}
                     </h3>
