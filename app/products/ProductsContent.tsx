@@ -143,12 +143,12 @@ export default function ProductsContent({ categories, products }: { categories: 
             <div className="product-grid grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
               {visibleProducts.map((product, i) => (
                 <Link key={product._id} href={`/products/${product.categorySlug}/${product.slug}`} className="product-card group block rounded-sm border border-slate-200 bg-white p-2 shadow-[0_8px_24px_rgba(15,23,42,0.035)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_16px_32px_rgba(15,23,42,0.09)]">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-[#f8fafc]">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-white">
                     <Image
                       src={product.image ? urlFor(product.image).width(900).auto("format").url() : FALLBACK_IMAGE}
                       alt={product.title}
                       fill
-                      className="object-contain p-7 transition-transform duration-500 group-hover:scale-105 sm:p-8"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 300px"
                     />
                     <span className="absolute left-3 top-3 bg-white/95 px-2 py-1 text-[10px] font-bold tracking-[0.12em] text-[#0047BB] shadow-sm">

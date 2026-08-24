@@ -36,13 +36,15 @@ function GoogleTranslateWidget() {
     document.body.appendChild(s);
   }, []);
 
-  return <div id="google_translate_element" className="ff-translate" />;
+  return (
+    <div id="google_translate_element" className="ff-translate" aria-label="Language selector" />
+  );
 }
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled]     = useState(false);
-  const [navH, setNavH]             = useState(64); // tracked for mobile menu max-height
+  const [navH, setNavH]             = useState(64);
   const headerRef                   = useRef<HTMLElement>(null);
   const pathname                    = usePathname();
 
@@ -60,15 +62,13 @@ export default function Navbar() {
       if (headerRef.current) {
         const h = headerRef.current.offsetHeight;
         setNavH(h);
-        // Expose navbar height as a CSS variable so Hero can consume it
-        // without prop-drilling. Both MobileHero and DesktopHero use this.
         document.documentElement.style.setProperty("--nav-h", `${h}px`);
       }
     };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [scrolled]); // re-measure when padding changes on scroll
+  }, [scrolled]);
 
   /* Close menu on route change */
   useEffect(() => {
@@ -89,92 +89,128 @@ export default function Navbar() {
       ref={headerRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-[0_2px_24px_rgba(15,23,42,0.04)] py-3"
-          : "bg-white border-b border-slate-100/60 py-4 md:py-5"
+          ? "bg-white/90 backdrop-blur-md shadow-[0_2px_24px_rgba(15,23,42,0.04)] py-3"
+          : "bg-white py-4 md:py-5"
       }`}
     >
+      {/* Thin blue top border */}
+      <div className="absolute top-0 inset-x-0 h-[2px] bg-[#0047BB]" aria-hidden="true" />
+
+      {/* Bottom hairline */}
+      <div
+        className={`absolute bottom-0 inset-x-0 h-px bg-slate-100 transition-opacity duration-500 ${
+          scrolled ? "opacity-100" : "opacity-60"
+        }`}
+        aria-hidden="true"
+      />
+
       {/*
-        Inner row:
-        • px-4 on the smallest screens (320 px) — prevents overflow
-        • px-6 from sm (480 px)
-        • px-10 from md (768 px)
-        • px-14 from lg (1024 px)
-        min-w-0 on children prevents flex blowout
+        ============================================================
+        DESKTOP ROW (≥1280px) — CSS GRID, three independent columns:
+          [ logo ]  [ 7 nav links, centered, own track ]  [ utilities ]
+        Sections live in separate grid tracks, so the navigation can
+        physically never bleed into the utility cluster.
+
+        Width budget (worst case, 1280px, fully-rendered widget):
+          logo 151 + nav ~580 + utilities ~360 + track gaps ~52
+          ≈ 1143px of the 1168px available → fits with breathing room.
+        Phone number joins the row from 1536px up, where there is
+        guaranteed space for it without compressing anything.
+        ============================================================
       */}
-      <div className="px-4 sm:px-6 md:px-10 lg:px-14 flex items-center justify-between min-w-0 gap-2">
+      <div
+        className="hidden xl:grid items-center px-4 sm:px-6 md:px-10 xl:px-14"
+        style={{
+          gridTemplateColumns: "auto minmax(0, 1fr) auto",
+          columnGap: "clamp(20px, 2vw, 44px)",
+        }}
+      >
+        {/* ── Section 1 · Logo ── */}
+        <Logo className="xl:h-6 2xl:h-7" />
 
-        {/* ── Logo ── */}
-        <div className="flex-shrink-0 min-w-0">
-          <Logo />
-        </div>
-
-        {/* ── Desktop nav links (hidden below lg) ── */}
-        <nav className="hidden lg:flex items-center gap-7 min-w-0">
-          {NAV_LINKS.map((l) => {
-            const active = pathname === l.href;
-            return (
-              <Link
-                key={l.label}
-                href={l.href}
-                className={`eyebrow whitespace-nowrap transition-colors duration-200 ${
-                  active ? "text-[#0047BB]" : "text-slate-600 hover:text-[#0047BB]"
-                }`}
-              >
-                {l.label}
-              </Link>
-            );
-          })}
+        {/* ── Section 2 · Primary navigation ── */}
+        <nav aria-label="Primary" className="justify-self-center min-w-0">
+          <ul
+            className="flex items-center list-none m-0 p-0"
+            style={{ gap: "clamp(12px, 1.4vw, 26px)" }}
+          >
+            {NAV_LINKS.map((l) => {
+              const active = pathname === l.href;
+              return (
+                <li key={l.label} className="whitespace-nowrap">
+                  <Link
+                    href={l.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`eyebrow whitespace-nowrap transition-colors duration-200 ${
+                      active
+                        ? "text-[#0047BB]"
+                        : "text-slate-600 hover:text-[#0047BB]"
+                    }`}
+                    style={{ letterSpacing: "0.12em" }}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </nav>
 
-        {/* ── Right cluster ── */}
-        <div className="flex items-center gap-2 sm:gap-3 lg:gap-6 flex-shrink-0 min-w-0">
+        {/* ── Section 3 · Utilities ── */}
+        <div className="flex items-center flex-shrink-0">
 
-          {/*
-            Google Translate:
-            Hidden on mobile (<lg) — it lives inside the mobile menu instead,
-            so it doesn't consume precious horizontal space on narrow screens.
-          */}
-          <div className="hidden lg:block">
+          {/* Language selector */}
+          <div className="flex items-center gap-1.5 pr-4 mr-4 border-r border-slate-200">
+            <span className="eyebrow text-slate-400 select-none">EN</span>
+            <span className="text-slate-300 select-none" aria-hidden="true">/</span>
             <GoogleTranslateWidget />
           </div>
 
-          {/* Desktop: phone number + CTA button */}
-          <div className="hidden lg:flex items-center gap-6">
-            <a
-              href={CONTACT.phoneHref}
-              className="eyebrow text-slate-500 hover:text-[#0047BB] transition-colors whitespace-nowrap"
-            >
-              {CONTACT.phone}
-            </a>
-            <Link
-              href="/cta"
-              className="group inline-flex items-center gap-2 bg-[#0047BB] hover:bg-[#003A94] text-white eyebrow px-6 py-3 transition-all duration-200 whitespace-nowrap"
-            >
-              GET A QUOTE
-              <span className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true">→</span>
-            </Link>
-          </div>
-
-          {/*
-            Hamburger — mobile/tablet only (< lg).
-            44×44 px minimum touch target per WCAG 2.5.5.
-          */}
-          <button
-            className="lg:hidden flex items-center justify-center w-11 h-11 -mr-1 text-[#0f172a] rounded-sm
-                       focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]"
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-nav"
+          {/* Phone — from 1536px, where it fits without compression */}
+          <a
+            href={CONTACT.phoneHref}
+            className="hidden 2xl:inline-block eyebrow text-slate-500 hover:text-[#0047BB] transition-colors duration-200 whitespace-nowrap mr-4"
           >
-            {/* Three-bar → X morph */}
-            <span className="relative w-5 h-[14px] flex flex-col justify-between" aria-hidden="true">
-              <span className={`absolute top-0 left-0 w-5 h-px bg-current origin-center transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-[6.5px]" : ""}`} />
-              <span className={`absolute top-1/2 -translate-y-1/2 left-0 w-5 h-px bg-current transition-opacity duration-300 ${mobileOpen ? "opacity-0" : "opacity-100"}`} />
-              <span className={`absolute bottom-0 left-0 w-5 h-px bg-current origin-center transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[6.5px]" : ""}`} />
-            </span>
-          </button>
+            {CONTACT.phone}
+          </a>
+
+          {/* CTA — far right */}
+          <Link
+            href="/cta"
+            className="group inline-flex items-center justify-center gap-2 bg-[#0047BB] hover:bg-[#003A94] text-white eyebrow px-4 py-2.5 transition-colors duration-200 whitespace-nowrap"
+          >
+            GET A QUOTE
+            <span className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true">→</span>
+          </Link>
         </div>
+      </div>
+
+      {/*
+        ============================================================
+        MOBILE / TABLET ROW (<1280px) — flex: logo + hamburger.
+        Desktop nav and utilities are removed entirely; the existing
+        MobileMenu drawer carries links, quote CTA and language picker.
+        ============================================================
+      */}
+      <div className="xl:hidden flex items-center justify-between px-4 sm:px-6">
+        <Logo />
+
+        {/* Hamburger — 44×44 px minimum touch target per WCAG 2.5.5 */}
+        <button
+          className="flex items-center justify-center w-11 h-11 -mr-1 text-[#0f172a] rounded-sm
+                     focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+        >
+          {/* Three-bar → X morph */}
+          <span className="relative w-5 h-[14px] flex flex-col justify-between" aria-hidden="true">
+            <span className={`absolute top-0 left-0 w-5 h-px bg-current origin-center transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-[6.5px]" : ""}`} />
+            <span className={`absolute top-1/2 -translate-y-1/2 left-0 w-5 h-px bg-current transition-opacity duration-300 ${mobileOpen ? "opacity-0" : "opacity-100"}`} />
+            <span className={`absolute bottom-0 left-0 w-5 h-px bg-current origin-center transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[6.5px]" : ""}`} />
+          </span>
+        </button>
       </div>
 
       {/* ── Mobile menu drawer ── */}

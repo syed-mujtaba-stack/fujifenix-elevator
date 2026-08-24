@@ -108,7 +108,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                     src={urlFor(product.image).width(1200).auto("format").url()}
                     alt={product.title}
                     fill
-                    className="object-contain"
+                    className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 48vw"
                   />
                 </div>
