@@ -1,51 +1,72 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import Link from "next/link";
 
 export default function BrandStatement() {
   const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".bs-word",
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.06,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top 75%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-
-      gsap.fromTo(
-        ".bs-para",
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".bs-para",
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    }, ref);
-
-    return () => ctx.revert();
+  useEffect(() => {
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let ctx: any = null;
+    let timelineKill: any = null;
+    (async () => {
+      if (prefersReducedMotion) {
+        // Reveal all elements without animation for reduced-motion users
+        document.querySelectorAll('.bs-word, .bs-para').forEach((el) => {
+          (el as HTMLElement).style.opacity = '1';
+          (el as HTMLElement).style.transform = 'none';
+        });
+        return;
+      }
+      const gsapModule = await import('gsap');
+      const ScrollTriggerModule = await import('gsap/ScrollTrigger');
+      const gsap = (gsapModule && (gsapModule.default || gsapModule));
+      const ScrollTrigger = (ScrollTriggerModule && (ScrollTriggerModule.default || ScrollTriggerModule));
+      if (gsap && ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+      }
+      ctx = gsap.context(() => {
+        timelineKill = gsap.fromTo(
+          ".bs-word",
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.06,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ref.current,
+              start: "top 75%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+        gsap.fromTo(
+          ".bs-para",
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".bs-para",
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }, ref);
+    })();
+    return () => {
+      try {        if (ctx && ctx.revert) ctx.revert();
+      } catch (e) {}
+      try {        if (timelineKill && timelineKill.kill) timelineKill.kill();
+      } catch (e) {}
+    };
   }, []);
 
   return (
@@ -53,10 +74,12 @@ export default function BrandStatement() {
       <div className="px-8 md:px-16 lg:px-24">
 
         {/* Top rule */}
-        <div className="flex items-center gap-4 mb-14">
+        <div className="flex items-center gap-4 mb-6">
           <div className="w-8 h-px bg-[#2563EB]" />
-          <span className="eyebrow text-[#2563EB]">OUR VISION</span>
+          <h2 className="eyebrow text-[#2563EB]">OUR VISION</h2>
         </div>
+        {/* Accessible short summary for screen readers */}
+        <p className="sr-only">Our vision is moving people, connecting spaces, and engineering what comes next — Fuji Fenix provides precision-engineered elevator and escalator solutions worldwide.</p>
 
         {/* Massive word cascade */}
         <div className="flex flex-wrap gap-x-4 md:gap-x-6 gap-y-1 mb-16">
@@ -104,6 +127,13 @@ export default function BrandStatement() {
               CHINA
             </div>
           </div>
+        </div>
+
+        {/* CTA */}
+        <div className="px-8 md:px-16 lg:px-24 mt-8">
+          <Link href="/about" aria-label="Learn more about our vision" className="inline-block rounded-md bg-[#2563EB] text-white px-4 py-2 hover:bg-[#1f4fcf] transition-colors">
+            Learn more about our vision
+          </Link>
         </div>
       </div>
     </section>

@@ -48,6 +48,12 @@ export const metadata: Metadata = {
     title: "Fuji Fenix Elevator | Elevator & Escalator Solutions",
     description:
       "Total solution for vertical transportation. From high-rise towers to transit hubs, we have solutions for all your needs.",
+    images: [
+      {
+        url: '/hero-elevator.jpg',
+        alt: 'Fuji Fenix hero image',
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -69,6 +75,18 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <head>
+        {/* Preload hero image to improve LCP */}
+        <link rel="preload" as="image" href="/hero-elevator.jpg" />
+        {/* Organization JSON-LD for richer search previews */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Fuji Fenix Elevator",
+          "url": "https://fujifenix.com",
+          "logo": "https://fujifenix.com/hero-elevator.jpg",
+          "sameAs": ["https://www.linkedin.com/company/fujifenix"],
+          "@id": "https://fujifenix.com#organization"
+        }) }} />
         {/* Override removeChild BEFORE React mounts to catch Google Translate DOM mutations */}
         <Script id="google-translate-patch" strategy="beforeInteractive">{`
           (function() {
