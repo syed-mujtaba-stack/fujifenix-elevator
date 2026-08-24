@@ -5,6 +5,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { CONTACT } from "@/app/data/content";
 import { submitContact } from "@/app/actions/contact";
+import WeChatQRButton from "@/app/components/WeChatQR";
 
 const COUNTRIES = [
   "China",
@@ -384,6 +385,7 @@ export default function CtaContent() {
               <span className="body-text text-slate-500" style={{ fontSize: "15px" }}>
                 {CONTACT.address}
               </span>
+              <WeChatQRButton variant="dark" label="CONTACT US ON WECHAT" />
             </div>
           </div>
         </div>

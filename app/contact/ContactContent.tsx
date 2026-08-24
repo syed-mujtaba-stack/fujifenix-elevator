@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import SectionHeading from "@/app/components/SectionHeading";
+import WeChatQRButton from "@/app/components/WeChatQR";
 import ContactForm from "./ContactForm";
 import { CONTACT, COMPANY } from "@/app/data/content";
 
@@ -80,6 +81,17 @@ export default function ContactContent() {
                   >
                     {CONTACT.email}
                   </a>
+                </div>
+                <div className="ct-line">
+                  <div className="eyebrow text-slate-400 mb-2" style={{ fontSize: "11px" }}>
+                    WECHAT
+                  </div>
+                  <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+                    <p className="body-text text-[#0f172a]" style={{ fontSize: "15px" }}>
+                      Chat with our team instantly on WeChat.
+                    </p>
+                    <WeChatQRButton variant="light" label="SHOW QR CODE" />
+                  </div>
                 </div>
                 <div className="ct-line">
                   <div className="eyebrow text-slate-400 mb-2" style={{ fontSize: "11px" }}>

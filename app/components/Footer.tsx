@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CONTACT } from "@/app/data/content";
 import Logo from "./Logo";
+import WeChatQRButton from "./WeChatQR";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -109,6 +110,9 @@ export default function Footer() {
               >
                 {CONTACT.email}
               </a>
+            </li>
+            <li className="pt-2">
+              <WeChatQRButton variant="dark" label="WECHAT" className="!px-4 !py-2.5" />
             </li>
           </ul>
         </div>
