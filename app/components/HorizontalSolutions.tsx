@@ -35,31 +35,39 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
     const prefersReducedMotion = typeof window !== 'undefined' &&
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let mm: any = null;
+
+    let mm: any = null;
     let tween: any = null;
-    (async () => {
+
+    (async () => {
       if (prefersReducedMotion) {
         // Reveal content without animation for reduced-motion users
         document.querySelectorAll('#solutions .heading, #solutions .eyebrow, #solutions .body-text, #solutions .display').forEach((el) => {
           (el as HTMLElement).style.opacity = '1';
           (el as HTMLElement).style.transform = 'none';
         });
+        trackRef.current?.parentElement?.style.setProperty('overflow-x', 'auto');
         return;
       }
-      const gsapModule = await import('gsap');
+
+      const gsapModule = await import('gsap');
       const ScrollTriggerModule = await import('gsap/ScrollTrigger');
       const gsap = (gsapModule && (gsapModule.default || gsapModule));
       const ScrollTrigger = (ScrollTriggerModule && (ScrollTriggerModule.default || ScrollTriggerModule));
       if (!gsap || !ScrollTrigger) return;
       gsap.registerPlugin(ScrollTrigger);
-      mm = gsap.matchMedia();
-      // Desktop GSAP Horizontal Pinned Animation
+
+      mm = gsap.matchMedia();
+
+      // Desktop GSAP Horizontal Pinned Animation
       mm.add("(min-width: 768px)", () => {
         const section = sectionRef.current;
         const track = trackRef.current;
         if (!section || !track) return;
-        const getDistance = () => track.scrollWidth - window.innerWidth;
-        tween = gsap.to(track, {
+
+        const getDistance = () => track.scrollWidth - window.innerWidth;
+
+        tween = gsap.to(track, {
           x: () => -getDistance(),
           ease: "none",
           scrollTrigger: {
@@ -72,17 +80,20 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
             anticipatePin: 1,
           },
         });
-        // Refresh ScrollTrigger after layout settles
+
+        // Refresh ScrollTrigger after layout settles
         const timer = setTimeout(() => {
           if (ScrollTrigger && ScrollTrigger.refresh) ScrollTrigger.refresh();
         }, 150);
-        return () => {
+
+        return () => {
           clearTimeout(timer);
           if (tween && tween.kill) tween.kill();
         };
       });
     })();
-    return () => {
+
+    return () => {
       try { if (mm && mm.revert) mm.revert(); } catch (e) {}
       try { if (tween && tween.kill) tween.kill(); } catch (e) {}
     };
