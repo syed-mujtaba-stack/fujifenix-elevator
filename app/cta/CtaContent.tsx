@@ -128,13 +128,13 @@ export default function CtaContent() {
     >
       {/* grid overlay */}
       <div className="absolute inset-0 opacity-[0.07] arch-grid pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#2563EB]" />
+      <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#0047BB]" />
 
-      <div className="relative flex-1 flex flex-col px-8 md:px-16 lg:px-24 pt-28 md:pt-32 pb-12">
+      <div className="relative flex-1 flex flex-col container-gutter pt-28 md:pt-32 pb-12">
         {/* top row */}
         <div className="flex items-center justify-between">
           <div className="cta-eyebrow flex items-center gap-3 opacity-0">
-            <div className="w-8 h-px bg-[#2563EB]" />
+            <div className="w-8 h-px bg-[#0047BB]" />
             <span className="eyebrow text-[#60a5fa]">START YOUR PROJECT</span>
           </div>
           <Link href="/" className="cta-nav eyebrow text-slate-400 hover:text-white transition-colors opacity-0">
@@ -147,11 +147,11 @@ export default function CtaContent() {
           <h1 className="display" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
             <span className="cta-line block opacity-0 overflow-hidden">LET'S</span>
             <span className="cta-line block opacity-0 overflow-hidden">
-              BUILD <span className="text-[#2563EB]">TOGETHER</span>
+              BUILD <span className="text-[#0047BB]">TOGETHER</span>
             </span>
           </h1>
 
-          <p className="cta-sub body-text text-slate-400 max-w-lg mt-6 border-l-2 border-[#2563EB]/40 pl-6 opacity-0">
+          <p className="cta-sub body-text text-slate-400 max-w-lg mt-6 border-l-2 border-[#0047BB]/40 pl-6 opacity-0">
             Share your project details and our engineering team will craft a tailored vertical transportation solution.
           </p>
         </div>
@@ -169,7 +169,7 @@ export default function CtaContent() {
                 name="name"
                 type="text"
                 required
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors placeholder:text-slate-600"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors placeholder:text-slate-600"
                 placeholder="John Smith"
               />
             </div>
@@ -184,7 +184,7 @@ export default function CtaContent() {
                 name="email"
                 type="email"
                 required
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors placeholder:text-slate-600"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors placeholder:text-slate-600"
                 placeholder="john@company.com"
               />
             </div>
@@ -198,7 +198,7 @@ export default function CtaContent() {
                 id="cta-phone"
                 name="phone"
                 type="tel"
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors placeholder:text-slate-600"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors placeholder:text-slate-600"
                 placeholder="+1 234 567 890"
               />
             </div>
@@ -212,7 +212,7 @@ export default function CtaContent() {
                 id="cta-company"
                 name="company"
                 type="text"
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors placeholder:text-slate-600"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors placeholder:text-slate-600"
                 placeholder="Company name"
               />
             </div>
@@ -226,7 +226,7 @@ export default function CtaContent() {
                 id="cta-country"
                 name="country"
                 required
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors appearance-none cursor-pointer"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors appearance-none cursor-pointer"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
               >
@@ -246,7 +246,7 @@ export default function CtaContent() {
                 <select
                   id="cta-city"
                   name="city"
-                  className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors appearance-none cursor-pointer"
+                  className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors appearance-none cursor-pointer"
                 >
                   <option value="" className="bg-[#071324]">Select city</option>
                   {cities.map((c) => (
@@ -258,7 +258,7 @@ export default function CtaContent() {
                   id="cta-city"
                   name="city"
                   type="text"
-                  className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors placeholder:text-slate-600"
+                  className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors placeholder:text-slate-600"
                   placeholder="Enter your city"
                 />
               )}
@@ -273,7 +273,7 @@ export default function CtaContent() {
                 id="cta-type"
                 name="projectType"
                 required
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors appearance-none cursor-pointer"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors appearance-none cursor-pointer"
               >
                 <option value="" className="bg-[#071324]">Select type</option>
                 <option value="passenger" className="bg-[#071324]">Passenger Elevators</option>
@@ -295,7 +295,7 @@ export default function CtaContent() {
                 id="cta-floors"
                 name="floors"
                 type="text"
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors placeholder:text-slate-600"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors placeholder:text-slate-600"
                 placeholder="e.g. 15"
               />
             </div>
@@ -309,7 +309,7 @@ export default function CtaContent() {
                 id="cta-units"
                 name="units"
                 type="text"
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors placeholder:text-slate-600"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors placeholder:text-slate-600"
                 placeholder="e.g. 4"
               />
             </div>
@@ -324,7 +324,7 @@ export default function CtaContent() {
                 name="message"
                 rows={4}
                 required
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#2563EB] transition-colors resize-none placeholder:text-slate-600"
+                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm outline-none focus:border-[#0047BB] transition-colors resize-none placeholder:text-slate-600"
                 placeholder="Tell us about your building, requirements, timeline..."
               />
             </div>
@@ -334,7 +334,7 @@ export default function CtaContent() {
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className="group inline-flex items-center gap-3 bg-[#2563EB] hover:bg-[#1d4ed8] text-white px-8 py-4 eyebrow transition-all duration-200 hover:shadow-[0_4px_16px_rgba(37,99,235,0.3)] disabled:opacity-60 disabled:cursor-not-allowed"
+                className="group inline-flex items-center gap-3 bg-[#0047BB] hover:bg-[#003A94] text-white px-8 py-4 eyebrow transition-all duration-200 hover:shadow-[0_4px_16px_rgba(0,71,187,0.3)] disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {status === "submitting" ? "SENDING…" : "SEND INQUIRY"}
                 {status !== "submitting" && (

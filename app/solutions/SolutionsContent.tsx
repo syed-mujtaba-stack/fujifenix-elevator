@@ -23,7 +23,7 @@ export default function SolutionsContent() {
           x: 0,
           duration: 0.7,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".sol-text", start: "top 80%" },
+          scrollTrigger: { trigger: ".sol-text", start: "top 85%" },
         }
       );
 
@@ -48,7 +48,7 @@ export default function SolutionsContent() {
     <>
       {/* Intro */}
       <section className="bg-white">
-        <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+        <div className="container-gutter py-16 md:py-20">
           <SectionHeading
             eyebrow="INDUSTRY SOLUTIONS"
             title="ENGINEERED FOR"
@@ -62,7 +62,7 @@ export default function SolutionsContent() {
       <section ref={ref} className="bg-white">
         {SOLUTIONS.map((seg, i) => (
           <div key={seg.slug} className="border-t border-slate-100">
-            <div className="px-8 md:px-16 lg:px-24 py-16 md:py-24">
+            <div className="container-gutter py-16 md:py-20">
               <div
                 className={`flex flex-col ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} gap-12 lg:gap-20 items-center`}
               >
@@ -78,7 +78,7 @@ export default function SolutionsContent() {
                 <div className={`lg:w-[48%] ${i % 2 !== 0 ? "lg:pr-8" : ""}`}>
                   <div className="sol-text">
                     <div className="flex items-center gap-3 mb-6">
-                      <span className="eyebrow text-[#2563EB]">{seg.eyebrow}</span>
+                      <span className="eyebrow text-[#0047BB]">{seg.eyebrow}</span>
                     </div>
                     <h2
                       className="display text-[#0f172a] mb-6"
@@ -96,14 +96,14 @@ export default function SolutionsContent() {
                           className="sol-tag inline-flex items-center gap-2 bg-[#f1f5f9] text-[#0f172a] px-4 py-2"
                           style={{ fontSize: "12px", letterSpacing: "0.06em" }}
                         >
-                          <span className="w-1 h-1 bg-[#2563EB] rounded-full" />
+                          <span className="w-1 h-1 bg-[#0047BB] rounded-full" />
                           {point}
                         </span>
                       ))}
                     </div>
                     <Link
                       href="/contact"
-                      className="group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+                      className="group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
                     >
                       DISCUSS YOUR PROJECT
                       <span className="group-hover:translate-x-1 transition-transform">→</span>

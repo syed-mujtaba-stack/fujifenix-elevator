@@ -157,7 +157,7 @@ export default function PageLoader() {
           style={{ opacity: 0 }}
         >
           <div
-            className="display text-[#2563EB] leading-none"
+            className="display text-[#0047BB] leading-none"
             style={{ fontSize: "clamp(34px, 6vw, 52px)", letterSpacing: "0.02em" }}
           >
             FUJI FENIX
@@ -180,7 +180,7 @@ export default function PageLoader() {
             <line
               className="ld-rise"
               x1="75" y1="286" x2="75" y2="20"
-              stroke="#2563EB"
+              stroke="#0047BB"
               strokeOpacity="0.45"
               strokeWidth="1.5"
               strokeDasharray="1 1"
@@ -211,7 +211,7 @@ export default function PageLoader() {
               cx="121"
               cy="40"
               r="3"
-              fill="#2563EB"
+              fill="#0047BB"
               opacity="0.25"
             />
 
@@ -220,7 +220,7 @@ export default function PageLoader() {
               {/* cabin frame */}
               <rect
                 x="46" y="204" width="58" height="66"
-                stroke="rgba(37,99,235,0.55)"
+                stroke="rgba(0,71,187,0.55)"
                 strokeWidth="1.2"
                 fill="#ffffff"
               />
@@ -231,7 +231,7 @@ export default function PageLoader() {
                 className="ld-door-l"
                 x="48" y="210" width="23" height="54"
                 fill="#ffffff"
-                stroke="#2563EB"
+                stroke="#0047BB"
                 strokeOpacity="0.4"
                 strokeWidth="1"
               />
@@ -239,7 +239,7 @@ export default function PageLoader() {
                 className="ld-door-r"
                 x="79" y="210" width="23" height="54"
                 fill="#ffffff"
-                stroke="#2563EB"
+                stroke="#0047BB"
                 strokeOpacity="0.4"
                 strokeWidth="1"
               />
@@ -260,7 +260,7 @@ export default function PageLoader() {
           <div className="relative h-px w-44 bg-slate-200 overflow-hidden">
             <div
               ref={barRef}
-              className="absolute inset-y-0 left-0 bg-[#2563EB]"
+              className="absolute inset-y-0 left-0 bg-[#0047BB]"
               style={{ width: "0%" }}
             />
           </div>

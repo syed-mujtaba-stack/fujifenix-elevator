@@ -14,7 +14,7 @@ export default function Logo({ href = "/", animate }: LogoProps) {
     <Link href={href} className="flex items-center group" aria-label="Fuji Fenix Elevator home">
       <div className="flex flex-col">
         <div
-          className="text-[#2563EB] font-black tracking-[0.08em] text-sm leading-none whitespace-nowrap"
+          className="text-[#0047BB] font-black tracking-[0.08em] text-sm leading-none whitespace-nowrap"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {WORDMARK}

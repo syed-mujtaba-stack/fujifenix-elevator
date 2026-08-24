@@ -40,7 +40,7 @@ export default function CategoryContent({ category, products }: Props) {
           duration: 0.8,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".cat-head", start: "top 80%" },
+          scrollTrigger: { trigger: ".cat-head", start: "top 85%" },
         }
       );
 
@@ -53,7 +53,7 @@ export default function CategoryContent({ category, products }: Props) {
           duration: 0.7,
           stagger: 0.08,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".product-grid", start: "top 78%" },
+          scrollTrigger: { trigger: ".product-grid", start: "top 85%" },
         }
       );
     }, ref);
@@ -63,7 +63,7 @@ export default function CategoryContent({ category, products }: Props) {
 
   return (
     <section ref={ref} className="bg-white">
-      <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+      <div className="container-gutter py-16 md:py-20">
         <div className="cat-head max-w-3xl">
           <SectionHeading
             eyebrow="PRODUCT RANGE"

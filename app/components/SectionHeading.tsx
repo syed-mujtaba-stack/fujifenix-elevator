@@ -36,7 +36,7 @@ export default function SectionHeading({
           duration: 0.8,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ref.current, start: "top 80%" },
+          scrollTrigger: { trigger: ref.current, start: "top 85%" },
         }
       );
     }, ref);
@@ -52,8 +52,8 @@ export default function SectionHeading({
       className={`sh-head flex flex-col ${align === "center" ? "items-center text-center" : ""} mb-12 md:mb-16`}
     >
       <div className="sh-el flex items-center gap-3 mb-6">
-        <div className="w-8 h-px bg-[#2563EB]" />
-        <span className={`eyebrow ${dark ? "text-[#60a5fa]" : "text-[#2563EB]"}`}>{eyebrow}</span>
+        <div className="w-8 h-px bg-[#0047BB]" />
+        <span className={`eyebrow ${dark ? "text-[#60a5fa]" : "text-[#0047BB]"}`}>{eyebrow}</span>
       </div>
       <h2
         className={`sh-el heading ${dark ? "text-white" : "text-[#0f172a]"} max-w-3xl`}
@@ -63,7 +63,7 @@ export default function SectionHeading({
           <span key={i} className="block">
             {line}
             {highlight && i === titleLines.length - 1 ? (
-              <span className="text-[#2563EB]"> {highlight}</span>
+              <span className="text-[#0047BB]"> {highlight}</span>
             ) : null}
           </span>
         ))}

@@ -66,18 +66,18 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
                 py-4 border-b border-slate-100
                 group
                 min-h-[52px]
-                focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2563EB]
+                focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
               "
               onClick={onClose}
             >
               <span
-                className="heading text-[#0f172a] group-hover:text-[#2563EB] transition-colors leading-none"
+                className="heading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none"
                 style={{ fontSize: "clamp(18px, 5vw, 22px)" }}
               >
                 {l.label}
               </span>
               <span
-                className="text-slate-300 group-hover:text-[#2563EB] group-hover:translate-x-1 transition-all flex-shrink-0 ml-3"
+                className="text-slate-300 group-hover:text-[#0047BB] group-hover:translate-x-1 transition-all flex-shrink-0 ml-3"
                 aria-hidden="true"
               >
                 →
@@ -107,13 +107,13 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
           onClick={onClose}
           className="
             flex items-center justify-center gap-2
-            bg-[#2563EB] hover:bg-[#1d4ed8] active:bg-[#1e40af]
+            bg-[#0047BB] hover:bg-[#003A94] active:bg-[#1e40af]
             text-white eyebrow
             py-4 px-6
             w-full
             transition-colors duration-200
             min-h-[48px]
-            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563EB]
+            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0047BB]
           "
         >
           GET A QUOTE
@@ -127,7 +127,7 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
           </span>
           <a
             href={CONTACT.phoneHref}
-            className="eyebrow text-[#2563EB] hover:underline whitespace-nowrap text-[11px] flex-shrink-0"
+            className="eyebrow text-[#0047BB] hover:underline whitespace-nowrap text-[11px] flex-shrink-0"
           >
             {CONTACT.phone}
           </a>

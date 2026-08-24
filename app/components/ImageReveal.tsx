@@ -42,7 +42,7 @@ export default function ImageReveal({
           clipPath: "inset(0 0% 0 0%)",
           duration: 1.2,
           ease: "power3.out",
-          scrollTrigger: { trigger: ref.current, start: "top 75%" },
+          scrollTrigger: { trigger: ref.current, start: "top 85%" },
         }
       );
 

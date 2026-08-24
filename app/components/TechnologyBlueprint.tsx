@@ -22,7 +22,7 @@ export default function TechnologyBlueprint() {
           duration: 0.8,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".tech-heading", start: "top 80%" },
+          scrollTrigger: { trigger: ".tech-heading", start: "top 85%" },
         }
       );
 
@@ -33,7 +33,7 @@ export default function TechnologyBlueprint() {
           clipPath: "inset(0 0% 0 0)",
           duration: 1.2,
           ease: "power3.out",
-          scrollTrigger: { trigger: ".tech-img", start: "top 70%" },
+          scrollTrigger: { trigger: ".tech-img", start: "top 85%" },
         }
       );
 
@@ -48,7 +48,7 @@ export default function TechnologyBlueprint() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: ".tech-features",
-            start: "top 75%",
+            start: "top 85%",
           },
         }
       );
@@ -59,13 +59,13 @@ export default function TechnologyBlueprint() {
 
   return (
     <section ref={ref} id="technology" className="bg-white section-gap overflow-hidden">
-      <div className="px-8 md:px-16 lg:px-24">
+      <div className="container-gutter">
 
         {/* Heading */}
         <div className="tech-heading mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#2563EB]" />
-            <span className="eyebrow text-[#2563EB]">ENGINEERING EXCELLENCE</span>
+            <div className="w-8 h-px bg-[#0047BB]" />
+            <span className="eyebrow text-[#0047BB]">ENGINEERING EXCELLENCE</span>
           </div>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <h2
@@ -73,7 +73,7 @@ export default function TechnologyBlueprint() {
               style={{ fontSize: "var(--fs-h2)" }}
             >
               THE FUJI FENIX<br />
-              <span className="text-[#2563EB]">TECHNOLOGY</span><br />
+              <span className="text-[#0047BB]">TECHNOLOGY</span><br />
               ADVANTAGE
             </h2>
             <p className="body-text max-w-sm text-slate-500 lg:pb-2">
@@ -110,7 +110,7 @@ export default function TechnologyBlueprint() {
                 key={f.num}
                 className={`tech-feature flex gap-5 py-8 ${i < ENGINEERING_PILLARS.length - 1 ? "border-b border-slate-100" : ""}`}
               >
-                <div className="eyebrow text-[#2563EB] flex-shrink-0 pt-1">{f.num}</div>
+                <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1">{f.num}</div>
                 <div>
                   <div
                     className="subheading text-[#0f172a] mb-2"

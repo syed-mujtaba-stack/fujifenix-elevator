@@ -59,7 +59,7 @@ export default function ProjectsContent() {
           duration: 0.7,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".proj-grid", start: "top 78%" },
+          scrollTrigger: { trigger: ".proj-grid", start: "top 85%" },
         }
       );
     }, ref);
@@ -70,7 +70,7 @@ export default function ProjectsContent() {
   return (
     <>
       <section ref={ref} className="bg-white">
-        <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+        <div className="container-gutter py-16 md:py-20">
           <div className="proj-grid grid grid-cols-1 md:grid-cols-12 gap-4">
             {/* Row 1: large (7) + two small cards (5) */}
             <div className="proj-item md:col-span-7">
@@ -86,12 +86,12 @@ export default function ProjectsContent() {
               <ProjectCard project={PROJECTS[3]} tall />
             </div>
             <div className="proj-item md:col-span-7 bg-[#071324] flex flex-col justify-center px-12 md:px-16 py-14" style={{ minHeight: "320px" }}>
-              <div className="eyebrow text-[#2563EB] mb-8">PROVEN TRACK RECORD</div>
+              <div className="eyebrow text-[#0047BB] mb-8">PROVEN TRACK RECORD</div>
               <div className="flex gap-10 md:gap-16 flex-wrap">
                 {STATS.slice(0, 2).map((stat) => (
                   <div key={stat.label}>
                     <div className="display text-white leading-none mb-2" style={{ fontSize: "clamp(40px, 6vw, 80px)" }}>
-                      {stat.end.toLocaleString()}<span className="text-[#2563EB]">{stat.suffix}</span>
+                      {stat.end.toLocaleString()}<span className="text-[#0047BB]">{stat.suffix}</span>
                     </div>
                     <div className="eyebrow text-slate-400">{stat.label}</div>
                   </div>
@@ -106,23 +106,23 @@ export default function ProjectsContent() {
 
       {/* Start a project band */}
       <section className="relative overflow-hidden bg-[#071324]">
-        <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#2563EB]" />
-        <div className="px-8 md:px-16 lg:px-24 py-24 md:py-28">
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#0047BB]" />
+        <div className="container-gutter py-16 md:py-20">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-px bg-[#2563EB]" />
+                <div className="w-8 h-px bg-[#0047BB]" />
                 <span className="eyebrow text-[#60a5fa]">NEXT PROJECT</span>
               </div>
               <h2 className="display text-white" style={{ fontSize: "clamp(36px, 5vw, 72px)" }}>
                 HAVE A PROJECT<br />
-                <span className="text-[#2563EB]">IN MIND?</span>
+                <span className="text-[#0047BB]">IN MIND?</span>
               </h2>
             </div>
             <div className="flex-shrink-0">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-4 bg-[#2563EB] text-white px-8 py-4 eyebrow hover:bg-[#1d4ed8] transition-colors"
+                className="group inline-flex items-center gap-4 bg-[#0047BB] text-white px-8 py-4 eyebrow hover:bg-[#003A94] transition-colors"
               >
                 START YOUR PROJECT
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -134,7 +134,7 @@ export default function ProjectsContent() {
               <div key={stat.label}>
                 <div className="display text-white" style={{ fontSize: "clamp(32px, 4vw, 56px)" }}>
                   {stat.end.toLocaleString()}
-                  <span className="text-[#2563EB]">{stat.suffix}</span>
+                  <span className="text-[#0047BB]">{stat.suffix}</span>
                 </div>
                 <div className="eyebrow text-slate-400 mt-2">{stat.label}</div>
               </div>

@@ -29,7 +29,7 @@ export default function Stats({ items, dark = false }: StatsProps) {
             ease: "power2.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 88%",
+              start: "top 85%",
               toggleActions: "play none none none",
             },
             onUpdate() {
@@ -48,7 +48,7 @@ export default function Stats({ items, dark = false }: StatsProps) {
           duration: 0.6,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ref.current, start: "top 80%" },
+          scrollTrigger: { trigger: ref.current, start: "top 85%" },
         }
       );
     }, ref);
@@ -69,7 +69,7 @@ export default function Stats({ items, dark = false }: StatsProps) {
         >
           <span
             className={`display ${
-              dark ? "text-white group-hover:text-[#2563EB]" : "text-[#0f172a] group-hover:text-[#2563EB]"
+              dark ? "text-white group-hover:text-[#0047BB]" : "text-[#0f172a] group-hover:text-[#0047BB]"
             } transition-colors duration-300 leading-none mb-3`}
             style={{ fontSize: "clamp(48px, 7vw, 88px)" }}
             data-stat={stat.end}

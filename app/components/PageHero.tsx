@@ -60,16 +60,16 @@ export default function PageHero({
 
   return (
     <section ref={ref} className="relative bg-white overflow-hidden pt-28 md:pt-32">
-      <div className="px-8 md:px-16 lg:px-24">
+      <div className="container-gutter">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 lg:gap-16 pb-12 border-b border-slate-100">
           {/* Left — typography */}
           <div className="max-w-3xl">
             <div className="ph-eyebrow flex items-center gap-3 mb-8 opacity-0">
-              <div className="w-8 h-px bg-[#2563EB]" />
-              <span className="eyebrow text-[#2563EB]">{eyebrow}</span>
+              <div className="w-8 h-px bg-[#0047BB]" />
+              <span className="eyebrow text-[#0047BB]">{eyebrow}</span>
             </div>
             <h1
-              className={`display ${titleBlue ? "text-[#2563EB]" : "text-[#0f172a]"}`}
+              className={`display ${titleBlue ? "text-[#0047BB]" : "text-[#0f172a]"}`}
               style={{ fontSize: "var(--fs-hero)" }}
             >
               {lines.map((line, i) => (
@@ -78,13 +78,13 @@ export default function PageHero({
                 </span>
               ))}
               {highlight ? (
-                <span className="ph-line block text-[#2563EB] opacity-0 overflow-hidden">
+                <span className="ph-line block text-[#0047BB] opacity-0 overflow-hidden">
                   {highlight}
                 </span>
               ) : null}
             </h1>
             {description ? (
-              <p className="ph-desc body-text text-slate-500 max-w-lg mt-8 border-l-2 border-[#2563EB]/20 pl-6 opacity-0">
+              <p className="ph-desc body-text text-slate-500 max-w-lg mt-8 border-l-2 border-[#0047BB]/20 pl-6 opacity-0">
                 {description}
               </p>
             ) : null}
@@ -92,19 +92,19 @@ export default function PageHero({
 
           {/* Breadcrumb */}
           <div className="ph-crumb flex items-center gap-2 opacity-0 pb-2 lg:pb-6 flex-shrink-0">
-            <Link href="/" className="eyebrow text-slate-400 hover:text-[#2563EB] transition-colors">
+            <Link href="/" className="eyebrow text-slate-400 hover:text-[#0047BB] transition-colors">
               HOME
             </Link>
             <span className="text-slate-300">/</span>
             {breadcrumbHref ? (
               <Link
                 href={breadcrumbHref}
-                className="eyebrow text-slate-400 hover:text-[#2563EB] transition-colors"
+                className="eyebrow text-slate-400 hover:text-[#0047BB] transition-colors"
               >
                 {breadcrumb}
               </Link>
             ) : (
-              <span className="eyebrow text-[#2563EB]">{breadcrumb}</span>
+              <span className="eyebrow text-[#0047BB]">{breadcrumb}</span>
             )}
           </div>
         </div>

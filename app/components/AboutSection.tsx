@@ -22,7 +22,7 @@ export default function AboutSection() {
           clipPath: "inset(0 0% 0 0)",
           duration: 1.2,
           ease: "power3.out",
-          scrollTrigger: { trigger: ".about-img", start: "top 75%" },
+          scrollTrigger: { trigger: ".about-img", start: "top 85%" },
         }
       );
 
@@ -36,7 +36,7 @@ export default function AboutSection() {
           duration: 0.8,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".about-text", start: "top 70%" },
+          scrollTrigger: { trigger: ".about-text", start: "top 85%" },
         }
       );
 
@@ -54,7 +54,7 @@ export default function AboutSection() {
             ease: "power2.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 88%",
+              start: "top 85%",
               toggleActions: "play none none none",
             },
             onUpdate() {
@@ -73,7 +73,7 @@ export default function AboutSection() {
           duration: 0.6,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".about-stats", start: "top 80%" },
+          scrollTrigger: { trigger: ".about-stats", start: "top 85%" },
         }
       );
     }, ref);
@@ -104,8 +104,8 @@ export default function AboutSection() {
         {/* Text panel — 42% */}
         <div className="about-text lg:w-[42%] flex flex-col justify-center px-10 md:px-14 lg:px-16 py-20">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-8 h-px bg-[#2563EB]" />
-            <span className="eyebrow text-[#2563EB]">ABOUT FUJI FENIX</span>
+            <div className="w-8 h-px bg-[#0047BB]" />
+            <span className="eyebrow text-[#0047BB]">ABOUT FUJI FENIX</span>
           </div>
 
           <h2
@@ -113,7 +113,7 @@ export default function AboutSection() {
             style={{ fontSize: "var(--fs-h2)" }}
           >
             WORLD-CLASS<br />
-            <span className="text-[#2563EB]">VERTICAL MOBILITY</span><br />
+            <span className="text-[#0047BB]">VERTICAL MOBILITY</span><br />
             SOLUTIONS
           </h2>
 
@@ -127,7 +127,7 @@ export default function AboutSection() {
 
           <Link
             href="/about"
-            className="group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+            className="group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
           >
             READ MORE
             <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -146,7 +146,7 @@ export default function AboutSection() {
                 hover:bg-[#f8fafc] transition-colors duration-300 group`}
             >
               <span
-                className="display text-[#0f172a] group-hover:text-[#2563EB] transition-colors duration-300 leading-none mb-3"
+                className="display text-[#0f172a] group-hover:text-[#0047BB] transition-colors duration-300 leading-none mb-3"
                 style={{ fontSize: "var(--fs-stat-xl)" }}
                 data-stat={end}
               >

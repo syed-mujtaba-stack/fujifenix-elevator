@@ -9,7 +9,7 @@
   :root {
     --font-sans: var(--font-inter), system-ui, sans-serif;
     --font-display: var(--font-outfit), system-ui, sans-serif;
-    --ff-blue: #2563eb;
+    --ff-blue: #0047bb;
     --ff-blue-deep: #1e40af;
     --ff-blue-light: #3b82f6;
     --ff-navy: #071324;
@@ -51,11 +51,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  ::selection { background: #2563eb; color: #fff; }
+  ::selection { background: #0047bb; color: #fff; }
 
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: #f1f5f9; }
-  ::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb { background: #0047bb; border-radius: 2px; }
 }
 
 /* =============================================
@@ -66,7 +66,7 @@
   font-family: var(--font-display);
   font-weight: 900;
   letter-spacing: -0.03em;
-  line-height: 1;
+  line-height: 1.1;
   text-transform: uppercase;
   overflow-wrap: break-word;
 }
@@ -75,7 +75,7 @@
   font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: -0.02em;
-  line-height: 1.05;
+  line-height: 1.2;
   text-transform: uppercase;
   text-wrap: balance;
   overflow-wrap: break-word;
@@ -85,7 +85,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.01em;
-  line-height: 1.15;
+  line-height: 1.25;
   text-transform: uppercase;
 }
 
@@ -108,8 +108,8 @@
 ============================================= */
 .arch-grid {
   background-image:
-    linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(0, 71, 187, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 71, 187, 0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -139,17 +139,50 @@
 }
 
 /* =============================================
-   SECTION SPACING
+   SECTION SPACING — unified vertical rhythm
+   (py-16 mobile / py-20 desktop)
 ============================================= */
 .section-gap {
-  padding-top: 120px;
-  padding-bottom: 120px;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 
 @media (max-width: 768px) {
   .section-gap {
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}
+
+/* =============================================
+   HORIZONTAL GUTTER
+   Mirrors the Navbar container exactly so page
+   content and the nav logo share one left edge.
+   (px-4 / sm:px-6 / md:px-10 / lg:px-14)
+============================================= */
+.container-gutter {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-gutter {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-gutter {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-gutter {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
 }
 
@@ -184,7 +217,7 @@ section, div {
 }
 
 .ff-field:focus {
-  border-color: #2563eb;
+  border-color: #0047bb;
 }
 
 .ff-field-dark {
@@ -291,14 +324,14 @@ a.goog-te-combo,
 
 a.goog-te-combo:hover,
 .goog-te-combo:hover {
-  border-color: #2563eb;
-  color: #2563eb;
+  border-color: #0047bb;
+  color: #0047bb;
 }
 
 a.goog-te-combo:focus,
 .goog-te-combo:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  border-color: #0047bb;
+  box-shadow: 0 0 0 3px rgba(0, 71, 187, 0.12);
 }
 
 /* Hide the Google Translate banner bar */

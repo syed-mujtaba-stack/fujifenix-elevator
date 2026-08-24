@@ -35,7 +35,7 @@ export default function AnimatedText({
           ease: "power3.out",
           scrollTrigger: {
             trigger: ref.current,
-            start: "top 82%",
+            start: "top 85%",
             toggleActions: "play none none none",
           },
         }

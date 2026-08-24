@@ -44,7 +44,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
           duration: 0.7,
           stagger: 0.12,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".pd-body", start: "top 80%" },
+          scrollTrigger: { trigger: ".pd-body", start: "top 85%" },
         }
       );
     }, ref);
@@ -58,10 +58,10 @@ export default function ProductDetailContent({ product }: { product: ProductData
     <>
       {/* Breadcrumb / back link */}
       <div className="bg-white border-b border-slate-100">
-        <div className="px-8 md:px-16 lg:px-24 py-4">
+        <div className="container-gutter py-4">
           <Link
             href={`/products/${product.categorySlug}`}
-            className="group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+            className="group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
           >
             <span className="group-hover:-translate-x-1 transition-transform">←</span>
             {product.category}
@@ -71,7 +71,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
 
       {/* Detail body */}
       <section ref={ref} className="bg-white">
-        <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+        <div className="container-gutter py-16 md:py-20">
           <div className="pd-body flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
             <div className="lg:w-[52%]">
               <SectionHeading
@@ -87,7 +87,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                       className="pd-reveal inline-flex items-center gap-2 bg-[#f1f5f9] text-[#0f172a] px-4 py-2"
                       style={{ fontSize: "12px", letterSpacing: "0.06em" }}
                     >
-                      <span className="w-1 h-1 bg-[#2563EB] rounded-full" />
+                      <span className="w-1 h-1 bg-[#0047BB] rounded-full" />
                       {f}
                     </span>
                   ))}
@@ -95,7 +95,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
               )}
               <Link
                 href="/contact"
-                className="pd-reveal mt-12 inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+                className="pd-reveal mt-12 inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
               >
                 REQUEST A QUOTE
                 <span>→</span>
@@ -125,12 +125,12 @@ export default function ProductDetailContent({ product }: { product: ProductData
       {/* Related products */}
       {related.length > 0 && (
         <section className="bg-[#f8fafc] border-t border-slate-100">
-          <div className="px-8 md:px-16 lg:px-24 py-24 md:py-28">
+          <div className="container-gutter py-16 md:py-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
               <SectionHeading eyebrow="MORE PRODUCTS" title="EXPLORE THE\nFULL RANGE" />
               <Link
                 href={`/products/${product.categorySlug}`}
-                className="group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300 flex-shrink-0"
+                className="group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300 flex-shrink-0"
               >
                 VIEW ALL {product.category?.toUpperCase() ?? "PRODUCTS"}
                 <span className="group-hover:translate-x-1 transition-transform">→</span>

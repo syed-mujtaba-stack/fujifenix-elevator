@@ -21,7 +21,7 @@ export default function CapabilitiesStrip() {
           duration: 0.7,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ref.current, start: "top 80%" },
+          scrollTrigger: { trigger: ref.current, start: "top 85%" },
         }
       );
     }, ref);
@@ -63,7 +63,7 @@ export default function CapabilitiesStrip() {
                 .join(" ")}
             >
               {/* Number badge */}
-              <span className="eyebrow text-[#2563EB] flex-shrink-0 pt-0.5 leading-none">
+              <span className="eyebrow text-[#0047BB] flex-shrink-0 pt-0.5 leading-none">
                 {c.num}
               </span>
 

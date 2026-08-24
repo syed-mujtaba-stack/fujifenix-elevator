@@ -47,7 +47,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
           duration: 0.8,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".ps-head", start: "top 80%" },
+          scrollTrigger: { trigger: ".ps-head", start: "top 85%" },
         }
       );
 
@@ -62,7 +62,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
             clipPath: "inset(0 0% 0 0%)",
             duration: 1.1,
             ease: "power3.out",
-            scrollTrigger: { trigger: block, start: "top 72%" },
+            scrollTrigger: { trigger: block, start: "top 85%" },
           }
         );
 
@@ -76,7 +76,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
             stagger: 0.1,
             ease: "power2.out",
             delay: 0.25,
-            scrollTrigger: { trigger: block, start: "top 72%" },
+            scrollTrigger: { trigger: block, start: "top 85%" },
           }
         );
       });
@@ -88,10 +88,10 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
   return (
     <section ref={ref} id="products" className="bg-[#f8fafc]">
       {/* Section header */}
-      <div className="ps-head px-8 md:px-16 lg:px-24 pt-24 pb-16 border-b border-slate-100">
+      <div className="ps-head container-gutter pt-24 pb-16 border-b border-slate-100">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-px bg-[#2563EB]" />
-          <span className="eyebrow text-[#2563EB]">OUR PRODUCTS</span>
+          <div className="w-8 h-px bg-[#0047BB]" />
+          <span className="eyebrow text-[#0047BB]">OUR PRODUCTS</span>
         </div>
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <h2
@@ -99,14 +99,14 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
             style={{ fontSize: "var(--fs-h2)" }}
           >
             PRECISION CRAFTED<br />
-            <span className="text-[#2563EB]">ELEVATOR SYSTEMS</span>
+            <span className="text-[#0047BB]">ELEVATOR SYSTEMS</span>
           </h2>
           <p className="body-text text-slate-500 max-w-sm lg:pb-2">
             Each product line is purpose-built for specific architectural requirements — from low-rise villas to landmark towers.
           </p>
           <Link
             href="/products"
-            className="lg:pb-2 group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300 flex-shrink-0"
+            className="lg:pb-2 group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300 flex-shrink-0"
           >
             VIEW ALL PRODUCTS
             <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -157,7 +157,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
                 {product.title}
               </h3>
 
-              <div className="prod-text-el w-10 h-px bg-[#2563EB] mb-6" />
+              <div className="prod-text-el w-10 h-px bg-[#0047BB] mb-6" />
 
               <p className="prod-text-el body-text text-slate-500 max-w-md mb-8">
                 {product.desc}
@@ -175,7 +175,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
 
               <Link
                 href={`/products/${product.categorySlug}/${product.slug}`}
-                className="prod-text-el group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+                className="prod-text-el group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
               >
                 EXPLORE PRODUCT
                 <span className="group-hover:translate-x-1 transition-transform">→</span>

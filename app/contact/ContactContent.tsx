@@ -29,7 +29,7 @@ export default function ContactContent() {
           duration: 0.6,
           stagger: 0.08,
           ease: "power2.out",
-          scrollTrigger: { trigger: ref.current, start: "top 80%" },
+          scrollTrigger: { trigger: ref.current, start: "top 85%" },
         }
       );
     }, ref);
@@ -40,7 +40,7 @@ export default function ContactContent() {
   return (
     <>
       <section ref={ref} className="bg-white">
-        <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+        <div className="container-gutter py-16 md:py-20">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
             {/* Left — info */}
             <div className="lg:w-[40%]">
@@ -63,7 +63,7 @@ export default function ContactContent() {
                   </div>
                   <a
                     href={CONTACT.phoneHref}
-                    className="body-text text-[#2563EB] hover:underline"
+                    className="body-text text-[#0047BB] hover:underline"
                     style={{ fontSize: "17px" }}
                   >
                     {CONTACT.phone}
@@ -75,7 +75,7 @@ export default function ContactContent() {
                   </div>
                   <a
                     href={CONTACT.emailHref}
-                    className="body-text text-[#2563EB] hover:underline"
+                    className="body-text text-[#0047BB] hover:underline"
                     style={{ fontSize: "17px" }}
                   >
                     {CONTACT.email}
@@ -91,10 +91,10 @@ export default function ContactContent() {
                 </div>
               </div>
               <div className="mt-12 border-t border-slate-100 pt-8 flex flex-col gap-3">
-                <Link href="/products" className="eyebrow text-slate-500 hover:text-[#2563EB] transition-colors">
+                <Link href="/products" className="eyebrow text-slate-500 hover:text-[#0047BB] transition-colors">
                   EXPLORE OUR PRODUCTS
                 </Link>
-                <Link href="/solutions" className="eyebrow text-slate-500 hover:text-[#2563EB] transition-colors">
+                <Link href="/solutions" className="eyebrow text-slate-500 hover:text-[#0047BB] transition-colors">
                   INDUSTRY SOLUTIONS
                 </Link>
               </div>
@@ -112,7 +112,7 @@ export default function ContactContent() {
 
       {/* MAP SECTION */}
       <section className="bg-white">
-        <div className="px-8 md:px-16 lg:px-24 pb-24 md:pb-32">
+        <div className="container-gutter pb-24 md:pb-32">
           <SectionHeading
             eyebrow="OUR LOCATION"
             title="FIND US ON THE MAP"
@@ -134,7 +134,7 @@ export default function ContactContent() {
 
       {/* GLOBAL NETWORKING SECTION */}
       <section className="bg-[#0f172a]">
-        <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+        <div className="container-gutter py-16 md:py-20">
           <SectionHeading
             eyebrow="GLOBAL NETWORKING"
             title="WORLDWIDE PRESENCE"

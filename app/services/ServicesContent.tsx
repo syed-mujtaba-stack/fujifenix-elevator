@@ -24,7 +24,7 @@ export default function ServicesContent() {
           duration: 0.65,
           stagger: 0.06,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".svc-list", start: "top 78%" },
+          scrollTrigger: { trigger: ".svc-list", start: "top 85%" },
         }
       );
     }, ref);
@@ -34,7 +34,7 @@ export default function ServicesContent() {
 
   return (
     <section ref={ref} className="bg-white">
-      <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+      <div className="container-gutter py-16 md:py-20">
         <div className="flex flex-col lg:flex-row lg:gap-20">
           <div className="lg:w-[38%] mb-14 lg:mb-0">
             <SectionHeading
@@ -44,11 +44,11 @@ export default function ServicesContent() {
             />
             <AnimatedText
               text={COMPANY.tagline}
-              className="body-text text-slate-500 max-w-sm mt-8 border-l-2 border-[#2563EB]/20 pl-6"
+              className="body-text text-slate-500 max-w-sm mt-8 border-l-2 border-[#0047BB]/20 pl-6"
             />
             <Link
               href="/contact"
-              className="group mt-12 inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+              className="group mt-12 inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
             >
               DISCUSS YOUR PROJECT
               <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -59,7 +59,7 @@ export default function ServicesContent() {
               <div key={s.num}>
                 <div className="h-px bg-slate-200" />
                 <div className="svc-item flex gap-8 py-9 md:py-11">
-                  <div className="eyebrow text-[#2563EB] flex-shrink-0 pt-1 w-8">{s.num}</div>
+                  <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1 w-8">{s.num}</div>
                   <div>
                     <h3 className="heading text-[#0f172a] mb-3" style={{ fontSize: "clamp(18px, 2.4vw, 28px)" }}>
                       {s.title}

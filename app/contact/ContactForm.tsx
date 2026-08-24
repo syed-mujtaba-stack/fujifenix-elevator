@@ -197,7 +197,7 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <div className="py-10 text-center flex flex-col items-center gap-4">
-        <div className="w-12 h-12 rounded-full bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB] text-2xl">
+        <div className="w-12 h-12 rounded-full bg-[#0047BB]/10 flex items-center justify-center text-[#0047BB] text-2xl">
           ✓
         </div>
         <p className="heading text-[#0f172a]" style={{ fontSize: "22px" }}>
@@ -205,11 +205,11 @@ export default function ContactForm() {
         </p>
         <p className="body-text text-slate-500" style={{ fontSize: "15px" }}>
           Thank you! We&apos;ll get back to you within 24 hours. You can also reach us at{" "}
-          <a href={`mailto:${CONTACT.email}`} className="text-[#2563EB] hover:underline">
+          <a href={`mailto:${CONTACT.email}`} className="text-[#0047BB] hover:underline">
             {CONTACT.email}
           </a>{" "}
           or call{" "}
-          <a href={CONTACT.phoneHref} className="text-[#2563EB] hover:underline">
+          <a href={CONTACT.phoneHref} className="text-[#0047BB] hover:underline">
             {CONTACT.phone}
           </a>
           .
@@ -308,7 +308,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="group inline-flex items-center gap-4 bg-[#2563EB] text-white px-8 py-4 eyebrow hover:bg-[#1d4ed8] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="group inline-flex items-center gap-4 bg-[#0047BB] text-white px-8 py-4 eyebrow hover:bg-[#003A94] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {status === "submitting" ? "SENDING…" : "SEND MESSAGE"}
             {status !== "submitting" && (

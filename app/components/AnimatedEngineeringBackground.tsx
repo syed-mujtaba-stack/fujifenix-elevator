@@ -87,18 +87,18 @@ function ShaftDrawing() {
     >
       <rect
         x="15" y="8" width="80" height="404"
-        stroke="#2563EB" strokeOpacity="0.1" strokeWidth="1"
+        stroke="#0047BB" strokeOpacity="0.1" strokeWidth="1"
         strokeDasharray="0.3 0.7" pathLength={1} className="bg-draw"
       />
-      <line x1="40" y1="8" x2="40" y2="412" stroke="#2563EB" strokeOpacity="0.07" strokeWidth="1" />
-      <line x1="70" y1="8" x2="70" y2="412" stroke="#2563EB" strokeOpacity="0.07" strokeWidth="1" />
+      <line x1="40" y1="8" x2="40" y2="412" stroke="#0047BB" strokeOpacity="0.07" strokeWidth="1" />
+      <line x1="70" y1="8" x2="70" y2="412" stroke="#0047BB" strokeOpacity="0.07" strokeWidth="1" />
       <rect
         x="24" y="120" width="62" height="180"
-        stroke="#2563EB" strokeOpacity="0.12" strokeWidth="1"
+        stroke="#0047BB" strokeOpacity="0.12" strokeWidth="1"
         strokeDasharray="0.3 0.7" pathLength={1} className="bg-draw"
       />
-      <line x1="55" y1="120" x2="55" y2="300" stroke="#2563EB" strokeOpacity="0.08" strokeWidth="1" />
-      <g stroke="#2563EB" strokeOpacity="0.1" strokeWidth="1">
+      <line x1="55" y1="120" x2="55" y2="300" stroke="#0047BB" strokeOpacity="0.08" strokeWidth="1" />
+      <g stroke="#0047BB" strokeOpacity="0.1" strokeWidth="1">
         <line x1="95" y1="90" x2="106" y2="90" />
         <line x1="95" y1="180" x2="106" y2="180" />
         <line x1="95" y1="270" x2="106" y2="270" />
@@ -133,11 +133,11 @@ function ElevationDrawing() {
       </g>
       <line
         x1="20" y1="310" x2="230" y2="310"
-        stroke="#2563EB" strokeOpacity="0.1" strokeWidth="1"
+        stroke="#0047BB" strokeOpacity="0.1" strokeWidth="1"
         strokeDasharray="0.2 0.8" pathLength={1} className="bg-draw"
       />
-      <line x1="20" y1="306" x2="20" y2="314" stroke="#2563EB" strokeOpacity="0.12" strokeWidth="1" />
-      <line x1="230" y1="306" x2="230" y2="314" stroke="#2563EB" strokeOpacity="0.12" strokeWidth="1" />
+      <line x1="20" y1="306" x2="20" y2="314" stroke="#0047BB" strokeOpacity="0.12" strokeWidth="1" />
+      <line x1="230" y1="306" x2="230" y2="314" stroke="#0047BB" strokeOpacity="0.12" strokeWidth="1" />
     </svg>
   );
 }
@@ -153,7 +153,7 @@ function NodeNetwork({ density }: { density: 1 | 2 }) {
       fill="none"
       aria-hidden="true"
     >
-      <g stroke="#2563EB" strokeWidth="1">
+      <g stroke="#0047BB" strokeWidth="1">
         {LINKS.map(([a, b], i) => {
           if (!shownSet.has(a) || !shownSet.has(b)) return null;
           const [ax, ay] = NODES[a];
@@ -163,7 +163,7 @@ function NodeNetwork({ density }: { density: 1 | 2 }) {
       </g>
       {shownIndices.map((idx) => {
         const [x, y] = NODES[idx];
-        return <circle key={idx} cx={x} cy={y} r="2" fill="#2563EB" opacity="0.12" />;
+        return <circle key={idx} cx={x} cy={y} r="2" fill="#0047BB" opacity="0.12" />;
       })}
     </svg>
   );
@@ -322,9 +322,9 @@ export default function AnimatedEngineeringBackground() {
           className={`bg-glow-hero absolute ${variant === "home" ? "right-[-90px] top-[6%]" : "right-[-160px] top-[2%]"} w-[760px] h-[600px]`}
           style={{
             background:
-              "radial-gradient(closest-side, rgba(37,99,235," +
+              "radial-gradient(closest-side, rgba(0,71,187," +
               (cfg.glow * 0.8).toFixed(3) +
-              "), rgba(37,99,235,0.02) 55%, transparent 72%)",
+              "), rgba(0,71,187,0.02) 55%, transparent 72%)",
           }}
         />
         <div
@@ -346,20 +346,20 @@ export default function AnimatedEngineeringBackground() {
         {cfg.shaft ? <ShaftDrawing /> : null}
         {cfg.elevation ? <ElevationDrawing /> : null}
         <div className="bg-traveler-a absolute left-[3%] -top-10 -bottom-10 w-px bg-[#0f172a]" style={{ opacity: 0.05 }} />
-        <div className="bg-traveler-b absolute right-[14%] -top-10 -bottom-10 w-px bg-[#2563EB]" style={{ opacity: 0.05 }} />
+        <div className="bg-traveler-b absolute right-[14%] -top-10 -bottom-10 w-px bg-[#0047BB]" style={{ opacity: 0.05 }} />
       </div>
 
       {/* LAYER 3 — engineering connection nodes */}
       <div className="bg-nodes absolute inset-0 will-change-transform">
         <NodeNetwork density={cfg.nodes} />
         {variant === "home" ? (
-          <div className="absolute right-[26%] bottom-[22%] w-2 h-2 rounded-full bg-[#2563EB] opacity-20" />
+          <div className="absolute right-[26%] bottom-[22%] w-2 h-2 rounded-full bg-[#0047BB] opacity-20" />
         ) : null}
       </div>
 
       {/* LAYER 4 — blue energy pulse */}
       <div
-        className="bg-pulse absolute left-0 top-[34%] h-40 w-px bg-[#2563EB]"
+        className="bg-pulse absolute left-0 top-[34%] h-40 w-px bg-[#0047BB]"
         style={{ opacity: 0 }}
       />
     </div>

@@ -109,7 +109,7 @@ export default function Hero() {
       style={{ width: "100%", minHeight: "100svh", background: "#0f172a" }}
     >
       {/* ── Brand accent top rule ── */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#2563EB] z-50" aria-hidden="true" />
+      <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#0047BB] z-50" aria-hidden="true" />
 
       {/* ── Full-bleed background video ── */}
       <video
@@ -139,12 +139,12 @@ export default function Hero() {
 
       {/* ── Content ── */}
       <div
-        className="relative flex flex-col justify-center"
+        className="container-gutter relative flex flex-col justify-center"
         style={{
           zIndex: 10,
           minHeight: "100svh",
-          padding:
-            "calc(var(--nav-h, 68px) + 16px) clamp(20px, 6vw, 88px) calc(96px + env(safe-area-inset-bottom, 0px))",
+          paddingTop: "calc(var(--nav-h, 68px) + 16px)",
+          paddingBottom: "calc(96px + env(safe-area-inset-bottom, 0px))",
           boxSizing: "border-box",
         }}
       >
@@ -165,7 +165,7 @@ export default function Hero() {
               fontFamily: "var(--font-display)",
               fontWeight: 900,
               letterSpacing: "-0.03em",
-              lineHeight: 1.05,
+              lineHeight: 1.12,
               fontSize: "var(--fs-hero)",
               marginBottom: "20px",
               color: "#ffffff",
@@ -202,7 +202,7 @@ export default function Hero() {
             <Link
               href="/solutions"
               className="hero-cta group inline-flex items-center gap-2.5"
-              style={{ padding: "12px 24px", background: "#2563EB", color: "#fff", textDecoration: "none" }}
+              style={{ padding: "12px 24px", background: "#0047BB", color: "#fff", textDecoration: "none" }}
             >
               <span className="eyebrow" style={{ color: "#fff" }}>EXPLORE SOLUTIONS</span>
               <span aria-hidden="true" className="group-hover:translate-x-0.5 transition-transform duration-300" style={{ color: "#fff" }}>→</span>
@@ -286,7 +286,7 @@ export default function Hero() {
               }}
             >
               {item}
-              <span className="inline-block w-0.5 h-0.5 rounded-full bg-[#2563EB] opacity-50" />
+              <span className="inline-block w-0.5 h-0.5 rounded-full bg-[#0047BB] opacity-50" />
             </span>
           ))}
         </div>

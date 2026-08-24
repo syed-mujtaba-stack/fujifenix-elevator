@@ -83,7 +83,7 @@ export default function RootLayout({
           })();
         `}</Script>
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-white text-[#0F172A] selection:bg-blue-600 selection:text-white overflow-x-hidden">
+      <body className="min-h-full flex flex-col font-sans bg-white text-[#0F172A] selection:bg-[#0047BB] selection:text-white overflow-x-hidden">
         <PageLoader />
         <AnimatedEngineeringBackground />
         <Navbar />

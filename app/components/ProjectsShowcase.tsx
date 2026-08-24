@@ -44,7 +44,7 @@ function ProjectItem({
       <div className="absolute inset-0 flex flex-col justify-between p-6 md:p-8">
         {/* Top badge */}
         <div className="flex items-center gap-2">
-          <div className="w-4 h-px bg-[#2563EB]" />
+          <div className="w-4 h-px bg-[#0047BB]" />
           <span className="eyebrow text-[#60a5fa]">{project.type}</span>
         </div>
 
@@ -54,7 +54,7 @@ function ProjectItem({
           <div className="flex items-end justify-between">
             <div>
               <h3
-                className="heading text-white leading-tight mb-1"
+                className="heading text-white leading-snug mb-1"
                 style={{ fontSize: tall ? "clamp(18px, 2.2vw, 28px)" : "clamp(15px, 1.8vw, 22px)" }}
               >
                 {project.title}
@@ -83,7 +83,7 @@ export default function ProjectsShowcase() {
           duration: 0.8,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".proj-head", start: "top 80%" },
+          scrollTrigger: { trigger: ".proj-head", start: "top 85%" },
         }
       );
 
@@ -109,13 +109,13 @@ export default function ProjectsShowcase() {
 
   return (
     <section ref={ref} id="projects" className="bg-white section-gap">
-      <div className="px-8 md:px-16 lg:px-24">
+      <div className="container-gutter">
 
         {/* Heading */}
         <div className="proj-head mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#2563EB]" />
-            <span className="eyebrow text-[#2563EB]">PROJECT PORTFOLIO</span>
+            <div className="w-8 h-px bg-[#0047BB]" />
+            <span className="eyebrow text-[#0047BB]">PROJECT PORTFOLIO</span>
           </div>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <h2
@@ -123,7 +123,7 @@ export default function ProjectsShowcase() {
               style={{ fontSize: "var(--fs-h2)" }}
             >
               PROJECT<br />
-              <span className="text-[#2563EB]">EXCELLENCE</span>
+              <span className="text-[#0047BB]">EXCELLENCE</span>
             </h2>
             <div className="lg:pb-2">
               <p className="body-text text-slate-500 max-w-xs mb-6">
@@ -131,7 +131,7 @@ export default function ProjectsShowcase() {
               </p>
               <Link
                 href="/projects"
-                className="group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+                className="group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
               >
                 VIEW ALL PROJECTS
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -162,7 +162,7 @@ export default function ProjectsShowcase() {
 
           {/* Stats block */}
           <div className="md:col-span-7 bg-[#071324] flex flex-col justify-center px-12 md:px-16 py-14" style={{ minHeight: "260px" }}>
-            <div className="eyebrow text-[#2563EB] mb-8">PROVEN TRACK RECORD</div>
+            <div className="eyebrow text-[#0047BB] mb-8">PROVEN TRACK RECORD</div>
             <div className="flex gap-10 md:gap-16 flex-wrap">
               {STATS.slice(0, 2).map((stat) => (
                 <div key={stat.label}>
@@ -170,7 +170,7 @@ export default function ProjectsShowcase() {
                     className="display text-white leading-none mb-2"
                     style={{ fontSize: "var(--fs-stat-xl)" }}
                   >
-                    {stat.end.toLocaleString()}<span className="text-[#2563EB]">{stat.suffix}</span>
+                    {stat.end.toLocaleString()}<span className="text-[#0047BB]">{stat.suffix}</span>
                   </div>
                   <div className="eyebrow text-slate-400">{stat.label}</div>
                 </div>

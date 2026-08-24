@@ -13,13 +13,13 @@ export default function GlobalLoading() {
         >
           <rect
             x="4" y="2" width="32" height="76"
-            stroke="#2563EB"
+            stroke="#0047BB"
             strokeOpacity="0.25"
             strokeWidth="1"
           />
           <rect
             x="10" y="22" width="20" height="24"
-            stroke="#2563EB"
+            stroke="#0047BB"
             strokeOpacity="0.6"
             strokeWidth="1.5"
             className="origin-center"

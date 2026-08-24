@@ -31,7 +31,7 @@ export default function Footer() {
             >
               FUJI FENIX
             </div>
-            <div className="eyebrow text-[#2563EB] mb-3">FUJI FENIX ELEVATOR</div>
+            <div className="eyebrow text-[#0047BB] mb-3">FUJI FENIX ELEVATOR</div>
             <p className="text-slate-400 max-w-sm" style={{ fontSize: "14px", lineHeight: "1.7" }}>
               Combining advanced technology with precision engineering to deliver world-class vertical
               transportation systems.
@@ -40,7 +40,7 @@ export default function Footer() {
 
           <Link
             href="/cta"
-            className="group inline-flex items-center gap-3 border border-white/20 hover:border-[#2563EB] eyebrow text-white hover:text-[#2563EB] px-8 py-4 transition-all duration-300 self-start md:self-auto flex-shrink-0"
+            className="group inline-flex items-center gap-3 border border-white/20 hover:border-[#0047BB] eyebrow text-white hover:text-[#0047BB] px-8 py-4 transition-all duration-300 self-start md:self-auto flex-shrink-0"
           >
             START A PROJECT
             <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -51,7 +51,7 @@ export default function Footer() {
       {/* Columns */}
       <div className="px-6 md:px-10 lg:px-14 py-14 grid grid-cols-2 md:grid-cols-3 gap-10 border-b border-white/5">
         <div>
-          <div className="eyebrow text-[#2563EB] mb-6">COMPANY</div>
+          <div className="eyebrow text-[#0047BB] mb-6">COMPANY</div>
           <ul className="space-y-3">
             {companyLinks.map((l) => (
               <li key={l.href}>
@@ -68,7 +68,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <div className="eyebrow text-[#2563EB] mb-6">CAPABILITIES</div>
+          <div className="eyebrow text-[#0047BB] mb-6">CAPABILITIES</div>
           <ul className="space-y-3">
             {["Comprehensive Solutions", "Safety First", "Energy Efficiency", "After-Sales Support"].map(
               (label) => (
@@ -87,7 +87,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <div className="eyebrow text-[#2563EB] mb-6">CONTACT</div>
+          <div className="eyebrow text-[#0047BB] mb-6">CONTACT</div>
           <ul className="space-y-3">
             <li className="text-slate-400" style={{ fontSize: "14px" }}>
               {CONTACT.address}
@@ -122,7 +122,7 @@ export default function Footer() {
         <div className="flex items-center gap-4">
           <span className="eyebrow text-slate-600 text-[10px]">SHANGHAI · CHINA</span>
           <div className="w-px h-3 bg-slate-700" />
-          <span className="eyebrow text-[#2563EB] text-[10px]">{CONTACT.phone}</span>
+          <span className="eyebrow text-[#0047BB] text-[10px]">{CONTACT.phone}</span>
         </div>
       </div>
     </footer>

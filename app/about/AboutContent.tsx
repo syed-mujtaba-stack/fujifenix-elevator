@@ -26,7 +26,7 @@ function EngineeringApproach() {
           duration: 0.6,
           stagger: 0.08,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".eng-list", start: "top 75%" },
+          scrollTrigger: { trigger: ".eng-list", start: "top 85%" },
         }
       );
     }, ref);
@@ -36,7 +36,7 @@ function EngineeringApproach() {
 
   return (
     <section ref={ref} className="bg-[#f8fafc] border-t border-slate-100">
-      <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+      <div className="container-gutter py-16 md:py-20">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           <div className="lg:w-[46%]">
             <ImageReveal
@@ -60,7 +60,7 @@ function EngineeringApproach() {
                     i % 2 === 0 ? "sm:border-r sm:border-slate-100 sm:pr-8" : ""
                   } ${i < ENGINEERING_PILLARS.length - 2 ? "border-b border-slate-100" : ""}`}
                 >
-                  <div className="eyebrow text-[#2563EB] flex-shrink-0 pt-1">{pillar.num}</div>
+                  <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1">{pillar.num}</div>
                   <div>
                     <div className="subheading text-[#0f172a] mb-2" style={{ fontSize: "15px", letterSpacing: "0.04em" }}>
                       {pillar.title}
@@ -95,7 +95,7 @@ function Capabilities() {
             duration: 0.65,
             ease: "power2.out",
             delay: i * 0.05,
-            scrollTrigger: { trigger: item, start: "top 88%" },
+            scrollTrigger: { trigger: item, start: "top 85%" },
           }
         );
       });
@@ -106,7 +106,7 @@ function Capabilities() {
 
   return (
     <section ref={ref} className="bg-white">
-      <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+      <div className="container-gutter py-16 md:py-20">
         <div className="flex flex-col lg:flex-row lg:gap-20">
           <div className="lg:w-[38%] mb-14 lg:mb-0">
             <SectionHeading
@@ -116,7 +116,7 @@ function Capabilities() {
             />
             <Link
               href="/services"
-              className="group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+              className="group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
             >
               EXPLORE OUR SERVICES
               <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -127,7 +127,7 @@ function Capabilities() {
               <div key={service.num}>
                 <div className="h-px bg-slate-200" />
                 <div className="cap-list-item flex gap-8 py-8 md:py-10">
-                  <div className="eyebrow text-[#2563EB] flex-shrink-0 pt-1 w-8">{service.num}</div>
+                  <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1 w-8">{service.num}</div>
                   <div>
                     <h3
                       className="heading text-[#0f172a] mb-3"
@@ -155,7 +155,7 @@ export default function AboutContent() {
     <>
       {/* Company overview */}
       <section className="bg-white">
-        <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+        <div className="container-gutter py-16 md:py-20">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
             <div className="lg:w-[54%]">
               <SectionHeading
@@ -187,10 +187,10 @@ export default function AboutContent() {
 
       {/* Total solution band */}
       <section className="relative overflow-hidden bg-[#071324]">
-        <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#2563EB]" />
-        <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#0047BB]" />
+        <div className="container-gutter py-16 md:py-20">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-8 h-px bg-[#2563EB]" />
+            <div className="w-8 h-px bg-[#0047BB]" />
             <span className="eyebrow text-[#60a5fa]">OUR PROMISE</span>
           </div>
           <h2
@@ -198,11 +198,11 @@ export default function AboutContent() {
             style={{ fontSize: "clamp(40px, 6.5vw, 92px)" }}
           >
             TOTAL SOLUTION FOR<br />
-            <span className="text-[#2563EB]">VERTICAL TRANSPORTATION</span>
+            <span className="text-[#0047BB]">VERTICAL TRANSPORTATION</span>
           </h2>
           <AnimatedText
             text={COMPANY.intro}
-            className="body-text text-slate-400 max-w-2xl mt-10 border-l-2 border-[#2563EB]/40 pl-6"
+            className="body-text text-slate-400 max-w-2xl mt-10 border-l-2 border-[#0047BB]/40 pl-6"
           />
         </div>
       </section>

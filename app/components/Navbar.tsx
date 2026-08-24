@@ -117,7 +117,7 @@ export default function Navbar() {
                 key={l.label}
                 href={l.href}
                 className={`eyebrow whitespace-nowrap transition-colors duration-200 ${
-                  active ? "text-[#2563EB]" : "text-slate-600 hover:text-[#2563EB]"
+                  active ? "text-[#0047BB]" : "text-slate-600 hover:text-[#0047BB]"
                 }`}
               >
                 {l.label}
@@ -142,13 +142,13 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-6">
             <a
               href={CONTACT.phoneHref}
-              className="eyebrow text-slate-500 hover:text-[#2563EB] transition-colors whitespace-nowrap"
+              className="eyebrow text-slate-500 hover:text-[#0047BB] transition-colors whitespace-nowrap"
             >
               {CONTACT.phone}
             </a>
             <Link
               href="/cta"
-              className="group inline-flex items-center gap-2 bg-[#2563EB] hover:bg-[#1d4ed8] text-white eyebrow px-6 py-3 transition-all duration-200 whitespace-nowrap"
+              className="group inline-flex items-center gap-2 bg-[#0047BB] hover:bg-[#003A94] text-white eyebrow px-6 py-3 transition-all duration-200 whitespace-nowrap"
             >
               GET A QUOTE
               <span className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true">→</span>
@@ -161,7 +161,7 @@ export default function Navbar() {
           */}
           <button
             className="lg:hidden flex items-center justify-center w-11 h-11 -mr-1 text-[#0f172a] rounded-sm
-                       focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2563EB]"
+                       focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}

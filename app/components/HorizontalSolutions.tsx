@@ -85,17 +85,17 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
         className="hidden md:flex flex-col justify-between h-screen w-full overflow-hidden bg-white relative"
       >
         {/* Pinned Header Bar (Top 22%) */}
-        <div className="px-8 md:px-16 lg:px-24 pt-12 pb-6 flex-shrink-0">
+        <div className="container-gutter pt-12 pb-6 flex-shrink-0">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-px bg-[#2563EB]" />
-            <span className="eyebrow text-[#2563EB]">WHAT WE BUILD</span>
+            <div className="w-8 h-px bg-[#0047BB]" />
+            <span className="eyebrow text-[#0047BB]">WHAT WE BUILD</span>
           </div>
           <div className="flex items-end justify-between border-b border-slate-100 pb-4">
             <h2
               className="heading text-[#0f172a]"
               style={{ fontSize: "var(--fs-h2)" }}
             >
-              ENGINEERED SOLUTIONS <span className="text-[#2563EB]">FOR EVERY SCALE</span>
+              ENGINEERED SOLUTIONS <span className="text-[#0047BB]">FOR EVERY SCALE</span>
             </h2>
             <p className="body-text max-w-xs text-slate-500 pb-1 text-right text-xs">
               Scroll down to explore all solutions →
@@ -140,7 +140,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
 
                 {/* Details — 45% */}
                 <div className="w-[45%] flex flex-col justify-center px-8 md:px-12 lg:px-14 py-8 bg-white">
-                  <div className="eyebrow text-[#2563EB] mb-4">{sol.num}</div>
+                  <div className="eyebrow text-[#0047BB] mb-4">{sol.num}</div>
 
                   <h3
                     className="heading text-[#0f172a] mb-4 whitespace-pre-line"
@@ -149,7 +149,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                     {sol.title}
                   </h3>
 
-                  <div className="w-10 h-px bg-[#2563EB] mb-5" />
+                  <div className="w-10 h-px bg-[#0047BB] mb-5" />
 
                   <p className="body-text text-slate-500 max-w-sm mb-8" style={{ fontSize: "15px", lineHeight: "1.7" }}>
                     {sol.desc}
@@ -157,7 +157,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
 
                   <Link
                     href={`/products/${sol.categorySlug}/${sol.slug}`}
-                    className="group inline-flex items-center gap-3 eyebrow text-[#2563EB] hover:gap-5 transition-all duration-300"
+                    className="group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
                   >
                     EXPLORE
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -175,15 +175,15 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
       <div className="block md:hidden bg-white">
         <div className="px-6 pt-16 pb-8 border-b border-slate-100">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-px bg-[#2563EB]" />
-            <span className="eyebrow text-[#2563EB]">WHAT WE BUILD</span>
+            <div className="w-8 h-px bg-[#0047BB]" />
+            <span className="eyebrow text-[#0047BB]">WHAT WE BUILD</span>
           </div>
           <h2
             className="heading text-[#0f172a]"
             style={{ fontSize: "clamp(26px, 7vw, 32px)" }}
           >
             ENGINEERED SOLUTIONS<br />
-            <span className="text-[#2563EB]">FOR EVERY SCALE</span>
+            <span className="text-[#0047BB]">FOR EVERY SCALE</span>
           </h2>
         </div>
 
@@ -200,18 +200,18 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                 />
               </div>
               <div>
-                <div className="eyebrow text-[#2563EB] mb-3">{sol.num}</div>
+                <div className="eyebrow text-[#0047BB] mb-3">{sol.num}</div>
                 <h3
                   className="heading text-[#0f172a] mb-3 whitespace-pre-line"
                   style={{ fontSize: "20px" }}
                 >
                   {sol.title}
                 </h3>
-                <div className="w-8 h-px bg-[#2563EB] mb-4" />
+                <div className="w-8 h-px bg-[#0047BB] mb-4" />
                 <p className="body-text text-slate-500 mb-6" style={{ fontSize: "14px" }}>
                   {sol.desc}
                 </p>
-                <Link href={`/products/${sol.categorySlug}/${sol.slug}`} className="eyebrow text-[#2563EB] inline-flex items-center gap-2">
+                <Link href={`/products/${sol.categorySlug}/${sol.slug}`} className="eyebrow text-[#0047BB] inline-flex items-center gap-2">
                   EXPLORE <span>→</span>
                 </Link>
               </div>

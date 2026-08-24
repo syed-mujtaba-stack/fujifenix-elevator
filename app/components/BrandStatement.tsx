@@ -22,7 +22,7 @@ export default function BrandStatement() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: ref.current,
-            start: "top 75%",
+            start: "top 85%",
             toggleActions: "play none none none",
           },
         }
@@ -50,12 +50,12 @@ export default function BrandStatement() {
 
   return (
     <section ref={ref} className="bg-white section-gap" id="statement">
-      <div className="px-8 md:px-16 lg:px-24">
+      <div className="container-gutter">
 
         {/* Top rule */}
         <div className="flex items-center gap-4 mb-14">
-          <div className="w-8 h-px bg-[#2563EB]" />
-          <span className="eyebrow text-[#2563EB]">OUR VISION</span>
+          <div className="w-8 h-px bg-[#0047BB]" />
+          <span className="eyebrow text-[#0047BB]">OUR VISION</span>
         </div>
 
         {/* Massive word cascade */}
@@ -72,7 +72,7 @@ export default function BrandStatement() {
           ].map(({ word, blue }, i) => (
             <span
               key={i}
-              className={`bs-word display select-none ${blue ? "text-[#2563EB]" : "text-[#0f172a]"}`}
+              className={`bs-word display select-none ${blue ? "text-[#0047BB]" : "text-[#0f172a]"}`}
               style={{ fontSize: "var(--fs-display-xl)" }}
             >
               {word}
@@ -85,7 +85,7 @@ export default function BrandStatement() {
 
         {/* Editorial paragraph row */}
         <div className="bs-para flex flex-col md:flex-row gap-10 md:gap-20">
-          <p className="body-text max-w-lg border-l-2 border-[#2563EB]/20 pl-6 text-slate-600">
+          <p className="body-text max-w-lg border-l-2 border-[#0047BB]/20 pl-6 text-slate-600">
             Fuji Fenix Elevator is a leading provider of innovative elevator and escalator solutions, combining advanced technology with precision engineering to deliver world-class vertical transportation systems.
           </p>
           <div className="flex flex-col justify-center gap-1 md:ml-auto">

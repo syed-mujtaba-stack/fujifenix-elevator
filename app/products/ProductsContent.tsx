@@ -60,7 +60,7 @@ export default function ProductsContent({ categories }: { categories: CategoryDa
           duration: 0.8,
           stagger: 0.1,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".cat-intro", start: "top 80%" },
+          scrollTrigger: { trigger: ".cat-intro", start: "top 85%" },
         }
       );
 
@@ -73,7 +73,7 @@ export default function ProductsContent({ categories }: { categories: CategoryDa
           duration: 0.7,
           stagger: 0.08,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".category-grid", start: "top 78%" },
+          scrollTrigger: { trigger: ".category-grid", start: "top 85%" },
         }
       );
     }, ref);
@@ -85,7 +85,7 @@ export default function ProductsContent({ categories }: { categories: CategoryDa
 
   return (
     <section ref={ref} className="bg-white">
-      <div className="px-8 md:px-16 lg:px-24 py-24 md:py-32">
+      <div className="container-gutter py-16 md:py-20">
         <div className="cat-intro max-w-3xl">
           <SectionHeading
             eyebrow="OUR PRODUCT RANGE"
@@ -101,8 +101,8 @@ export default function ProductsContent({ categories }: { categories: CategoryDa
             <div key={group.key} className="mt-20 md:mt-24 first:mt-0">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
                 <div className="flex items-center gap-4">
-                  <span className="eyebrow text-[#2563EB]">{group.label}</span>
-                  <div className="w-12 h-px bg-[#2563EB]/40" />
+                  <span className="eyebrow text-[#0047BB]">{group.label}</span>
+                  <div className="w-12 h-px bg-[#0047BB]/40" />
                   <span className="eyebrow text-slate-400">{String(groupCategories.length).padStart(2, "0")}</span>
                 </div>
                 <p className="body-text text-slate-500 max-w-sm" style={{ fontSize: "14px" }}>

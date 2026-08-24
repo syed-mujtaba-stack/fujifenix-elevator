@@ -21,7 +21,7 @@ export default function WhyFujiFenix() {
           duration: 0.9,
           stagger: 0.1,
           ease: "power3.out",
-          scrollTrigger: { trigger: ".why-heading", start: "top 80%" },
+          scrollTrigger: { trigger: ".why-heading", start: "top 85%" },
         }
       );
 
@@ -36,7 +36,7 @@ export default function WhyFujiFenix() {
             duration: 0.65,
             ease: "power2.out",
             delay: i * 0.07,
-            scrollTrigger: { trigger: item, start: "top 87%" },
+            scrollTrigger: { trigger: item, start: "top 85%" },
           }
         );
       });
@@ -47,15 +47,15 @@ export default function WhyFujiFenix() {
 
   return (
     <section ref={ref} id="why-fuji-fenix" className="bg-[#f8fafc] section-gap">
-      <div className="px-8 md:px-16 lg:px-24">
+      <div className="container-gutter">
         <div className="flex flex-col lg:flex-row lg:gap-20">
 
           {/* Left — sticky heading */}
           <div className="lg:w-[38%] lg:sticky lg:top-28 lg:self-start mb-16 lg:mb-0">
             <div className="why-heading">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-8 h-px bg-[#2563EB]" />
-                <span className="eyebrow text-[#2563EB]">WHY CHOOSE US</span>
+                <div className="w-8 h-px bg-[#0047BB]" />
+                <span className="eyebrow text-[#0047BB]">WHY CHOOSE US</span>
               </div>
               <h2
                 className="heading text-[#0f172a] mb-8"
@@ -63,10 +63,10 @@ export default function WhyFujiFenix() {
               >
                 WHY DEVELOPERS<br />
                 & ARCHITECTS<br />
-                <span className="text-[#2563EB]">TRUST</span><br />
+                <span className="text-[#0047BB]">TRUST</span><br />
                 FUJI FENIX
               </h2>
-              <p className="body-text text-slate-500 max-w-xs border-l-2 border-[#2563EB]/20 pl-5">
+              <p className="body-text text-slate-500 max-w-xs border-l-2 border-[#0047BB]/20 pl-5">
                 Eight core capabilities that define Fuji Fenix Elevator.
               </p>
             </div>
@@ -78,7 +78,7 @@ export default function WhyFujiFenix() {
               <div key={reason.num}>
                 <div className="h-px bg-slate-200" />
                 <div className="why-item flex gap-8 py-10 md:py-12">
-                  <div className="eyebrow text-[#2563EB] flex-shrink-0 pt-1 w-8">{reason.num}</div>
+                  <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1 w-8">{reason.num}</div>
                   <div>
                     <h3
                       className="heading text-[#0f172a] mb-4 whitespace-pre-line"
