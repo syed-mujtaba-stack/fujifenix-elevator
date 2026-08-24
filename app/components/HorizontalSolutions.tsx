@@ -3,11 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { urlFor } from "@/sanity/lib/image";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface SolutionProduct {
   _id: string;
@@ -36,42 +32,71 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
   const SOLUTIONS = buildSolutions(products);
 
   useEffect(() => {
-    const mm = gsap.matchMedia();
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Desktop GSAP Horizontal Pinned Animation
-    mm.add("(min-width: 768px)", () => {
-      const section = sectionRef.current;
-      const track = trackRef.current;
-      if (!section || !track) return;
+    let mm: any = null;
+    let tween: any = null;
 
-      const getDistance = () => track.scrollWidth - window.innerWidth;
+    (async () => {
+      if (prefersReducedMotion) {
+        // Reveal content without animation for reduced-motion users
+        document.querySelectorAll('#solutions .heading, #solutions .eyebrow, #solutions .body-text, #solutions .display').forEach((el) => {
+          (el as HTMLElement).style.opacity = '1';
+          (el as HTMLElement).style.transform = 'none';
+        });
+        trackRef.current?.parentElement?.style.setProperty('overflow-x', 'auto');
+        return;
+      }
 
-      const tween = gsap.to(track, {
-        x: () => -getDistance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: () => `+=${getDistance()}`,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
+      const gsapModule = await import('gsap');
+      const ScrollTriggerModule = await import('gsap/ScrollTrigger');
+      const gsap = (gsapModule && (gsapModule.default || gsapModule));
+      const ScrollTrigger = (ScrollTriggerModule && (ScrollTriggerModule.default || ScrollTriggerModule));
+      if (!gsap || !ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      mm = gsap.matchMedia();
+
+      // Desktop GSAP Horizontal Pinned Animation
+      mm.add("(min-width: 768px)", () => {
+        const section = sectionRef.current;
+        const track = trackRef.current;
+        if (!section || !track) return;
+
+        const getDistance = () => track.scrollWidth - window.innerWidth;
+
+        tween = gsap.to(track, {
+          x: () => -getDistance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            pin: true,
+            scrub: 1,
+            start: "top top",
+            end: () => `+=${getDistance()}`,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          },
+        });
+
+        // Refresh ScrollTrigger after layout settles
+        const timer = setTimeout(() => {
+          if (ScrollTrigger && ScrollTrigger.refresh) ScrollTrigger.refresh();
+        }, 150);
+
+        return () => {
+          clearTimeout(timer);
+          if (tween && tween.kill) tween.kill();
+        };
       });
+    })();
 
-      // Refresh ScrollTrigger after layout settles
-      const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 150);
-
-      return () => {
-        clearTimeout(timer);
-        tween.kill();
-      };
-    });
-
-    return () => mm.revert();
+    return () => {
+      try { if (mm && mm.revert) mm.revert(); } catch (e) {}
+      try { if (tween && tween.kill) tween.kill(); } catch (e) {}
+    };
   }, []);
 
   return (
@@ -88,8 +113,9 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
         <div className="px-8 md:px-16 lg:px-24 pt-12 pb-6 flex-shrink-0">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-px bg-[#2563EB]" />
-            <span className="eyebrow text-[#2563EB]">WHAT WE BUILD</span>
+            <h3 className="eyebrow text-[#2563EB]">WHAT WE BUILD</h3>
           </div>
+          <p className="sr-only">What we build — engineered elevator and escalator products across residential, commercial, and infrastructure categories; scroll to explore examples.</p>
           <div className="flex items-end justify-between border-b border-slate-100 pb-4">
             <h2
               className="heading text-[#0f172a]"
@@ -176,8 +202,9 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
         <div className="px-6 pt-16 pb-8 border-b border-slate-100">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-px bg-[#2563EB]" />
-            <span className="eyebrow text-[#2563EB]">WHAT WE BUILD</span>
+            <h3 className="eyebrow text-[#2563EB]">WHAT WE BUILD</h3>
           </div>
+          <p className="sr-only">What we build — engineered elevator and escalator products across residential, commercial, and infrastructure categories; scroll to explore examples.</p>
           <h2
             className="heading text-[#0f172a]"
             style={{ fontSize: "clamp(26px, 7vw, 32px)" }}

@@ -1,17 +1,17 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import gsap from "gsap";
+import Image from "next/image";
 
-/* ═══════════════════════════════════════════════════════════════════════
-   FUJI FENIX — Hero  v6
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   FUJI FENIX â€” Hero  v6
 
    Single responsive hero for all breakpoints.
    The video is a full-bleed background (autoplay, muted, loop) on every
-   screen size — no scroll pinning, no GSAP transforms on the video.
+   screen size â€” no scroll pinning, no GSAP transforms on the video.
    Only the text content gets a light GSAP entrance; stats count up.
-═══════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 const HEADLINE = [
   { text: "ENGINEERING", blue: false },
@@ -40,64 +40,97 @@ export default function Hero() {
     const video = videoRef.current;
     if (video) video.play().catch(() => {});
 
-    /* ── entrance (text only) ── */
-    gsap.set([".hero-word", ".hero-eyebrow", ".hero-desc", ".hero-cta", ".hero-stat"], {
-      opacity: 0,
-      y: 24,
-    });
-    gsap.set(".hero-line", { scaleX: 0, transformOrigin: "left center" });
-    gsap.set(cueRef.current, { opacity: 0 });
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const tl = gsap.timeline({ delay: 0.2, defaults: { ease: "power3.out" } });
-    tl.to(".hero-line", { scaleX: 1, duration: 0.55, ease: "power2.inOut" }, 0)
-      .to(".hero-eyebrow", { opacity: 1, y: 0, duration: 0.5 }, 0.05)
-      .to(".hero-word", { opacity: 1, y: 0, duration: 0.8, stagger: 0.08 }, 0.1)
-      .to(".hero-desc", { opacity: 1, y: 0, duration: 0.65 }, "-=0.35")
-      .to(".hero-cta", { opacity: 1, y: 0, duration: 0.55, stagger: 0.1, ease: "back.out(1.2)" }, "-=0.3")
-      .to(".hero-stat", { opacity: 1, y: 0, duration: 0.55, stagger: 0.07 }, "-=0.3")
-      .to(cueRef.current, { opacity: 1, duration: 0.4 }, "-=0.15");
-
-    /* count-up */
-    STATS.forEach((s) => {
-      const el = document.querySelector<HTMLElement>(`[data-hero-stat="${s.end}"]`);
-      if (!el) return;
-      const proxy = { val: 0 };
-      tl.to(
-        proxy,
-        {
-          val: s.end,
-          duration: 2,
-          ease: "power2.out",
-          onUpdate() {
-            el.textContent = Math.round(proxy.val).toLocaleString() + s.suffix;
-          },
-        },
-        "-=1.5"
-      );
-    });
-
-    /* scroll cue bob */
-    tl.call(() => {
-      if (cueRef.current) {
-        gsap.to(cueRef.current, { y: 7, duration: 1.1, ease: "sine.inOut", yoyo: true, repeat: -1 });
-      }
-    });
-
-    /* ticker */
-    const ticker = tickerRef.current;
-    if (ticker) {
-      const w = ticker.scrollWidth / 2;
-      gsap.to(ticker, {
-        x: -w,
-        duration: 22,
-        ease: "none",
-        repeat: -1,
-        modifiers: { x: (x: string) => `${parseFloat(x) % w}px` },
+    const revealNoAnimation = () => {
+      const selectors = ['.hero-word', '.hero-eyebrow', '.hero-desc', '.hero-cta', '.hero-stat', '.hero-line'];
+      selectors.forEach((sel) => {
+        document.querySelectorAll(sel).forEach((el) => {
+          (el as HTMLElement).style.opacity = '1';
+          (el as HTMLElement).style.transform = 'none';
+        });
       });
-    }
+      if (cueRef.current) cueRef.current.style.opacity = '1';
+    };
+
+    let tl: any = null;
+    let tickerAnim: any = null;
+
+    (async () => {
+      if (prefersReducedMotion) {
+        revealNoAnimation();
+        STATS.forEach((s) => {
+          const el = document.querySelector<HTMLElement>(`[data-hero-stat="${s.end}"]`);
+          if (el) el.textContent = s.end.toLocaleString() + s.suffix;
+        });
+        return;
+      }
+
+      const gsapModule = await import('gsap');
+      const gsap = (gsapModule && (gsapModule.default || gsapModule));
+
+      /* â”€â”€ entrance (text only) â”€â”€ */
+      gsap.set(['.hero-word', '.hero-eyebrow', '.hero-desc', '.hero-cta', '.hero-stat'], {
+        opacity: 0,
+        y: 24,
+      });
+      gsap.set('.hero-line', { scaleX: 0, transformOrigin: 'left center' });
+      gsap.set(cueRef.current, { opacity: 0 });
+
+      tl = gsap.timeline({ delay: 0.2, defaults: { ease: 'power3.out' } });
+      tl.to('.hero-line', { scaleX: 1, duration: 0.55, ease: 'power2.inOut' }, 0)
+        .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.5 }, 0.05)
+        .to('.hero-word', { opacity: 1, y: 0, duration: 0.8, stagger: 0.08 }, 0.1)
+        .to('.hero-desc', { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
+        .to('.hero-cta', { opacity: 1, y: 0, duration: 0.55, stagger: 0.1, ease: 'back.out(1.2)' }, '-=0.3')
+        .to('.hero-stat', { opacity: 1, y: 0, duration: 0.55, stagger: 0.07 }, '-=0.3')
+        .to(cueRef.current, { opacity: 1, duration: 0.4 }, '-=0.15');
+
+      /* count-up */
+      STATS.forEach((s) => {
+        const el = document.querySelector<HTMLElement>(`[data-hero-stat="${s.end}"]`);
+        if (!el) return;
+        const proxy = { val: 0 };
+        tl.to(
+          proxy,
+          {
+            val: s.end,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate() {
+              el.textContent = Math.round(proxy.val).toLocaleString() + s.suffix;
+            },
+          },
+          '-=1.5'
+        );
+      });
+
+      /* scroll cue bob */
+      tl.call(() => {
+        if (cueRef.current) {
+          gsap.to(cueRef.current, { y: 7, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+        }
+      });
+
+      /* ticker */
+      const ticker = tickerRef.current;
+      if (ticker) {
+        const w = ticker.scrollWidth / 2;
+        tickerAnim = gsap.to(ticker, {
+          x: -w,
+          duration: 22,
+          ease: 'none',
+          repeat: -1,
+          modifiers: { x: (x: string) => `${parseFloat(x) % w}px` },
+        });
+      }
+    })();
 
     return () => {
-      tl.kill();
+      if (tl && tl.kill) tl.kill();
+      if (tickerAnim && tickerAnim.kill) tickerAnim.kill();
     };
   }, []);
 
@@ -108,17 +141,26 @@ export default function Hero() {
       className="relative overflow-hidden"
       style={{ width: "100%", minHeight: "100svh", background: "#0f172a" }}
     >
-      {/* ── Brand accent top rule ── */}
+      {/* â”€â”€ Brand accent top rule â”€â”€ */}
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#2563EB] z-50" aria-hidden="true" />
 
-      {/* ── Full-bleed background video ── */}
+      {/* ── Full-bleed background image (preload for LCP) ── */}
+      <Image
+        src="/hero-elevator.jpg"
+        alt="Fuji Fenix Elevator"
+        priority
+        fill
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ zIndex: 0 }}
+      />
+      {/* ── Full-bleed background video (deferred) ── */}
       <video
         ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         poster="/hero-elevator.jpg"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ zIndex: 1 }}
@@ -126,7 +168,7 @@ export default function Hero() {
         <source src="/Fuji_Fenix_compressed.mp4" type="video/mp4" />
       </video>
 
-      {/* ── Gradient overlay ── */}
+      {/* â”€â”€ Gradient overlay â”€â”€ */}
       <div
         aria-hidden="true"
         className="absolute inset-0"
@@ -137,7 +179,7 @@ export default function Hero() {
         }}
       />
 
-      {/* ── Content ── */}
+      {/* â”€â”€ Content â”€â”€ */}
       <div
         className="relative flex flex-col justify-center"
         style={{
@@ -193,7 +235,7 @@ export default function Hero() {
             }}
           >
             Precision-engineered elevator and escalator solutions for
-            residential, commercial, healthcare, and infrastructure projects —
+            residential, commercial, healthcare, and infrastructure projects â€”
             delivered worldwide from Shanghai.
           </p>
 
@@ -201,25 +243,20 @@ export default function Hero() {
           <div className="flex flex-wrap gap-3 mb-9">
             <Link
               href="/solutions"
-              className="hero-cta group inline-flex items-center gap-2.5"
-              style={{ padding: "12px 24px", background: "#2563EB", color: "#fff", textDecoration: "none" }}
+              aria-label="Explore solutions"
+              className="btn-primary"
             >
               <span className="eyebrow" style={{ color: "#fff" }}>EXPLORE SOLUTIONS</span>
-              <span aria-hidden="true" className="group-hover:translate-x-0.5 transition-transform duration-300" style={{ color: "#fff" }}>→</span>
+              <span aria-hidden="true" className="transition-transform duration-300" style={{ color: "#fff" }}>→</span>
             </Link>
             <Link
               href="/products"
-              className="hero-cta group inline-flex items-center gap-2.5"
-              style={{
-                padding: "12px 24px",
-                border: "1px solid rgba(255,255,255,0.35)",
-                background: "rgba(255,255,255,0.08)",
-                backdropFilter: "blur(4px)",
-                textDecoration: "none",
-              }}
+              aria-label="View products"
+              className="btn-secondary"
+              style={{ color: "#fff" }}
             >
-              <span className="eyebrow group-hover:text-[#60a5fa] transition-colors duration-300" style={{ color: "#fff" }}>VIEW PRODUCTS</span>
-              <span aria-hidden="true" className="group-hover:translate-x-0.5 group-hover:text-[#60a5fa] transition-all duration-300" style={{ color: "#fff" }}>→</span>
+              <span className="eyebrow" style={{ color: "#fff" }}>VIEW PRODUCTS</span>
+              <span aria-hidden="true" className="transition-all duration-300" style={{ color: "#fff" }}>→</span>
             </Link>
           </div>
 
@@ -253,7 +290,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Scroll cue ── */}
+      {/* â”€â”€ Scroll cue â”€â”€ */}
       <div
         ref={cueRef}
         className="absolute flex flex-col items-center gap-2 pointer-events-none"
@@ -265,7 +302,7 @@ export default function Hero() {
         <div aria-hidden="true" className="w-px h-6" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.55), transparent)" }} />
       </div>
 
-      {/* ── Ticker ── */}
+      {/* â”€â”€ Ticker â”€â”€ */}
       <div
         aria-hidden="true"
         className="absolute bottom-0 left-0 right-0 overflow-hidden"
@@ -294,3 +331,11 @@ export default function Hero() {
     </section>
   );
 }
+
+
+
+
+
+
+
+
