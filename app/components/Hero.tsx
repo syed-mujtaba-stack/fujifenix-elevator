@@ -61,6 +61,10 @@ export default function Hero() {
     (async () => {
       if (prefersReducedMotion) {
         revealNoAnimation();
+        STATS.forEach((s) => {
+          const el = document.querySelector<HTMLElement>(`[data-hero-stat="${s.end}"]`);
+          if (el) el.textContent = s.end.toLocaleString() + s.suffix;
+        });
         return;
       }
 
