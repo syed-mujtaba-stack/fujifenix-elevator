@@ -15,7 +15,7 @@ interface PageHeroProps {
   imageAlt?: string;
   breadcrumb: string;
   breadcrumbHref?: string;
-  dark?: boolean;
+  /** Accent the full title in light blue (readable on the dark photo backdrop) */
   titleBlue?: boolean;
 }
 
@@ -29,7 +29,6 @@ export default function PageHero({
   imageAlt = "",
   breadcrumb,
   breadcrumbHref,
-  dark = false,
   titleBlue = false,
 }: PageHeroProps) {
   const ref = useRef<HTMLElement>(null);
@@ -38,20 +37,19 @@ export default function PageHero({
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.fromTo(".ph-eyebrow", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6 })
+      tl.fromTo(
+        ".ph-img",
+        { opacity: 0, scale: 1.12 },
+        { opacity: 1, scale: 1, duration: 1.4, ease: "power2.out" }
+      )
+        .fromTo(".ph-eyebrow", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6 }, "-=0.9")
         .fromTo(
           ".ph-line",
           { opacity: 0, y: 60, skewY: 2 },
           { opacity: 1, y: 0, skewY: 0, duration: 0.85, stagger: 0.1 },
-          "-=0.2"
+          "-=0.35"
         )
         .fromTo(".ph-desc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.4")
-        .fromTo(
-          ".ph-img",
-          { clipPath: "inset(0 100% 0 0)", opacity: 0 },
-          { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1.1, ease: "power2.out" },
-          "-=0.6"
-        )
         .fromTo(".ph-crumb", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.6");
     }, ref);
 
@@ -59,75 +57,73 @@ export default function PageHero({
   }, []);
 
   return (
-    <section ref={ref} className="relative bg-white overflow-hidden pt-28 md:pt-32">
-      <div className="container-gutter">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 lg:gap-16 pb-12 border-b border-slate-100">
-          {/* Left — typography */}
-          <div className="max-w-3xl">
-            <div className="ph-eyebrow flex items-center gap-3 mb-8 opacity-0">
-              <div className="w-8 h-px bg-[#0047BB]" />
-              <span className="eyebrow text-[#0047BB]">{eyebrow}</span>
-            </div>
-            <h1
-              className={`display ${titleBlue ? "text-[#0047BB]" : "text-[#0f172a]"}`}
-              style={{ fontSize: "var(--fs-hero)" }}
-            >
-              {lines.map((line, i) => (
-                <span key={i} className="ph-line block opacity-0 overflow-hidden">
-                  {line}
-                </span>
-              ))}
-              {highlight ? (
-                <span className="ph-line block text-[#0047BB] opacity-0 overflow-hidden">
-                  {highlight}
-                </span>
-              ) : null}
-            </h1>
-            {description ? (
-              <p className="ph-desc body-text text-slate-500 max-w-lg mt-8 border-l-2 border-[#0047BB]/20 pl-6 opacity-0">
-                {description}
-              </p>
-            ) : null}
-          </div>
+    <section ref={ref} className="relative overflow-hidden bg-[#071324]">
+      {/* Background image */}
+      <div className="ph-img absolute inset-0 opacity-0">
+        <Image
+          src={image}
+          alt={imageAlt}
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        {/* Readability overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#071324]/95 via-[#071324]/55 to-[#071324]/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#071324]/75 via-[#071324]/25 to-transparent" />
+      </div>
 
-          {/* Breadcrumb */}
-          <div className="ph-crumb flex items-center gap-2 opacity-0 pb-2 lg:pb-6 flex-shrink-0">
-            <Link href="/" className="eyebrow text-slate-400 hover:text-[#0047BB] transition-colors">
-              HOME
+      {/* Content */}
+      <div className="container-gutter relative flex flex-col justify-between pt-28 md:pt-32 pb-12 md:pb-16 min-h-[clamp(460px,64vh,640px)] md:min-h-[clamp(560px,76vh,780px)]">
+        {/* Breadcrumb */}
+        <div className="ph-crumb flex items-center gap-2 opacity-0 self-end flex-shrink-0">
+          <Link href="/" className="eyebrow text-slate-400 hover:text-white transition-colors">
+            HOME
+          </Link>
+          <span className="text-slate-500">/</span>
+          {breadcrumbHref ? (
+            <Link
+              href={breadcrumbHref}
+              className="eyebrow text-slate-400 hover:text-white transition-colors"
+            >
+              {breadcrumb}
             </Link>
-            <span className="text-slate-300">/</span>
-            {breadcrumbHref ? (
-              <Link
-                href={breadcrumbHref}
-                className="eyebrow text-slate-400 hover:text-[#0047BB] transition-colors"
-              >
-                {breadcrumb}
-              </Link>
-            ) : (
-              <span className="eyebrow text-[#0047BB]">{breadcrumb}</span>
-            )}
-          </div>
+          ) : (
+            <span className="eyebrow text-[#60a5fa]">{breadcrumb}</span>
+          )}
         </div>
 
-        {/* Hero image */}
-        <div
-          className="ph-img relative overflow-hidden opacity-0"
-          style={{ height: "clamp(340px, 46vh, 560px)" }}
-        >
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            className={`object-cover ${dark ? "opacity-25" : ""}`}
-            sizes="100vw"
-          />
-          {dark ? (
-            <div className="absolute inset-0 bg-gradient-to-t from-[#071324]/70 via-transparent to-transparent" />
+        {/* Heading block */}
+        <div className="max-w-3xl mt-16 md:mt-24">
+          <div className="ph-eyebrow flex items-center gap-3 mb-8 opacity-0">
+            <div className="w-8 h-px bg-[#0047BB]" />
+            <span className="eyebrow text-[#60a5fa]">{eyebrow}</span>
+          </div>
+          <h1
+            className={`display ${titleBlue ? "text-[#60a5fa]" : "text-white"}`}
+            style={{ fontSize: "var(--fs-hero)" }}
+          >
+            {lines.map((line, i) => (
+              <span key={i} className="ph-line block opacity-0 overflow-hidden drop-shadow-lg">
+                {line}
+              </span>
+            ))}
+            {highlight ? (
+              <span className="ph-line block text-[#60a5fa] opacity-0 overflow-hidden drop-shadow-lg">
+                {highlight}
+              </span>
+            ) : null}
+          </h1>
+          {description ? (
+            <p className="ph-desc body-text text-slate-300 max-w-lg mt-8 border-l-2 border-[#60a5fa]/50 pl-6 opacity-0">
+              {description}
+            </p>
           ) : null}
-          <div className="absolute inset-0 border border-white/10 pointer-events-none" />
         </div>
       </div>
+
+      {/* Blue base accent */}
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0047BB] z-10" />
     </section>
   );
 }

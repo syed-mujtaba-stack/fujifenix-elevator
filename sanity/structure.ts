@@ -33,24 +33,12 @@ export const structure: StructureResolver = (S, context) => {
         )
     )
 
-  const accessories = S.listItem()
-    .title('Accessories')
-    .child(
-      S.documentList()
-        .id('accessories-products')
-        .title('Accessories')
-        .filter(`_type == "product" && category->title == "Accessories"`)
-        .defaultOrdering([{ field: 'order', direction: 'asc' }])
-    )
-
   return S.list()
     .title('Content')
     .items([
       S.documentTypeListItem('product').title('All Products'),
       S.divider(),
       productsByCategory,
-      S.divider(),
-      accessories,
       S.divider(),
       S.documentTypeListItem('category').title('Categories'),
     ])

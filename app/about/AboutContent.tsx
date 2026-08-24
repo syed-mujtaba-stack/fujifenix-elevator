@@ -36,8 +36,8 @@ function EngineeringApproach() {
 
   return (
     <section ref={ref} className="bg-[#f8fafc] border-t border-slate-100">
-      <div className="container-gutter py-16 md:py-20">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+      <div className="container-gutter py-20 md:py-28">
+        <div className="flex flex-col lg:flex-row gap-14 lg:gap-20">
           <div className="lg:w-[46%]">
             <ImageReveal
               src="/about-lobby.jpg"
@@ -65,7 +65,7 @@ function EngineeringApproach() {
                     <div className="subheading text-[#0f172a] mb-2" style={{ fontSize: "15px", letterSpacing: "0.04em" }}>
                       {pillar.title}
                     </div>
-                    <p className="text-slate-500" style={{ fontSize: "14px", lineHeight: "1.6" }}>
+                    <p className="text-slate-500" style={{ fontSize: "15px", lineHeight: "1.7" }}>
                       {pillar.desc}
                     </p>
                   </div>
@@ -106,7 +106,7 @@ function Capabilities() {
 
   return (
     <section ref={ref} className="bg-white">
-      <div className="container-gutter py-16 md:py-20">
+      <div className="container-gutter py-20 md:py-28">
         <div className="flex flex-col lg:flex-row lg:gap-20">
           <div className="lg:w-[38%] mb-14 lg:mb-0">
             <SectionHeading
@@ -155,8 +155,8 @@ export default function AboutContent() {
     <>
       {/* Company overview */}
       <section className="bg-white">
-        <div className="container-gutter py-16 md:py-20">
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+        <div className="container-gutter py-20 md:py-28">
+          <div className="flex flex-col lg:flex-row gap-14 lg:gap-24 items-start">
             <div className="lg:w-[54%]">
               <SectionHeading
                 eyebrow="ABOUT FUJI FENIX"
@@ -164,7 +164,7 @@ export default function AboutContent() {
               />
               <AnimatedText
                 text={COMPANY.about1}
-                className="body-text text-slate-600 max-w-xl mb-6"
+                className="body-text text-slate-600 max-w-xl mb-7"
               />
               <AnimatedText
                 text={COMPANY.about2}
@@ -176,7 +176,7 @@ export default function AboutContent() {
               <ImageReveal
                 src="/hero-elevator.jpg"
                 alt="Fuji Fenix architectural elevator installation project"
-                className="w-full min-h-[420px]"
+                className="w-full min-h-[460px]"
                 sizes="46vw"
                 parallax
               />
@@ -188,7 +188,7 @@ export default function AboutContent() {
       {/* Total solution band */}
       <section className="relative overflow-hidden bg-[#071324]">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#0047BB]" />
-        <div className="container-gutter py-16 md:py-20">
+        <div className="container-gutter py-20 md:py-28">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-8 h-px bg-[#0047BB]" />
             <span className="eyebrow text-[#60a5fa]">OUR PROMISE</span>

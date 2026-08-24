@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
-import { categoriesQuery } from "@/sanity/lib/queries";
+import { allProductsQuery, categoriesQuery } from "@/sanity/lib/queries";
 import PageHero from "@/app/components/PageHero";
 import ProductsContent from "./ProductsContent";
 
@@ -13,7 +13,10 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
-  const categories = await client.fetch(categoriesQuery);
+  const [categories, products] = await Promise.all([
+    client.fetch(categoriesQuery),
+    client.fetch(allProductsQuery),
+  ]);
 
   return (
     <>
@@ -21,11 +24,11 @@ export default async function ProductsPage() {
         eyebrow="OUR PRODUCTS"
         title={["OUR"]}
         highlight="PRODUCTS"
-        description={`Discover ${categories.length} product categories covering elevator systems, cabin components, and accessories.`}
+        description={`Explore ${products.length} elevator systems, components, and accessories for residential, commercial, and infrastructure projects.`}
         image="/hero-elevator.jpg"
         breadcrumb="PRODUCTS"
       />
-      <ProductsContent categories={categories} />
+      <ProductsContent categories={categories} products={products} />
     </>
   );
 }

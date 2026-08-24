@@ -252,9 +252,19 @@ section, div {
 ============================================= */
 
 .ff-translate {
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   flex-shrink: 0;
   line-height: 1;
+}
+
+.ff-translate::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 5h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9l-4 4V7a2 2 0 0 1 2-2Z'/%3E%3Cpath d='M17 8h2a2 2 0 0 1 2 2v9l-4-4h-1'/%3E%3Cpath d='M8 9h5M10.5 7v2.5M11 9c-.3 2-1.3 3.5-3 4.5M11 9c.3 1.1 1 2 2 2.7'/%3E%3C/svg%3E");
 }
 
 /* Hide only the Google logo/icon and branding text */
@@ -282,11 +292,44 @@ section, div {
 
 /* Simple wrapper — do NOT set font-size:0 here, it kills the dropdown */
 .goog-te-gadget-simple {
+  display: inline-flex !important;
+  align-items: center !important;
   border: none !important;
   background: none !important;
   padding: 0 !important;
   margin: 0 !important;
   vertical-align: middle !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 6px 21px 6px 0 !important;
+  border: 0 !important;
+  color: #334155 !important;
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3.5l3 3 3-3'/%3E%3C/svg%3E") no-repeat right 2px center !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value:hover {
+  color: #0047bb !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value img {
+  display: none !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span {
+  display: inline !important;
+  color: inherit !important;
+  font: inherit !important;
 }
 
 .goog-te-gadget-simple .goog-te-combo-wrapper {
@@ -301,21 +344,21 @@ a.goog-te-combo,
   -webkit-appearance: none;
   -moz-appearance: none;
   background: transparent;
-  border: 1px solid #e2e8f0;
-  border-radius: 9999px;
-  padding: 6px 30px 6px 12px;
+  border: 0;
+  border-radius: 0;
+  padding: 6px 21px 6px 0;
   font-size: 11px !important;
   font-family: var(--font-sans) !important;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #475569;
+  color: #334155;
   cursor: pointer;
   outline: none;
   transition: all 0.25s ease;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3.5l3 3 3-3'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 10px center;
+  background-position: right 2px center;
   line-height: 1;
   max-width: 100%;
   overflow: hidden;
@@ -324,19 +367,24 @@ a.goog-te-combo,
 
 a.goog-te-combo:hover,
 .goog-te-combo:hover {
-  border-color: #0047bb;
   color: #0047bb;
 }
 
 a.goog-te-combo:focus,
 .goog-te-combo:focus {
-  border-color: #0047bb;
-  box-shadow: 0 0 0 3px rgba(0, 71, 187, 0.12);
+  box-shadow: 0 2px 0 0 rgba(0, 71, 187, 0.2);
 }
 
 /* Hide the Google Translate banner bar */
-.goog-te-banner-frame {
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+iframe[class*="goog-te-banner-frame"] {
   display: none !important;
+  visibility: hidden !important;
+}
+
+html {
+  top: 0 !important;
 }
 
 body {

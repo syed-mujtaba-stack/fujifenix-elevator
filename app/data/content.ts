@@ -25,6 +25,78 @@ export const STATS = [
   { end: 3240, suffix: "+", label: "PROJECTS COMPLETED" },
 ] as const;
 
+export const SERVICE_OFFERINGS = [
+  {
+    icon: "factory",
+    title: "Manufacturing & Supply",
+    desc: "State-of-the-art production of elevators and escalators, engineered to order in our Shanghai facility and delivered on schedule.",
+    bullets: ["Made-to-order systems", "ISO-certified production", "Global logistics"],
+  },
+  {
+    icon: "wrench",
+    title: "Installation & Commissioning",
+    desc: "Certified crews handle everything from shaft preparation to final handover — tested, tuned, and compliant from day one.",
+    bullets: ["Certified install teams", "Precision commissioning", "Full compliance testing"],
+  },
+  {
+    icon: "refresh",
+    title: "Modernization & Upgrades",
+    desc: "Breathe new life into aging equipment — controllers, drives, cabins, and safety systems upgraded with minimal downtime.",
+    bullets: ["Control system retrofits", "Cabin refurbishment", "Safety upgrades"],
+  },
+  {
+    icon: "shield",
+    title: "Maintenance & Servicing",
+    desc: "Preventive maintenance programs that keep every unit running smoothly, quietly, and safely throughout its lifecycle.",
+    bullets: ["Scheduled preventive care", "Genuine spare parts", "Performance audits"],
+  },
+  {
+    icon: "bolt",
+    title: "Repair & Emergency Response",
+    desc: "Rapid-response technicians on call around the clock to diagnose and resolve breakdowns before they disrupt your building.",
+    bullets: ["24/7 emergency hotline", "Fast dispatch", "Qualified technicians"],
+  },
+  {
+    icon: "compass",
+    title: "Design Consultation",
+    desc: "Traffic analysis, shaft planning, and bespoke cabin design — expert guidance from feasibility study to final specification.",
+    bullets: ["Traffic analysis", "Shaft & pit planning", "Custom interiors"],
+  },
+] as const;
+
+export const SERVICE_PROCESS = [
+  {
+    step: "01",
+    title: "Consultation",
+    desc: "We assess your site, traffic demands, and budget to define the right solution.",
+  },
+  {
+    step: "02",
+    title: "Design",
+    desc: "Engineers produce specifications, drawings, and cabin designs for your approval.",
+  },
+  {
+    step: "03",
+    title: "Manufacturing",
+    desc: "Your system is built and rigorously tested in our ISO-certified facility.",
+  },
+  {
+    step: "04",
+    title: "Installation",
+    desc: "Certified crews install, commission, and hand over — safe, clean, on time.",
+  },
+  {
+    step: "05",
+    title: "Lifetime Support",
+    desc: "Maintenance, modernization, and 24/7 emergency response for the long run.",
+  },
+] as const;
+
+export const SERVICE_SUPPORT_POINTS = [
+  { stat: "24/7", label: "EMERGENCY RESPONSE" },
+  { stat: "98%", label: "FIRST-VISIT FIX RATE" },
+] as const;
+
 export const SERVICES = [
   {
     num: "01",

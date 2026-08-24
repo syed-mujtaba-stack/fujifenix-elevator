@@ -5,7 +5,7 @@ import ServicesContent from "./ServicesContent";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Fuji Fenix Elevator offers comprehensive solutions — manufacturing, sales, and after-sales support of elevators and escalators, built to the highest international safety and performance standards.",
+    "End-to-end elevator and escalator services — manufacturing, installation, modernization, preventive maintenance, and 24/7 emergency response, built to the highest international safety standards.",
 };
 
 export default function ServicesPage() {
@@ -13,10 +13,10 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="OUR SERVICES"
-        title={["OUR"]}
-        highlight="SERVICES"
-        description="Total solution for vertical transportation — manufacturing, sales, and after-sales support."
-        image="/hero-elevator.jpg"
+        title={["TOTAL CARE,"]}
+        highlight="EVERY FLOOR"
+        description="Manufacturing, installation, modernization, maintenance, and rapid emergency response — one partner for the entire lifecycle of your vertical transportation."
+        image="/building-exterior.jpg"
         breadcrumb="SERVICES"
       />
       <ServicesContent />

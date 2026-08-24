@@ -72,6 +72,8 @@ export const allProductsQuery = `
     _id,
     title,
     "slug": slug.current,
+  description,
+  image,
     "category": category->title,
     "categorySlug": category->slug.current
   }

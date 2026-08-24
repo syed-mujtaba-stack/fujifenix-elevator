@@ -5,7 +5,7 @@ import Link from "next/link";
 import { NAV_LINKS, CONTACT } from "@/app/data/content";
 
 /* Google Translate widget — rendered inside the mobile menu
-   so it doesn't eat horizontal space in the navbar row */
+    so it doesn't eat horizontal space in the navbar row */
 function MobileTranslate() {
   return (
     <div

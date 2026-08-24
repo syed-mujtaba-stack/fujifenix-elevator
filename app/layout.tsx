@@ -67,6 +67,7 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${inter.variable} h-full antialiased scroll-smooth`}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
       <head>
         {/* Override removeChild BEFORE React mounts to catch Google Translate DOM mutations */}
@@ -80,10 +81,29 @@ export default function RootLayout({
                 return child;
               }
             };
+
+            function hideTranslateBanner() {
+              var banners = document.querySelectorAll('iframe.goog-te-banner-frame, iframe[class*="goog-te-banner-frame"]');
+              banners.forEach(function(banner) {
+                banner.style.setProperty('display', 'none', 'important');
+                banner.style.setProperty('visibility', 'hidden', 'important');
+              });
+              document.documentElement.style.setProperty('top', '0', 'important');
+              if (document.body) document.body.style.setProperty('top', '0', 'important');
+            }
+
+            hideTranslateBanner();
+            new MutationObserver(hideTranslateBanner).observe(document.documentElement, {
+              childList: true,
+              subtree: true
+            });
           })();
         `}</Script>
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-white text-[#0F172A] selection:bg-[#0047BB] selection:text-white overflow-x-hidden">
+      <body
+        className="min-h-full flex flex-col font-sans bg-white text-[#0F172A] selection:bg-[#0047BB] selection:text-white overflow-x-hidden"
+        suppressHydrationWarning
+      >
         <PageLoader />
         <AnimatedEngineeringBackground />
         <Navbar />
