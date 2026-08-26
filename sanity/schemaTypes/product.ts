@@ -44,6 +44,109 @@ export const product = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'gallery',
+      title: 'Product Gallery (local image paths)',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'galleryImage',
+          title: 'Gallery Image',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'src',
+              title: 'Image Path',
+              type: 'string',
+              description: 'Public URL path, e.g. /Elevators/Passenger%20Elevator%20Cabin/Passenger%20Elevator%20Cabin.png',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'specGroups',
+      title: 'Technical Specifications',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'specGroup',
+          title: 'Specification Group',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Group Title',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'items',
+              title: 'Specifications',
+              type: 'array',
+              of: [
+                defineField({
+                  name: 'spec',
+                  title: 'Specification',
+                  type: 'object',
+                  fields: [
+                    defineField({ name: 'label', title: 'Label', type: 'string', validation: (rule) => rule.required() }),
+                    defineField({ name: 'value', title: 'Value', type: 'string', validation: (rule) => rule.required() }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'technicalDrawings',
+      title: 'Technical Drawings (local image paths)',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'drawing',
+          title: 'Technical Drawing',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'drawingGroup',
+              title: 'Drawing Group',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'General Traction — Machine Room Type', value: 'machine-room' },
+                  { title: 'Machine-Room-Less (MRL) Type', value: 'mrl' },
+                  { title: 'Common / Entrance', value: 'general' },
+                ],
+              },
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'src',
+              title: 'Image Path',
+              type: 'string',
+              description: 'Public URL path, e.g. /Elevators/Passenger%20Elevator%20Cabin/blueprints/Machine%20Room%20Type.png',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
       name: 'order',
       title: 'Order',
       type: 'number',

@@ -17,6 +17,7 @@ interface CategoryProduct {
   description: string | null;
   features: string[] | null;
   image: unknown;
+  gallery: { src: string; alt: string }[] | null;
   category: string;
   categorySlug: string;
 }
@@ -92,7 +93,7 @@ export default function CategoryContent({ category, products }: Props) {
                 <div className="relative overflow-hidden aspect-[4/3] bg-[#f1f5f9]">
                   {p.image ? (
                     <Image
-                      src={urlFor(p.image).width(900).auto("format").url()}
+                      src={p.image ? urlFor(p.image).width(900).auto("format").url() : p.gallery?.[0]?.src ?? "/hero-elevator.jpg"}
                       alt={p.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"

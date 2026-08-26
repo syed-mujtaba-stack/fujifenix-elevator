@@ -146,7 +146,7 @@ export default function CtaContent() {
         {/* main title */}
         <div className="py-12">
           <h1 className="display" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
-            <span className="cta-line block opacity-0 overflow-hidden">LET'S</span>
+            <span className="cta-line block opacity-0 overflow-hidden">LET&rsquo;S</span>
             <span className="cta-line block opacity-0 overflow-hidden">
               BUILD <span className="text-[#0047BB]">TOGETHER</span>
             </span>

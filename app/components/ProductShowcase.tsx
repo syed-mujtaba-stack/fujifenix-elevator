@@ -16,6 +16,7 @@ interface FeaturedProduct {
   description: string | null;
   features: string[] | null;
   image: unknown;
+  gallery: { src: string; alt: string }[] | null;
   category: string;
   categorySlug: string;
 }
@@ -28,7 +29,9 @@ const FEATURED = (products: FeaturedProduct[]) =>
     title: p.title.toUpperCase(),
     desc: p.description ?? "",
     specs: p.features ?? [],
-    img: p.image ? urlFor(p.image).width(1600).auto("format").url() : "/hero-elevator.jpg",
+    img: p.image
+      ? urlFor(p.image).width(1600).auto("format").url()
+      : p.gallery?.[0]?.src ?? "/hero-elevator.jpg",
     imgAlt: p.title,
   }));
 

@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { client } from "@/sanity/lib/client";
-import { categoryQuery, productsByCategoryQuery } from "@/sanity/lib/queries";
+import { safeFetch } from "@/sanity/lib/client";
+import {
+  categoryQuery,
+  productsByCategoryQuery,
+  type SanityCategoryItem,
+  type SanityProductItem,
+} from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import PageHero from "@/app/components/PageHero";
 import CategoryContent from "./CategoryContent";
@@ -9,15 +14,17 @@ import CategoryContent from "./CategoryContent";
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const categories = await client.fetch<{ slug: string }[]>(
-    `*[_type == "category"] { "slug": slug.current }`
+  const categories = await safeFetch<{ slug: string }[]>(
+    `*[_type == "category"] { "slug": slug.current }`,
+    {},
+    []
   );
   return categories.map((c) => ({ category: c.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   const { category } = await params;
-  const cat = await client.fetch(categoryQuery, { slug: category });
+  const cat = await safeFetch<SanityCategoryItem | null>(categoryQuery, { slug: category }, null);
   if (!cat) return {};
   return {
     title: cat.title,
@@ -28,8 +35,8 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
   const [cat, products] = await Promise.all([
-    client.fetch(categoryQuery, { slug: category }),
-    client.fetch(productsByCategoryQuery, { slug: category }),
+    safeFetch<SanityCategoryItem | null>(categoryQuery, { slug: category }, null),
+    safeFetch<SanityProductItem[]>(productsByCategoryQuery, { slug: category }, []),
   ]);
   if (!cat) return notFound();
 

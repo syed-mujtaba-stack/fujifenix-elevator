@@ -88,20 +88,15 @@ export default function BrandStatement() {
           <p className="body-text max-w-lg border-l-2 border-[#0047BB]/20 pl-6 text-slate-600">
             Fuji Fenix Elevator is a leading provider of innovative elevator and escalator solutions, combining advanced technology with precision engineering to deliver world-class vertical transportation systems.
           </p>
-          <div className="flex flex-col justify-center gap-1 md:ml-auto">
-            <div className="eyebrow text-slate-400">HEADQUARTERS</div>
-            <div
-              className="display text-[#0f172a]"
-              style={{ fontSize: "clamp(22px, 2.5vw, 36px)" }}
-            >
-              SHANGHAI
-            </div>
-            <div className="eyebrow text-slate-400 mt-3">REGION</div>
-            <div
-              className="display text-[#0f172a]"
-              style={{ fontSize: "clamp(22px, 2.5vw, 36px)" }}
-            >
-              CHINA
+          <div className="flex flex-col justify-center md:ml-auto">
+            <div className="border-l-2 border-[#0047BB]/40 pl-5">
+              <div className="eyebrow text-slate-400">HEADQUARTERS</div>
+              <div
+                className="display text-[#0f172a] mt-2"
+                style={{ fontSize: "clamp(22px, 2.5vw, 36px)" }}
+              >
+                SHANGHAI, CHINA
+              </div>
             </div>
           </div>
         </div>

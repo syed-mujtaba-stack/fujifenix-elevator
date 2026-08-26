@@ -8,8 +8,8 @@ import TechnologyBlueprint from "./components/TechnologyBlueprint";
 import ProductShowcase from "./components/ProductShowcase";
 import ProjectsShowcase from "./components/ProjectsShowcase";
 import WhyFujiFenix from "./components/WhyFujiFenix";
-import { client } from "@/sanity/lib/client";
-import { featuredProductsQuery } from "@/sanity/lib/queries";
+import { safeFetch } from "@/sanity/lib/client";
+import { featuredProductsQuery, type SanityProductItem } from "@/sanity/lib/queries";
 
 export const revalidate = 60;
 
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const products = await client.fetch(featuredProductsQuery);
+  const products = await safeFetch<SanityProductItem[]>(featuredProductsQuery, {}, []);
   return (
     <main className="min-h-screen bg-white text-[#0f172a] flex flex-col overflow-x-hidden">
       <Hero />
