@@ -39,11 +39,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       <PageHero
         eyebrow={p.category?.toUpperCase() ?? "PRODUCT"}
         title={[p.title.toUpperCase()]}
-        description={p.description ?? undefined}
         image={heroImage}
         breadcrumb="PRODUCTS"
         breadcrumbHref="/products"
         titleBlue
+        centered
       />
       <ProductDetailContent product={p} />
     </>

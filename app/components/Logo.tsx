@@ -4,114 +4,39 @@ import Link from "next/link";
 
 interface LogoProps {
   href?: string;
-  animate?: boolean;
-  /** Override the brand blue if needed (defaults to FujiFenix deep blue) */
-  color?: string;
-  /** Extra classes for the horizontal svg (e.g. responsive height overrides) */
+  /** Extra classes for the svg (e.g. responsive height overrides) */
   className?: string;
+  /** Reserved for callers that previously animated the mark (no-op now) */
+  animate?: boolean;
 }
 
 /**
- * Fuji Fenix logo — hand-drawn geometric SVG letterforms.
- * Grid: cap-height 100u, stroke 24u, letter gap 12u, word gap 28u.
- *
- * Two variants:
- *  • Stacked (FUJI over FENIX) — mobile only; square-ish proportions
- *    so the mark reads as a logo instead of a thin text strip.
- *  • Horizontal wordmark — tablet/desktop (md+).
- * Rendered via currentColor so the brand color stays configurable.
+ * Fuji Fenix logo — client-supplied wordmark (FUJI FENIX ®).
+ * Sourced from public/FUJI FENIX (1).svg: stray artifact removed and the
+ * canvas cropped to the artwork so there is no empty "background" padding.
+ * Inlined (not <img>) so it scales responsively with height utilities and
+ * keeps its native brand colors.
  */
-export default function Logo({ href = "/", color = "#174F96", className = "" }: LogoProps) {
+export default function Logo({ href = "/", className = "" }: LogoProps) {
   return (
     <Link href={href} className="flex items-center group" aria-label="Fuji Fenix Elevator home">
-      {/* ── Stacked variant · mobile ── */}
       <svg
-        viewBox="0 0 324 218"
+        viewBox="100 60 355 70"
         role="img"
         aria-labelledby="fuji-fenix-logo-title"
-        className="h-9 w-auto flex-shrink-0 md:hidden"
-        style={{ color }}
+        className={`h-7 w-auto flex-shrink-0 md:h-8 ${className}`}
       >
         <title id="fuji-fenix-logo-title">Fuji Fenix</title>
-
-        {/* Row 1 · FUJI */}
-        <g fill="currentColor">
-          <path d="M0 0 H64 V24 H24 V38 H56 V62 H24 V100 H0 Z" />
-          <path d="M76 0 H100 V76 H116 V0 H140 V100 H76 Z" />
-          <path d="M184 0 H208 V100 H152 V76 H184 Z" />
-          <path d="M220 0 H244 V100 H220 Z" />
-        </g>
-
-        {/* ® — upper-right of row 1 */}
         <path
+          transform="matrix(1,0,0,-1,0,841.8898)"
+          d="M438.4193 761.855V769.2347H441.6622C442.4771 769.2347 443.0687 769.1681 443.4384 769.0354 443.8077 768.9036 444.1042 768.6683 444.3259 768.3293 444.5478 767.9897 444.6578 767.6028 444.6578 767.1662 444.6578 766.6132 444.4894 766.154 444.1535 765.7934 443.8179 765.4343 443.3142 765.2055 442.6444 765.1131 442.9783 764.9243 443.2533 764.7177 443.4698 764.4926 443.6867 764.2675 443.9781 763.869 444.3457 763.2952L445.2778 761.855H443.4364L442.3232 763.4614C441.9272 764.0359 441.6571 764.3962 441.5114 764.5459 441.3657 764.6956 441.2112 764.7968 441.0476 764.8537 440.8841 764.9082 440.627 764.9359 440.2721 764.9359H439.9608V761.855ZM439.9608 766.1149H441.0995C441.8385 766.1149 442.2997 766.1435 442.4848 766.2044 442.6671 766.2645 442.8111 766.3691 442.9162 766.5171 443.0188 766.6648 443.0721 766.8488 443.0721 767.0699 443.0721 767.319 443.003 767.5189 442.866 767.6714 442.7291 767.8242 442.5361 767.9203 442.2858 767.9619 442.1616 767.9772 441.7863 767.986 441.1616 767.986H439.9608Z"
+          fill="#074ea2"
           fillRule="evenodd"
-          fill="currentColor"
-          d="M256 13 A13 13 0 1 0 282 13 A13 13 0 1 0 256 13 Z M260 13 A9 9 0 1 0 278 13 A9 9 0 1 0 260 13 Z"
         />
         <path
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="butt"
-          d="M265.5 19 V7.5 H270 A3.25 3.25 0 0 1 270 14 H265.5 M270 14 L274 19"
-        />
-
-        {/* Row 2 · FENIX */}
-        <g fill="currentColor" transform="translate(0 118)">
-          <path d="M0 0 H64 V24 H24 V38 H56 V62 H24 V100 H0 Z" />
-          <path d="M76 0 H136 V24 H100 V38 H130 V62 H100 V76 H136 V100 H76 Z" />
-          <path d="M148 0 H172 L188 44 V0 H212 V100 H188 L172 56 V100 H148 Z" />
-          <path d="M224 0 H248 V100 H224 Z" />
-          <path d="M260 0 H282 L292 34 L302 0 H324 L306 50 L324 100 H302 L292 66 L282 100 H260 L278 50 Z" />
-        </g>
-      </svg>
-
-      {/* ── Horizontal variant · tablet/desktop ── */}
-      <svg
-        viewBox="0 0 630 100"
-        role="img"
-        aria-labelledby="fuji-fenix-logo-title"
-        className={`hidden md:block h-6 w-auto md:h-7 flex-shrink-0 ${className}`}
-        style={{ color }}
-      >
-        <title id="fuji-fenix-logo-title">Fuji Fenix</title>
-
-        {/* FUJI */}
-        <g fill="currentColor">
-          {/* F */}
-          <path d="M0 0 H64 V24 H24 V38 H56 V62 H24 V100 H0 Z" />
-          {/* U */}
-          <path d="M76 0 H100 V76 H116 V0 H140 V100 H76 Z" />
-          {/* J */}
-          <path d="M184 0 H208 V100 H152 V76 H184 Z" />
-          {/* I */}
-          <path d="M220 0 H244 V100 H220 Z" />
-
-          {/* FENIX */}
-          {/* F */}
-          <path d="M272 0 H336 V24 H296 V38 H328 V62 H296 V100 H272 Z" />
-          {/* E */}
-          <path d="M348 0 H408 V24 H372 V38 H402 V62 H372 V76 H408 V100 H348 Z" />
-          {/* N */}
-          <path d="M420 0 H444 L460 44 V0 H484 V100 H460 L444 56 V100 H420 Z" />
-          {/* I */}
-          <path d="M496 0 H520 V100 H496 Z" />
-          {/* X */}
-          <path d="M532 0 H554 L564 34 L574 0 H596 L578 50 L596 100 H574 L564 66 L554 100 H532 L550 50 Z" />
-        </g>
-
-        {/* Registered trademark — upper-right of the final X */}
-        <path
-          fillRule="evenodd"
-          fill="currentColor"
-          d="M598 13 A13 13 0 1 0 624 13 A13 13 0 1 0 598 13 Z M602 13 A9 9 0 1 0 620 13 A9 9 0 1 0 602 13 Z"
-        />
-        <path
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="butt"
-          d="M607.5 19 V7.5 H612 A3.25 3.25 0 0 1 612 14 H607.5 M612 14 L616 19"
+          transform="matrix(1,0,0,-1,0,841.8898)"
+          d="M136.1823 757.1344V767.3462H108V720.9283H118.6098V737.9705H135.8507V748.1823H118.6098V757.1344ZM160.0546 720C170.2664 720 177.9588 725.9681 177.9588 735.9148V767.3462H167.3487V736.8432C167.3487 733.3285 165.691 730.3445 160.0546 730.3445 154.4182 730.3445 152.7602 733.3285 152.7602 736.8432V767.3462H142.1504V735.9148C142.1504 725.9681 149.8425 720 160.0546 720ZM199.311 720C208.8598 720 216.0215 725.6364 216.0215 735.8485V767.3462H205.4117V735.8485C205.4117 732.9971 204.0191 730.3445 199.3774 730.3445 195.7963 730.3445 194.2713 731.7371 192.8126 734.3232L183.5952 729.0184C186.6455 723.1167 191.9503 720 199.311 720ZM223.6473 767.3462V720.9283H234.2571V767.3462ZM286.9747 757.1344V767.3462H258.7924V720.9283H269.4022V737.9705H286.6431V748.1823H269.4022V757.1344ZM303.8842 731.1404V739.3629H320.4621V749.4423H303.8842V757.1344H322.1198V767.3462H293.2744V720.9283H322.4514V731.1404ZM354.2808 767.3462V742.1479L336.3769 767.3462H328.4195V720.9283H339.0293V746.1266L356.9335 720.9283H364.8909V767.3462ZM372.848 767.3462V720.9283H383.4578V767.3462ZM427.8866 720.9283 414.0275 744.7343 427.2233 767.3462H415.1548L407.9931 755.0787 400.8314 767.3462H388.7629L401.9587 744.7343 388.0996 720.9283H400.1683L407.9931 734.3232 415.8179 720.9283Z"
+          fill="#134a94"
         />
       </svg>
     </Link>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHeading from "@/app/components/SectionHeading";
+import WeChatQRButton from "@/app/components/WeChatQR";
 import { urlFor } from "@/sanity/lib/image";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -52,11 +53,24 @@ interface ProductData {
   related: RelatedProduct[] | null;
 }
 
-const DRAWING_GROUPS = [
-  { key: "machine-room", label: "General Traction — Machine Room Type" },
-  { key: "mrl", label: "Machine-Room-Less (MRL) Type" },
-  { key: "general", label: "Common / Entrance" },
-] as const;
+/* Short CTA row shown at the end of every product section */
+function SectionCta() {
+  return (
+    <div className="mt-14 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
+      <span className="eyebrow mr-auto text-slate-400">NEED MORE DETAILS?</span>
+      <WeChatQRButton />
+      <Link
+        href="/contact"
+        className="group inline-flex items-center gap-2.5 border border-[#0047BB] bg-[#0047BB] px-5 py-3 eyebrow text-white transition-all duration-200 hover:bg-transparent hover:text-[#0047BB]"
+      >
+        CONTACT US
+        <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
+          →
+        </span>
+      </Link>
+    </div>
+  );
+}
 
 export default function ProductDetailContent({ product }: { product: ProductData }) {
   const ref = useRef<HTMLElement>(null);
@@ -102,19 +116,6 @@ export default function ProductDetailContent({ product }: { product: ProductData
           scrollTrigger: { trigger: ".gal-grid", start: "top 88%" },
         }
       );
-
-      gsap.fromTo(
-        ".draw-item",
-        { opacity: 0, y: 36 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: { trigger: ".draw-groups", start: "top 88%" },
-        }
-      );
     }, ref);
 
     return () => ctx.revert();
@@ -140,12 +141,6 @@ export default function ProductDetailContent({ product }: { product: ProductData
       ? { src: galleryImages[0].src, alt: galleryImages[0].alt }
       : null;
   const galleryRest = product.image ? galleryImages : galleryImages.slice(1);
-
-  const drawings = product.technicalDrawings ?? [];
-  const groupedDrawings = DRAWING_GROUPS.map((g) => ({
-    ...g,
-    items: drawings.filter((d) => d.drawingGroup === g.key),
-  })).filter((g) => g.items.length > 0);
 
   const related = product.related ?? [];
 
@@ -226,6 +221,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
               </Link>
             </div>
           </div>
+          <SectionCta />
         </div>
       </section>
 
@@ -233,11 +229,10 @@ export default function ProductDetailContent({ product }: { product: ProductData
       {product.specGroups && product.specGroups.length > 0 && (
         <section className="bg-[#f8fafc] border-t border-slate-100">
           <div className="container-gutter py-16 md:py-20">
-            <SectionHeading
-              eyebrow="TECHNICAL SPECIFICATIONS"
-              title="SPECIFICATIONS"
-              description="Available configurations and rated performance ranges for this product."
-            />
+            <div className="mb-12 md:mb-16 flex items-center gap-3">
+              <div className="w-8 h-px bg-[#0047BB]" />
+              <span className="eyebrow text-[#0047BB]">SPECIFICATIONS</span>
+            </div>
             <div className="spec-grid grid md:grid-cols-2 gap-8 max-w-4xl">
               {product.specGroups.map((group) => (
                 <div
@@ -263,6 +258,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 </div>
               ))}
             </div>
+            <SectionCta />
           </div>
         </section>
       )}
@@ -298,67 +294,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 </button>
               ))}
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* Technical drawings / blueprints */}
-      {groupedDrawings.length > 0 && (
-        <section className="bg-[#f8fafc] border-t border-slate-100">
-          <div className="container-gutter py-16 md:py-20">
-            <SectionHeading
-              eyebrow="TECHNICAL DRAWINGS"
-              title="BLUEPRINTS &\nDIMENSION DRAWINGS"
-              description="Architectural drawings shown at full aspect ratio. Open any drawing full size for detailed inspection."
-            />
-            <div className="draw-groups max-w-5xl">
-              {groupedDrawings.map((group) => (
-                <div key={group.key} className="mb-14 last:mb-0">
-                  <h3 className="flex items-center gap-3 mb-6">
-                    <span className="w-6 h-px bg-[#0047BB]" />
-                    <span className="eyebrow text-[#0047BB]">{group.label}</span>
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-                    {group.items.map((d) => (
-                      <figure
-                        key={d._key ?? d.src}
-                        className="draw-item bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.035)]"
-                      >
-                        <button
-                          type="button"
-                          onClick={() => setZoom({ src: d.src, alt: d.title })}
-                          aria-label={`Enlarge drawing: ${d.title}`}
-                          className="block w-full cursor-zoom-in bg-white p-4 md:p-6"
-                        >
-                          <div className="relative w-full aspect-[4/3]">
-                            <Image
-                              src={d.src}
-                              alt={`${d.title} — technical drawing for ${product.title}`}
-                              fill
-                              className="object-contain"
-                              sizes="(max-width: 768px) 100vw, 50vw"
-                            />
-                          </div>
-                        </button>
-                        <figcaption className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 px-5 py-4">
-                          <span className="heading text-[#0f172a]" style={{ fontSize: "14px" }}>
-                            {d.title}
-                          </span>
-                          <a
-                            href={d.src}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] hover:underline whitespace-nowrap"
-                          >
-                            OPEN FULL SIZE ↗
-                          </a>
-                        </figcaption>
-                      </figure>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <SectionCta />
           </div>
         </section>
       )}
@@ -416,6 +352,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 </Link>
               ))}
             </div>
+            <SectionCta />
           </div>
         </section>
       )}

@@ -17,6 +17,8 @@ interface PageHeroProps {
   breadcrumbHref?: string;
   /** Accent the full title in light blue (readable on the dark photo backdrop) */
   titleBlue?: boolean;
+  /** Center the eyebrow + heading block */
+  centered?: boolean;
 }
 
 export default function PageHero({
@@ -30,6 +32,7 @@ export default function PageHero({
   breadcrumb,
   breadcrumbHref,
   titleBlue = false,
+  centered = false,
 }: PageHeroProps) {
   const ref = useRef<HTMLElement>(null);
   const lines = title ?? titleLines ?? [];
@@ -94,8 +97,8 @@ export default function PageHero({
         </div>
 
         {/* Heading block */}
-        <div className="max-w-3xl mt-16 md:mt-24">
-          <div className="ph-eyebrow flex items-center gap-3 mb-8 opacity-0">
+        <div className={`max-w-3xl mt-16 md:mt-24 flex flex-col ${centered ? "items-center text-center mx-auto" : ""}`}>
+          <div className={`ph-eyebrow flex items-center gap-3 mb-8 opacity-0 ${centered ? "justify-center" : ""}`}>
             <div className="w-8 h-px bg-[#0047BB]" />
             <span className="eyebrow text-[#60a5fa]">{eyebrow}</span>
           </div>
