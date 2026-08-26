@@ -81,15 +81,15 @@ const PRODUCT_DOC = {
   gallery: [
     {
       _type: 'galleryImage',
-      _key: 'hero',
-      src: `${BASE}/Passenger%20Elevator%20Cabin.png`,
-      alt: 'Fuji Fenix passenger elevator cabin with brushed stainless steel walls, dual LED ceiling panels, and marble floor',
+      _key: 'pattern-etched',
+      src: `${BASE}/Passenger%20Elevator%20Cabin%20(Pattern%20Etched%20Stainless%20Steel%20%26%20Center%20Mirror%20Finish).png`,
+      alt: 'Passenger elevator cabin with pattern etched stainless steel panels and center mirror finish',
     },
     {
       _type: 'galleryImage',
-      _key: 'pattern-etched',
-      src: `${BASE}/Passenger%20Elevator%20Cabin%20(Pattern%20Etched%20Stainless%20Steel%20&%20Center%20Mirror%20Finish).png`,
-      alt: 'Passenger elevator cabin with pattern etched stainless steel panels and center mirror finish',
+      _key: 'mirror-strip',
+      src: `${BASE}/Passenger%20Elevator%20Cabin%20(Mirror%20Strip%20%26%20Matte,%20Etched%20Stainless%20Steel%20Finish).png`,
+      alt: 'Passenger elevator cabin with mirror strip and matte etched stainless steel finish',
     },
     {
       _type: 'galleryImage',
@@ -99,21 +99,21 @@ const PRODUCT_DOC = {
     },
     {
       _type: 'galleryImage',
-      _key: 'luxury-golden',
-      src: `${BASE}/Luxury%20Golden%20Passenger%20Elevator%20Cabin%20(Golden%20Mirror%20Etched%20Stainless%20Steel).png`,
-      alt: 'Luxury golden passenger elevator cabin with golden mirror etched stainless steel finish and ornate ceiling',
+      _key: 'hero',
+      src: `${BASE}/Passenger%20Elevator%20Cabin.png`,
+      alt: 'Fuji Fenix passenger elevator cabin with brushed stainless steel walls, dual LED ceiling panels, and marble floor',
     },
     {
       _type: 'galleryImage',
       _key: 'grid-ceiling',
-      src: `${BASE}/Passenger%20Elevator%20Cabin%20(Mirror%20&%20Stainless%20Steel%20Finish%20with%20Grid%20Ceiling).png`,
+      src: `${BASE}/Passenger%20Elevator%20Cabin%20(Mirror%20%26%20Stainless%20Steel%20Finish%20with%20Grid%20Ceiling).png`,
       alt: 'Passenger elevator cabin with mirror and stainless steel finish and grid LED ceiling',
     },
     {
       _type: 'galleryImage',
-      _key: 'mirror-strip',
-      src: `${BASE}/Passenger%20Elevator%20Cabin%20(Mirror%20Strip%20&%20Matte,%20Etched%20Stainless%20Steel%20Finish).png`,
-      alt: 'Passenger elevator cabin with mirror strip and matte etched stainless steel finish',
+      _key: 'luxury-golden',
+      src: `${BASE}/Luxury%20Golden%20Passenger%20Elevator%20Cabin%20(Golden%20Mirror%20Etched%20Stainless%20Steel).png`,
+      alt: 'Luxury golden passenger elevator cabin with golden mirror etched stainless steel finish and ornate ceiling',
     },
   ],
   specGroups: [

@@ -167,10 +167,10 @@ export default function ProductDetailContent({ product }: { product: ProductData
             <div className="pd-reveal relative bg-[#f1f5f9] border border-slate-100 flex items-center justify-center p-8 md:p-14">
               {heroImage ? (
                 <div className="relative w-full max-w-[460px] aspect-[2/3]">
-                  <Image
-                    src={heroImage.src}
-                    alt={heroImage.alt}
-                    fill
+                   <Image
+                     src={heroImage.src}
+                     alt={heroImage.alt || product.title || "Product image"}
+                     fill
                     priority
                     className="object-contain"
                     sizes="(max-width: 1024px) 100vw, 46vw"
@@ -281,11 +281,11 @@ export default function ProductDetailContent({ product }: { product: ProductData
                   aria-label={`View larger: ${img.alt}`}
                   className="gal-item group relative aspect-[2/3] bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in"
                 >
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    className="object-contain p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+                   <Image
+                     src={img.src}
+                     alt={img.alt || product.title || "Product image"}
+                     fill
+                     className="object-contain p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04]"
                     sizes="(max-width: 768px) 50vw, 33vw"
                   />
                   <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">
@@ -375,7 +375,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
             ✕
           </button>
           <div className="relative w-full h-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
-            <Image src={zoom.src} alt={zoom.alt} fill className="object-contain" sizes="100vw" />
+            <Image src={zoom.src} alt={zoom.alt || product.title || "Product image"} fill className="object-contain" sizes="100vw" />
           </div>
         </div>
       )}
