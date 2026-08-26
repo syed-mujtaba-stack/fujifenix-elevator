@@ -38,7 +38,7 @@ export interface SanityProductItem {
 export interface SanityProductDetail extends SanityProductItem {
   specGroups: SpecGroup[] | null;
   technicalDrawings: TechnicalDrawing[] | null;
-  related: { _id: string; title: string; slug: string; category: string; image: unknown }[] | null;
+  related: { _id: string; title: string; slug: string; category: string; image: unknown; gallery: { src: string; alt: string }[] | null }[] | null;
 }
 
 export interface SanityCategoryItem {
@@ -113,7 +113,8 @@ export const productQuery = `
       title,
       "slug": slug.current,
       "category": category->title,
-      image
+      image,
+      "gallery": gallery[] { src, alt }
     }
   }
 `

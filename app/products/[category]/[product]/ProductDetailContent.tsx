@@ -36,6 +36,7 @@ interface RelatedProduct {
   slug: string;
   category: string;
   image: unknown;
+  gallery: { src: string; alt: string }[] | null;
 }
 
 interface ProductData {
@@ -321,10 +322,10 @@ export default function ProductDetailContent({ product }: { product: ProductData
                   className="group block"
                 >
                   <div className="relative overflow-hidden aspect-[4/3] bg-[#e2e8f0]">
-                    {p.image ? (
+                    {(p.image || p.gallery?.[0]?.src) ? (
                       <Image
-                        src={urlFor(p.image).width(800).auto("format").url()}
-                        alt={p.title}
+                        src={p.image ? urlFor(p.image).width(800).auto("format").url() : p.gallery?.[0]?.src ?? "/hero-elevator.jpg"}
+                        alt={p.gallery?.[0]?.alt || p.title || "Product image"}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 33vw"
