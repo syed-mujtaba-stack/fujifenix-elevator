@@ -279,6 +279,7 @@ export const PRODUCT_MENU = [
     items: [
       { label: "Passenger Elevator Cabin", href: "/products/elevators/passenger-elevator-cabin" },
       { label: "Home Elevators", href: "/products/elevators/home-elevators" },
+      { label: "High-Speed Elevators", href: "/products/elevators/high-speed-elevators" },
       { label: "View All Elevators", href: "/products/elevators" },
     ],
   },
