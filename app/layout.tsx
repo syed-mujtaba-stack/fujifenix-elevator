@@ -69,7 +69,10 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <head>
+      <body
+        className="min-h-full flex flex-col font-sans bg-white text-[#0F172A] selection:bg-[#0047BB] selection:text-white overflow-x-hidden"
+        suppressHydrationWarning
+      >
         {/* Override removeChild BEFORE React mounts to catch Google Translate DOM mutations */}
         <Script id="google-translate-patch" strategy="beforeInteractive">{`
           (function() {
@@ -99,11 +102,6 @@ export default function RootLayout({
             });
           })();
         `}</Script>
-      </head>
-      <body
-        className="min-h-full flex flex-col font-sans bg-white text-[#0F172A] selection:bg-[#0047BB] selection:text-white overflow-x-hidden"
-        suppressHydrationWarning
-      >
         <PageLoader />
         <AnimatedEngineeringBackground />
         <Navbar />
