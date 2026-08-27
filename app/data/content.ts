@@ -281,6 +281,7 @@ export const PRODUCT_MENU = [
       { label: "Home Elevators", href: "/products/elevators/home-elevators" },
       { label: "High-Speed Elevators", href: "/products/elevators/high-speed-elevators" },
       { label: "Panoramic / Observation Elevators", href: "/products/elevators/panoramic-observation-elevators" },
+      { label: "Freight Elevators", href: "/products/elevators/freight-elevators" },
       { label: "View All Elevators", href: "/products/elevators" },
     ],
   },

@@ -147,6 +147,18 @@ export const product = defineType({
       ],
     }),
     defineField({
+      name: 'disclaimer',
+      title: 'Disclaimer (e.g. specifications may vary by project)',
+      type: 'text',
+      rows: 2,
+    }),
+    defineField({
+      name: 'imageDisclaimer',
+      title: 'Image Disclaimer (e.g. images for illustrative purposes only)',
+      type: 'text',
+      rows: 2,
+    }),
+    defineField({
       name: 'order',
       title: 'Order',
       type: 'number',

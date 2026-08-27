@@ -38,6 +38,8 @@ export interface SanityProductItem {
 export interface SanityProductDetail extends SanityProductItem {
   specGroups: SpecGroup[] | null;
   technicalDrawings: TechnicalDrawing[] | null;
+  disclaimer: string | null;
+  imageDisclaimer: string | null;
   related: { _id: string; title: string; slug: string; category: string; image: unknown; gallery: { src: string; alt: string }[] | null }[] | null;
 }
 
@@ -58,6 +60,8 @@ const detailProjections = `
     ${galleryProjection}
     "specGroups": specGroups[] { title, items[] { label, value } },
     "technicalDrawings": technicalDrawings[] { title, drawingGroup, src },
+    "disclaimer": disclaimer,
+    "imageDisclaimer": imageDisclaimer,
 `
 
 export const categoriesQuery = `

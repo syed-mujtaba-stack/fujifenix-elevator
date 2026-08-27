@@ -49,6 +49,8 @@ interface ProductData {
   gallery: GalleryImage[] | null;
   specGroups: SpecGroup[] | null;
   technicalDrawings: TechnicalDrawing[] | null;
+  disclaimer?: string | null;
+  imageDisclaimer?: string | null;
   category: string;
   categorySlug: string;
   related: RelatedProduct[] | null;
@@ -70,6 +72,15 @@ function SectionCta() {
         </span>
       </Link>
     </div>
+  );
+}
+
+/* Subtle client / legal note shown only when the product defines one */
+function Disclaimer({ text }: { text: string }) {
+  return (
+    <p className="mt-8 border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500">
+      {text}
+    </p>
   );
 }
 
@@ -264,6 +275,15 @@ export default function ProductDetailContent({ product }: { product: ProductData
         </section>
       )}
 
+      {/* General disclaimer (client note, e.g. specs may vary) */}
+      {product.disclaimer && (
+        <section className="bg-[#f8fafc] border-t border-slate-100">
+          <div className="container-gutter py-8">
+            <Disclaimer text={product.disclaimer} />
+          </div>
+        </section>
+      )}
+
       {/* Product gallery */}
       {galleryRest.length > 0 && (
         <section className="bg-white border-t border-slate-100">
@@ -295,6 +315,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 </button>
               ))}
             </div>
+            {product.imageDisclaimer && <Disclaimer text={product.imageDisclaimer} />}
             <SectionCta />
           </div>
         </section>
