@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { CONTACT } from "@/app/data/content";
 import Logo from "./Logo";
@@ -129,6 +130,13 @@ export default function Footer() {
           <span className="eyebrow text-[#0047BB] text-[10px]">{CONTACT.phone}</span>
         </div>
       </div>
+
+      {/* Zanderio AI chat widget */}
+      <Script
+        src="https://cdn.zanderio.ai/widget/loader.js"
+        data-id="wdg_VsNSec0hfmhmQSJqXz1M9Rf5"
+        strategy="afterInteractive"
+      />
     </footer>
   );
 }
