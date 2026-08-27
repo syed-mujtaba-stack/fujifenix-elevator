@@ -270,7 +270,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
           <div className="container-gutter py-16 md:py-20">
             <SectionHeading
               eyebrow="PRODUCT GALLERY"
-              title="CABIN FINISH\nOPTIONS"
+              title="CABIN FINISH OPTIONS"
               description="A selection of cabin interior finishes available for this product. Click any image to view it larger."
             />
             <div className="gal-grid grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8">
