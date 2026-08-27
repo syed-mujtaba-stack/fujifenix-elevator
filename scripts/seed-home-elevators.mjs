@@ -155,8 +155,8 @@ const PRODUCT_DOC = {
       title: 'Aluminum Structure Home Elevator',
       items: [
         { _type: 'spec', _key: 'as-type', label: 'Type', value: 'Machine-Room-Less (MRL)' },
-        { _type: 'spec', _key: 'as-load', label: 'Load Capacity', value: '250–450 kg' },
-        { _type: 'spec', _key: 'as-speed', label: 'Speed', value: '0.15–1.00 m/s' },
+        { _type: 'spec', _key: 'as-load', label: 'Load Capacity', value: '250–400 kg' },
+        { _type: 'spec', _key: 'as-speed', label: 'Speed', value: '0.15m/sec-0.4m/sec' },
         { _type: 'spec', _key: 'as-structure', label: 'Structure', value: 'Aluminum' },
         { _type: 'spec', _key: 'as-standard-colors', label: 'Standard Colors', value: 'Black / White / Champagne Gold' },
         { _type: 'spec', _key: 'as-custom-colors', label: 'Custom Colors', value: 'Available upon request' },
