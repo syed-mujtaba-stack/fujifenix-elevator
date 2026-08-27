@@ -51,6 +51,8 @@ interface ProductData {
   technicalDrawings: TechnicalDrawing[] | null;
   disclaimer?: string | null;
   imageDisclaimer?: string | null;
+  designedFor?: string[] | null;
+  configurationNote?: string | null;
   category: string;
   categorySlug: string;
   related: RelatedProduct[] | null;
@@ -237,6 +239,35 @@ export default function ProductDetailContent({ product }: { product: ProductData
         </div>
       </section>
 
+      {/* Image disclaimer (client note, near product imagery) */}
+      {product.imageDisclaimer && (
+        <section className="bg-white border-t border-slate-100">
+          <div className="container-gutter py-8">
+            <Disclaimer text={product.imageDisclaimer} />
+          </div>
+        </section>
+      )}
+
+      {/* Designed For */}
+      {product.designedFor && product.designedFor.length > 0 && (
+        <section className="bg-white border-t border-slate-100">
+          <div className="container-gutter py-16 md:py-20">
+            <div className="mb-12 md:mb-16 flex items-center gap-3">
+              <div className="w-8 h-px bg-[#0047BB]" />
+              <span className="eyebrow text-[#0047BB]">DESIGNED FOR</span>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8">
+              {product.designedFor.map((item, i) => (
+                <div key={item} className="bg-[#f8fafc] border border-slate-200 p-8 text-center">
+                  <span className="eyebrow text-[#0047BB]">0{i + 1}</span>
+                  <p className="heading text-[#0f172a] mt-3" style={{ fontSize: '17px' }}>{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Technical specifications */}
       {product.specGroups && product.specGroups.length > 0 && (
         <section className="bg-[#f8fafc] border-t border-slate-100">
@@ -315,8 +346,17 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 </button>
               ))}
             </div>
-            {product.imageDisclaimer && <Disclaimer text={product.imageDisclaimer} />}
             <SectionCta />
+          </div>
+        </section>
+      )}
+
+      {/* Configuration note + general disclaimer (client notes) */}
+      {(product.configurationNote || product.disclaimer) && (
+        <section className="bg-[#f8fafc] border-t border-slate-100">
+          <div className="container-gutter py-8 space-y-4">
+            {product.configurationNote && <Disclaimer text={product.configurationNote} />}
+            {product.disclaimer && <Disclaimer text={product.disclaimer} />}
           </div>
         </section>
       )}

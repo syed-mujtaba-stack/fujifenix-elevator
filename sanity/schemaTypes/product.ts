@@ -159,6 +159,18 @@ export const product = defineType({
       rows: 2,
     }),
     defineField({
+      name: 'designedFor',
+      title: 'Designed For (list of use cases)',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'configurationNote',
+      title: 'Configuration Note (e.g. configured per project requirements)',
+      type: 'text',
+      rows: 2,
+    }),
+    defineField({
       name: 'order',
       title: 'Order',
       type: 'number',

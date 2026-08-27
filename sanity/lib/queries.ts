@@ -40,6 +40,8 @@ export interface SanityProductDetail extends SanityProductItem {
   technicalDrawings: TechnicalDrawing[] | null;
   disclaimer: string | null;
   imageDisclaimer: string | null;
+  designedFor: string[] | null;
+  configurationNote: string | null;
   related: { _id: string; title: string; slug: string; category: string; image: unknown; gallery: { src: string; alt: string }[] | null }[] | null;
 }
 
@@ -62,6 +64,8 @@ const detailProjections = `
     "technicalDrawings": technicalDrawings[] { title, drawingGroup, src },
     "disclaimer": disclaimer,
     "imageDisclaimer": imageDisclaimer,
+    "designedFor": designedFor,
+    "configurationNote": configurationNote,
 `
 
 export const categoriesQuery = `
