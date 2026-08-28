@@ -12,6 +12,8 @@ export interface SpecItem {
 
 export interface SpecGroup {
   title: string;
+  sectionImages?: string[] | null;
+  sectionDescription?: string | null;
   items: SpecItem[] | null;
   _key?: string;
 }
@@ -56,11 +58,11 @@ export interface SanityCategoryItem {
 }
 
 const galleryProjection = `
-    gallery[] { src, alt },
+    gallery[] { _key, src, alt },
 `
 const detailProjections = `
     ${galleryProjection}
-    "specGroups": specGroups[] { title, items[] { label, value } },
+    "specGroups": specGroups[] { title, sectionImages, sectionDescription, items[] { label, value } },
     "technicalDrawings": technicalDrawings[] { title, drawingGroup, src },
     "disclaimer": disclaimer,
     "imageDisclaimer": imageDisclaimer,

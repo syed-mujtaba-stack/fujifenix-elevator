@@ -87,6 +87,19 @@ export const product = defineType({
               validation: (rule) => rule.required(),
             }),
             defineField({
+              name: 'sectionImages',
+              title: 'Section Gallery Image Keys (optional)',
+              type: 'array',
+              of: [{ type: 'string' }],
+              description: 'Gallery image _key values to show in this section, e.g. ["villa-wood-steel", "dual-tone-wood-steel"]',
+            }),
+            defineField({
+              name: 'sectionDescription',
+              title: 'Section Description (optional)',
+              type: 'text',
+              rows: 3,
+            }),
+            defineField({
               name: 'items',
               title: 'Specifications',
               type: 'array',

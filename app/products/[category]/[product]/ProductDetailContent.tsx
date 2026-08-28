@@ -19,6 +19,8 @@ interface GalleryImage {
 
 interface SpecGroup {
   title: string;
+  sectionImages?: string[] | null;
+  sectionDescription?: string | null;
   items: { label: string; value: string; _key?: string }[] | null;
   _key?: string;
 }
@@ -155,6 +157,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       ? { src: galleryImages[0].src, alt: galleryImages[0].alt }
       : null;
   const galleryRest = product.image ? galleryImages : galleryImages.slice(1);
+  const hasSections = product.specGroups?.some((g) => g.sectionImages && g.sectionImages.length > 0) ?? false;
 
   const related = product.related ?? [];
 
@@ -269,42 +272,116 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {/* Technical specifications */}
-      {product.specGroups && product.specGroups.length > 0 && (
-        <section className="bg-[#f8fafc] border-t border-slate-100">
-          <div className="container-gutter py-16 md:py-20">
-            <div className="mb-12 md:mb-16 flex items-center gap-3">
-              <div className="w-8 h-px bg-[#0047BB]" />
-              <span className="eyebrow text-[#0047BB]">SPECIFICATIONS</span>
-            </div>
-            <div className="spec-grid grid md:grid-cols-2 gap-8 max-w-4xl">
-              {product.specGroups.map((group) => (
-                <div
-                  key={group._key ?? group.title}
-                  className="spec-card bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.035)]"
-                >
-                  <div className="bg-[#0047BB] px-6 py-4">
-                    <h3 className="eyebrow text-white">{group.title}</h3>
+      {product.specGroups && product.specGroups.length > 0 && (() => {
+        const hasSections = product.specGroups.some((g) => g.sectionImages && g.sectionImages.length > 0);
+
+        if (hasSections) {
+          return product.specGroups.map((group) => {
+            const sectionImgs = (group.sectionImages ?? [])
+              .map((key) => galleryImages.find((g) => g._key === key))
+              .filter(Boolean) as GalleryImage[];
+
+            return (
+              <section key={group._key ?? group.title} className="bg-white border-t border-slate-100">
+                <div className="container-gutter py-16 md:py-20">
+                  {/* Section title */}
+                  <div className="mb-8">
+                    <h2 className="heading text-[#0f172a] mb-3" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>
+                      {group.title}
+                    </h2>
                   </div>
-                  <dl>
-                    {(group.items ?? []).map((item, i) => (
-                      <div
-                        key={item._key ?? item.label}
-                        className={`flex items-center justify-between gap-6 px-6 py-5 ${i > 0 ? "border-t border-slate-100" : ""}`}
-                      >
-                        <dt className="eyebrow text-slate-400">{item.label}</dt>
-                        <dd className="heading text-[#0f172a] text-right" style={{ fontSize: "17px" }}>
-                          {item.value}
-                        </dd>
+
+                  {/* Section gallery images */}
+                  {sectionImgs.length > 0 && (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 mb-12 [grid-auto-rows:1fr]">
+                      {sectionImgs.map((img) => (
+                        <button
+                          key={img._key ?? img.src}
+                          type="button"
+                          onClick={() => setZoom({ src: img.src, alt: img.alt })}
+                          aria-label={`View larger: ${img.alt}`}
+                          className="gal-item group relative aspect-[2/3] bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full"
+                        >
+                          <Image
+                            src={img.src}
+                            alt={img.alt || group.title}
+                            fill
+                            quality={85}
+                            className="object-cover p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+                            sizes="(max-width: 768px) 50vw, 33vw"
+                          />
+                          <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">
+                            ZOOM ⤢
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Key Specifications */}
+                  <div className="max-w-2xl">
+                    <div className="bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.035)]">
+                      <div className="bg-[#0047BB] px-6 py-4">
+                        <h3 className="eyebrow text-white">{group.title}</h3>
                       </div>
-                    ))}
-                  </dl>
+                      <dl>
+                        {(group.items ?? []).map((item, i) => (
+                          <div
+                            key={item._key ?? item.label}
+                            className={`flex items-center justify-between gap-6 px-6 py-5 ${i > 0 ? "border-t border-slate-100" : ""}`}
+                          >
+                            <dt className="eyebrow text-slate-400">{item.label}</dt>
+                            <dd className="heading text-[#0f172a] text-right" style={{ fontSize: "17px" }}>
+                              {item.value}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  </div>
                 </div>
-              ))}
+              </section>
+            );
+          });
+        }
+
+        return (
+          <section className="bg-[#f8fafc] border-t border-slate-100">
+            <div className="container-gutter py-16 md:py-20">
+              <div className="mb-12 md:mb-16 flex items-center gap-3">
+                <div className="w-8 h-px bg-[#0047BB]" />
+                <span className="eyebrow text-[#0047BB]">SPECIFICATIONS</span>
+              </div>
+              <div className="spec-grid grid md:grid-cols-2 gap-8 max-w-4xl">
+                {product.specGroups.map((group) => (
+                  <div
+                    key={group._key ?? group.title}
+                    className="spec-card bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.035)]"
+                  >
+                    <div className="bg-[#0047BB] px-6 py-4">
+                      <h3 className="eyebrow text-white">{group.title}</h3>
+                    </div>
+                    <dl>
+                      {(group.items ?? []).map((item, i) => (
+                        <div
+                          key={item._key ?? item.label}
+                          className={`flex items-center justify-between gap-6 px-6 py-5 ${i > 0 ? "border-t border-slate-100" : ""}`}
+                        >
+                          <dt className="eyebrow text-slate-400">{item.label}</dt>
+                          <dd className="heading text-[#0f172a] text-right" style={{ fontSize: "17px" }}>
+                            {item.value}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                ))}
+              </div>
+              <SectionCta />
             </div>
-            <SectionCta />
-          </div>
-        </section>
-      )}
+          </section>
+        );
+      })()}
 
       {/* General disclaimer (client note, e.g. specs may vary) */}
       {product.disclaimer && (
@@ -315,8 +392,24 @@ export default function ProductDetailContent({ product }: { product: ProductData
         </section>
       )}
 
-      {/* Product gallery */}
-      {galleryRest.length > 0 && (
+      {/* Request Technical Specification CTA */}
+      {product.specGroups && product.specGroups.some((g) => g.sectionImages && g.sectionImages.length > 0) && (
+        <section className="bg-white border-t border-slate-100">
+          <div className="container-gutter py-12 flex flex-wrap items-center gap-6">
+            <Link
+              href="/contact"
+              className="group inline-flex items-center gap-3 border border-[#0047BB] bg-[#0047BB] px-6 py-4 eyebrow text-white transition-all duration-200 hover:bg-transparent hover:text-[#0047BB]"
+            >
+              REQUEST TECHNICAL SPECIFICATION
+              <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">→</span>
+            </Link>
+            <WeChatQRButton />
+          </div>
+        </section>
+      )}
+
+      {/* Product gallery — skip for section-based products */}
+      {!hasSections && galleryRest.length > 0 && (
         <section className="bg-white border-t border-slate-100">
           <div className="container-gutter py-16 md:py-20">
             <SectionHeading
@@ -353,12 +446,11 @@ export default function ProductDetailContent({ product }: { product: ProductData
         </section>
       )}
 
-      {/* Configuration note + general disclaimer (client notes) */}
-      {(product.configurationNote || product.disclaimer) && (
+      {/* Configuration note (client notes) */}
+      {product.configurationNote && (
         <section className="bg-[#f8fafc] border-t border-slate-100">
           <div className="container-gutter py-8 space-y-4">
-            {product.configurationNote && <Disclaimer text={product.configurationNote} />}
-            {product.disclaimer && <Disclaimer text={product.disclaimer} />}
+            <Disclaimer text={product.configurationNote} />
           </div>
         </section>
       )}
