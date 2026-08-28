@@ -283,6 +283,7 @@ export const PRODUCT_MENU = [
       { label: "Panoramic / Observation Elevators", href: "/products/elevators/panoramic-observation-elevators" },
       { label: "Freight Elevators", href: "/products/elevators/freight-elevators" },
       { label: "Hospital Bed Elevators", href: "/products/elevators/hospital-bed-elevators" },
+      { label: "Escalator", href: "/products/elevators/escalator" },
       { label: "View All Elevators", href: "/products/elevators" },
     ],
   },

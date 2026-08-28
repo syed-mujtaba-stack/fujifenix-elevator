@@ -300,7 +300,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                           type="button"
                           onClick={() => setZoom({ src: img.src, alt: img.alt })}
                           aria-label={`View larger: ${img.alt}`}
-                          className="gal-item group relative aspect-[2/3] bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full"
+                          className={`gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full aspect-[2/3] ${img._key === 'luxury-gold-1' ? 'md:col-span-2 aspect-[4/3]' : ''}`}
                         >
                           <Image
                             src={img.src}
@@ -352,7 +352,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 <div className="w-8 h-px bg-[#0047BB]" />
                 <span className="eyebrow text-[#0047BB]">SPECIFICATIONS</span>
               </div>
-              <div className="spec-grid grid md:grid-cols-2 gap-8 max-w-4xl">
+              <div className={`spec-grid grid gap-8 ${product.specGroups.length <= 1 ? 'grid-cols-1 max-w-3xl' : 'md:grid-cols-2 max-w-4xl'}`}>
                 {product.specGroups.map((group) => (
                   <div
                     key={group._key ?? group.title}
