@@ -211,7 +211,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 <div className="pd-reveal -mt-6 mb-8">
                   <span className="inline-flex items-center gap-2 bg-[#f1f5f9] text-[#0047BB] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em]">
                     <span className="w-1 h-1 bg-[#0047BB] rounded-full" />
-                    {product.category}
+                    {product.title?.toUpperCase()?.includes('ESCALATOR') ? 'ESCALATORS' : product.category}
                   </span>
                 </div>
               )}

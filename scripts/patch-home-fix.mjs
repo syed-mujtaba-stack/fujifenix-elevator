@@ -23,8 +23,6 @@ const client = createClient({
   useCdn: false,
 })
 
-const BASE = '/Elevators/Home%20Elevators'
-
 const UPDATED_SPECGROUPS = [
   {
     _type: 'specGroup',
@@ -41,7 +39,7 @@ const UPDATED_SPECGROUPS = [
     _type: 'specGroup',
     _key: 'platform',
     title: 'Platform Home Elevator',
-    sectionImages: ['luxury-gold-1','luxury-gold-2'],
+    sectionImages: ['luxury-gold-1','luxury-gold-2','luxury-gold-3'],
     items: [
       { _type: 'spec', _key: 'pl-type', label: 'Type', value: 'Machine-Room-Less (MRL)' },
       { _type: 'spec', _key: 'pl-load', label: 'Load Capacity', value: '250–400 kg' },
@@ -57,7 +55,7 @@ const UPDATED_SPECGROUPS = [
     items: [
       { _type: 'spec', _key: 'as-type', label: 'Type', value: 'Machine-Room-Less (MRL)' },
       { _type: 'spec', _key: 'as-load', label: 'Load Capacity', value: '250–400 kg' },
-      { _type: 'spec', _key: 'as-speed', label: 'Speed', value: '0.15–1.00 m/s' },
+      { _type: 'spec', _key: 'as-speed', label: 'Speed', value: '0.15–0.4m/sec' },
       { _type: 'spec', _key: 'as-structure', label: 'Structure', value: 'Aluminum' },
       { _type: 'spec', _key: 'as-standard-colors', label: 'Standard Colors', value: 'Black, White, Champagne Gold' },
       { _type: 'spec', _key: 'as-custom-colors', label: 'Custom Colors', value: 'Available upon request' },
@@ -69,7 +67,7 @@ async function main() {
   const product = await client.fetch(`*[_type == "product" && slug.current == "home-elevators"][0] { _id }`)
   if (!product) { console.error('Not found'); return }
   await client.patch(product._id).set({ specGroups: UPDATED_SPECGROUPS }).commit()
-  console.log('Done: Aluminum Structure Load Capacity → 250–400 kg')
+  console.log('Done: Aluminum Speed → 0.15–0.4m/sec, Added luxury-gold-3')
 }
 
 main().catch(console.error)
