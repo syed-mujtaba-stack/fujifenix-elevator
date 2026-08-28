@@ -71,8 +71,6 @@ const PRODUCT_DOC = {
   description:
     'The Fuji Fenix Passenger Elevator Cabin combines precision engineering with refined interior finishes. Available in General Traction (Machine Room) and Machine-Room-Less (MRL) configurations, with etched stainless steel, mirror, and premium golden cabin finish options for residential, commercial, and public buildings.',
   features: [
-    'General Traction — Machine Room',
-    'Machine-Room-Less (MRL)',
     'Load Range 450–2000 KG',
     'Speed Range 1.00–2.50 m/sec',
     'Multiple Cabin Finish Options',
@@ -120,9 +118,8 @@ const PRODUCT_DOC = {
     {
       _type: 'specGroup',
       _key: 'machine-room',
-      title: 'General Traction — Machine Room',
+      title: 'General Traction- Machine Room',
       items: [
-        { _type: 'spec', _key: 'mr-type', label: 'Type', value: 'General Traction — Machine Room' },
         { _type: 'spec', _key: 'mr-load', label: 'Load Capacity', value: '450KG–2000 KG' },
         { _type: 'spec', _key: 'mr-speed', label: 'Speed', value: '1.00m/sec-2.50m/sec' },
       ],
@@ -132,7 +129,6 @@ const PRODUCT_DOC = {
       _key: 'mrl',
       title: 'Machine-Room-Less (MRL)',
       items: [
-        { _type: 'spec', _key: 'mrl-type', label: 'Type', value: 'Machine-Room-Less (MRL)' },
         { _type: 'spec', _key: 'mrl-load', label: 'Load Capacity', value: '450KG–2000 KG' },
         { _type: 'spec', _key: 'mrl-speed', label: 'Speed', value: '1.00m/sec-2.50m/sec' },
       ],

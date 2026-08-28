@@ -75,7 +75,7 @@ const PRODUCT_DOC = {
     {
       _type: 'galleryImage',
       _key: 'car',
-      src: `${BASE}/High-Speed%20Elevator%20Car%20(Aerodynamic%20Cabin%20Design).jpg`,
+      src: `${BASE}/High-Speed%20Elevator%20Car%20(Aerodynamic%20Cabin%20Design).png`,
       alt: 'Fuji Fenix high-speed elevator car with aerodynamic cabin design',
     },
     {

@@ -324,20 +324,22 @@ export default function ProductDetailContent({ product }: { product: ProductData
               title="CABIN FINISH OPTIONS"
               description="A selection of cabin interior finishes available for this product. Click any image to view it larger."
             />
-            <div className="gal-grid grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8">
+            <div className="gal-grid grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 [grid-auto-rows:1fr]">
               {galleryRest.map((img) => (
                 <button
                   key={img._key ?? img.src}
                   type="button"
                   onClick={() => setZoom({ src: img.src, alt: img.alt })}
                   aria-label={`View larger: ${img.alt}`}
-                  className="gal-item group relative aspect-[2/3] bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in"
+                  className="gal-item group relative aspect-[2/3] bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full"
                 >
                    <Image
                      src={img.src}
                      alt={img.alt || product.title || "Product image"}
                      fill
-                     className="object-contain p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+                     quality={85}
+                      className="object-cover p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+                      style={img._key === 'grid-ceiling' ? { objectPosition: 'top' } : undefined}
                     sizes="(max-width: 768px) 50vw, 33vw"
                   />
                   <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">

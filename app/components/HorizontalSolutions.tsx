@@ -15,17 +15,19 @@ interface SolutionProduct {
   slug: string;
   description: string | null;
   image: unknown;
+  gallery: { src: string; alt: string }[] | null;
   categorySlug: string;
 }
 
-// Map the first 6 products from Sanity into the horizontal-scroll card shape
 const buildSolutions = (products: SolutionProduct[]) =>
   products.slice(0, 6).map((p, i) => ({
     num: String(i + 1).padStart(2, "0"),
     title: p.title.toUpperCase().replace(" ", "\n"),
     desc: p.description ?? "",
-    img: p.image ? urlFor(p.image).width(1600).auto("format").url() : "/hero-elevator.jpg",
-    imgAlt: p.title,
+    img: p.image
+      ? urlFor(p.image).width(1600).auto("format").url()
+      : p.gallery?.[0]?.src ?? "/hero-elevator.jpg",
+    imgAlt: p.gallery?.[0]?.alt || p.title,
     slug: p.slug,
     categorySlug: p.categorySlug,
   }));
@@ -119,8 +121,8 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                   borderRight: "1px solid #f1f5f9",
                 }}
               >
-                {/* Image — 55% */}
-                <div className="w-[55%] relative overflow-hidden h-[90%] my-auto" style={{ minHeight: "260px" }}>
+                {/* Image — 50% */}
+                <div className="w-[50%] relative overflow-hidden h-full" style={{ minHeight: "200px" }}>
                   <Image
                     src={sol.img}
                     alt={sol.imgAlt}
@@ -138,15 +140,17 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                   </div>
                 </div>
 
-                {/* Details — 45% */}
-                <div className="w-[45%] flex flex-col justify-center px-8 md:px-12 lg:px-14 py-8 bg-white">
-                  <div className="eyebrow text-[#0047BB] mb-4">{sol.num}</div>
+                {/* Details — 50% */}
+                <div className="w-[50%] flex flex-col px-8 md:px-12 lg:px-14 py-10 bg-white">
+                  <div className="eyebrow text-[#0047BB] mb-3">{sol.num}</div>
 
                   <h3
-                    className="heading text-[#0f172a] mb-4 whitespace-pre-line"
-                    style={{ fontSize: "var(--fs-h3)" }}
+                    className="heading text-[#0f172a] mb-3 leading-tight"
+                    style={{ fontSize: "clamp(22px, 2.5vw, 32px)" }}
                   >
-                    {sol.title}
+                    {sol.title.split("\n").map((line, idx) => (
+                      <span key={idx} className="block">{line}</span>
+                    ))}
                   </h3>
 
                   <div className="w-10 h-px bg-[#0047BB] mb-5" />

@@ -74,7 +74,7 @@ const PRODUCT_DOC = {
     {
       _type: 'galleryImage',
       _key: 'pano-glass',
-      src: IMG('panoramic%20glass%20elevator.png'),
+      src: IMG('panoramic%20glass%20elevator.jpg'),
       alt: 'Fuji Fenix panoramic glass elevator',
     },
     {

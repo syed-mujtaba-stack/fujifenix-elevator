@@ -35,9 +35,8 @@ const specGroups = [
   {
     _type: 'specGroup',
     _key: 'machine-room',
-    title: 'General Traction — Machine Room',
+    title: 'General Traction- Machine Room',
     items: [
-      { _type: 'spec', _key: 'mr-type', label: 'Type', value: 'General Traction — Machine Room' },
       { _type: 'spec', _key: 'mr-load', label: 'Load Capacity', value: '450KG–2000 KG' },
       { _type: 'spec', _key: 'mr-speed', label: 'Speed', value: '1.00m/sec-2.50m/sec' },
     ],
@@ -47,7 +46,6 @@ const specGroups = [
     _key: 'mrl',
     title: 'Machine-Room-Less (MRL)',
     items: [
-      { _type: 'spec', _key: 'mrl-type', label: 'Type', value: 'Machine-Room-Less (MRL)' },
       { _type: 'spec', _key: 'mrl-load', label: 'Load Capacity', value: '450KG–2000 KG' },
       { _type: 'spec', _key: 'mrl-speed', label: 'Speed', value: '1.00m/sec-2.50m/sec' },
     ],
@@ -70,8 +68,6 @@ await client.patch(product._id).set({ title: 'Passenger Elevator' }).commit()
 console.log(`+ Updated title for ${product._id}`)
 
 const features = [
-  'General Traction — Machine Room',
-  'Machine-Room-Less (MRL)',
   'Load Range 450–2000 KG',
   'Speed Range 1.00–2.50 m/sec',
   'Multiple Cabin Finish Options',
