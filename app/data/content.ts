@@ -284,6 +284,7 @@ export const PRODUCT_MENU = [
       { label: "Freight Elevators", href: "/products/elevators/freight-elevators" },
       { label: "Hospital Bed Elevators", href: "/products/elevators/hospital-bed-elevators" },
       { label: "Escalator", href: "/products/elevators/escalator" },
+      { label: "Moving Walks", href: "/products/elevators/moving-walks" },
       { label: "View All Elevators", href: "/products/elevators" },
     ],
   },

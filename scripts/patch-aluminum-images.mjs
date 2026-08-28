@@ -26,41 +26,17 @@ const client = createClient({
 const BASE = '/Elevators/Home%20Elevators'
 
 const ALUMINUM_GALLERY = [
-  {
-    _type: 'galleryImage',
-    _key: 'aluminum-structure-1',
-    src: `${BASE}/Aluminum%20Structure%20Home%20Elevator1.jpg`,
-    alt: 'Aluminum structure home elevator cabin',
-  },
-  {
-    _type: 'galleryImage',
-    _key: 'aluminum-structure-2',
-    src: `${BASE}/Aluminum%20Structure%20Home%20Elevator2.png`,
-    alt: 'Aluminum structure home elevator cabin interior',
-  },
-  {
-    _type: 'galleryImage',
-    _key: 'aluminum-structure-3',
-    src: `${BASE}/Aluminum%20Structure%20Home%20Elevator3.png`,
-    alt: 'Aluminum structure home elevator cabin, view 3',
-  },
-  {
-    _type: 'galleryImage',
-    _key: 'aluminum-structure-4',
-    src: `${BASE}/Aluminum%20Structure%20Home%20Elevator4.jpg`,
-    alt: 'Aluminum structure home elevator cabin, view 4',
-  },
-  {
-    _type: 'galleryImage',
-    _key: 'aluminum-structure-5',
-    src: `${BASE}/Aluminum%20Structure%20Home%20Elevator5.jpg`,
-    alt: 'Aluminum structure home elevator cabin, view 5',
-  },
+  { _key: 'aluminum-structure-1', src: `${BASE}/Aluminum%20Structure%20Home%20Elevator1.jpg?v=3`, alt: 'Aluminum structure home elevator cabin' },
+  { _key: 'aluminum-structure-2', src: `${BASE}/Aluminum%20Structure%20Home%20Elevator2.png?v=3`, alt: 'Aluminum structure home elevator cabin interior' },
+  { _key: 'aluminum-structure-3', src: `${BASE}/Aluminum%20Structure%20Home%20Elevator3.png?v=3`, alt: 'Aluminum structure home elevator cabin, view 3' },
+  { _key: 'aluminum-structure-4', src: `${BASE}/Aluminum%20Structure%20Home%20Elevator4.jpg?v=3`, alt: 'Aluminum structure home elevator cabin, view 4' },
+  { _key: 'aluminum-structure-5', src: `${BASE}/Aluminum%20Structure%20Home%20Elevator5.jpg?v=3`, alt: 'Aluminum structure home elevator cabin, view 5' },
+  { _key: 'aluminum-structure-6', src: `${BASE}/Aluminum%20Structure%20Home%20Elevator6.jpg?v=3`, alt: 'Aluminum structure home elevator cabin, view 6' },
 ]
 
 async function main() {
   const product = await client.fetch(
-    `*[_type == "product" && slug.current == "home-elevators"][0] { _id, gallery, specGroups }`
+    `*[_type == "product" && slug.current == "home-elevators"][0] { _id, gallery }`
   )
   if (!product) { console.error('Not found'); return }
 
@@ -68,24 +44,8 @@ async function main() {
   const kept = existing.filter((g) => !g._key.startsWith('aluminum-structure-'))
   const gallery = [...kept, ...ALUMINUM_GALLERY]
 
-  const specGroups = (product.specGroups ?? []).map((g) => {
-    if (g._key === 'aluminum-structure') {
-      return {
-        ...g,
-        sectionImages: [
-          'aluminum-structure-1',
-          'aluminum-structure-2',
-          'aluminum-structure-3',
-          'aluminum-structure-4',
-          'aluminum-structure-5',
-        ],
-      }
-    }
-    return g
-  })
-
-  await client.patch(product._id).set({ gallery, specGroups }).commit()
-  console.log('Done: Aluminum Structure Home Elevator section updated with images 1-5')
+  await client.patch(product._id).set({ gallery }).commit()
+  console.log('Done: Aluminum Structure gallery sources cache-busted with ?v=3')
 }
 
 main().catch(console.error)

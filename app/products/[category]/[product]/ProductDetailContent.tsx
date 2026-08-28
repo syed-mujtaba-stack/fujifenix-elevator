@@ -167,6 +167,10 @@ export default function ProductDetailContent({ product }: { product: ProductData
     /escalator/i.test(product.title || "") ||
     /escalator/i.test(product.category || "");
 
+  const isMovingWalk =
+    /moving[\s-]?walk/i.test(product.slug || "") ||
+    /moving[\s-]?walk/i.test(product.title || "");
+
   const related = product.related ?? [];
 
   return (
@@ -191,7 +195,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
             {/* Main product image — first in DOM */}
             <div className="pd-reveal relative bg-[#f1f5f9] border border-slate-100 flex items-center justify-center p-8 md:p-14">
               {heroImage ? (
-                <div className="relative w-full max-w-[460px] aspect-[2/3]">
+                <div className={`relative w-full max-w-[460px] ${isMovingWalk ? 'aspect-[4/3]' : 'aspect-[2/3]'}`}>
                    <Image
                      src={heroImage.src}
                      alt={heroImage.alt || product.title || "Product image"}
@@ -232,7 +236,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                       style={{ fontSize: "12px", letterSpacing: "0.06em" }}
                     >
                       <span className="w-1 h-1 bg-[#0047BB] rounded-full" />
-                      {f}
+                      {f.split(' — ')[0]}
                     </span>
                   ))}
                 </div>
@@ -302,36 +306,27 @@ export default function ProductDetailContent({ product }: { product: ProductData
                   {/* Section gallery images */}
                   {sectionImgs.length > 0 && (
                     <div className={`grid grid-cols-2 ${group.title === 'Platform Home Elevator' ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-5 md:gap-8 mb-12`}>
-                      {sectionImgs.map((img, idx) => {
-                        const alumOrder = group.title === 'Aluminum Structure Home Elevator'
-                          ? idx === 3 ? 'order-5 md:order-none'
-                          : idx === 4 ? 'order-4 md:order-none md:ml-8'
-                          : idx === 2 ? 'order-3 md:order-none'
-                          : idx === 1 ? 'order-2 md:order-none'
-                          : 'order-1 md:order-none'
-                          : ''
-                        return (
+                      {sectionImgs.map((img, idx) => (
                         <button
                           key={img._key ?? img.src}
                           type="button"
                           onClick={() => setZoom({ src: img.src, alt: img.alt })}
                           aria-label={`View larger: ${img.alt}`}
-                          className={`gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full ${group.title === 'Platform Home Elevator' && idx === sectionImgs.length - 1 ? 'col-span-2 aspect-[16/9]' : group.title === 'Aluminum Structure Home Elevator' && idx === 3 ? 'col-span-2 aspect-[16/9]' : 'aspect-[3/4]'} ${alumOrder}`}
+                          className={`gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full ${group.title === 'Platform Home Elevator' && idx === sectionImgs.length - 1 ? 'col-span-2 aspect-[16/9]' : 'aspect-[3/4]'}`}
                         >
                           <Image
                             src={img.src}
                             alt={img.alt || group.title}
                             fill
                             quality={85}
-                       className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${group.title === 'Platform Home Elevator' && idx === sectionImgs.length - 1 || group.title === 'Aluminum Structure Home Elevator' && idx === 3 ? 'object-contain' : 'object-cover'}`}
+                       className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${group.title === 'Platform Home Elevator' && idx === sectionImgs.length - 1 ? 'object-contain' : 'object-cover'}`}
                             sizes="(max-width: 768px) 50vw, 33vw"
                           />
                           <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">
                             ZOOM ⤢
                           </span>
                         </button>
-                        )
-                      })}
+                      ))}
                     </div>
                   )}
 
@@ -445,14 +440,14 @@ export default function ProductDetailContent({ product }: { product: ProductData
                   type="button"
                   onClick={() => setZoom({ src: img.src, alt: img.alt })}
                   aria-label={`View larger: ${img.alt}`}
-                  className="gal-item group relative aspect-[2/3] bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full"
+                    className={`gal-item group relative ${galleryRest.length === 1 ? 'col-span-full aspect-[2/1]' : 'aspect-[2/3]'} bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full`}
                 >
                    <Image
                      src={img.src}
                      alt={img.alt || product.title || "Product image"}
                      fill
                      quality={85}
-                      className="p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] object-cover"
+                       className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${galleryRest.length === 1 ? 'object-contain' : 'object-cover'}`}
                       style={img._key === 'grid-ceiling' ? { objectPosition: 'top' } : undefined}
                     sizes="(max-width: 768px) 50vw, 33vw"
                    />

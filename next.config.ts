@@ -8,6 +8,15 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sanity.io",
       },
     ],
+    localPatterns: [
+      {
+        pathname: "/**",
+      },
+      {
+        pathname: "/**",
+        search: "/.*/",
+      },
+    ],
   },
 };
 
