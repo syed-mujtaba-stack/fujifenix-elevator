@@ -4,6 +4,7 @@ import { safeFetch } from "@/sanity/lib/client";
 import { productQuery, type SanityProductDetail } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import PageHero from "@/app/components/PageHero";
+import { PRODUCT_IMAGE_OVERRIDES } from "@/app/data/productImageOverrides";
 import ProductDetailContent from "./ProductDetailContent";
 
 export const revalidate = 60;
@@ -32,7 +33,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const p = await safeFetch<SanityProductDetail | null>(productQuery, { slug: product }, null);
   if (!p) return notFound();
 
-  const heroImage = p.image ? urlFor(p.image).width(1920).auto("format").url() : "/hero-elevator.jpg";
+  const overrideImage = PRODUCT_IMAGE_OVERRIDES[p.slug];
+  const heroImage = overrideImage ?? (p.image ? urlFor(p.image).width(1920).auto("format").url() : "/hero-elevator.jpg");
 
   return (
     <>

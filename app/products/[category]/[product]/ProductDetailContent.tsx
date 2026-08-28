@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHeading from "@/app/components/SectionHeading";
 import WeChatQRButton from "@/app/components/WeChatQR";
 import { urlFor } from "@/sanity/lib/image";
+import { PRODUCT_IMAGE_OVERRIDES } from "@/app/data/productImageOverrides";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -151,13 +152,20 @@ export default function ProductDetailContent({ product }: { product: ProductData
   }, [zoom]);
 
   const galleryImages = product.gallery ?? [];
-  const heroImage = product.image
-    ? { src: urlFor(product.image).width(1200).auto("format").url(), alt: product.title }
-    : galleryImages[0]
-      ? { src: galleryImages[0].src, alt: galleryImages[0].alt }
-      : null;
+  const overrideImage = PRODUCT_IMAGE_OVERRIDES[product.slug];
+  const heroImage = overrideImage
+    ? { src: overrideImage, alt: product.title }
+    : product.image
+      ? { src: urlFor(product.image).width(1200).auto("format").url(), alt: product.title }
+      : galleryImages[0]
+        ? { src: galleryImages[0].src, alt: galleryImages[0].alt }
+        : null;
   const galleryRest = product.image ? galleryImages : galleryImages.slice(1);
   const hasSections = product.specGroups?.some((g) => g.sectionImages && g.sectionImages.length > 0) ?? false;
+  const isEscalator =
+    /escalator/i.test(product.slug || "") ||
+    /escalator/i.test(product.title || "") ||
+    /escalator/i.test(product.category || "");
 
   const related = product.related ?? [];
 
@@ -293,28 +301,37 @@ export default function ProductDetailContent({ product }: { product: ProductData
 
                   {/* Section gallery images */}
                   {sectionImgs.length > 0 && (
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 mb-12 [grid-auto-rows:1fr]">
-                      {sectionImgs.map((img) => (
+                    <div className={`grid grid-cols-2 ${group.title === 'Platform Home Elevator' ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-5 md:gap-8 mb-12`}>
+                      {sectionImgs.map((img, idx) => {
+                        const alumOrder = group.title === 'Aluminum Structure Home Elevator'
+                          ? idx === 3 ? 'order-5 md:order-none'
+                          : idx === 4 ? 'order-4 md:order-none md:ml-8'
+                          : idx === 2 ? 'order-3 md:order-none'
+                          : idx === 1 ? 'order-2 md:order-none'
+                          : 'order-1 md:order-none'
+                          : ''
+                        return (
                         <button
                           key={img._key ?? img.src}
                           type="button"
                           onClick={() => setZoom({ src: img.src, alt: img.alt })}
                           aria-label={`View larger: ${img.alt}`}
-                          className={`gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full aspect-[2/3] ${img._key === 'luxury-gold-1' ? 'md:col-span-2 aspect-[4/3]' : ''}`}
+                          className={`gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full ${group.title === 'Platform Home Elevator' && idx === sectionImgs.length - 1 ? 'col-span-2 aspect-[16/9]' : group.title === 'Aluminum Structure Home Elevator' && idx === 3 ? 'col-span-2 aspect-[16/9]' : 'aspect-[3/4]'} ${alumOrder}`}
                         >
                           <Image
                             src={img.src}
                             alt={img.alt || group.title}
                             fill
                             quality={85}
-                            className="object-cover p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+                       className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${group.title === 'Platform Home Elevator' && idx === sectionImgs.length - 1 || group.title === 'Aluminum Structure Home Elevator' && idx === 3 ? 'object-contain' : 'object-cover'}`}
                             sizes="(max-width: 768px) 50vw, 33vw"
                           />
                           <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">
                             ZOOM ⤢
                           </span>
                         </button>
-                      ))}
+                        )
+                      })}
                     </div>
                   )}
 
@@ -414,8 +431,12 @@ export default function ProductDetailContent({ product }: { product: ProductData
           <div className="container-gutter py-16 md:py-20">
             <SectionHeading
               eyebrow="PRODUCT GALLERY"
-              title="CABIN FINISH OPTIONS"
-              description="A selection of cabin interior finishes available for this product. Click any image to view it larger."
+              title={isEscalator ? "ESCALATOR FINISH OPTIONS" : "CABIN FINISH OPTIONS"}
+              description={
+                isEscalator
+                  ? "A selection of escalator interior finishes available for this product. Click any image to view it larger."
+                  : "A selection of cabin interior finishes available for this product. Click any image to view it larger."
+              }
             />
             <div className="gal-grid grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 [grid-auto-rows:1fr]">
               {galleryRest.map((img) => (
@@ -431,10 +452,10 @@ export default function ProductDetailContent({ product }: { product: ProductData
                      alt={img.alt || product.title || "Product image"}
                      fill
                      quality={85}
-                      className="object-cover p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+                      className="p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] object-cover"
                       style={img._key === 'grid-ceiling' ? { objectPosition: 'top' } : undefined}
                     sizes="(max-width: 768px) 50vw, 33vw"
-                  />
+                   />
                   <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">
                     ZOOM ⤢
                   </span>

@@ -39,7 +39,7 @@ const UPDATED_SPECGROUPS = [
     _type: 'specGroup',
     _key: 'platform',
     title: 'Platform Home Elevator',
-    sectionImages: ['luxury-gold-1','luxury-gold-2','luxury-gold-3'],
+    sectionImages: ['luxury-gold-3','luxury-gold-2','luxury-gold-1'],
     items: [
       { _type: 'spec', _key: 'pl-type', label: 'Type', value: 'Machine-Room-Less (MRL)' },
       { _type: 'spec', _key: 'pl-load', label: 'Load Capacity', value: '250–400 kg' },
