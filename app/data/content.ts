@@ -271,6 +271,16 @@ export const NAV_LINKS = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
+/* Hero display headings — plural form per client requirement.
+ * Only the HERO heading is overridden here; Sanity product titles, slugs,
+ * URLs, cards, and SEO remain unchanged. Products already using a
+ * client-approved plural name are intentionally not listed. */
+export const HERO_HEADINGS: Record<string, string> = {
+  "passenger-elevator-cabin": "Passenger Elevators",
+  escalator: "Escalators",
+  "platform-stair-lift": "Platform Stair Lifts",
+};
+
 /* Desktop mega-menu under PRODUCTS — grouped category links */
 export const PRODUCT_MENU = [
   {

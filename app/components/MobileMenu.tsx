@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { NAV_LINKS, CONTACT } from "@/app/data/content";
+import { NAV_LINKS, PRODUCT_MENU, CONTACT } from "@/app/data/content";
 
 /* Google Translate widget — rendered inside the mobile menu
     so it doesn't eat horizontal space in the navbar row */
@@ -23,6 +24,9 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuProps) {
+  const [productsOpen, setProductsOpen] = useState(false);
+  const productItems = PRODUCT_MENU.flatMap((g) => g.items);
+
   return (
     <motion.div
       id={id}
@@ -86,6 +90,63 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
           </motion.div>
         ))}
       </nav>
+
+      {/* ── Products (expandable) ── */}
+      <div className="border-b border-slate-100">
+        <button
+          type="button"
+          onClick={() => setProductsOpen((v) => !v)}
+          aria-expanded={productsOpen}
+          className="
+            flex items-center justify-between w-full
+            py-4 min-h-[52px]
+            group
+            focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
+          "
+        >
+          <span
+            className="heading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none"
+            style={{ fontSize: "clamp(18px, 5vw, 22px)" }}
+          >
+            Products
+          </span>
+          <span
+            className={`text-slate-300 group-hover:text-[#0047BB] transition-transform duration-200 flex-shrink-0 ml-3 ${
+              productsOpen ? "rotate-90" : ""
+            }`}
+            aria-hidden="true"
+          >
+            →
+          </span>
+        </button>
+        {productsOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden pb-3"
+          >
+            {productItems.map((it) => (
+              <Link
+                key={it.href}
+                href={it.href}
+                onClick={onClose}
+                className="
+                  flex items-center gap-2
+                  py-2.5 pl-4
+                  text-[14px] text-slate-600
+                  border-l-2 border-slate-100
+                  hover:border-[#0047BB] hover:text-[#0047BB] hover:bg-blue-50/40
+                  transition-colors
+                "
+              >
+                <span className="h-1 w-1 rounded-full bg-slate-300" aria-hidden="true" />
+                {it.label}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </div>
 
       {/* ── Bottom actions ── */}
       <motion.div
