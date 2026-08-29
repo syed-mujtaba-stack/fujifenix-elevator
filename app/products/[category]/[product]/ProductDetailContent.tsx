@@ -55,6 +55,12 @@ interface ProductData {
   disclaimer?: string | null;
   imageDisclaimer?: string | null;
   designedFor?: string[] | null;
+  keyFeatures?: string[] | null;
+  applications?: string[] | null;
+  capacities?: string[] | null;
+  design?: string[] | null;
+  operation?: string | null;
+  tagline?: string | null;
   configurationNote?: string | null;
   category: string;
   categorySlug: string;
@@ -254,6 +260,98 @@ export default function ProductDetailContent({ product }: { product: ProductData
         </div>
       </section>
 
+      {/* Key Features */}
+      {product.keyFeatures && product.keyFeatures.length > 0 && (
+        <section className="bg-white border-t border-slate-100">
+          <div className="container-gutter py-16 md:py-20">
+            <div className="mb-12 md:mb-16 flex items-center gap-3">
+              <div className="w-8 h-px bg-[#0047BB]" />
+              <span className="eyebrow text-[#0047BB]">KEY FEATURES</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
+              {product.keyFeatures.map((f, i) => (
+                <div key={f} className="bg-[#f8fafc] border border-slate-200 p-8">
+                  <span className="eyebrow text-[#0047BB]">0{i + 1}</span>
+                  <p className="heading text-[#0f172a] mt-3" style={{ fontSize: "16px", lineHeight: 1.5 }}>{f}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Applications */}
+      {product.applications && product.applications.length > 0 && (
+        <section className="bg-[#f8fafc] border-t border-slate-100">
+          <div className="container-gutter py-16 md:py-20">
+            <div className="mb-12 md:mb-16 flex items-center gap-3">
+              <div className="w-8 h-px bg-[#0047BB]" />
+              <span className="eyebrow text-[#0047BB]">APPLICATIONS</span>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8">
+              {product.applications.map((a) => (
+                <div key={a} className="bg-white border border-slate-200 p-8 text-center">
+                  <p className="heading text-[#0f172a]" style={{ fontSize: "16px", lineHeight: 1.5 }}>{a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Available Capacities */}
+      {product.capacities && product.capacities.length > 0 && (
+        <section className="bg-white border-t border-slate-100">
+          <div className="container-gutter py-16 md:py-20">
+            <div className="mb-12 md:mb-16 flex items-center gap-3">
+              <div className="w-8 h-px bg-[#0047BB]" />
+              <span className="eyebrow text-[#0047BB]">AVAILABLE CAPACITIES</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-8">
+              {product.capacities.map((c) => (
+                <div key={c} className="bg-[#f8fafc] border border-slate-200 p-10 text-center">
+                  <p className="heading text-[#0f172a]" style={{ fontSize: "32px" }}>{c}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Design */}
+      {product.design && product.design.length > 0 && (
+        <section className="bg-[#f8fafc] border-t border-slate-100">
+          <div className="container-gutter py-16 md:py-20">
+            <div className="mb-12 md:mb-16 flex items-center gap-3">
+              <div className="w-8 h-px bg-[#0047BB]" />
+              <span className="eyebrow text-[#0047BB]">DESIGN</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-8">
+              {product.design.map((d) => (
+                <div key={d} className="bg-white border border-slate-200 p-8 text-center">
+                  <p className="heading text-[#0f172a]" style={{ fontSize: "18px" }}>{d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Operation */}
+      {product.operation && (
+        <section className="bg-white border-t border-slate-100">
+          <div className="container-gutter py-16 md:py-20">
+            <div className="mb-12 md:mb-16 flex items-center gap-3">
+              <div className="w-8 h-px bg-[#0047BB]" />
+              <span className="eyebrow text-[#0047BB]">OPERATION</span>
+            </div>
+            <p className="heading text-[#0f172a] max-w-3xl" style={{ fontSize: "clamp(20px, 2.5vw, 28px)", lineHeight: 1.4 }}>
+              {product.operation}
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Image disclaimer (client note, near product imagery) */}
       {product.imageDisclaimer && (
         <section className="bg-white border-t border-slate-100">
@@ -330,7 +428,8 @@ export default function ProductDetailContent({ product }: { product: ProductData
                     </div>
                   )}
 
-                  {/* Key Specifications */}
+                  {/* Key Specifications — only when the group defines items */}
+                  {group.items && group.items.length > 0 && (
                   <div className="max-w-2xl">
                     <div className="bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.035)]">
                       <div className="bg-[#0047BB] px-6 py-4">
@@ -351,6 +450,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                       </dl>
                     </div>
                   </div>
+                  )}
                 </div>
               </section>
             );
@@ -416,6 +516,15 @@ export default function ProductDetailContent({ product }: { product: ProductData
               <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">→</span>
             </Link>
             <WeChatQRButton />
+          </div>
+        </section>
+      )}
+
+      {/* Closing tagline (rendered only when the product defines one) */}
+      {product.tagline && (
+        <section className="bg-[#f8fafc] border-t border-slate-100">
+          <div className="container-gutter py-10 text-center">
+            <p className="heading text-[#0f172a]" style={{ fontSize: "20px", letterSpacing: "0.02em" }}>{product.tagline}</p>
           </div>
         </section>
       )}

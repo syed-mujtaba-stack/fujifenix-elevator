@@ -43,6 +43,12 @@ export interface SanityProductDetail extends SanityProductItem {
   disclaimer: string | null;
   imageDisclaimer: string | null;
   designedFor: string[] | null;
+  keyFeatures: string[] | null;
+  applications: string[] | null;
+  capacities: string[] | null;
+  design: string[] | null;
+  operation: string | null;
+  tagline: string | null;
   configurationNote: string | null;
   related: { _id: string; title: string; slug: string; category: string; image: unknown; gallery: { src: string; alt: string }[] | null }[] | null;
 }
@@ -67,6 +73,12 @@ const detailProjections = `
     "disclaimer": disclaimer,
     "imageDisclaimer": imageDisclaimer,
     "designedFor": designedFor,
+    "keyFeatures": keyFeatures,
+    "applications": applications,
+    "capacities": capacities,
+    "design": design,
+    "operation": operation,
+    "tagline": tagline,
     "configurationNote": configurationNote,
 `
 

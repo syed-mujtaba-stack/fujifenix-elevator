@@ -178,6 +178,40 @@ export const product = defineType({
       of: [{ type: 'string' }],
     }),
     defineField({
+      name: 'keyFeatures',
+      title: 'Key Features (list of feature descriptions)',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'applications',
+      title: 'Applications (list of application environments)',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'capacities',
+      title: 'Available Capacities (list of capacity values)',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'design',
+      title: 'Design Characteristics (list of design traits)',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'operation',
+      title: 'Operation (short description)',
+      type: 'string',
+    }),
+    defineField({
+      name: 'tagline',
+      title: 'Tagline (closing/secondary tagline)',
+      type: 'string',
+    }),
+    defineField({
       name: 'configurationNote',
       title: 'Configuration Note (e.g. configured per project requirements)',
       type: 'text',
