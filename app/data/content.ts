@@ -279,6 +279,8 @@ export const HERO_HEADINGS: Record<string, string> = {
   "passenger-elevator-cabin": "Passenger Elevators",
   escalator: "Escalators",
   "platform-stair-lift": "Platform Stair Lifts",
+  "auto-parking-system": "AUTO CAR PARKING SYSTEMS",
+  "platform-screen-doors": "PLATFORM SCREEN DOORS",
 };
 
 /* Desktop mega-menu under PRODUCTS — grouped category links */
@@ -300,6 +302,8 @@ export const PRODUCT_MENU = [
       { label: "Circular Elevators", href: "/products/elevators/circular-elevators" },
       { label: "Platform / Stair Lifts", href: "/products/elevators/platform-stair-lift" },
       { label: "Dumbwaiters", href: "/products/elevators/dumbwaiters" },
+      { label: "Auto Car Parking System", href: "/products/elevators/auto-parking-system" },
+      { label: "Platform Screen Doors", href: "/products/elevators/platform-screen-doors" },
       { label: "View All Elevators", href: "/products/elevators" },
     ],
   },

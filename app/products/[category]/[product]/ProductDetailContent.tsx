@@ -384,113 +384,98 @@ export default function ProductDetailContent({ product }: { product: ProductData
 
       {/* Technical specifications */}
       {product.specGroups && product.specGroups.length > 0 && (() => {
-        const hasSections = product.specGroups.some((g) => g.sectionImages && g.sectionImages.length > 0);
-
-        if (hasSections) {
-          return product.specGroups.map((group) => {
-            const sectionImgs = (group.sectionImages ?? [])
-              .map((key) => galleryImages.find((g) => g._key === key))
-              .filter(Boolean) as GalleryImage[];
-
-            return (
-              <section key={group._key ?? group.title} className="bg-white border-t border-slate-100">
-                <div className="container-gutter py-16 md:py-20">
-                  {/* Section title */}
-                  <div className="mb-8">
-                    <h2 className="heading text-[#0f172a] mb-3" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>
-                      {group.title}
-                    </h2>
-                  </div>
-
-                  {/* Section gallery images */}
-                  {sectionImgs.length > 0 && (
-                    <div className={`grid grid-cols-2 ${group.title === 'Platform Home Elevator' ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-5 md:gap-8 mb-12`}>
-                      {sectionImgs.map((img, idx) => (
-                        <button
-                          key={img._key ?? img.src}
-                          type="button"
-                          onClick={() => setZoom({ src: img.src, alt: img.alt })}
-                          aria-label={`View larger: ${img.alt}`}
-                          className={`gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full ${group.title === 'Platform Home Elevator' && idx === sectionImgs.length - 1 ? 'col-span-2 aspect-[16/9]' : 'aspect-[3/4]'}`}
-                        >
-                          <Image
-                            src={img.src}
-                            alt={img.alt || group.title}
-                            fill
-                            quality={85}
-                       className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${group.title === 'Platform Home Elevator' && idx === sectionImgs.length - 1 ? 'object-contain' : 'object-cover'}`}
-                            sizes="(max-width: 768px) 50vw, 33vw"
-                          />
-                          <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">
-                            ZOOM ⤢
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                  {/* Key Specifications — only when the group defines items */}
-                  {group.items && group.items.length > 0 && (
-                  <div className="max-w-2xl">
-                    <div className="bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.035)]">
-                      <div className="bg-[#0047BB] px-6 py-4">
-                        <h3 className="eyebrow text-white">{group.title}</h3>
-                      </div>
-                      <dl>
-                        {(group.items ?? []).map((item, i) => (
-                          <div
-                            key={item._key ?? item.label}
-                            className={`flex items-center justify-between gap-6 px-6 py-5 ${i > 0 ? "border-t border-slate-100" : ""}`}
-                          >
-                            <dt className="eyebrow text-slate-400">{item.label}</dt>
-                            <dd className="heading text-[#0f172a] text-right" style={{ fontSize: "17px" }}>
-                              {item.value}
-                            </dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </div>
-                  </div>
-                  )}
-                </div>
-              </section>
-            );
-          });
-        }
+        const imageGroups = product.specGroups.filter((g) => g.sectionImages && g.sectionImages.length > 0);
+        const typeGroups = product.specGroups.filter((g) => !g.sectionImages || g.sectionImages.length === 0);
 
         return (
-          <section className="bg-[#f8fafc] border-t border-slate-100">
-            <div className="container-gutter py-16 md:py-20">
-              <div className="mb-12 md:mb-16">
-                <h2 className="heading text-[#0f172a]" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>Technical Specifications</h2>
-              </div>
-              <div className={`spec-grid grid gap-8 ${product.specGroups.length <= 1 ? 'grid-cols-1 max-w-3xl' : 'md:grid-cols-2 max-w-4xl'}`}>
-                {product.specGroups.map((group) => (
-                  <div
-                    key={group._key ?? group.title}
-                    className="spec-card bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.035)]"
-                  >
-                    <div className="bg-[#0047BB] px-6 py-4">
-                      <h3 className="eyebrow text-white">{group.title}</h3>
+          <>
+            {/* Section-based groups (with images) */}
+            {imageGroups.map((group) => {
+              const sectionImgs = (group.sectionImages ?? [])
+                .map((key) => galleryImages.find((g) => g._key === key))
+                .filter(Boolean) as GalleryImage[];
+
+              return (
+                <section key={group._key ?? group.title} className="bg-white border-t border-slate-100">
+                  <div className="container-gutter py-16 md:py-20">
+                    <div className="mb-8">
+                      <h2 className="heading text-[#0f172a] mb-3" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>
+                        {group.title}
+                      </h2>
                     </div>
-                    <dl>
-                      {(group.items ?? []).map((item, i) => (
-                        <div
-                          key={item._key ?? item.label}
-                          className={`flex items-center justify-between gap-6 px-6 py-5 ${i > 0 ? "border-t border-slate-100" : ""}`}
-                        >
-                          <dt className="eyebrow text-slate-400">{item.label}</dt>
-                          <dd className="heading text-[#0f172a] text-right" style={{ fontSize: "17px" }}>
-                            {item.value}
-                          </dd>
+                    {sectionImgs.length > 0 && (
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 mb-12">
+                        {sectionImgs.map((img) => (
+                          <button
+                            key={img._key ?? img.src}
+                            type="button"
+                            onClick={() => setZoom({ src: img.src, alt: img.alt })}
+                            aria-label={`View larger: ${img.alt}`}
+                            className="gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full aspect-[3/4]"
+                          >
+                            <Image
+                              src={img.src}
+                              alt={img.alt || group.title}
+                              fill
+                              quality={85}
+                              className="p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] object-cover"
+                              sizes="(max-width: 768px) 50vw, 33vw"
+                            />
+                            <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">
+                              ZOOM ⤢
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {group.items && group.items.length > 0 && (
+                      <div className="max-w-2xl">
+                        <div className="bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.035)]">
+                          <div className="bg-[#0047BB] px-6 py-4">
+                            <h3 className="eyebrow text-white">{group.title}</h3>
+                          </div>
+                          <dl>
+                            {(group.items ?? []).map((item, i) => (
+                              <div
+                                key={item._key ?? item.label}
+                                className={`flex items-center justify-between gap-6 px-6 py-5 ${i > 0 ? "border-t border-slate-100" : ""}`}
+                              >
+                                <dt className="eyebrow text-slate-400">{item.label}</dt>
+                                <dd className="heading text-[#0f172a] text-right" style={{ fontSize: "17px" }}>
+                                  {item.value}
+                                </dd>
+                              </div>
+                            ))}
+                          </dl>
                         </div>
-                      ))}
-                    </dl>
+                      </div>
+                    )}
                   </div>
-                ))}
-              </div>
-              <SectionCta />
-            </div>
-          </section>
+                </section>
+              );
+            })}
+
+            {/* Type groups — compact cards grid */}
+            {typeGroups.length > 0 && (
+              <section className="bg-[#f8fafc] border-t border-slate-100">
+                <div className="container-gutter py-12 md:py-16">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {typeGroups.map((group) => (
+                      <div
+                        key={group._key ?? group.title}
+                        className="bg-white border border-slate-200 p-6"
+                      >
+                        <h3 className="text-[#0047BB] font-bold text-sm mb-2">{group.title}</h3>
+                        {group.sectionDescription && (
+                          <p className="text-[#475569] text-[13px] leading-relaxed">{group.sectionDescription}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            )}
+          </>
         );
       })()}
 
