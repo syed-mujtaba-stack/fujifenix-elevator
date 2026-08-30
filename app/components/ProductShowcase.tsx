@@ -143,6 +143,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
                 {product.num}
               </div>
             </div>
+            <p className="mt-4 mb-8 border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500 px-10 md:px-14 lg:px-16 bg-white">Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.</p>
 
             {/* Text */}
             <div className="lg:w-[45%] flex flex-col justify-center px-10 md:px-14 lg:px-16 py-16 bg-white">

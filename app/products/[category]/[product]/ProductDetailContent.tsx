@@ -256,6 +256,9 @@ export default function ProductDetailContent({ product }: { product: ProductData
               </Link>
             </div>
           </div>
+          <div className="mt-8 mb-8">
+            <p className="border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500">Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.</p>
+          </div>
           <SectionCta />
         </div>
       </section>
@@ -352,14 +355,12 @@ export default function ProductDetailContent({ product }: { product: ProductData
         </section>
       )}
 
-      {/* Image disclaimer (client note, near product imagery) */}
-      {product.imageDisclaimer && (
-        <section className="bg-white border-t border-slate-100">
-          <div className="container-gutter py-8">
-            <Disclaimer text={product.imageDisclaimer} />
-          </div>
-        </section>
-      )}
+      {/* Configuration note (client notes) */}
+      <section className="bg-[#f8fafc] border-t border-slate-100">
+        <div className="container-gutter py-8 space-y-4">
+          <Disclaimer text={product.configurationNote || "Configured according to project requirements, building layout, capacity, and applicable standards."} />
+        </div>
+      </section>
 
       {/* Designed For */}
       {product.designedFor && product.designedFor.length > 0 && (
@@ -427,6 +428,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                       ))}
                     </div>
                   )}
+                  <p className="mt-4 mb-8 border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500">Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.</p>
 
                   {/* Key Specifications — only when the group defines items */}
                   {group.items && group.items.length > 0 && (
@@ -535,11 +537,13 @@ export default function ProductDetailContent({ product }: { product: ProductData
           <div className="container-gutter py-16 md:py-20">
             <SectionHeading
               eyebrow="PRODUCT GALLERY"
-              title={isEscalator ? "ESCALATOR FINISH OPTIONS" : "CABIN FINISH OPTIONS"}
+              title={!isMovingWalk ? (isEscalator ? "ESCALATOR FINISH OPTIONS" : "CABIN FINISH OPTIONS") : ""}
               description={
-                isEscalator
-                  ? "A selection of escalator interior finishes available for this product. Click any image to view it larger."
-                  : "A selection of cabin interior finishes available for this product. Click any image to view it larger."
+                !isMovingWalk
+                  ? (isEscalator
+                      ? "A selection of escalator interior finishes available for this product. Click any image to view it larger."
+                      : "A selection of cabin interior finishes available for this product. Click any image to view it larger.")
+                  : "Click any image to view it larger."
               }
             />
             <div className="gal-grid grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 [grid-auto-rows:1fr]">
@@ -566,16 +570,8 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 </button>
               ))}
             </div>
+            <p className="mt-4 mb-8 border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500">Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.</p>
             <SectionCta />
-          </div>
-        </section>
-      )}
-
-      {/* Configuration note (client notes) */}
-      {product.configurationNote && (
-        <section className="bg-[#f8fafc] border-t border-slate-100">
-          <div className="container-gutter py-8 space-y-4">
-            <Disclaimer text={product.configurationNote} />
           </div>
         </section>
       )}
@@ -629,6 +625,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                     <h3 className="heading text-[#0f172a]" style={{ fontSize: "17px", letterSpacing: "0.02em" }}>
                       {p.title}
                     </h3>
+                    <p className="mt-4 mb-8 border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500">Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.</p>
                   </div>
                 </Link>
               ))}

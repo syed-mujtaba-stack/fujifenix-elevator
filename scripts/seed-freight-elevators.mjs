@@ -130,7 +130,7 @@ const PRODUCT_DOC = {
   ],
   technicalDrawings: [],
   disclaimer: 'The above specifications may vary according to project requirements.',
-  imageDisclaimer: 'Images shown are for illustrative purposes only.',
+  imageDisclaimer: 'Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.',
   order: 5,
 }
 

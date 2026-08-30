@@ -116,6 +116,7 @@ export default function CategoryContent({ category, products }: Props) {
                     </span>
                   </div>
                 </div>
+                <p className="mt-4 mb-8 border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500">Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.</p>
                 <div className="pt-5">
                   <h3 className="heading text-[#0f172a]" style={{ fontSize: "20px", letterSpacing: "0.02em" }}>
                     {p.title}

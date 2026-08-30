@@ -184,6 +184,7 @@ export default function ProductsContent({ categories, products }: { categories: 
                       {String((page - 1) * pageSize + i + 1).padStart(2, "0")}
                     </span>
                   </div>
+                  <p className="mt-4 mb-8 border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500">Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.</p>
                   <div className="px-2 pb-3 pt-4">
                     <h3 className="heading line-clamp-2 text-[#0f172a]" style={{ fontSize: "16px", letterSpacing: "0.02em" }}>
                       {product.title}

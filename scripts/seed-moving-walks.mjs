@@ -109,7 +109,7 @@ const PRODUCT_DOC = {
     'Public Facilities',
   ],
   imageDisclaimer: 'Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.',
-  configurationNote: 'Final specifications and configuration are subject to project requirements, application, and applicable standards.',
+  configurationNote: 'Configured according to project requirements, building layout, capacity, and applicable standards.',
   order: 8,
 }
 
@@ -138,7 +138,8 @@ async function main() {
     `*[_type == "product" && slug.current == "moving-walks"][0] { _id }`
   )
   if (existingProduct) {
-    console.log(`• Product "Moving Walks" already exists (${existingProduct._id}) — skipped`)
+    await client.patch(existingProduct._id).set({ configurationNote: PRODUCT_DOC.configurationNote }).commit()
+    console.log(`• Product "Moving Walks" updated (${existingProduct._id}) — configurationNote patched`)
     return
   }
 
