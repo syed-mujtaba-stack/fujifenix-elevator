@@ -271,11 +271,11 @@ export default function ProductDetailContent({ product }: { product: ProductData
               <div className="w-8 h-px bg-[#0047BB]" />
               <span className="eyebrow text-[#0047BB]">KEY FEATURES</span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {product.keyFeatures.map((f, i) => (
-                <div key={f} className="bg-[#f8fafc] border border-slate-200 p-8">
-                  <span className="eyebrow text-[#0047BB]">0{i + 1}</span>
-                  <p className="heading text-[#0f172a] mt-3" style={{ fontSize: "16px", lineHeight: 1.5 }}>{f}</p>
+                <div key={f} className={`bg-[#f8fafc] border border-slate-200 py-5 px-3 flex items-start gap-3 ${i === 6 ? 'col-span-2' : ''}`}>
+                  <span className="eyebrow text-[#0047BB] shrink-0 mt-0.5">0{i + 1}</span>
+                  <p className="text-[#0f172a] font-bold" style={{ fontSize: "13px", lineHeight: 1.5 }}>{f}</p>
                 </div>
               ))}
             </div>
@@ -286,14 +286,14 @@ export default function ProductDetailContent({ product }: { product: ProductData
       {/* Applications */}
       {product.applications && product.applications.length > 0 && (
         <section className="bg-[#f8fafc] border-t border-slate-100">
-          <div className="container-gutter py-16 md:py-20">
-            <div className="mb-12 md:mb-16 flex items-center gap-3">
+          <div className="container-gutter py-10 md:py-14">
+            <div className="mb-10 md:mb-12 flex items-center gap-3">
               <div className="w-8 h-px bg-[#0047BB]" />
               <span className="eyebrow text-[#0047BB]">APPLICATIONS</span>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {product.applications.map((a) => (
-                <div key={a} className="bg-white border border-slate-200 p-8 text-center">
+                <div key={a} className="bg-white border border-slate-200 p-5 text-center">
                   <p className="heading text-[#0f172a]" style={{ fontSize: "16px", lineHeight: 1.5 }}>{a}</p>
                 </div>
               ))}
@@ -428,8 +428,6 @@ export default function ProductDetailContent({ product }: { product: ProductData
                       ))}
                     </div>
                   )}
-                  <p className="mt-4 mb-8 border-l-2 border-[#0047BB]/30 pl-4 text-[13px] leading-relaxed text-slate-500">Images are for illustrative purposes only. Actual product may vary according to project requirements and selected specifications.</p>
-
                   {/* Key Specifications — only when the group defines items */}
                   {group.items && group.items.length > 0 && (
                   <div className="max-w-2xl">
@@ -462,9 +460,8 @@ export default function ProductDetailContent({ product }: { product: ProductData
         return (
           <section className="bg-[#f8fafc] border-t border-slate-100">
             <div className="container-gutter py-16 md:py-20">
-              <div className="mb-12 md:mb-16 flex items-center gap-3">
-                <div className="w-8 h-px bg-[#0047BB]" />
-                <span className="eyebrow text-[#0047BB]">SPECIFICATIONS</span>
+              <div className="mb-12 md:mb-16">
+                <h2 className="heading text-[#0f172a]" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>Technical Specifications</h2>
               </div>
               <div className={`spec-grid grid gap-8 ${product.specGroups.length <= 1 ? 'grid-cols-1 max-w-3xl' : 'md:grid-cols-2 max-w-4xl'}`}>
                 {product.specGroups.map((group) => (

@@ -83,63 +83,9 @@ const PRODUCT_DOC = {
   specGroups: [
     {
       _type: 'specGroup',
-      _key: 'traction-machine',
-      title: 'Traction Machine',
-      sectionImages: null,
-      sectionDescription:
-        'The traction machine is driven by a squirrel cage induction motor and provided with an electromagnetic brake acting on the coupling between the gear and the motor. In order to prevent vibration from the hull, an isolation pad is equipped in the traction machine foundation.',
-      items: [
-        { _type: 'spec', _key: 'tm-drive', label: 'Drive', value: 'Squirrel cage induction motor with electromagnetic brake' },
-        { _type: 'spec', _key: 'tm-isolation', label: 'Hull Isolation', value: 'Vibration isolation pad in traction machine foundation' },
-      ],
-    },
-    {
-      _type: 'specGroup',
-      _key: 'motor-spec',
-      title: 'General Specification of Motor',
-      sectionImages: null,
-      sectionDescription: null,
-      items: [
-        { _type: 'spec', _key: 'motor-protection', label: 'Motor Protection', value: 'IP 23, IP44 & IP54' },
-        { _type: 'spec', _key: 'motor-insulation', label: 'Insulation Class', value: 'B and/or F Class' },
-        { _type: 'spec', _key: 'motor-starting', label: 'Starting times (2BC)', value: '180 times/hour' },
-        { _type: 'spec', _key: 'motor-ambient', label: 'Ambient temperature', value: '45C' },
-        { _type: 'spec', _key: 'motor-voltage', label: 'Variation Voltage', value: '6% ~ 10% at rated voltage' },
-        { _type: 'spec', _key: 'motor-frequency', label: 'Variation Frequency', value: '2.5% at rated frequency' },
-      ],
-    },
-    {
-      _type: 'specGroup',
-      _key: 'landing-doors',
-      title: 'Landing Doors',
-      sectionImages: null,
-      sectionDescription:
-        'All types of Hyundai Elevator landing doors are designed especially for marine elevators. The doors are designed and fire-tested for class A-0 & A-60 divisions in accordance with SOLAS.',
-      items: [
-        { _type: 'spec', _key: 'ld-rating', label: 'Fire Rating', value: 'A-0 & A-60 divisions (SOLAS)' },
-        { _type: 'spec', _key: 'ld-type', label: 'Door Type', value: 'Fire Proof Landing Doors' },
-      ],
-    },
-    {
-      _type: 'specGroup',
-      _key: 'control-panel',
-      title: 'Control Panel',
-      sectionImages: null,
-      sectionDescription:
-        'The control panel is placed in the elevator machine room and contains: Main Inverter, PC Boards, Relays, Rolling / pitching switch, and relevant equipment for operation.',
-      items: [
-        { _type: 'spec', _key: 'cp-system', label: 'Control System', value: 'Inverter (VVVF) drive with microprocessor control' },
-        { _type: 'spec', _key: 'cp-speed', label: 'Speed (m/min.)', value: '30, 45, 60 & 96' },
-        { _type: 'spec', _key: 'cp-capacity', label: 'Capacity (kg)', value: '360, 500, 800, 1000, 1200, 1500 & 1700' },
-        { _type: 'spec', _key: 'cp-operation', label: 'Operation', value: 'Selective Collective Control (2BC)' },
-        { _type: 'spec', _key: 'cp-door', label: 'Landing Door', value: 'Hinged Type: A-60 Class / Center Open Type: A-0 & A-60 Class' },
-      ],
-    },
-    {
-      _type: 'specGroup',
       _key: 'technical-specs',
       title: 'Technical Specifications',
-      sectionImages: ['marine-elevator-main'],
+      sectionImages: null,
       sectionDescription: null,
       items: [
         { _type: 'spec', _key: 'ts-speed', label: 'Speed (m/min.)', value: '30, 45, 60 & 96' },
