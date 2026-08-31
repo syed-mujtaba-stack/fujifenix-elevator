@@ -1,9 +1,92 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { NAV_LINKS, PRODUCT_MENU, CONTACT } from "@/app/data/content";
+
+interface ProductCategory {
+  num: string;
+  title: string;
+  items: { label: string; href: string }[];
+}
+
+interface ProductMenuGroup {
+  num: string;
+  title: string;
+  items: { label: string; href: string }[];
+}
+
+const ProductCategoryAccordion = ({
+  group,
+  onClose,
+}: {
+  group: ProductMenuGroup;
+  onClose: () => void;
+}) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="border-b border-slate-100">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="
+          flex items-center justify-between w-full
+          py-3 px-4 min-h-[48px]
+          group
+          focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
+        "
+      >
+        <span
+          className="subheading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none flex-1"
+          style={{ fontSize: "clamp(15px, 4vw, 17px)", letterSpacing: "0.08em" }}
+        >
+          <span className="eyebrow text-[#0047BB] mr-2">{group.num}</span>
+          {group.title}
+        </span>
+        <span
+          className={`text-slate-300 group-hover:text-[#0047BB] transition-transform duration-200 flex-shrink-0 ml-3 ${open ? "rotate-90" : ""}`}
+          aria-hidden="true"
+        >
+          →
+        </span>
+      </button>
+      <AnimatePresence mode="popLayout">
+        {open && (
+          <motion.ul
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.15 }}
+            className="overflow-hidden bg-blue-50/30"
+          >
+            {group.items.map((it) => (
+              <li key={it.href}>
+                <Link
+                  href={it.href}
+                  onClick={onClose}
+                  className="
+                    flex items-center gap-2
+                    py-2.5 pl-10
+                    text-[13px] text-slate-600
+                    border-l-2 border-slate-200
+                    hover:border-[#0047BB] hover:text-[#0047BB] hover:bg-blue-100/50
+                    transition-colors
+                  "
+                >
+                  <span className="h-1 w-1 rounded-full bg-slate-300" aria-hidden="true" />
+                  {it.label}
+                </Link>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 /* Google Translate widget — rendered inside the mobile menu
     so it doesn't eat horizontal space in the navbar row */
@@ -56,7 +139,7 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
     >
       {/* ── Nav links ── */}
       <nav className="flex flex-col px-4 sm:px-6 pt-2 pb-4 flex-1">
-        {NAV_LINKS.map((l, i) => (
+        {NAV_LINKS.filter((l) => l.href !== "/products").map((l, i) => (
           <motion.div
             key={l.label}
             initial={{ opacity: 0, x: -10 }}
@@ -91,7 +174,7 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
         ))}
       </nav>
 
-      {/* ── Products (expandable) ── */}
+      {/* ── Products (nested accordion: Category → Products) ── */}
       <div className="border-b border-slate-100">
         <button
           type="button"
@@ -126,24 +209,15 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
             transition={{ duration: 0.2 }}
             className="overflow-hidden pb-3"
           >
-            {productItems.map((it) => (
-              <Link
-                key={it.href}
-                href={it.href}
-                onClick={onClose}
-                className="
-                  flex items-center gap-2
-                  py-2.5 pl-4
-                  text-[14px] text-slate-600
-                  border-l-2 border-slate-100
-                  hover:border-[#0047BB] hover:text-[#0047BB] hover:bg-blue-50/40
-                  transition-colors
-                "
-              >
-                <span className="h-1 w-1 rounded-full bg-slate-300" aria-hidden="true" />
-                {it.label}
-              </Link>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {PRODUCT_MENU.map((group: ProductMenuGroup) => (
+                <ProductCategoryAccordion
+                  key={group.title}
+                  group={group}
+                  onClose={onClose}
+                />
+              ))}
+            </AnimatePresence>
           </motion.div>
         )}
       </div>
