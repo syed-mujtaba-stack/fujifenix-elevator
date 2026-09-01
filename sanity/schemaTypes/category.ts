@@ -19,18 +19,6 @@ export const category = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'group',
-      title: 'Group',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Elevator Systems', value: 'elevators' },
-          { title: 'Components & Accessories', value: 'components' },
-        ],
-      },
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',

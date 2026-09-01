@@ -3,19 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { NAV_LINKS, PRODUCT_MENU, CONTACT } from "@/app/data/content";
-
-interface ProductCategory {
-  num: string;
-  title: string;
-  items: { label: string; href: string }[];
-}
-
-interface ProductMenuGroup {
-  num: string;
-  title: string;
-  items: { label: string; href: string }[];
-}
+import { NAV_LINKS, PRODUCT_MENU, CONTACT, type ProductMenuGroup } from "@/app/data/content";
 
 const ProductCategoryAccordion = ({
   group,
@@ -25,37 +13,54 @@ const ProductCategoryAccordion = ({
   onClose: () => void;
 }) => {
   const [open, setOpen] = useState(false);
+  const categoryHref = `/products/${group.slug}`;
 
   return (
     <div className="border-b border-slate-100">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="
-          flex items-center justify-between w-full
-          py-3 px-4 min-h-[48px]
-          group
-          focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
-        "
-      >
-        <span
-          className="subheading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none flex-1"
-          style={{ fontSize: "clamp(15px, 4vw, 17px)", letterSpacing: "0.08em" }}
+      <div className="flex items-center w-full">
+        <Link
+          href={categoryHref}
+          onClick={onClose}
+          className="
+            flex items-center justify-between w-full flex-1
+            py-3 px-4 min-h-[48px]
+            group
+            focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
+          "
+          aria-label={`View ${group.title} category`}
         >
-          <span className="eyebrow text-[#0047BB] mr-2">{group.num}</span>
-          {group.title}
-        </span>
-        <span
-          className={`text-slate-300 group-hover:text-[#0047BB] transition-transform duration-200 flex-shrink-0 ml-3 ${open ? "rotate-90" : ""}`}
-          aria-hidden="true"
+          <span
+            className="subheading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none flex-1 truncate"
+            style={{ fontSize: "clamp(15px, 4vw, 17px)", letterSpacing: "0.08em" }}
+          >
+            <span className="eyebrow text-[#0047BB] mr-2">{group.num}</span>
+            {group.title}
+          </span>
+        </Link>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls={`category-products-${group.slug}`}
+          className="
+            flex items-center justify-center w-12 h-12 min-w-[44px]
+            group
+            focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
+            ml-auto
+          "
         >
-          →
-        </span>
-      </button>
+          <span
+            className={`text-slate-300 group-hover:text-[#0047BB] transition-transform duration-200 ${open ? "rotate-90" : ""}`}
+            aria-hidden="true"
+          >
+            →
+          </span>
+        </button>
+      </div>
       <AnimatePresence mode="popLayout">
         {open && (
           <motion.ul
+            id={`category-products-${group.slug}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -69,14 +74,14 @@ const ProductCategoryAccordion = ({
                   onClick={onClose}
                   className="
                     flex items-center gap-2
-                    py-2.5 pl-10
-                    text-[13px] text-slate-600
+                    py-2 px-6
+                    text-[12px] text-slate-600
                     border-l-2 border-slate-200
                     hover:border-[#0047BB] hover:text-[#0047BB] hover:bg-blue-100/50
                     transition-colors
                   "
                 >
-                  <span className="h-1 w-1 rounded-full bg-slate-300" aria-hidden="true" />
+                  <span className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300" aria-hidden="true" />
                   {it.label}
                 </Link>
               </li>
@@ -180,6 +185,7 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
           type="button"
           onClick={() => setProductsOpen((v) => !v)}
           aria-expanded={productsOpen}
+          aria-controls="products-categories"
           className="
             flex items-center justify-between w-full
             py-4 min-h-[52px]
@@ -204,6 +210,7 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
         </button>
         {productsOpen && (
           <motion.div
+            id="products-categories"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             transition={{ duration: 0.2 }}

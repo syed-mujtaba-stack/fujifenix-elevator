@@ -283,11 +283,24 @@ export const HERO_HEADINGS: Record<string, string> = {
   "platform-screen-doors": "PLATFORM SCREEN DOORS",
 };
 
+export interface ProductMenuItem {
+  label: string;
+  href: string;
+}
+
+export interface ProductMenuGroup {
+  num: string;
+  title: string;
+  slug: string;
+  items: ProductMenuItem[];
+}
+
 /* Desktop mega-menu under PRODUCTS — grouped category links */
-export const PRODUCT_MENU = [
+export const PRODUCT_MENU: ProductMenuGroup[] = [
   {
     num: "01",
     title: "ELEVATORS",
+    slug: "elevators",
     items: [
       { label: "Passenger Elevators", href: "/products/elevators/passenger-elevator-cabin" },
       { label: "Home Elevators", href: "/products/elevators/home-elevators" },
@@ -296,15 +309,37 @@ export const PRODUCT_MENU = [
       { label: "Hospital Bed Elevators", href: "/products/elevators/hospital-bed-elevators" },
       { label: "Freight Elevators", href: "/products/elevators/freight-elevators" },
       { label: "Car Elevators", href: "/products/elevators/car-elevators" },
-      { label: "Escalators", href: "/products/elevators/escalator" },
-      { label: "Moving Walks", href: "/products/elevators/moving-walks" },
-      { label: "Marine Elevators", href: "/products/elevators/marine-elevators" },
-      { label: "Circular Elevators", href: "/products/elevators/circular-elevators" },
-      { label: "Platform / Stair Lifts", href: "/products/elevators/platform-stair-lift" },
-      { label: "Dumbwaiters", href: "/products/elevators/dumbwaiters" },
-      { label: "Auto Car Parking System", href: "/products/elevators/auto-parking-system" },
-      { label: "Platform Screen Doors", href: "/products/elevators/platform-screen-doors" },
-      { label: "View All Elevators", href: "/products/elevators" },
+    ],
+  },
+  {
+    num: "02",
+    title: "ESCALATORS & MOVING WALKS",
+    slug: "escalators-moving-walks",
+    items: [
+      { label: "Escalators", href: "/products/escalators-moving-walks/escalator" },
+      { label: "Trolley Escalators", href: "/products/escalators-moving-walks/trolley-escalators" },
+      { label: "Moving Walks", href: "/products/escalators-moving-walks/moving-walks" },
+    ],
+  },
+  {
+    num: "03",
+    title: "SPECIALIZED ELEVATOR SOLUTIONS",
+    slug: "specialized-elevator-solutions",
+    items: [
+      { label: "Customized Elevators", href: "/products/specialized-elevator-solutions/customized-elevators" },
+      { label: "Marine Elevators", href: "/products/specialized-elevator-solutions/marine-elevators" },
+      { label: "Circular Elevators", href: "/products/specialized-elevator-solutions/circular-elevators" },
+      { label: "Platform / Stair Lifts", href: "/products/specialized-elevator-solutions/platform-stair-lift" },
+      { label: "Dumbwaiters", href: "/products/specialized-elevator-solutions/dumbwaiters" },
+    ],
+  },
+  {
+    num: "04",
+    title: "TRANSPORTATION & INFRASTRUCTURE",
+    slug: "transportation-infrastructure",
+    items: [
+      { label: "Auto Car Parking Systems", href: "/products/transportation-infrastructure/auto-parking-system" },
+      { label: "Platform Screen Doors", href: "/products/transportation-infrastructure/platform-screen-doors" },
     ],
   },
 ] as const;

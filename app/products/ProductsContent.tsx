@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, AnimatePresence } from "framer-motion";
 import { urlFor } from "@/sanity/lib/image";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,7 +14,6 @@ interface CategoryData {
   _id: string;
   title: string;
   slug: string;
-  group: string;
   description: string | null;
   image: unknown;
   productCount: number;
@@ -36,6 +36,90 @@ const cardImage = (product: ProductData) =>
   product.image
     ? urlFor(product.image).width(900).auto("format").url()
     : product.gallery?.[0]?.src ?? FALLBACK_IMAGE;
+
+function CategoryAccordion({
+  category,
+  products,
+  selectedCategory,
+  onSelectCategory,
+  catsOpen,
+}: {
+  category: CategoryData;
+  products: ProductData[];
+  selectedCategory: string | null;
+  onSelectCategory: (slug: string | null) => void;
+  catsOpen: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const categoryProducts = products.filter((p) => p.categorySlug === category.slug);
+  const isSelected = selectedCategory === category.slug;
+
+  return (
+    <div className="border-b border-slate-200">
+      <button
+        type="button"
+        onClick={() => setIsOpen((v) => !v)}
+        aria-expanded={isOpen}
+        className={`
+          flex items-center justify-between w-full
+          py-3 px-3 min-h-[44px]
+          group
+          transition-all
+          ${isSelected ? "border-l-2 border-[#0047BB] bg-blue-50/60" : "border-transparent bg-white"}
+          ${!isOpen && !isSelected ? "hover:border-[#0047BB] hover:bg-blue-50/50" : ""}
+          focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
+        `}
+      >
+        <span
+          className={`
+            subheading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none flex-1
+            ${isSelected ? "text-[#0047BB]" : "text-slate-600"}
+          `}
+          style={{ fontSize: "13px", letterSpacing: "0.08em" }}
+        >
+          {category.title}
+        </span>
+        <span
+          className={`text-slate-300 group-hover:text-[#0047BB] transition-transform duration-200 flex-shrink-0 ml-3 ${isOpen ? "rotate-90" : ""}`}
+          aria-hidden="true"
+        >
+          →
+        </span>
+      </button>
+      <AnimatePresence mode="popLayout">
+        {isOpen && (
+          <motion.ul
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.15 }}
+            className="overflow-hidden bg-blue-50/30"
+          >
+            {categoryProducts.map((product) => (
+              <li key={product._id}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSelectCategory(category.slug);
+                    if (window.innerWidth < 1024) setIsOpen(false);
+                  }}
+                  className={`
+                    flex items-center gap-2 w-full px-6 py-2 text-left
+                    text-[12px] transition-colors
+                    ${selectedCategory === category.slug ? "text-[#0047BB] font-semibold" : "text-slate-600 hover:text-[#0047BB]"}
+                  `}
+                >
+                  <span className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300" aria-hidden="true" />
+                  {product.title}
+                </button>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function ProductsContent({ categories, products }: { categories: CategoryData[]; products: ProductData[] }) {
   const ref = useRef<HTMLElement>(null);
@@ -136,19 +220,14 @@ export default function ProductsContent({ categories, products }: { categories: 
                   <span className="text-[10px] text-slate-400">{products.length}</span>
                 </button>
                 {categories.map((category) => (
-                  <button
+                  <CategoryAccordion
                     key={category._id}
-                    type="button"
-                    onClick={() => {
-                      setSelectedCategory(category.slug);
-                      setPage(1);
-                      if (window.innerWidth < 1024) setCatsOpen(false);
-                    }}
-                    className={`group flex min-h-11 w-full items-center justify-between gap-4 border-l-2 px-3 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.08em] transition-all ${selectedCategory === category.slug ? "border-[#0047BB] bg-blue-50/60 text-[#0047BB]" : "border-transparent bg-white text-slate-600 hover:border-[#0047BB] hover:bg-blue-50/50 hover:text-[#0047BB]"}`}
-                  >
-                    <span>{category.title}</span>
-                    <span className="text-[10px] text-slate-400">{category.productCount}</span>
-                  </button>
+                    category={category}
+                    products={products}
+                    selectedCategory={selectedCategory}
+                    onSelectCategory={setSelectedCategory}
+                    catsOpen={catsOpen}
+                  />
                 ))}
               </nav>
             </div>

@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { safeFetch } from "@/sanity/lib/client";
-import { productQuery, type SanityProductDetail } from "@/sanity/lib/queries";
+import {
+  productQuery,
+  categoriesQuery,
+  allProductsQuery,
+  type SanityProductDetail,
+  type SanityCategoryItem,
+  type SanityProductItem,
+} from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import PageHero from "@/app/components/PageHero";
 import ProductSidebar from "@/app/components/ProductSidebar";
@@ -32,7 +39,11 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ category: string; product: string }> }) {
   const { product } = await params;
-  const p = await safeFetch<SanityProductDetail | null>(productQuery, { slug: product }, null);
+  const [p, categories, allProducts] = await Promise.all([
+    safeFetch<SanityProductDetail | null>(productQuery, { slug: product }, null),
+    safeFetch<SanityCategoryItem[]>(categoriesQuery, {}, []),
+    safeFetch<SanityProductItem[]>(allProductsQuery, {}, []),
+  ]);
   if (!p) return notFound();
 
   const overrideImage = PRODUCT_IMAGE_OVERRIDES[p.slug];
@@ -57,7 +68,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <div className="lg:flex lg:gap-12 xl:gap-16">
           <aside className="hidden lg:block lg:w-64 lg:flex-shrink-0">
             <div className="lg:sticky lg:top-28">
-              <ProductSidebar currentHref={currentHref} />
+              <ProductSidebar
+                currentHref={currentHref}
+                categories={categories}
+                products={allProducts}
+              />
             </div>
           </aside>
           <div className="min-w-0 flex-1">

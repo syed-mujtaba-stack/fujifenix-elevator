@@ -179,18 +179,36 @@ export default function ProductDetailContent({ product }: { product: ProductData
 
   const related = product.related ?? [];
 
-  return (
+return (
     <>
       {/* Breadcrumb / back link */}
       <div className="bg-white border-b border-slate-100">
         <div className="container-gutter py-4">
-          <Link
-            href={`/products/${product.categorySlug}`}
-            className="group inline-flex items-center gap-3 eyebrow text-[#0047BB] hover:gap-5 transition-all duration-300"
-          >
-            <span className="group-hover:-translate-x-1 transition-transform">←</span>
-            {product.category}
-          </Link>
+          <nav className="flex flex-wrap items-center gap-2 text-sm" aria-label="Breadcrumb">
+            <Link
+              href="/"
+              className="group inline-flex items-center gap-1.5 text-slate-500 hover:text-[#0047BB] transition-colors"
+            >
+              <span className="group-hover:-translate-x-0.5 transition-transform">←</span>
+              Home
+            </Link>
+            <span className="text-slate-300" aria-hidden="true">/</span>
+            <Link
+              href="/products"
+              className="text-slate-500 hover:text-[#0047BB] transition-colors"
+            >
+              Products
+            </Link>
+            <span className="text-slate-300" aria-hidden="true">/</span>
+            <Link
+              href={`/products/${product.categorySlug}`}
+              className="text-slate-500 hover:text-[#0047BB] transition-colors"
+            >
+              {product.category}
+            </Link>
+            <span className="text-slate-300" aria-hidden="true">/</span>
+            <span className="text-[#0f172a] font-medium truncate max-w-[200px]">{product.title}</span>
+          </nav>
         </div>
       </div>
 

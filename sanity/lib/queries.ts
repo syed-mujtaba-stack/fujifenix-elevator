@@ -57,7 +57,6 @@ export interface SanityCategoryItem {
   _id: string;
   title: string;
   slug: string;
-  group: string;
   description: string | null;
   image: unknown;
   productCount: number;
@@ -87,7 +86,6 @@ export const categoriesQuery = `
     _id,
     title,
     "slug": slug.current,
-    group,
     description,
     image,
     "productCount": count(*[_type == "product" && category._ref == ^._id])
@@ -99,7 +97,6 @@ export const categoryQuery = `
     _id,
     title,
     "slug": slug.current,
-    group,
     description,
     image
   }
