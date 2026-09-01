@@ -296,7 +296,7 @@ export default function Navbar() {
         MobileMenu drawer carries links, quote CTA and language picker.
         ============================================================
       */}
-      <div className="xl:hidden flex items-center justify-between px-4 sm:px-6">
+      <div className="xl:hidden flex items-center justify-between px-6 sm:px-8">
         <Logo />
 
         {/* Hamburger — 44×44 px minimum touch target per WCAG 2.5.5 */}
