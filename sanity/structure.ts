@@ -26,8 +26,8 @@ export const structure: StructureResolver = (S, context) => {
                       .title(cat.title)
                       .filter(`_type == "product" && category._ref == $catId`)
                       .params({ catId: cat._id })
-.defaultOrdering([{ field: 'order', direction: 'asc' }])
-                    )
+                      .defaultOrdering([{ field: 'order', direction: 'asc' }])
+                  )
               )
             )
         )
@@ -41,5 +41,14 @@ export const structure: StructureResolver = (S, context) => {
       productsByCategory,
       S.divider(),
       S.documentTypeListItem('category').title('Categories'),
+      S.divider(),
+      S.documentTypeListItem('inquiry').title('Inquiries'),
+      S.divider(),
+      S.documentTypeListItem('popup').title('Popups & Banners'),
+      S.divider(),
+      S.documentTypeListItem('adminUser').title('Admin Users'),
+      S.documentTypeListItem('pushSubscription').title('Push Subscriptions'),
+      S.divider(),
+      S.documentTypeListItem('auditLog').title('Audit Logs'),
     ])
 }
