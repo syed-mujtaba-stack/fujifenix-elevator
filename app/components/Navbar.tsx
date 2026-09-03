@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAV_LINKS, PRODUCT_MENU, CONTACT } from "@/app/data/content";
+import { NAV_LINKS, PRODUCT_MENU, CONTACT, type ProductMenuGroup } from "@/app/data/content";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 
@@ -124,72 +124,60 @@ export default function Navbar() {
         <Logo className="xl:h-6 2xl:h-7 flex-shrink-0" />
 
         {/* CENTER: Navigation */}
-        <nav aria-label="Primary" className="flex-1 flex justify-center">
-          <ul
-            className="flex items-center list-none m-0 p-0"
-            style={{ gap: "clamp(16px, 2vw, 32px)" }}
-          >
-            {NAV_LINKS.map((l) => {
-              const active =
-                pathname === l.href ||
-                (l.href === "/products" && (pathname.startsWith("/products") || pathname === "/")) ||
-                (l.href === "/" && pathname === "/");
+        <nav aria-label="Primary" className="flex-1 flex justify-center items-center">
+          <div className="flex items-center" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
+            {/* PRODUCTS BUTTON — hover opens mega-menu, click navigates to /products */}
+            <div className="relative">
+              <Link
+                href="/products"
+                className={`eyebrow inline-flex items-center gap-1.5 whitespace-nowrap transition-colors duration-200 ${
+                  pathname === "/products" || pathname.startsWith("/products/")
+                    ? "text-[#0047BB]"
+                    : "text-slate-600 hover:text-[#0047BB]"
+                }`}
+                style={{ letterSpacing: "0.12em" }}
+                aria-haspopup="true"
+                aria-expanded={megaOpen}
+                onMouseEnter={() => setMegaOpen(true)}
+                onMouseLeave={() => setMegaOpen(false)}
+              >
+                Products
+                <svg
+                  viewBox="0 0 12 12"
+                  className={`h-2.5 w-2.5 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                >
+                  <path d="M2 4l4 4 4-4" />
+                </svg>
+              </Link>
+            </div>
 
-              /* PRODUCTS — hover mega-menu trigger */
-              if (l.href === "/products") {
+            {/* Other nav links */}
+            <ul className="flex items-center list-none m-0 p-0" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
+              {NAV_LINKS.map((l) => {
+                const active = pathname === l.href || (l.href === "/" && pathname === "/");
                 return (
-                  <li
-                    key={l.label}
-                    className="relative whitespace-nowrap"
-                    onMouseEnter={() => setMegaOpen(true)}
-                    onMouseLeave={() => setMegaOpen(false)}
-                  >
+                  <li key={l.label} className="whitespace-nowrap">
                     <Link
                       href={l.href}
                       aria-current={active ? "page" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={megaOpen}
-                      className={`eyebrow inline-flex items-center gap-1.5 whitespace-nowrap transition-colors duration-200 ${
-                        active || megaOpen
+                      className={`eyebrow whitespace-nowrap transition-colors duration-200 ${
+                        active
                           ? "text-[#0047BB]"
                           : "text-slate-600 hover:text-[#0047BB]"
                       }`}
                       style={{ letterSpacing: "0.12em" }}
                     >
                       {l.label}
-                      <svg
-                        viewBox="0 0 12 12"
-                        className={`h-2.5 w-2.5 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        aria-hidden="true"
-                      >
-                        <path d="M2 4l4 4 4-4" />
-                      </svg>
                     </Link>
                   </li>
                 );
-              }
-
-              return (
-                <li key={l.label} className="whitespace-nowrap">
-                  <Link
-                    href={l.href}
-                    aria-current={active ? "page" : undefined}
-                    className={`eyebrow whitespace-nowrap transition-colors duration-200 ${
-                      active
-                        ? "text-[#0047BB]"
-                        : "text-slate-600 hover:text-[#0047BB]"
-                    }`}
-                    style={{ letterSpacing: "0.12em" }}
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+              })}
+            </ul>
+          </div>
         </nav>
 
         {/* RIGHT: Utilities */}

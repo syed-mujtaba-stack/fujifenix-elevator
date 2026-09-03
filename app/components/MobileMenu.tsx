@@ -144,7 +144,7 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
     >
       {/* ── Nav links ── */}
       <nav className="flex flex-col px-4 sm:px-6 pt-2 pb-4 flex-1">
-        {NAV_LINKS.filter((l) => l.href !== "/products").map((l, i) => {
+        {NAV_LINKS.map((l, i) => {
           const showProductsAfter = l.href === "/about";
           return (
             <>

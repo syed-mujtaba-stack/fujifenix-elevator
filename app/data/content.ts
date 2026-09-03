@@ -262,7 +262,6 @@ export const CAPABILITIES_STRIP = [
 ] as const;
 
 export const NAV_LINKS = [
-  { label: "Products", href: "/products" },
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
