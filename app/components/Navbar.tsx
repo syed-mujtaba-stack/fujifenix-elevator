@@ -148,8 +148,10 @@ export default function Navbar() {
             className="flex items-center list-none m-0 p-0"
             style={{ gap: "clamp(12px, 1.4vw, 26px)" }}
           >
-            {NAV_LINKS.map((l) => {
-              const active = pathname === l.href || (l.href === "/products" && pathname.startsWith("/products"));
+{NAV_LINKS.map((l) => {
+                const active = pathname === l.href || 
+                  (l.href === "/products" && (pathname.startsWith("/products") || pathname === "/")) ||
+                  (l.href === "/" && pathname === "/");
 
               /* PRODUCTS — hover mega-menu trigger */
               if (l.href === "/products") {
