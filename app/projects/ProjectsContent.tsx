@@ -25,9 +25,6 @@ function ProjectCard({ project, tall }: { project: Project; tall: boolean }) {
           <span className="eyebrow text-white/70" style={{ fontSize: "11px" }}>
             {project.type}
           </span>
-          <span className="eyebrow text-[#60a5fa]" style={{ fontSize: "11px" }}>
-            {project.floors}
-          </span>
         </div>
         <div className="absolute bottom-6 left-6 right-6">
           <h3 className="heading text-white mb-2" style={{ fontSize: "clamp(18px, 2.2vw, 26px)" }}>
@@ -107,7 +104,7 @@ export default function ProjectsContent() {
       {/* Start a project band */}
       <section className="relative overflow-hidden bg-[#071324]">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#0047BB]" />
-        <div className="container-gutter py-16 md:py-20">
+        <div className="container-gutter py-16 md:py-20 pb-24 md:pb-28">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
             <div>
               <div className="flex items-center gap-3 mb-6">

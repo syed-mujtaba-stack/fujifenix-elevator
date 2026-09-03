@@ -61,7 +61,6 @@ function ProjectItem({
               </h3>
               <div className="eyebrow text-white/50">{project.location}</div>
             </div>
-            <div className="eyebrow text-white/40 text-right">{project.floors}</div>
           </div>
         </div>
       </div>

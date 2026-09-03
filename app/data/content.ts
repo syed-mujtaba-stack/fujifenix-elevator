@@ -209,7 +209,7 @@ export const PROJECTS: Project[] = [
     location: "COMMERCIAL OFFICE",
     type: "PANORAMIC GLASS LIFTS",
     floors: "18 FLOORS",
-    img: "/escalator.jpg",
+    img: "/Elevators/Panoramic Elevator/panoramic glass elevator.jpg",
     size: "small",
   },
   {

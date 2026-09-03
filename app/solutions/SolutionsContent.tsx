@@ -82,7 +82,7 @@ export default function SolutionsContent() {
                     </div>
                     <h2
                       className="display text-[#0f172a] mb-6"
-                      style={{ fontSize: "clamp(36px, 5vw, 68px)" }}
+                      style={{ fontSize: "clamp(36px, 5vw, 68px)", whiteSpace: "nowrap" }}
                     >
                       {seg.title}
                     </h2>
