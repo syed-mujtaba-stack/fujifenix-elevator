@@ -30,8 +30,8 @@ const ProductCategoryAccordion = ({
           aria-label={`View ${group.title} category`}
         >
           <span
-            className="subheading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none flex-1 truncate"
-            style={{ fontSize: "clamp(15px, 4vw, 17px)", letterSpacing: "0.08em" }}
+            className="subheading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none flex-1 whitespace-nowrap"
+            style={{ fontSize: "clamp(9px, 2.8vw, 11px)", letterSpacing: "0.06em" }}
           >
             <span className="eyebrow text-[#0047BB] mr-2">{group.num}</span>
             {group.title}
@@ -75,7 +75,7 @@ const ProductCategoryAccordion = ({
                   className="
                     flex items-center gap-2
                     py-2 px-6
-                    text-[12px] text-slate-600
+                    text-[10px] text-slate-600
                     border-l-2 border-slate-200
                     hover:border-[#0047BB] hover:text-[#0047BB] hover:bg-blue-100/50
                     transition-colors
@@ -113,7 +113,6 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuProps) {
   const [productsOpen, setProductsOpen] = useState(false);
-  const productItems = PRODUCT_MENU.flatMap((g) => g.items);
 
   return (
     <motion.div
@@ -124,13 +123,6 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      /*
-        Position: fixed so it overlays the entire screen below the navbar.
-        max-h: viewport minus real navbar height.
-        overflow-y: auto for very small screens / many links.
-        width: 100vw prevents any horizontal overflow.
-        No horizontal padding on the wrapper — applied per-item instead.
-      */
       style={{ top: navHeight }}
       className="
         fixed left-0 right-0 bottom-0
@@ -145,22 +137,70 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
       {/* ── Nav links ── */}
       <nav className="flex flex-col px-4 sm:px-6 pt-2 pb-4 flex-1">
         {NAV_LINKS.map((l, i) => {
-          const showProductsAfter = l.href === "/about";
+          const isProducts = l.href === "/products";
           return (
-            <>
-              <motion.div
-                key={l.label}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.04 * i, duration: 0.25 }}
-              >
+            <motion.div
+              key={l.label}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.04 * i, duration: 0.25 }}
+            >
+              {isProducts ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setProductsOpen((v) => !v)}
+                    aria-expanded={productsOpen}
+                    aria-controls="products-categories"
+                    className="
+                      flex items-center justify-between w-full
+                      py-4 border-b border-slate-100
+                      group min-h-[52px]
+                      focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
+                    "
+                  >
+                    <span
+                      className="heading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none"
+                      style={{ fontSize: "clamp(18px, 5vw, 22px)" }}
+                    >
+                      {l.label}
+                    </span>
+                    <span
+                      className={`text-slate-300 group-hover:text-[#0047BB] transition-transform duration-200 flex-shrink-0 ml-3 ${
+                        productsOpen ? "rotate-90" : ""
+                      }`}
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </button>
+                  {productsOpen && (
+                    <motion.div
+                      id="products-categories"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden pb-3"
+                    >
+                      <AnimatePresence mode="popLayout">
+                        {PRODUCT_MENU.map((group) => (
+                          <ProductCategoryAccordion
+                            key={group.title}
+                            group={group}
+                            onClose={onClose}
+                          />
+                        ))}
+                      </AnimatePresence>
+                    </motion.div>
+                  )}
+                </>
+              ) : (
                 <Link
                   href={l.href}
                   className="
                     flex items-center justify-between
                     py-4 border-b border-slate-100
-                    group
-                    min-h-[52px]
+                    group min-h-[52px]
                     focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
                   "
                   onClick={onClose}
@@ -178,61 +218,8 @@ export default function MobileMenu({ onClose, navHeight = 64, id }: MobileMenuPr
                     →
                   </span>
                 </Link>
-              </motion.div>
-              {showProductsAfter && (
-                <>
-                  {/* ── Products (nested accordion: Category → Products) ── */}
-                  <div className="border-b border-slate-100">
-                    <button
-                      type="button"
-                      onClick={() => setProductsOpen((v) => !v)}
-                      aria-expanded={productsOpen}
-                      aria-controls="products-categories"
-                      className="
-                        flex items-center justify-between w-full
-                        py-4 min-h-[52px]
-                        group
-                        focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]
-                      "
-                    >
-                      <span
-                        className="heading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none"
-                        style={{ fontSize: "clamp(18px, 5vw, 22px)" }}
-                      >
-                        Products
-                      </span>
-                      <span
-                        className={`text-slate-300 group-hover:text-[#0047BB] transition-transform duration-200 flex-shrink-0 ml-3 ${
-                          productsOpen ? "rotate-90" : ""
-                        }`}
-                        aria-hidden="true"
-                      >
-                        →
-                      </span>
-                    </button>
-                    {productsOpen && (
-                      <motion.div
-                        id="products-categories"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden pb-3"
-                      >
-                        <AnimatePresence mode="popLayout">
-                          {PRODUCT_MENU.map((group: ProductMenuGroup) => (
-                            <ProductCategoryAccordion
-                              key={group.title}
-                              group={group}
-                              onClose={onClose}
-                            />
-                          ))}
-                        </AnimatePresence>
-                      </motion.div>
-                    )}
-                  </div>
-                </>
               )}
-            </>
+            </motion.div>
           );
         })}
       </nav>

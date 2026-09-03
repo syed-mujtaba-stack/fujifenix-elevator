@@ -53,7 +53,7 @@ function CategoryAccordion({
         "
       >
         <span
-          className="subheading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none flex-1"
+          className="subheading text-[#0f172a] group-hover:text-[#0047BB] transition-colors leading-none flex-1 text-left"
           style={{ fontSize: "13px", letterSpacing: "0.08em" }}
         >
           {category.title}
@@ -81,7 +81,7 @@ function CategoryAccordion({
                   className={`
                     flex items-center gap-2
                     py-2 px-6
-                    text-[12px] text-slate-600
+                    text-[12px] text-slate-600 text-left
                     border-l-2 border-slate-200
                     hover:border-[#0047BB] hover:text-[#0047BB] hover:bg-blue-100/50
                     transition-colors
@@ -120,7 +120,7 @@ export default function ProductSidebar({ currentHref, categories, products }: Pr
 
   return (
     <div className="border border-slate-200 bg-[#f8fafc] p-3 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
-      <div className="eyebrow text-[#0047BB] px-3 pt-2 pb-3">PRODUCTS</div>
+      <div className="eyebrow text-[#0047BB] px-3 pt-2 pb-3 text-left">PRODUCTS</div>
       <nav className="flex flex-col gap-1" aria-label="Products">
         {categories.map((category) => {
           const isOpen = openCategories.includes(category.slug) || category.slug === currentProductCategorySlug;

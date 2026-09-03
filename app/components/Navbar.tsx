@@ -126,45 +126,24 @@ export default function Navbar() {
         {/* CENTER: Navigation */}
         <nav aria-label="Primary" className="flex-1 flex justify-center items-center">
           <div className="flex items-center" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
-            {/* PRODUCTS BUTTON — hover opens mega-menu, click navigates to /products */}
-            <div className="relative">
-              <Link
-                href="/products"
-                className={`eyebrow inline-flex items-center gap-1.5 whitespace-nowrap transition-colors duration-200 ${
-                  pathname === "/products" || pathname.startsWith("/products/")
-                    ? "text-[#0047BB]"
-                    : "text-slate-600 hover:text-[#0047BB]"
-                }`}
-                style={{ letterSpacing: "0.12em" }}
-                aria-haspopup="true"
-                aria-expanded={megaOpen}
-                onMouseEnter={() => setMegaOpen(true)}
-                onMouseLeave={() => setMegaOpen(false)}
-              >
-                Products
-                <svg
-                  viewBox="0 0 12 12"
-                  className={`h-2.5 w-2.5 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  aria-hidden="true"
-                >
-                  <path d="M2 4l4 4 4-4" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Other nav links */}
+            {/* Nav links */}
             <ul className="flex items-center list-none m-0 p-0" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
               {NAV_LINKS.map((l) => {
                 const active = pathname === l.href || (l.href === "/" && pathname === "/");
+                const isProducts = l.href === "/products";
                 return (
-                  <li key={l.label} className="whitespace-nowrap">
+                  <li
+                    key={l.label}
+                    className={`whitespace-nowrap${isProducts ? " relative" : ""}`}
+                    onMouseEnter={isProducts ? () => setMegaOpen(true) : undefined}
+                    onMouseLeave={isProducts ? () => setMegaOpen(false) : undefined}
+                  >
                     <Link
                       href={l.href}
                       aria-current={active ? "page" : undefined}
-                      className={`eyebrow whitespace-nowrap transition-colors duration-200 ${
+                      aria-haspopup={isProducts ? "true" : undefined}
+                      aria-expanded={isProducts ? megaOpen : undefined}
+                      className={`eyebrow inline-flex items-center gap-1.5 whitespace-nowrap transition-colors duration-200 ${
                         active
                           ? "text-[#0047BB]"
                           : "text-slate-600 hover:text-[#0047BB]"
@@ -172,7 +151,202 @@ export default function Navbar() {
                       style={{ letterSpacing: "0.12em" }}
                     >
                       {l.label}
+                      {isProducts && (
+                        <svg
+                          viewBox="0 0 12 12"
+                          className={`h-2.5 w-2.5 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          aria-hidden="true"
+                        >
+                          <path d="M2 4l4 4 4-4" />
+                        </svg>
+                      )}
                     </Link>
+
+                    {/* ── MEGA MENU (Desktop) ── */}
+                    {isProducts && (
+                      <AnimatePresence>
+                        {megaOpen && (
+                          <motion.div
+                            role="menu"
+                            aria-label="Product categories"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 8 }}
+                            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                            className="fixed left-0 top-[var(--nav-h,64px)] z-[50] w-screen max-w-[1280px] px-6 sm:px-8 md:px-10 lg:px-14 xl:px-16 pt-2 pointer-events-auto"
+                            style={{ pointerEvents: "auto" }}
+                          >
+                            <div className="">
+                              <motion.div
+                                className="border border-slate-200 bg-white rounded-b-xl shadow-[0_24px_64px_rgba(15,23,42,0.14)] p-6 md:p-8"
+                              >
+                                {/* 4-Column Grid Layout */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                                  {/* COLUMN 1: ELEVATORS */}
+                                  <div className="min-w-0">
+                                    {PRODUCT_MENU.map((g) => {
+                                      if (g.slug !== "elevators") return null;
+                                      return (
+                                        <div key={g.title}>
+                                          <div className="mb-4 flex items-baseline gap-2.5">
+                                            <span className="eyebrow text-[#0047BB] whitespace-nowrap">{g.num}</span>
+                                            <span
+                                              className="subheading text-[#0f172a] whitespace-nowrap"
+                                              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+                                            >
+                                              {g.title}
+                                            </span>
+                                          </div>
+                                          <ul className="space-y-2 border-l border-slate-100 pl-4">
+                                            {g.items.map((it) => (
+                                              <li key={it.href}>
+                                                <Link
+                                                  href={it.href}
+                                                  role="menuitem"
+                                                  onClick={() => setMegaOpen(false)}
+                                                  className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
+                                                  style={{ fontSize: "13px" }}
+                                                >
+                                                  <span
+                                                    className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
+                                                    aria-hidden="true"
+                                                  />
+                                                  {it.label}
+                                                </Link>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+
+                                  {/* COLUMN 2: ESCALATORS & MOVING WALKS */}
+                                  <div className="min-w-0">
+                                    {PRODUCT_MENU.map((g) => {
+                                      if (g.slug !== "escalators-moving-walks") return null;
+                                      return (
+                                        <div key={g.title}>
+                                          <div className="mb-4 flex items-baseline gap-2.5">
+                                            <span className="eyebrow text-[#0047BB] whitespace-nowrap">{g.num}</span>
+                                            <span
+                                              className="subheading text-[#0f172a] whitespace-nowrap"
+                                              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+                                            >
+                                              {g.title}
+                                            </span>
+                                          </div>
+                                          <ul className="space-y-2 border-l border-slate-100 pl-4">
+                                            {g.items.map((it) => (
+                                              <li key={it.href}>
+                                                <Link
+                                                  href={it.href}
+                                                  role="menuitem"
+                                                  onClick={() => setMegaOpen(false)}
+                                                  className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
+                                                  style={{ fontSize: "13px" }}
+                                                >
+                                                  <span
+                                                    className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
+                                                    aria-hidden="true"
+                                                  />
+                                                  {it.label}
+                                                </Link>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+
+                                  {/* COLUMN 3: SPECIALIZED ELEVATOR SOLUTIONS */}
+                                  <div className="min-w-0">
+                                    {PRODUCT_MENU.map((g) => {
+                                      if (g.slug !== "specialized-elevator-solutions") return null;
+                                      return (
+                                        <div key={g.title}>
+                                          <div className="mb-4 flex items-baseline gap-2.5">
+                                            <span className="eyebrow text-[#0047BB] whitespace-nowrap">{g.num}</span>
+                                            <span
+                                              className="subheading text-[#0f172a] truncate"
+                                              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+                                            >
+                                              {g.title}
+                                            </span>
+                                          </div>
+                                          <ul className="space-y-2 border-l border-slate-100 pl-4">
+                                            {g.items.map((it) => (
+                                              <li key={it.href}>
+                                                <Link
+                                                  href={it.href}
+                                                  role="menuitem"
+                                                  onClick={() => setMegaOpen(false)}
+                                                  className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
+                                                  style={{ fontSize: "13px" }}
+                                                >
+                                                  <span
+                                                    className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
+                                                    aria-hidden="true"
+                                                  />
+                                                  {it.label}
+                                                </Link>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+
+                                  {/* COLUMN 4: TRANSPORTATION & INFRASTRUCTURE */}
+                                  <div className="min-w-0">
+                                    {PRODUCT_MENU.map((g) => {
+                                      if (g.slug !== "transportation-infrastructure") return null;
+                                      return (
+                                        <div key={g.title}>
+                                          <div className="mb-4 flex items-baseline gap-2.5">
+                                            <span className="eyebrow text-[#0047BB] whitespace-nowrap">{g.num}</span>
+                                            <span
+                                              className="subheading text-[#0f172a] whitespace-nowrap"
+                                              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+                                            >
+                                              {g.title}
+                                            </span>
+                                          </div>
+                                          <ul className="space-y-2 border-l border-slate-100 pl-4">
+                                            {g.items.map((it) => (
+                                              <li key={it.href}>
+                                                <Link
+                                                  href={it.href}
+                                                  role="menuitem"
+                                                  onClick={() => setMegaOpen(false)}
+                                                  className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
+                                                  style={{ fontSize: "13px" }}
+                                                >
+                                                  <span
+                                                    className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
+                                                    aria-hidden="true"
+                                                  />
+                                                  {it.label}
+                                                </Link>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </motion.div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    )}
                   </li>
                 );
               })}
@@ -218,151 +392,6 @@ export default function Navbar() {
           </span>
         </button>
       </div>
-
-      {/* ── MEGA MENU (Desktop) ── */}
-      <AnimatePresence>
-        {megaOpen && (
-          <motion.div
-            role="menu"
-            aria-label="Product categories"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed left-0 right-0 top-full z-[50] w-full px-6 sm:px-8 md:px-10 lg:px-14 xl:px-16 pt-2 pointer-events-auto"
-            style={{ pointerEvents: "auto" }}
-          >
-            <div className="mx-auto max-w-[1280px]">
-              <motion.div
-                className="border border-slate-200 bg-white rounded-b-xl shadow-[0_24px_64px_rgba(15,23,42,0.14)] p-6 md:p-8"
-              >
-                {/* 3-Column Grid Layout */}
-                <div
-                  className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12"
-                  style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}
-                >
-                  {/* COLUMN 1: ELEVATORS */}
-                  <div className="min-w-0">
-                    {PRODUCT_MENU.map((g, idx) => {
-                      if (g.slug !== "elevators") return null;
-                      return (
-                        <div key={g.title} className="border-r-0 lg:border-r lg:border-slate-100 pr-4 lg:pr-8">
-                          <div className="mb-4 flex items-baseline gap-2.5">
-                            <span className="eyebrow text-[#0047BB] whitespace-nowrap">{g.num}</span>
-                            <span
-                              className="subheading text-[#0f172a] whitespace-nowrap"
-                              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-                            >
-                              {g.title}
-                            </span>
-                          </div>
-                          <ul className="space-y-2 border-l border-slate-100 pl-4">
-                            {g.items.map((it) => (
-                              <li key={it.href}>
-                                <Link
-                                  href={it.href}
-                                  role="menuitem"
-                                  onClick={() => setMegaOpen(false)}
-                                  className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
-                                  style={{ fontSize: "13px" }}
-                                >
-                                  <span
-                                    className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
-                                    aria-hidden="true"
-                                  />
-                                  {it.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* COLUMN 2: ESCALATORS & MOVING WALKS */}
-                  <div className="min-w-0">
-                    {PRODUCT_MENU.map((g, idx) => {
-                      if (g.slug !== "escalators-moving-walks") return null;
-                      return (
-                        <div key={g.title} className="border-r-0 lg:border-r lg:border-slate-100 pr-4 lg:pr-8">
-                          <div className="mb-4 flex items-baseline gap-2.5">
-                            <span className="eyebrow text-[#0047BB] whitespace-nowrap">{g.num}</span>
-                            <span
-                              className="subheading text-[#0f172a] whitespace-nowrap"
-                              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-                            >
-                              {g.title}
-                            </span>
-                          </div>
-                          <ul className="space-y-2 border-l border-slate-100 pl-4">
-                            {g.items.map((it) => (
-                              <li key={it.href}>
-                                <Link
-                                  href={it.href}
-                                  role="menuitem"
-                                  onClick={() => setMegaOpen(false)}
-                                  className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
-                                  style={{ fontSize: "13px" }}
-                                >
-                                  <span
-                                    className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
-                                    aria-hidden="true"
-                                  />
-                                  {it.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* COLUMN 3: SPECIALIZED ELEVATOR SOLUTIONS + TRANSPORTATION & INFRASTRUCTURE */}
-                  <div className="min-w-0">
-                    {PRODUCT_MENU.map((g, idx) => {
-                      if (!["specialized-elevator-solutions", "transportation-infrastructure"].includes(g.slug)) return null;
-                      return (
-                        <div key={g.title} className="mb-8 last:mb-0">
-                          <div className="mb-4 flex items-baseline gap-2.5">
-                            <span className="eyebrow text-[#0047BB] whitespace-nowrap">{g.num}</span>
-                            <span
-                              className="subheading text-[#0f172a] truncate"
-                              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-                            >
-                              {g.title}
-                            </span>
-                          </div>
-                          <ul className="space-y-2 border-l border-slate-100 pl-4">
-                            {g.items.map((it) => (
-                              <li key={it.href}>
-                                <Link
-                                  href={it.href}
-                                  role="menuitem"
-                                  onClick={() => setMegaOpen(false)}
-                                  className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
-                                  style={{ fontSize: "13px" }}
-                                >
-                                  <span
-                                    className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
-                                    aria-hidden="true"
-                                  />
-                                  {it.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* ── Mobile menu drawer ── */}
       <AnimatePresence>
