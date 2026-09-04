@@ -38,5 +38,5 @@ export default function GoogleTranslateWidget() {
     document.body.appendChild(s);
   }, []);
 
-  return <div id="google_translate_element" />;
+  return <div id="google_translate_element" className="ff-translate notranslate" translate="no" />;
 }

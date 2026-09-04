@@ -259,6 +259,16 @@ section, div {
   line-height: 1;
 }
 
+/* Prevent Google Translate from translating the widget itself */
+.ff-translate,
+.ff-translate * {
+  translate: no;
+}
+
+.goog-te-gadget {
+  font-size: 0 !important;
+}
+
 .ff-translate::before {
   content: "";
   width: 15px;

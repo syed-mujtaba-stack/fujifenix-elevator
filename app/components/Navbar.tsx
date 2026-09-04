@@ -37,7 +37,7 @@ function GoogleTranslateWidget() {
   }, []);
 
   return (
-    <div id="google_translate_element" className="ff-translate" aria-label="Language selector" />
+    <div id="google_translate_element" className="ff-translate notranslate" translate="no" aria-label="Language selector" />
   );
 }
 

@@ -99,7 +99,8 @@ function MobileTranslate() {
   return (
     <div
       id="google_translate_element"
-      className="ff-translate"
+      className="ff-translate notranslate"
+      translate="no"
       aria-label="Language selector"
     />
   );
