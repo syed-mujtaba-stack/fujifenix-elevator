@@ -10,10 +10,139 @@ import MobileMenu from "./MobileMenu";
 
 let scriptLoaded = false;
 
+const ENGLISH_LABELS: Record<string, string> = {
+  af: "Afrikaans",
+  sq: "Albanian",
+  am: "Amharic",
+  ar: "Arabic",
+  hy: "Armenian",
+  az: "Azerbaijani",
+  eu: "Basque",
+  be: "Belarusian",
+  bn: "Bengali",
+  bs: "Bosnian",
+  bg: "Bulgarian",
+  ca: "Catalan",
+  ceb: "Cebuano",
+  "zh-CN": "Chinese (Simplified)",
+  "zh-TW": "Chinese (Traditional)",
+  co: "Corsican",
+  hr: "Croatian",
+  cs: "Czech",
+  da: "Danish",
+  nl: "Dutch",
+  en: "English",
+  eo: "Esperanto",
+  et: "Estonian",
+  fi: "Finnish",
+  fr: "French",
+  fy: "Frisian",
+  gl: "Galician",
+  ka: "Georgian",
+  de: "German",
+  el: "Greek",
+  gu: "Gujarati",
+  ht: "Haitian Creole",
+  ha: "Hausa",
+  haw: "Hawaiian",
+  he: "Hebrew",
+  hi: "Hindi",
+  hmn: "Hmong",
+  hu: "Hungarian",
+  is: "Icelandic",
+  ig: "Igbo",
+  id: "Indonesian",
+  ga: "Irish",
+  it: "Italian",
+  ja: "Japanese",
+  jv: "Javanese",
+  kn: "Kannada",
+  kk: "Kazakh",
+  km: "Khmer",
+  rw: "Kinyarwanda",
+  ko: "Korean",
+  ku: "Kurdish",
+  ky: "Kyrgyz",
+  lo: "Lao",
+  la: "Latin",
+  lv: "Latvian",
+  lt: "Lithuanian",
+  lb: "Luxembourgish",
+  mk: "Macedonian",
+  mg: "Malagasy",
+  ms: "Malay",
+  ml: "Malayalam",
+  mt: "Maltese",
+  mi: "Maori",
+  mr: "Marathi",
+  mn: "Mongolian",
+  my: "Myanmar (Burmese)",
+  ne: "Nepali",
+  no: "Norwegian",
+  ny: "Chichewa",
+  or: "Odia",
+  ps: "Pashto",
+  fa: "Persian",
+  pl: "Polish",
+  pt: "Portuguese",
+  pa: "Punjabi",
+  ro: "Romanian",
+  ru: "Russian",
+  sm: "Samoan",
+  gd: "Scots Gaelic",
+  sr: "Serbian",
+  st: "Sesotho",
+  sn: "Shona",
+  sd: "Sindhi",
+  si: "Sinhala",
+  sk: "Slovak",
+  sl: "Slovenian",
+  so: "Somali",
+  es: "Spanish",
+  su: "Sundanese",
+  sw: "Swahili",
+  sv: "Swedish",
+  tl: "Filipino",
+  tg: "Tajik",
+  ta: "Tamil",
+  tt: "Tatar",
+  te: "Telugu",
+  th: "Thai",
+  tr: "Turkish",
+  tk: "Turkmen",
+  uk: "Ukrainian",
+  ur: "Urdu",
+  ug: "Uyghur",
+  uz: "Uzbek",
+  vi: "Vietnamese",
+  cy: "Welsh",
+  xh: "Xhosa",
+  yi: "Yiddish",
+  yo: "Yoruba",
+  zu: "Zulu",
+};
+
+function forceEnglishOptions() {
+  const container = document.getElementById("google_translate_element");
+  if (!container) return;
+
+  const select = container.querySelector("select") as HTMLSelectElement | null;
+  if (!select) return;
+
+  Array.from(select.options).forEach((opt) => {
+    if (opt.text && ENGLISH_LABELS[opt.value]) {
+      opt.text = ENGLISH_LABELS[opt.value];
+    }
+  });
+}
+
 function GoogleTranslateWidget() {
   useEffect(() => {
     if (scriptLoaded) return;
     scriptLoaded = true;
+
+    // Force Google Translate UI to always use English
+    document.cookie = "googtranslate=en; path=/; max-age=31536000; SameSite=Lax";
 
     window.googleTranslateElementInit = () => {
       if (!window.google?.translate?.TranslateElement) return;
@@ -27,6 +156,17 @@ function GoogleTranslateWidget() {
         },
         "google_translate_element"
       );
+
+      // Force English option labels after widget renders
+      const timers = [300, 600, 1200, 2500];
+      timers.forEach((ms) => setTimeout(forceEnglishOptions, ms));
+
+      // Watch for any DOM changes that re-render the options
+      const observer = new MutationObserver(forceEnglishOptions);
+      const target = document.getElementById("google_translate_element");
+      if (target) {
+        observer.observe(target, { childList: true, subtree: true, characterData: true });
+      }
     };
 
     const s = document.createElement("script");
@@ -165,181 +305,78 @@ export default function Navbar() {
                       )}
                     </Link>
 
-                    {/* ── MEGA MENU (Desktop) ── */}
+                    {/* ── MEGA MENU (Desktop) — FenixSeven-style two-level flyout ── */}
                     {isProducts && (
                       <AnimatePresence>
                         {megaOpen && (
                           <motion.div
                             role="menu"
                             aria-label="Product categories"
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 8 }}
+                            exit={{ opacity: 0, y: 6 }}
                             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                            className="fixed left-0 top-[var(--nav-h,64px)] z-[50] w-full pointer-events-auto"
-                            style={{ pointerEvents: "auto" }}
+                            className="absolute left-0 top-full z-[50]"
+                            style={{ marginTop: "2px" }}
                           >
-                            <div className="px-6 sm:px-8 md:px-10 lg:px-14 xl:px-16 pt-2">
-                              <div
-                                className="bg-white border border-slate-200 rounded-b-xl shadow-[0_24px_64px_rgba(15,23,42,0.14)]"
-                                style={{ display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", columnGap: 0, padding: "32px 0" }}
-                              >
-                                {/* COLUMN 1: ELEVATORS */}
-                                <div style={{ padding: "0 24px", minWidth: 0 }}>
-                                  {PRODUCT_MENU.map((g) => {
-                                    if (g.slug !== "elevators") return null;
-                                    return (
-                                      <div key={g.title}>
-                                        <div className="mb-4">
-                                          <span className="eyebrow text-[#0047BB] block mb-1">{g.num}</span>
-                                          <span
-                                            className="subheading text-[#0f172a] block"
-                                            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-                                          >
-                                            {g.title}
-                                          </span>
-                                        </div>
-                                        <ul className="space-y-2">
-                                          {g.items.map((it) => (
-                                            <li key={it.href}>
-                                              <Link
-                                                href={it.href}
-                                                role="menuitem"
-                                                onClick={() => setMegaOpen(false)}
-                                                className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
-                                                style={{ fontSize: "13px" }}
-                                              >
-                                                <span
-                                                  className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
-                                                  aria-hidden="true"
-                                                />
-                                                {it.label}
-                                              </Link>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
+                            <div className="bg-white border border-slate-100/80 rounded-lg shadow-[0_20px_60px_rgba(15,23,42,0.12)] py-1 min-w-[280px]">
+                              {PRODUCT_MENU.map((group) => (
+                                <div key={group.slug} className="relative group/cat">
+                                  <Link
+                                    href={`/products/${group.slug}`}
+                                    className="flex items-center justify-between px-5 py-3 text-[13px] font-semibold text-slate-700 hover:text-[#0047BB] hover:bg-slate-50/80 transition-colors duration-150"
+                                    onClick={() => setMegaOpen(false)}
+                                    role="menuitem"
+                                  >
+                                    <span className="uppercase tracking-[0.04em] truncate" style={{ fontSize: "10px" }}>
+                                      {group.title}
+                                    </span>
+                                    <svg
+                                      viewBox="0 0 12 12"
+                                      className="h-3 w-3 flex-shrink-0 text-slate-300 group-hover/cat:text-[#0047BB] transition-colors"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="1.5"
+                                      aria-hidden="true"
+                                    >
+                                      <path d="M4 2l4 4-4 4" />
+                                    </svg>
+                                  </Link>
 
-                                {/* COLUMN 2: ESCALATORS & MOVING WALKS */}
-                                <div style={{ paddingLeft: "16px", paddingRight: "24px", minWidth: 0, borderLeft: "1px solid #e2e8f0" }}>
-                                  {PRODUCT_MENU.map((g) => {
-                                    if (g.slug !== "escalators-moving-walks") return null;
-                                    return (
-                                      <div key={g.title}>
-                                        <div className="mb-4">
-                                          <span className="eyebrow text-[#0047BB] block mb-1">{g.num}</span>
-                                          <span
-                                            className="subheading text-[#0f172a] block"
-                                            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-                                          >
-                                            {g.title}
-                                          </span>
-                                        </div>
-                                        <ul className="space-y-2">
-                                          {g.items.map((it) => (
-                                            <li key={it.href}>
-                                              <Link
-                                                href={it.href}
-                                                role="menuitem"
-                                                onClick={() => setMegaOpen(false)}
-                                                className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
-                                                style={{ fontSize: "13px" }}
-                                              >
-                                                <span
-                                                  className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
-                                                  aria-hidden="true"
-                                                />
-                                                {it.label}
-                                              </Link>
-                                            </li>
-                                          ))}
-                                        </ul>
+                                  {/* Flyout submenu */}
+                                  <div className="absolute left-full top-0 pl-3 opacity-0 invisible group-hover/cat:opacity-100 group-hover/cat:visible pointer-events-none group-hover/cat:pointer-events-auto transition-all duration-200 ease-out z-[51]">
+                                    <div className="bg-white border border-slate-100/80 rounded-lg shadow-[0_20px_60px_rgba(15,23,42,0.12)] py-3 min-w-[240px]">
+                                      <div className="px-4 mb-2">
+                                        <span className="block text-[10px] font-bold text-[#0047BB] uppercase tracking-[0.15em]">
+                                          {group.num}
+                                        </span>
+                                        <span className="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">
+                                          {group.title}
+                                        </span>
                                       </div>
-                                    );
-                                  })}
+                                      <div className="border-t border-slate-100 mx-4 mb-2" />
+                                      <ul className="space-y-0.5 px-1">
+                                        {group.items.map((item) => (
+                                          <li key={item.href}>
+                                            <Link
+                                              href={item.href}
+                                              role="menuitem"
+                                              onClick={() => setMegaOpen(false)}
+                                              className="group/item flex items-center gap-2.5 px-3 py-2 text-[13px] text-slate-500 transition-colors duration-150 hover:text-[#0047BB] hover:bg-slate-50/80 rounded-md"
+                                            >
+                                              <span
+                                                className="h-[5px] w-[5px] flex-shrink-0 rounded-full bg-slate-200 transition-colors duration-150 group-hover/item:bg-[#0047BB]"
+                                                aria-hidden="true"
+                                              />
+                                              {item.label}
+                                            </Link>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  </div>
                                 </div>
-
-                                {/* COLUMN 3: SPECIALIZED ELEVATOR SOLUTIONS */}
-                                <div style={{ padding: "0 24px", minWidth: 0, borderLeft: "1px solid #e2e8f0" }}>
-                                  {PRODUCT_MENU.map((g) => {
-                                    if (g.slug !== "specialized-elevator-solutions") return null;
-                                    return (
-                                      <div key={g.title}>
-                                        <div className="mb-4">
-                                          <span className="eyebrow text-[#0047BB] block mb-1">{g.num}</span>
-                                          <span
-                                            className="subheading text-[#0f172a] block"
-                                            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-                                          >
-                                            {g.title}
-                                          </span>
-                                        </div>
-                                        <ul className="space-y-2">
-                                          {g.items.map((it) => (
-                                            <li key={it.href}>
-                                              <Link
-                                                href={it.href}
-                                                role="menuitem"
-                                                onClick={() => setMegaOpen(false)}
-                                                className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
-                                                style={{ fontSize: "13px" }}
-                                              >
-                                                <span
-                                                  className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
-                                                  aria-hidden="true"
-                                                />
-                                                {it.label}
-                                              </Link>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-
-                                {/* COLUMN 4: TRANSPORTATION & INFRASTRUCTURE */}
-                                <div style={{ padding: "0 24px", minWidth: 0, borderLeft: "1px solid #e2e8f0" }}>
-                                  {PRODUCT_MENU.map((g) => {
-                                    if (g.slug !== "transportation-infrastructure") return null;
-                                    return (
-                                      <div key={g.title}>
-                                        <div className="mb-4">
-                                          <span className="eyebrow text-[#0047BB] block mb-1">{g.num}</span>
-                                          <span
-                                            className="subheading text-[#0f172a] block"
-                                            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-                                          >
-                                            {g.title}
-                                          </span>
-                                        </div>
-                                        <ul className="space-y-2">
-                                          {g.items.map((it) => (
-                                            <li key={it.href}>
-                                              <Link
-                                                href={it.href}
-                                                role="menuitem"
-                                                onClick={() => setMegaOpen(false)}
-                                                className="group flex items-center gap-2 text-slate-600 transition-colors duration-150 hover:text-[#0047BB]"
-                                                style={{ fontSize: "13px" }}
-                                              >
-                                                <span
-                                                  className="h-1 w-1 flex-shrink-0 rounded-full bg-slate-300 transition-colors duration-150 group-hover:bg-[#0047BB]"
-                                                  aria-hidden="true"
-                                                />
-                                                {it.label}
-                                              </Link>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              </div>
+                              ))}
                             </div>
                           </motion.div>
                         )}
