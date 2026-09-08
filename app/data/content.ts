@@ -1,5 +1,6 @@
 export const CONTACT = {
-  address: "Shanghai, China",
+  address:
+    "Building 2, No. 315 Weichang Road, Jinshan Zui Industrial Zone Economic Park, Jinshan District, Shanghai City",
   phone: "+86 157 5725 3279",
   phoneHref: "tel:+8615757253279",
   email: "info@fujifenix.com",
