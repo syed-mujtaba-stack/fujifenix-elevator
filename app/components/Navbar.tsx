@@ -265,60 +265,122 @@ function GoogleTranslateWidget() {
         }}
       />
 
-      {/* Custom trigger button — always in English */}
-      <button
+      {/* ── Compact trigger button ── */}
+      <motion.button
         id="translate-toggle-btn"
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Select language"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-600 text-[11px] font-semibold tracking-widest uppercase hover:border-[#0047BB] hover:text-[#0047BB] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#0047BB] focus:ring-offset-1"
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        className={`group flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold tracking-[0.1em] uppercase transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0047BB]/40 focus:ring-offset-1 ${
+          open
+            ? "bg-[#0047BB] text-white border border-[#0047BB]"
+            : "bg-white text-slate-500 border border-slate-200 hover:border-[#0047BB] hover:text-[#0047BB]"
+        }`}
       >
-        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-          <circle cx="8" cy="8" r="6.5" />
-          <path d="M8 1.5C8 1.5 5.5 4.5 5.5 8s2.5 6.5 2.5 6.5M8 1.5C8 1.5 10.5 4.5 10.5 8S8 14.5 8 14.5M1.5 8h13" />
-        </svg>
-        <span>{currentLabel === "English" ? "EN" : currentLabel.slice(0, 2).toUpperCase()}</span>
-        <svg viewBox="0 0 12 12" className={`h-2.5 w-2.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-          <path d="M2 4l4 4 4-4" />
-        </svg>
-      </button>
-
-      {/* Custom dropdown — language names always in English */}
-      {open && (
-        <div
-          role="listbox"
-          aria-label="Select language"
-          className="absolute right-0 mt-1.5 w-52 bg-white border border-slate-100 rounded-lg shadow-[0_8px_32px_rgba(15,23,42,0.12)] overflow-hidden z-[200]"
-          style={{ top: "100%" }}
+        {/* Globe icon — tiny & crisp */}
+        <motion.svg
+          viewBox="0 0 14 14"
+          className="h-3 w-3 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          aria-hidden="true"
+          animate={{ rotate: open ? 15 : 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
-          <div className="py-1 max-h-72 overflow-y-auto">
-            {TRANSLATE_LANGUAGES.map((lang) => (
-              <button
-                key={lang.code}
-                role="option"
-                aria-selected={activeLang === lang.code}
-                type="button"
-                onClick={() => handleSelect(lang.code)}
-                className={`w-full flex items-center gap-2.5 px-4 py-2 text-[13px] text-left transition-colors duration-100 ${
-                  activeLang === lang.code
-                    ? "bg-blue-50 text-[#0047BB] font-semibold"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-[#0047BB]"
-                }`}
-              >
-                {activeLang === lang.code && (
-                  <svg viewBox="0 0 12 12" className="h-3 w-3 flex-shrink-0 text-[#0047BB]" fill="currentColor" aria-hidden="true">
-                    <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                )}
-                {activeLang !== lang.code && <span className="h-3 w-3 flex-shrink-0" />}
-                {lang.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+          <circle cx="7" cy="7" r="5.5" />
+          <path d="M7 1.5C7 1.5 4.8 4 4.8 7s2.2 5.5 2.2 5.5M7 1.5C7 1.5 9.2 4 9.2 7S7 12.5 7 12.5M1.5 7h11" />
+        </motion.svg>
+
+        <span>{currentLabel === "English" ? "EN" : currentLabel.slice(0, 2).toUpperCase()}</span>
+
+        {/* Chevron */}
+        <motion.svg
+          viewBox="0 0 10 10"
+          className="h-2 w-2 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          aria-hidden="true"
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        >
+          <path d="M2 3.5l3 3 3-3" />
+        </motion.svg>
+      </motion.button>
+
+      {/* ── Animated dropdown ── */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="listbox"
+            aria-label="Select language"
+            initial={{ opacity: 0, y: -6, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 380, damping: 28 }}
+            className="absolute right-0 mt-2 w-44 bg-white border border-slate-100 rounded-xl shadow-[0_12px_40px_rgba(15,23,42,0.13)] overflow-hidden z-[200]"
+            style={{ top: "100%", transformOrigin: "top right" }}
+          >
+            {/* Header */}
+            <div className="px-3.5 pt-2.5 pb-1.5 border-b border-slate-100">
+              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.14em]">
+                Select Language
+              </p>
+            </div>
+
+            {/* Language list */}
+            <div className="py-1 max-h-64 overflow-y-auto">
+              {TRANSLATE_LANGUAGES.map((lang, i) => (
+                <motion.button
+                  key={lang.code}
+                  role="option"
+                  aria-selected={activeLang === lang.code}
+                  type="button"
+                  onClick={() => handleSelect(lang.code)}
+                  initial={{ opacity: 0, x: -6 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.018, duration: 0.18 }}
+                  whileHover={{ x: 2 }}
+                  className={`w-full flex items-center gap-2 px-3.5 py-1.5 text-[12px] text-left transition-colors duration-100 ${
+                    activeLang === lang.code
+                      ? "bg-[#EEF3FF] text-[#0047BB] font-semibold"
+                      : "text-slate-600 hover:bg-slate-50 hover:text-[#0047BB]"
+                  }`}
+                >
+                  {/* Active checkmark */}
+                  <span className="w-3 flex-shrink-0 flex items-center justify-center">
+                    {activeLang === lang.code && (
+                      <motion.svg
+                        viewBox="0 0 10 10"
+                        className="h-2.5 w-2.5 text-[#0047BB]"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                      >
+                        <path d="M1.5 5l2.5 2.5 4.5-4" />
+                      </motion.svg>
+                    )}
+                  </span>
+                  {lang.label}
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
