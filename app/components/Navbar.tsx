@@ -136,13 +136,60 @@ function forceEnglishOptions() {
   });
 }
 
+// Languages shown always in English regardless of user's locale
+const TRANSLATE_LANGUAGES = [
+  { code: "en",    label: "English" },
+  { code: "ar",    label: "Arabic" },
+  { code: "zh-CN", label: "Chinese (Simplified)" },
+  { code: "zh-TW", label: "Chinese (Traditional)" },
+  { code: "fr",    label: "French" },
+  { code: "de",    label: "German" },
+  { code: "hi",    label: "Hindi" },
+  { code: "id",    label: "Indonesian" },
+  { code: "it",    label: "Italian" },
+  { code: "ja",    label: "Japanese" },
+  { code: "ko",    label: "Korean" },
+  { code: "ms",    label: "Malay" },
+  { code: "pt",    label: "Portuguese" },
+  { code: "ru",    label: "Russian" },
+  { code: "es",    label: "Spanish" },
+  { code: "th",    label: "Thai" },
+  { code: "tr",    label: "Turkish" },
+  { code: "ur",    label: "Urdu" },
+  { code: "vi",    label: "Vietnamese" },
+];
+
+function setGoogTransCookie(langCode: string) {
+  const value = langCode === "en" ? "/en/en" : `/en/${langCode}`;
+  // Set on current domain and root path so every page picks it up
+  document.cookie = `googtrans=${value}; path=/; SameSite=Lax`;
+  // Also set on naked domain for sub-path compatibility
+  document.cookie = `googtrans=${value}; path=/; domain=${location.hostname}; SameSite=Lax`;
+}
+
+function triggerGoogleTranslate(langCode: string) {
+  setGoogTransCookie(langCode);
+  // Programmatically select the language in the hidden native widget
+  const container = document.getElementById("google_translate_element");
+  const select = container?.querySelector("select") as HTMLSelectElement | null;
+  if (select) {
+    select.value = langCode;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  } else {
+    // If widget not ready yet, reload — cookie will auto-translate
+    window.location.reload();
+  }
+}
+
 function GoogleTranslateWidget() {
+  const [open, setOpen] = useState(false);
+  const [activeLang, setActiveLang] = useState("en");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Load the hidden Google Translate widget once
   useEffect(() => {
     if (scriptLoaded) return;
     scriptLoaded = true;
-
-    // Force Google Translate UI to always use English
-    document.cookie = "googtranslate=en; path=/; max-age=31536000; SameSite=Lax";
 
     window.googleTranslateElementInit = () => {
       if (!window.google?.translate?.TranslateElement) return;
@@ -156,17 +203,6 @@ function GoogleTranslateWidget() {
         },
         "google_translate_element"
       );
-
-      // Force English option labels after widget renders
-      const timers = [300, 600, 1200, 2500];
-      timers.forEach((ms) => setTimeout(forceEnglishOptions, ms));
-
-      // Watch for any DOM changes that re-render the options
-      const observer = new MutationObserver(forceEnglishOptions);
-      const target = document.getElementById("google_translate_element");
-      if (target) {
-        observer.observe(target, { childList: true, subtree: true, characterData: true });
-      }
     };
 
     const s = document.createElement("script");
@@ -176,8 +212,114 @@ function GoogleTranslateWidget() {
     document.body.appendChild(s);
   }, []);
 
+  // Detect active language from cookie on mount
+  useEffect(() => {
+    const match = document.cookie
+      .split("; ")
+      .find((c) => c.startsWith("googtrans="));
+    if (match) {
+      const parts = match.split("=")[1]?.split("/");
+      const lang = parts?.[parts.length - 1];
+      if (lang && TRANSLATE_LANGUAGES.find((l) => l.code === lang)) {
+        setActiveLang(lang);
+      }
+    }
+  }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  const currentLabel =
+    TRANSLATE_LANGUAGES.find((l) => l.code === activeLang)?.label ?? "English";
+
+  const handleSelect = (code: string) => {
+    setActiveLang(code);
+    setOpen(false);
+    triggerGoogleTranslate(code);
+  };
+
   return (
-    <div id="google_translate_element" className="ff-translate notranslate" translate="no" aria-label="Language selector" />
+    <div ref={dropdownRef} style={{ position: "relative", display: "inline-block" }}>
+      {/* Hidden Google Translate native widget — keeps GT engine alive */}
+      <div
+        id="google_translate_element"
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+          opacity: 0,
+          pointerEvents: "none",
+          top: 0,
+          left: 0,
+        }}
+      />
+
+      {/* Custom trigger button — always in English */}
+      <button
+        id="translate-toggle-btn"
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label="Select language"
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-600 text-[11px] font-semibold tracking-widest uppercase hover:border-[#0047BB] hover:text-[#0047BB] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#0047BB] focus:ring-offset-1"
+      >
+        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.5" />
+          <path d="M8 1.5C8 1.5 5.5 4.5 5.5 8s2.5 6.5 2.5 6.5M8 1.5C8 1.5 10.5 4.5 10.5 8S8 14.5 8 14.5M1.5 8h13" />
+        </svg>
+        <span>{currentLabel === "English" ? "EN" : currentLabel.slice(0, 2).toUpperCase()}</span>
+        <svg viewBox="0 0 12 12" className={`h-2.5 w-2.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+          <path d="M2 4l4 4 4-4" />
+        </svg>
+      </button>
+
+      {/* Custom dropdown — language names always in English */}
+      {open && (
+        <div
+          role="listbox"
+          aria-label="Select language"
+          className="absolute right-0 mt-1.5 w-52 bg-white border border-slate-100 rounded-lg shadow-[0_8px_32px_rgba(15,23,42,0.12)] overflow-hidden z-[200]"
+          style={{ top: "100%" }}
+        >
+          <div className="py-1 max-h-72 overflow-y-auto">
+            {TRANSLATE_LANGUAGES.map((lang) => (
+              <button
+                key={lang.code}
+                role="option"
+                aria-selected={activeLang === lang.code}
+                type="button"
+                onClick={() => handleSelect(lang.code)}
+                className={`w-full flex items-center gap-2.5 px-4 py-2 text-[13px] text-left transition-colors duration-100 ${
+                  activeLang === lang.code
+                    ? "bg-blue-50 text-[#0047BB] font-semibold"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-[#0047BB]"
+                }`}
+              >
+                {activeLang === lang.code && (
+                  <svg viewBox="0 0 12 12" className="h-3 w-3 flex-shrink-0 text-[#0047BB]" fill="currentColor" aria-hidden="true">
+                    <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+                {activeLang !== lang.code && <span className="h-3 w-3 flex-shrink-0" />}
+                {lang.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -391,10 +533,8 @@ export default function Navbar() {
 
         {/* RIGHT: Utilities */}
         <div className="flex items-center gap-4 flex-shrink-0">
-          {/* Language selector */}
-          <div className="flex items-center gap-2 pr-3 border-r border-slate-200">
-            <span className="eyebrow text-slate-400 select-none whitespace-nowrap">EN</span>
-            <span className="text-slate-300 select-none" aria-hidden="true">/</span>
+          {/* Language selector — always displayed in English */}
+          <div className="flex items-center pr-3 border-r border-slate-200">
             <GoogleTranslateWidget />
           </div>
 

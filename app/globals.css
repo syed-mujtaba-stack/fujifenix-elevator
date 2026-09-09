@@ -385,18 +385,56 @@ a.goog-te-combo:focus,
   box-shadow: 0 2px 0 0 rgba(0, 71, 187, 0.2);
 }
 
-/* Hide the Google Translate banner bar */
+/* =============================================
+   GOOGLE TRANSLATE — Completely suppress native UI
+   We use our own custom English-only dropdown.
+   These rules hide every GT-injected element globally.
+============================================= */
+
+/* Hide the translation banner/toolbar iframe */
 .goog-te-banner-frame,
 iframe.goog-te-banner-frame,
-iframe[class*="goog-te-banner-frame"] {
+iframe[class*="goog-te-banner-frame"],
+#goog-gt-tt,
+.goog-te-balloon-frame,
+div#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-text-highlight {
   display: none !important;
   visibility: hidden !important;
+  height: 0 !important;
+  box-shadow: none !important;
 }
 
-html {
-  top: 0 !important;
-}
-
+/* Prevent GT from pushing body down */
+html,
 body {
   top: 0 !important;
+  position: static !important;
+}
+
+/* Hide the native GT select widget completely */
+.goog-te-combo,
+select.goog-te-combo,
+#google_translate_element select,
+#google_translate_element .goog-te-combo,
+.skiptranslate .goog-te-combo {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Hide the entire default GT widget gadget */
+.skiptranslate:not([id="google_translate_element"]) {
+  display: none !important;
+}
+
+/* Prevent translated text from getting GT's yellow highlight */
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
 }
