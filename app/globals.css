@@ -56,6 +56,25 @@
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: #f1f5f9; }
   ::-webkit-scrollbar-thumb { background: #0047bb; border-radius: 2px; }
+
+  /* Sleek scrollbar for dropdown menus */
+  .lang-dropdown-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+  .lang-dropdown-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  .lang-dropdown-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .lang-dropdown-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+  }
+  .lang-dropdown-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
 }
 
 /* =============================================

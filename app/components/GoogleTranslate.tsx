@@ -24,7 +24,10 @@ function getCookie(name: string): string | null {
   if (typeof document === "undefined") return null;
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()?.split(";").hit() ?? null;
+  if (parts.length === 2) {
+    const cookieValue = parts.pop() ?? "";
+    return cookieValue.split(";").shift() ?? null;
+  }
   return null;
 }
 
@@ -120,7 +123,7 @@ export function GoogleTranslate({
               if (code) {
                 const lang = LANGUAGES.find((l) => l.code === code);
                 if (lang) {
-                  opt.text = lang.name;
+                  (opt as HTMLOptionElement).text = lang.name;
                 }
               }
             });

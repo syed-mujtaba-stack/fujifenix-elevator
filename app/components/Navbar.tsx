@@ -138,25 +138,25 @@ function forceEnglishOptions() {
 
 // Languages shown always in English regardless of user's locale
 const TRANSLATE_LANGUAGES = [
-  { code: "en",    label: "English" },
-  { code: "ar",    label: "Arabic" },
-  { code: "zh-CN", label: "Chinese (Simplified)" },
-  { code: "zh-TW", label: "Chinese (Traditional)" },
-  { code: "fr",    label: "French" },
-  { code: "de",    label: "German" },
-  { code: "hi",    label: "Hindi" },
-  { code: "id",    label: "Indonesian" },
-  { code: "it",    label: "Italian" },
-  { code: "ja",    label: "Japanese" },
-  { code: "ko",    label: "Korean" },
-  { code: "ms",    label: "Malay" },
-  { code: "pt",    label: "Portuguese" },
-  { code: "ru",    label: "Russian" },
-  { code: "es",    label: "Spanish" },
-  { code: "th",    label: "Thai" },
-  { code: "tr",    label: "Turkish" },
-  { code: "ur",    label: "Urdu" },
-  { code: "vi",    label: "Vietnamese" },
+  { code: "en",    label: "English",              native: "English" },
+  { code: "ar",    label: "Arabic",               native: "العربية" },
+  { code: "zh-CN", label: "Chinese (Simplified)",  native: "简体中文" },
+  { code: "zh-TW", label: "Chinese (Traditional)", native: "繁體中文" },
+  { code: "fr",    label: "French",               native: "Français" },
+  { code: "de",    label: "German",               native: "Deutsch" },
+  { code: "hi",    label: "Hindi",                native: "हिन्दी" },
+  { code: "id",    label: "Indonesian",           native: "Bahasa Indonesia" },
+  { code: "it",    label: "Italian",              native: "Italiano" },
+  { code: "ja",    label: "Japanese",             native: "日本語" },
+  { code: "ko",    label: "Korean",               native: "한국어" },
+  { code: "ms",    label: "Malay",                native: "Bahasa Melayu" },
+  { code: "pt",    label: "Portuguese",           native: "Português" },
+  { code: "ru",    label: "Russian",              native: "Русский" },
+  { code: "es",    label: "Spanish",              native: "Español" },
+  { code: "th",    label: "Thai",                 native: "ไทย" },
+  { code: "tr",    label: "Turkish",              native: "Türkçe" },
+  { code: "ur",    label: "Urdu",                 native: "اردو" },
+  { code: "vi",    label: "Vietnamese",           native: "Tiếng Việt" },
 ];
 
 function setGoogTransCookie(langCode: string) {
@@ -184,6 +184,7 @@ function triggerGoogleTranslate(langCode: string) {
 function GoogleTranslateWidget() {
   const [open, setOpen] = useState(false);
   const [activeLang, setActiveLang] = useState("en");
+  const [search, setSearch] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Load the hidden Google Translate widget once
@@ -232,20 +233,32 @@ function GoogleTranslateWidget() {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpen(false);
+        setSearch("");
       }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
-  const currentLabel =
-    TRANSLATE_LANGUAGES.find((l) => l.code === activeLang)?.label ?? "English";
+  const activeLangObj =
+    TRANSLATE_LANGUAGES.find((l) => l.code === activeLang) ?? TRANSLATE_LANGUAGES[0];
 
   const handleSelect = (code: string) => {
     setActiveLang(code);
     setOpen(false);
+    setSearch("");
     triggerGoogleTranslate(code);
   };
+
+  const filteredLanguages = TRANSLATE_LANGUAGES.filter((l) => {
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      l.label.toLowerCase().includes(q) ||
+      (l.native && l.native.toLowerCase().includes(q)) ||
+      l.code.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <div ref={dropdownRef} style={{ position: "relative", display: "inline-block" }}>
@@ -276,41 +289,48 @@ function GoogleTranslateWidget() {
         whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.96 }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
-        className={`group flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold tracking-[0.1em] uppercase transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0047BB]/40 focus:ring-offset-1 ${
+        className={`group inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full text-[11px] font-bold tracking-[0.08em] uppercase transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0047BB]/40 focus:ring-offset-1 select-none ${
           open
-            ? "bg-[#0047BB] text-white border border-[#0047BB]"
-            : "bg-white text-slate-500 border border-slate-200 hover:border-[#0047BB] hover:text-[#0047BB]"
+            ? "bg-[#0047BB] text-white border border-[#0047BB] shadow-sm shadow-[#0047BB]/25"
+            : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200/90 hover:border-slate-300 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
         }`}
       >
-        {/* Globe icon — tiny & crisp */}
+        {/* Globe icon — crisp 13px */}
         <motion.svg
-          viewBox="0 0 14 14"
-          className="h-3 w-3 flex-shrink-0"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          aria-hidden="true"
-          animate={{ rotate: open ? 15 : 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        >
-          <circle cx="7" cy="7" r="5.5" />
-          <path d="M7 1.5C7 1.5 4.8 4 4.8 7s2.2 5.5 2.2 5.5M7 1.5C7 1.5 9.2 4 9.2 7S7 12.5 7 12.5M1.5 7h11" />
-        </motion.svg>
-
-        <span>{currentLabel === "English" ? "EN" : currentLabel.slice(0, 2).toUpperCase()}</span>
-
-        {/* Chevron */}
-        <motion.svg
-          viewBox="0 0 10 10"
-          className="h-2 w-2 flex-shrink-0"
+          width={13}
+          height={13}
+          viewBox="0 0 16 16"
+          style={{ width: 13, height: 13, minWidth: 13, minHeight: 13 }}
+          className="flex-shrink-0"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.6"
           strokeLinecap="round"
           aria-hidden="true"
+          animate={{ rotate: open ? 25 : 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
+          <circle cx="8" cy="8" r="6.5" />
+          <path d="M8 1.5C8 1.5 5.5 4.5 5.5 8s2.5 6.5 2.5 6.5M8 1.5C8 1.5 10.5 4.5 10.5 8s-2.5 6.5-2.5 6.5M1.5 8h13" />
+        </motion.svg>
+
+        <span className="leading-none">{activeLangObj.code.toUpperCase().slice(0, 2)}</span>
+
+        {/* Chevron */}
+        <motion.svg
+          width={9}
+          height={9}
+          viewBox="0 0 10 10"
+          style={{ width: 9, height: 9, minWidth: 9, minHeight: 9 }}
+          className="flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
           animate={{ rotate: open ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 22 }}
+          transition={{ type: "spring", stiffness: 320, damping: 22 }}
         >
           <path d="M2 3.5l3 3 3-3" />
         </motion.svg>
@@ -322,61 +342,159 @@ function GoogleTranslateWidget() {
           <motion.div
             role="listbox"
             aria-label="Select language"
-            initial={{ opacity: 0, y: -6, scale: 0.96 }}
+            initial={{ opacity: 0, y: -6, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 380, damping: 28 }}
-            className="absolute right-0 mt-2 w-44 bg-white border border-slate-100 rounded-xl shadow-[0_12px_40px_rgba(15,23,42,0.13)] overflow-hidden z-[200]"
+            transition={{ type: "spring", stiffness: 380, damping: 26 }}
+            className="absolute right-0 mt-2 w-64 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-[0_20px_50px_rgba(15,23,42,0.16),0_1px_3px_rgba(0,0,0,0.06)] p-2 z-[200]"
             style={{ top: "100%", transformOrigin: "top right" }}
           >
-            {/* Header */}
-            <div className="px-3.5 pt-2.5 pb-1.5 border-b border-slate-100">
-              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.14em]">
-                Select Language
-              </p>
+            {/* Header with Title and Language Count */}
+            <div className="px-2 pt-1 pb-2 border-b border-slate-100">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-1.5">
+                  <svg
+                    width={13}
+                    height={13}
+                    viewBox="0 0 16 16"
+                    style={{ width: 13, height: 13, minWidth: 13, minHeight: 13 }}
+                    className="text-[#0047BB] flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  >
+                    <circle cx="8" cy="8" r="6.5" />
+                    <path d="M8 1.5C8 1.5 5.5 4.5 5.5 8s2.5 6.5 2.5 6.5M8 1.5C8 1.5 10.5 4.5 10.5 8s-2.5 6.5-2.5 6.5M1.5 8h13" />
+                  </svg>
+                  <span className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.14em]">
+                    Select Language
+                  </span>
+                </div>
+                <span className="text-[9px] font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded-full">
+                  {TRANSLATE_LANGUAGES.length}
+                </span>
+              </div>
+
+              {/* Quick search input */}
+              <div className="relative flex items-center">
+                <svg
+                  width={13}
+                  height={13}
+                  viewBox="0 0 16 16"
+                  style={{ width: 13, height: 13, minWidth: 13, minHeight: 13 }}
+                  className="absolute left-2.5 text-slate-400 pointer-events-none flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                >
+                  <circle cx="7" cy="7" r="4.5" />
+                  <path d="M10.5 10.5L14 14" />
+                </svg>
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search language..."
+                  className="w-full pl-8 pr-7 py-1.5 text-[11px] bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200/90 rounded-lg text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0047BB]/20 focus:border-[#0047BB] transition-all"
+                  onClick={(e) => e.stopPropagation()}
+                />
+                {search && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSearch("");
+                    }}
+                    className="absolute right-2 text-slate-400 hover:text-slate-600 p-0.5 text-xs font-bold leading-none"
+                    aria-label="Clear search"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             </div>
 
-            {/* Language list */}
-            <div className="py-1 max-h-64 overflow-y-auto">
-              {TRANSLATE_LANGUAGES.map((lang, i) => (
-                <motion.button
-                  key={lang.code}
-                  role="option"
-                  aria-selected={activeLang === lang.code}
-                  type="button"
-                  onClick={() => handleSelect(lang.code)}
-                  initial={{ opacity: 0, x: -6 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.018, duration: 0.18 }}
-                  whileHover={{ x: 2 }}
-                  className={`w-full flex items-center gap-2 px-3.5 py-1.5 text-[12px] text-left transition-colors duration-100 ${
-                    activeLang === lang.code
-                      ? "bg-[#EEF3FF] text-[#0047BB] font-semibold"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-[#0047BB]"
-                  }`}
-                >
-                  {/* Active checkmark */}
-                  <span className="w-3 flex-shrink-0 flex items-center justify-center">
-                    {activeLang === lang.code && (
-                      <motion.svg
-                        viewBox="0 0 10 10"
-                        className="h-2.5 w-2.5 text-[#0047BB]"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                      >
-                        <path d="M1.5 5l2.5 2.5 4.5-4" />
-                      </motion.svg>
-                    )}
-                  </span>
-                  {lang.label}
-                </motion.button>
-              ))}
+            {/* Language list with sleek scoped scrollbar */}
+            <div className="py-1.5 max-h-60 overflow-y-auto space-y-0.5 pr-1 lang-dropdown-scroll">
+              {filteredLanguages.length === 0 ? (
+                <div className="py-6 text-center text-[11px] text-slate-400">
+                  No language found
+                </div>
+              ) : (
+                filteredLanguages.map((lang, i) => {
+                  const isSelected = activeLang === lang.code;
+                  return (
+                    <motion.button
+                      key={lang.code}
+                      role="option"
+                      aria-selected={isSelected}
+                      type="button"
+                      onClick={() => handleSelect(lang.code)}
+                      initial={{ opacity: 0, y: 3 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.012, duration: 0.15 }}
+                      whileHover={{ x: 2 }}
+                      className={`w-full group flex items-center justify-between px-2.5 py-1.5 rounded-xl text-left transition-all duration-150 ${
+                        isSelected
+                          ? "bg-[#0047BB]/10 text-[#0047BB] font-semibold"
+                          : "text-slate-700 hover:bg-slate-100/80 hover:text-slate-900"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        {/* Language code badge */}
+                        <span
+                          className={`w-6 h-5 rounded flex items-center justify-center text-[9px] font-bold font-mono flex-shrink-0 transition-colors ${
+                            isSelected
+                              ? "bg-[#0047BB] text-white"
+                              : "bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700"
+                          }`}
+                        >
+                          {lang.code.toUpperCase().slice(0, 2)}
+                        </span>
+
+                        {/* Language labels */}
+                        <div className="min-w-0">
+                          <p className="text-[12px] leading-snug truncate">
+                            {lang.label}
+                          </p>
+                          {lang.native && lang.native !== lang.label && (
+                            <p className="text-[10px] text-slate-400 font-normal leading-tight truncate group-hover:text-slate-500">
+                              {lang.native}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Selected checkmark indicator */}
+                      {isSelected && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                          style={{ width: 16, height: 16, minWidth: 16, minHeight: 16 }}
+                          className="rounded-full bg-[#0047BB] text-white flex items-center justify-center flex-shrink-0 ml-2"
+                        >
+                          <svg
+                            width={9}
+                            height={9}
+                            viewBox="0 0 12 12"
+                            style={{ width: 9, height: 9, minWidth: 9, minHeight: 9 }}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M2.5 6.5l2.5 2.5 4.5-5" />
+                          </svg>
+                        </motion.div>
+                      )}
+                    </motion.button>
+                  );
+                })
+              )}
             </div>
           </motion.div>
         )}
