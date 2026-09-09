@@ -181,7 +181,7 @@ function triggerGoogleTranslate(langCode: string) {
   }
 }
 
-function GoogleTranslateWidget() {
+function GoogleTranslateWidget({ buttonId = "translate-toggle-btn" }: { buttonId?: string } = {}) {
   const [open, setOpen] = useState(false);
   const [activeLang, setActiveLang] = useState("en");
   const [search, setSearch] = useState("");
@@ -262,25 +262,9 @@ function GoogleTranslateWidget() {
 
   return (
     <div ref={dropdownRef} style={{ position: "relative", display: "inline-block" }}>
-      {/* Hidden Google Translate native widget — keeps GT engine alive */}
-      <div
-        id="google_translate_element"
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          width: "1px",
-          height: "1px",
-          overflow: "hidden",
-          opacity: 0,
-          pointerEvents: "none",
-          top: 0,
-          left: 0,
-        }}
-      />
-
       {/* ── Compact trigger button ── */}
       <motion.button
-        id="translate-toggle-btn"
+        id={buttonId}
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
@@ -348,6 +332,7 @@ function GoogleTranslateWidget() {
             transition={{ type: "spring", stiffness: 380, damping: 26 }}
             className="absolute right-0 mt-2 w-64 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-[0_20px_50px_rgba(15,23,42,0.16),0_1px_3px_rgba(0,0,0,0.06)] p-2 z-[200]"
             style={{ top: "100%", transformOrigin: "top right" }}
+            onWheel={(e) => e.stopPropagation()}
           >
             {/* Header with Title and Language Count */}
             <div className="px-2 pt-1 pb-2 border-b border-slate-100">
@@ -416,8 +401,18 @@ function GoogleTranslateWidget() {
               </div>
             </div>
 
-            {/* Language list with sleek scoped scrollbar */}
-            <div className="py-1.5 max-h-60 overflow-y-auto space-y-0.5 pr-1 lang-dropdown-scroll">
+            {/* Language list with sleek scoped scrollbar & trapped scroll */}
+            <div
+              className="py-1.5 space-y-0.5 pr-1 lang-dropdown-scroll"
+              style={{
+                maxHeight: "260px",
+                overflowY: "auto",
+                overscrollBehavior: "contain",
+                WebkitOverflowScrolling: "touch",
+              }}
+              onWheel={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+            >
               {filteredLanguages.length === 0 ? (
                 <div className="py-6 text-center text-[11px] text-slate-400">
                   No language found
@@ -561,194 +556,217 @@ export default function Navbar() {
   if (pathname === "/cta") return null;
 
   return (
-    <header
-      ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/90 backdrop-blur-md shadow-[0_2px_24px_rgba(15,23,42,0.04)] py-3"
-          : "bg-white py-4 md:py-5"
-      }`}
-    >
-      {/* Thin blue top border */}
-      <div className="absolute top-0 inset-x-0 h-[2px] bg-[#0047BB]" aria-hidden="true" />
-
-      {/* Bottom hairline */}
-      <div
-        className={`absolute bottom-0 inset-x-0 h-px bg-slate-100 transition-opacity duration-500 ${
-          scrolled ? "opacity-100" : "opacity-60"
+    <>
+      <header
+        ref={headerRef}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          mobileOpen
+            ? "bg-white py-3 shadow-xs"
+            : scrolled
+              ? "bg-white/90 backdrop-blur-md shadow-[0_2px_24px_rgba(15,23,42,0.04)] py-3"
+              : "bg-white py-4 md:py-5"
         }`}
-        aria-hidden="true"
-      />
+      >
+        {/* Hidden Google Translate native widget — single engine anchor */}
+        <div
+          id="google_translate_element"
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            width: "1px",
+            height: "1px",
+            overflow: "hidden",
+            opacity: 0,
+            pointerEvents: "none",
+            top: 0,
+            left: 0,
+          }}
+        />
 
-      {/* ── DESKTOP ROW (≥1280px) ── */}
-      <div className="hidden xl:flex items-center justify-between px-6 sm:px-8 md:px-10 lg:px-14 xl:px-16">
-        {/* LEFT: Logo */}
-        <Logo className="xl:h-6 2xl:h-7 flex-shrink-0" />
+        {/* Thin blue top border */}
+        <div className="absolute top-0 inset-x-0 h-[2px] bg-[#0047BB]" aria-hidden="true" />
 
-        {/* CENTER: Navigation */}
-        <nav aria-label="Primary" className="flex-1 flex justify-center items-center">
-          <div className="flex items-center" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
-            {/* Nav links */}
-            <ul className="flex items-center list-none m-0 p-0" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
-              {NAV_LINKS.map((l) => {
-                const active = pathname === l.href || (l.href === "/" && pathname === "/");
-                const isProducts = l.href === "/products";
-                return (
-                  <li
-                    key={l.label}
-                    className={`whitespace-nowrap${isProducts ? " relative" : ""}`}
-                    onMouseEnter={isProducts ? () => setMegaOpen(true) : undefined}
-                    onMouseLeave={isProducts ? () => setMegaOpen(false) : undefined}
-                  >
-                    <Link
-                      href={l.href}
-                      aria-current={active ? "page" : undefined}
-                      aria-haspopup={isProducts ? "true" : undefined}
-                      aria-expanded={isProducts ? megaOpen : undefined}
-                      className={`eyebrow inline-flex items-center gap-1.5 whitespace-nowrap transition-colors duration-200 ${
-                        active
-                          ? "text-[#0047BB]"
-                          : "text-slate-600 hover:text-[#0047BB]"
-                      }`}
-                      style={{ letterSpacing: "0.12em" }}
+        {/* Bottom hairline */}
+        <div
+          className={`absolute bottom-0 inset-x-0 h-px bg-slate-100 transition-opacity duration-500 ${
+            scrolled ? "opacity-100" : "opacity-60"
+          }`}
+          aria-hidden="true"
+        />
+
+        {/* ── DESKTOP ROW (≥1280px) ── */}
+        <div className="hidden xl:flex items-center justify-between px-6 sm:px-8 md:px-10 lg:px-14 xl:px-16">
+          {/* LEFT: Logo */}
+          <Logo className="xl:h-6 2xl:h-7 flex-shrink-0" />
+
+          {/* CENTER: Navigation */}
+          <nav aria-label="Primary" className="flex-1 flex justify-center items-center">
+            <div className="flex items-center" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
+              {/* Nav links */}
+              <ul className="flex items-center list-none m-0 p-0" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
+                {NAV_LINKS.map((l) => {
+                  const active = pathname === l.href || (l.href === "/" && pathname === "/");
+                  const isProducts = l.href === "/products";
+                  return (
+                    <li
+                      key={l.label}
+                      className={`whitespace-nowrap${isProducts ? " relative" : ""}`}
+                      onMouseEnter={isProducts ? () => setMegaOpen(true) : undefined}
+                      onMouseLeave={isProducts ? () => setMegaOpen(false) : undefined}
                     >
-                      {l.label}
-                      {isProducts && (
-                        <svg
-                          viewBox="0 0 12 12"
-                          className={`h-2.5 w-2.5 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          aria-hidden="true"
-                        >
-                          <path d="M2 4l4 4 4-4" />
-                        </svg>
-                      )}
-                    </Link>
-
-                    {/* ── MEGA MENU (Desktop) — FenixSeven-style two-level flyout ── */}
-                    {isProducts && (
-                      <AnimatePresence>
-                        {megaOpen && (
-                          <motion.div
-                            role="menu"
-                            aria-label="Product categories"
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 6 }}
-                            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                            className="absolute left-0 top-full z-[50]"
-                            style={{ marginTop: "2px" }}
+                      <Link
+                        href={l.href}
+                        aria-current={active ? "page" : undefined}
+                        aria-haspopup={isProducts ? "true" : undefined}
+                        aria-expanded={isProducts ? megaOpen : undefined}
+                        className={`eyebrow inline-flex items-center gap-1.5 whitespace-nowrap transition-colors duration-200 ${
+                          active
+                            ? "text-[#0047BB]"
+                            : "text-slate-600 hover:text-[#0047BB]"
+                        }`}
+                        style={{ letterSpacing: "0.12em" }}
+                      >
+                        {l.label}
+                        {isProducts && (
+                          <svg
+                            viewBox="0 0 12 12"
+                            className={`h-2.5 w-2.5 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            aria-hidden="true"
                           >
-                            <div className="bg-white border border-slate-100/80 rounded-lg shadow-[0_20px_60px_rgba(15,23,42,0.12)] py-1 min-w-[280px]">
-                              {PRODUCT_MENU.map((group) => (
-                                <div key={group.slug} className="relative group/cat">
-                                  <Link
-                                    href={`/products/${group.slug}`}
-                                    className="flex items-center justify-between px-5 py-3 text-[13px] font-semibold text-slate-700 hover:text-[#0047BB] hover:bg-slate-50/80 transition-colors duration-150"
-                                    onClick={() => setMegaOpen(false)}
-                                    role="menuitem"
-                                  >
-                                    <span className="uppercase tracking-[0.04em] truncate" style={{ fontSize: "10px" }}>
-                                      {group.title}
-                                    </span>
-                                    <svg
-                                      viewBox="0 0 12 12"
-                                      className="h-3 w-3 flex-shrink-0 text-slate-300 group-hover/cat:text-[#0047BB] transition-colors"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="1.5"
-                                      aria-hidden="true"
-                                    >
-                                      <path d="M4 2l4 4-4 4" />
-                                    </svg>
-                                  </Link>
+                            <path d="M2 4l4 4 4-4" />
+                          </svg>
+                        )}
+                      </Link>
 
-                                  {/* Flyout submenu */}
-                                  <div className="absolute left-full top-0 pl-3 opacity-0 invisible group-hover/cat:opacity-100 group-hover/cat:visible pointer-events-none group-hover/cat:pointer-events-auto transition-all duration-200 ease-out z-[51]">
-                                    <div className="bg-white border border-slate-100/80 rounded-lg shadow-[0_20px_60px_rgba(15,23,42,0.12)] py-3 min-w-[240px]">
-                                      <div className="px-4 mb-2">
-                                        <span className="block text-[10px] font-bold text-[#0047BB] uppercase tracking-[0.15em]">
-                                          {group.num}
-                                        </span>
-                                        <span className="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">
-                                          {group.title}
-                                        </span>
+                      {/* ── MEGA MENU (Desktop) — FenixSeven-style two-level flyout ── */}
+                      {isProducts && (
+                        <AnimatePresence>
+                          {megaOpen && (
+                            <motion.div
+                              role="menu"
+                              aria-label="Product categories"
+                              initial={{ opacity: 0, y: 8 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: 6 }}
+                              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                              className="absolute left-0 top-full z-[50]"
+                              style={{ marginTop: "2px" }}
+                            >
+                              <div className="bg-white border border-slate-100/80 rounded-lg shadow-[0_20px_60px_rgba(15,23,42,0.12)] py-1 min-w-[280px]">
+                                {PRODUCT_MENU.map((group) => (
+                                  <div key={group.slug} className="relative group/cat">
+                                    <Link
+                                      href={`/products/${group.slug}`}
+                                      className="flex items-center justify-between px-5 py-3 text-[13px] font-semibold text-slate-700 hover:text-[#0047BB] hover:bg-slate-50/80 transition-colors duration-150"
+                                      onClick={() => setMegaOpen(false)}
+                                      role="menuitem"
+                                    >
+                                      <span className="uppercase tracking-[0.04em] truncate" style={{ fontSize: "10px" }}>
+                                        {group.title}
+                                      </span>
+                                      <svg
+                                        viewBox="0 0 12 12"
+                                        className="h-3 w-3 flex-shrink-0 text-slate-300 group-hover/cat:text-[#0047BB] transition-colors"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        aria-hidden="true"
+                                      >
+                                        <path d="M4 2l4 4-4 4" />
+                                      </svg>
+                                    </Link>
+
+                                    {/* Flyout submenu */}
+                                    <div className="absolute left-full top-0 pl-3 opacity-0 invisible group-hover/cat:opacity-100 group-hover/cat:visible pointer-events-none group-hover/cat:pointer-events-auto transition-all duration-200 ease-out z-[51]">
+                                      <div className="bg-white border border-slate-100/80 rounded-lg shadow-[0_20px_60px_rgba(15,23,42,0.12)] py-3 min-w-[240px]">
+                                        <div className="px-4 mb-2">
+                                          <span className="block text-[10px] font-bold text-[#0047BB] uppercase tracking-[0.15em]">
+                                            {group.num}
+                                          </span>
+                                          <span className="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">
+                                            {group.title}
+                                          </span>
+                                        </div>
+                                        <div className="border-t border-slate-100 mx-4 mb-2" />
+                                        <ul className="space-y-0.5 px-1">
+                                          {group.items.map((item) => (
+                                            <li key={item.href}>
+                                              <Link
+                                                href={item.href}
+                                                role="menuitem"
+                                                onClick={() => setMegaOpen(false)}
+                                                className="group/item flex items-center gap-2.5 px-3 py-2 text-[13px] text-slate-500 transition-colors duration-150 hover:text-[#0047BB] hover:bg-slate-50/80 rounded-md"
+                                              >
+                                                <span
+                                                  className="h-[5px] w-[5px] flex-shrink-0 rounded-full bg-slate-200 transition-colors duration-150 group-hover/item:bg-[#0047BB]"
+                                                  aria-hidden="true"
+                                                />
+                                                {item.label}
+                                              </Link>
+                                            </li>
+                                          ))}
+                                        </ul>
                                       </div>
-                                      <div className="border-t border-slate-100 mx-4 mb-2" />
-                                      <ul className="space-y-0.5 px-1">
-                                        {group.items.map((item) => (
-                                          <li key={item.href}>
-                                            <Link
-                                              href={item.href}
-                                              role="menuitem"
-                                              onClick={() => setMegaOpen(false)}
-                                              className="group/item flex items-center gap-2.5 px-3 py-2 text-[13px] text-slate-500 transition-colors duration-150 hover:text-[#0047BB] hover:bg-slate-50/80 rounded-md"
-                                            >
-                                              <span
-                                                className="h-[5px] w-[5px] flex-shrink-0 rounded-full bg-slate-200 transition-colors duration-150 group-hover/item:bg-[#0047BB]"
-                                                aria-hidden="true"
-                                              />
-                                              {item.label}
-                                            </Link>
-                                          </li>
-                                        ))}
-                                      </ul>
                                     </div>
                                   </div>
-                                </div>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </nav>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </nav>
 
-        {/* RIGHT: Utilities */}
-        <div className="flex items-center gap-4 flex-shrink-0">
-          {/* Language selector — always displayed in English */}
-          <div className="flex items-center pr-3 border-r border-slate-200">
-            <GoogleTranslateWidget />
-          </div>
+          {/* RIGHT: Utilities */}
+          <div className="flex items-center gap-4 flex-shrink-0">
+            {/* Language selector — always displayed in English */}
+            <div className="flex items-center pr-3 border-r border-slate-200">
+              <GoogleTranslateWidget buttonId="translate-toggle-btn" />
+            </div>
 
-          {/* GET A QUOTE CTA */}
-          <Link
-            href="/cta"
-            className="group inline-flex items-center justify-center gap-2 bg-[#0047BB] hover:bg-[#003A94] text-white eyebrow px-5 py-2.5 transition-colors duration-200 whitespace-nowrap flex-shrink-0"
-          >
-            GET A QUOTE
-            <span className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true">→</span>
-          </Link>
+            {/* GET A QUOTE CTA */}
+            <Link
+              href="/cta"
+              className="group inline-flex items-center justify-center gap-2 bg-[#0047BB] hover:bg-[#003A94] text-white eyebrow px-5 py-2.5 transition-colors duration-200 whitespace-nowrap flex-shrink-0"
+            >
+              GET A QUOTE
+              <span className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {/* ── MOBILE / TABLET ROW (<1280px) ── */}
-      <div className="xl:hidden flex items-center justify-between px-6 sm:px-8">
-        <Logo />
-        <button
-          className="flex items-center justify-center w-11 h-11 -mr-1 text-[#0f172a] rounded-sm
-                     focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-nav"
-        >
-          <span className="relative w-5 h-[14px] flex flex-col justify-between" aria-hidden="true">
-            <span className={`absolute top-0 left-0 w-5 h-px bg-current origin-center transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-[6.5px]" : ""}`} />
-            <span className={`absolute top-1/2 -translate-y-1/2 left-0 w-5 h-px bg-current transition-opacity duration-300 ${mobileOpen ? "opacity-0" : "opacity-100"}`} />
-            <span className={`absolute bottom-0 left-0 w-5 h-px bg-current origin-center transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[6.5px]" : ""}`} />
-          </span>
-        </button>
-      </div>
+        {/* ── MOBILE / TABLET ROW (<1280px) ── */}
+        <div className="xl:hidden flex items-center justify-between px-5 sm:px-8">
+          <Logo />
+          <div className="flex items-center gap-2.5">
+            <GoogleTranslateWidget buttonId="translate-toggle-btn-mobile" />
+            <button
+              className="flex items-center justify-center w-11 h-11 -mr-1 text-[#0f172a] rounded-sm
+                         focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0047BB]"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav"
+            >
+              <span className="relative w-5 h-[14px] flex flex-col justify-between" aria-hidden="true">
+                <span className={`absolute top-0 left-0 w-5 h-px bg-current origin-center transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-[6.5px]" : ""}`} />
+                <span className={`absolute top-1/2 -translate-y-1/2 left-0 w-5 h-px bg-current transition-opacity duration-300 ${mobileOpen ? "opacity-0" : "opacity-100"}`} />
+                <span className={`absolute bottom-0 left-0 w-5 h-px bg-current origin-center transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[6.5px]" : ""}`} />
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
 
-      {/* ── Mobile menu drawer ── */}
+      {/* ── Mobile menu drawer (rendered outside header so backdrop-blur on header never breaks fixed positioning) ── */}
       <AnimatePresence>
         {mobileOpen && (
           <MobileMenu
@@ -758,6 +776,6 @@ export default function Navbar() {
           />
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
