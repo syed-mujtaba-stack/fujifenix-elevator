@@ -92,7 +92,7 @@ export default function Footer() {
           <div className="eyebrow text-[#0047BB] mb-6">CONTACT</div>
           <ul className="space-y-3">
             <li className="text-slate-400" style={{ fontSize: "14px" }}>
-              {CONTACT.address}
+              Shanghai, China
             </li>
             <li>
               <a
