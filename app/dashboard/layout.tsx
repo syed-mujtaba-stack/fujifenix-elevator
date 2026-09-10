@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AdminSidebar } from '@/components/admin/Sidebar'
-import { AdminTopBar } from '@/components/admin/TopBar'
+import { Sidebar } from '@/components/admin/Sidebar'
+import { TopBar } from '@/components/admin/TopBar'
 import { SessionProvider } from "next-auth/react"
 import { cn } from '@/lib/utils'
 
@@ -29,12 +29,12 @@ export default function DashboardLayout({
   return (
     <SessionProvider>
       <div className="min-h-screen bg-[#071324]">
-        <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className={cn(
           'lg:ml-64 transition-all duration-300',
           'min-h-screen flex flex-col'
         )}>
-          <AdminTopBar onMenuClick={() => setSidebarOpen(true)} isSidebarOpen={sidebarOpen} />
+          <TopBar onMenuClick={() => setSidebarOpen(true)} isSidebarOpen={sidebarOpen} />
           <main className="flex-1 p-4 sm:p-6 lg:p-8">
             {children}
           </main>
