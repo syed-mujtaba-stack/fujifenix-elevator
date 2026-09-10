@@ -22,7 +22,7 @@ interface SolutionProduct {
 const buildSolutions = (products: SolutionProduct[]) =>
   products.slice(0, 6).map((p, i) => ({
     num: String(i + 1).padStart(2, "0"),
-    title: p.title.toUpperCase().replace(" ", "\n") + "S",
+    title: p.title.toUpperCase().replace(" ", "\n").replace(/ELEVATOR$/, "ELEVATORS"),
     desc: p.description ?? "",
     img: p.image
       ? urlFor(p.image).width(1600).auto("format").url()
