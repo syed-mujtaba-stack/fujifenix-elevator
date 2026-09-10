@@ -326,29 +326,7 @@ function SupportBand() {
           ))}
         </div>
 
-        {/* Emergency line */}
-        <div className="sup-el mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border border-white/10 bg-white/[0.03] px-6 py-5">
-          <span className="relative flex h-2 w-2 flex-shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
-          <span className="eyebrow text-slate-400">EMERGENCY BREAKDOWN?</span>
-          <a
-            href={CONTACT.phoneHref}
-            className="subheading text-white hover:text-[#60a5fa] transition-colors"
-            style={{ fontSize: "15px" }}
-          >
-            {CONTACT.phone}
-          </a>
-          <span className="text-slate-600">|</span>
-          <a
-            href={CONTACT.emailHref}
-            className="subheading text-white hover:text-[#60a5fa] transition-colors"
-            style={{ fontSize: "15px" }}
-          >
-            {CONTACT.email}
-          </a>
-        </div>
+
       </div>
     </section>
   );
