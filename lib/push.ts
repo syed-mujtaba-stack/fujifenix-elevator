@@ -101,7 +101,7 @@ export async function sendPushToAdmins(
     }
 
     const results = await Promise.allSettled(
-      subscriptions.map((sub) => sendPushToSubscription(sub, payload))
+      subscriptions.map((sub: { endpoint: string; keys: { p256dh: string; auth: string } }) => sendPushToSubscription(sub, payload))
     )
 
     const sent = results.filter(
@@ -149,13 +149,17 @@ export async function initializePushNotification(
         userVisibleOnly: true,
       })
 
+      // Get keys from subscription
+      const p256dhKey = result.getKey("p256dh");
+      const authKey = result.getKey("auth");
+
       // Save to Sanity
       await savePushSubscription(
         {
-          endpoint: result.endpoint!,
+          endpoint: result.endpoint,
           keys: {
-            p256dh: result.keys?.p256dh || "",
-            auth: result.keys?.auth || "",
+            p256dh: p256dhKey ? Buffer.from(p256dhKey).toString("base64") : "",
+            auth: authKey ? Buffer.from(authKey).toString("base64") : "",
           },
         },
         "current-admin-user-id" // This should be the actual admin user ID
