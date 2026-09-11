@@ -159,6 +159,7 @@ const TRANSLATE_LANGUAGES = [
   { code: "cs",    label: "Czech",                native: "Čeština" },
   { code: "da",    label: "Danish",               native: "Dansk" },
   { code: "nl",    label: "Dutch",                native: "Nederlands" },
+  { code: "en",    label: "English",              native: "English" },
   { code: "eo",    label: "Esperanto",            native: "Esperanto" },
   { code: "et",    label: "Estonian",             native: "Eesti" },
   { code: "fi",    label: "Finnish",              native: "Suomi" },
@@ -227,10 +228,8 @@ const TRANSLATE_LANGUAGES = [
   { code: "su",    label: "Sundanese",            native: "Basa Sunda" },
   { code: "sw",    label: "Swahili",              native: "Kiswahili" },
   { code: "sv",    label: "Swedish",              native: "Svenska" },
-  { code: "tl",    label: "Tagalog",              native: "Tagalog" },
   { code: "tg",    label: "Tajik",                native: "Тоҷикӣ" },
   { code: "ta",    label: "Tamil",                native: "தமிழ்" },
-  { code: "tt",    label: "Tatar",                native: "Татар" },
   { code: "te",    label: "Telugu",               native: "తెలుగు" },
   { code: "th",    label: "Thai",                 native: "ไทย" },
   { code: "ti",    label: "Tigrinya",             native: "ትግርኛ" },
@@ -287,8 +286,7 @@ function GoogleTranslateWidget({ buttonId = "translate-toggle-btn" }: { buttonId
       new window.google.translate.TranslateElement(
         {
           pageLanguage: "en",
-          includedLanguages:
-            "en,ar,zh-CN,zh-TW,fr,es,ur,ru,hi,ja,ko,pt,de,it,tr,th,vi,ms,id,bn,sw",
+          includedLanguages: "",
           layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
           autoDisplay: false,
         },
