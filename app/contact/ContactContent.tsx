@@ -7,6 +7,7 @@ import SectionHeading from "@/app/components/SectionHeading";
 import WeChatQRButton from "@/app/components/WeChatQR";
 import ContactForm from "./ContactForm";
 import { CONTACT, COMPANY } from "@/app/data/content";
+import AnimatedLocationSVG from "@/app/components/AnimatedLocationSVG";
 
 const GLOBAL_OFFICES = [
   { region: "ASIA PACIFIC", countries: ["China", "India", "Pakistan", "Singapore", "Malaysia", "Indonesia", "Philippines", "Vietnam", "Thailand"] },
@@ -129,17 +130,8 @@ export default function ContactContent() {
             eyebrow="OUR LOCATION"
             title="FIND US ON THE MAP"
           />
-          <div className="mt-12 border border-slate-200 overflow-hidden">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3412.1839456!2d121.4737!3d31.2304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDEzJzQ5LjQiTiAxMjHCsDI4JzI1LjMiRQ!5e0!3m2!1sen!2scn!4v1700000000000!5m2!1sen!2scn"
-              width="100%"
-              height="450"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Fuji Fenix Elevator - Shanghai HQ"
-            />
+          <div className="mt-12 border border-slate-200 overflow-hidden h-[450px]">
+            <AnimatedLocationSVG />
           </div>
         </div>
       </section>
