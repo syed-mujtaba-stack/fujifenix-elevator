@@ -8,7 +8,7 @@ export const CONTACT = {
 } as const;
 
 export const COMPANY = {
-  name: "Fuji Fenix Elevator",
+  name: "Shanghai Fuji Fenix Elevator Co Ltd.",
   displayName: "FUJI FENIX",
   shortName: "FUJIFENIX",
   tagline: "Total Solution for Vertical Transportation",
