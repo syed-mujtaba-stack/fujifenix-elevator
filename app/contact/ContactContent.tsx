@@ -55,8 +55,8 @@ export default function ContactContent() {
                   <div className="eyebrow text-slate-400 mb-2" style={{ fontSize: "11px" }}>
                     HEADQUARTERS
                   </div>
-                  <p className="body-text text-[#0f172a]" style={{ fontSize: "17px" }}>
-                    {CONTACT.address}
+                  <p className="body-text text-[#0f172a] font-medium" style={{ fontSize: "17px" }}>
+                    Shanghai Fuji Fenix Elevator Co Ltd.
                   </p>
                 </div>
                 <div className="ct-line">
@@ -94,14 +94,6 @@ export default function ContactContent() {
                     <WeChatQRButton variant="light" label="SHOW QR CODE" />
                   </div>
                 </div>
-                <div className="ct-line">
-                  <div className="eyebrow text-slate-400 mb-2" style={{ fontSize: "11px" }}>
-                    COMPANY
-                  </div>
-                  <p className="body-text text-[#0f172a]" style={{ fontSize: "15px" }}>
-                    {COMPANY.name}
-                  </p>
-                </div>
               </div>
               <div className="mt-12 border-t border-slate-100 pt-8 flex flex-col gap-3">
                 <Link href="/products" className="eyebrow text-slate-500 hover:text-[#0047BB] transition-colors">
@@ -125,12 +117,8 @@ export default function ContactContent() {
 
       {/* MAP SECTION */}
       <section className="bg-white">
-        <div className="container-gutter pb-24 md:pb-32">
-          <SectionHeading
-            eyebrow="OUR LOCATION"
-            title="FIND US ON THE MAP"
-          />
-          <div className="mt-12 border border-slate-200 overflow-hidden h-[450px]">
+        <div className="container-gutter pb-20 md:pb-28">
+          <div className="border border-slate-200 overflow-hidden h-[500px] md:h-[620px] rounded-2xl shadow-xl">
             <AnimatedLocationSVG />
           </div>
         </div>
