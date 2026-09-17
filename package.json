@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
+    "postinstall": "node scripts/force-wasm.js",
     "start": "next start",
     "lint": "eslint"
   },
