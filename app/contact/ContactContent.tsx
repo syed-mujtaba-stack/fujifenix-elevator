@@ -10,11 +10,11 @@ import { CONTACT, COMPANY } from "@/app/data/content";
 import AnimatedLocationSVG from "@/app/components/AnimatedLocationSVG";
 
 const GLOBAL_OFFICES = [
-  { region: "ASIA PACIFIC", countries: ["China", "India", "Pakistan", "Singapore", "Malaysia", "Indonesia", "Philippines", "Vietnam", "Thailand"] },
-  { region: "MIDDLE EAST", countries: ["United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Bahrain", "Oman"] },
-  { region: "AFRICA", countries: ["Nigeria", "Egypt", "South Africa", "Kenya", "Ghana"] },
-  { region: "EUROPE", countries: ["United Kingdom", "Germany", "France", "Turkey"] },
-  { region: "AMERICAS", countries: ["United States", "Canada", "Brazil", "Mexico"] },
+  { region: "ASIA", countries: ["Bangladesh", "Cambodia", "China", "India", "Indonesia", "Japan", "Malaysia", "Maldives", "Mongolia", "Nepal", "Pakistan", "Philippines", "Singapore", "South Korea", "Sri Lanka", "Taiwan", "Thailand", "Vietnam"] },
+  { region: "AFRICA", countries: ["Ethiopia", "Madagascar", "Mauritius", "Tanzania", "Uganda"] },
+  { region: "EUROPE / CIS", countries: ["Albania", "Kazakhstan", "Russia", "Tajikistan", "Turkmenistan", "Uzbekistan"] },
+  { region: "MIDDLE EAST", countries: ["Bahrain", "Kuwait", "Oman", "Qatar", "Saudi Arabia", "United Arab Emirates"] },
+  { region: "AMERICAS", countries: ["Argentina", "Chile", "Colombia", "Costa Rica", "Dominican Republic", "Ecuador", "El Salvador", "Paraguay", "Peru", "Uruguay"] },
 ];
 
 export default function ContactContent() {
@@ -133,7 +133,7 @@ export default function ContactContent() {
             dark
           />
           <p className="body-text text-slate-300 mt-6 max-w-2xl" style={{ fontSize: "17px" }}>
-            With offices and partners in over 30 countries across 5 continents, Fuji Fenix delivers global expertise with local support.
+            With offices and partners in over 45 countries across 5 continents, Fuji Fenix delivers global expertise with local support.
           </p>
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
             {GLOBAL_OFFICES.map((office) => (
@@ -153,7 +153,7 @@ export default function ContactContent() {
           </div>
           <div className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row gap-12">
             <div>
-              <div className="text-4xl font-bold text-white">30+</div>
+              <div className="text-4xl font-bold text-white">45+</div>
               <div className="eyebrow text-slate-400 mt-1" style={{ fontSize: "11px" }}>COUNTRIES SERVED</div>
             </div>
             <div>
