@@ -367,25 +367,27 @@ export default function CtaContent() {
             <div className="eyebrow text-slate-500 mb-3" style={{ fontSize: "11px" }}>
               REACH US DIRECTLY
             </div>
-            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
+            <div className="flex flex-col md:flex-row md:items-center flex-wrap gap-4 md:gap-8">
               <a
                 href={CONTACT.phoneHref}
-                className="display text-white hover:text-[#60a5fa] transition-colors"
-                style={{ fontSize: "clamp(20px, 3vw, 36px)" }}
+                className="font-semibold text-white hover:text-[#60a5fa] transition-colors tracking-wide whitespace-nowrap shrink-0"
+                style={{ fontSize: "18px", whiteSpace: "nowrap" }}
               >
                 {CONTACT.phone}
               </a>
               <a
                 href={CONTACT.emailHref}
-                className="body-text text-slate-300 hover:text-white transition-colors"
-                style={{ fontSize: "15px" }}
+                className="body-text text-slate-300 hover:text-white transition-colors whitespace-nowrap shrink-0"
+                style={{ fontSize: "15px", whiteSpace: "nowrap" }}
               >
                 {CONTACT.email}
               </a>
-              <span className="body-text text-slate-500" style={{ fontSize: "15px" }}>
+              <span className="body-text text-slate-500 max-w-xl" style={{ fontSize: "15px" }}>
                 {CONTACT.address}
               </span>
-              <WeChatQRButton variant="dark" label="CONTACT US ON WECHAT" />
+              <div className="shrink-0">
+                <WeChatQRButton variant="dark" label="CONTACT US ON WECHAT" />
+              </div>
             </div>
           </div>
         </div>

@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import FloatingCTA from "./components/FloatingCTA";
 import PageTransition from "./components/PageTransition";
-import AnimatedEngineeringBackground from "./components/AnimatedEngineeringBackground";
 import PageLoader from "./components/PageLoader";
 
 const outfit = Outfit({
@@ -140,7 +139,6 @@ export default function RootLayout({
           })();
         `}</Script>
         <PageLoader />
-        <AnimatedEngineeringBackground />
         <Navbar />
         <main className="flex-1 flex flex-col">
           <PageTransition>{children}</PageTransition>
