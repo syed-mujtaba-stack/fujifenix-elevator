@@ -139,7 +139,6 @@ export default function ContactContent() {
             {/* Left — info */}
             <div className="lg:w-[40%]">
               <SectionHeading
-                eyebrow="GET IN TOUCH"
                 title="LET'S TALK"
               />
               <div className="mt-10 space-y-8">

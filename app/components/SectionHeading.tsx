@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 interface SectionHeadingProps {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   highlight?: string;
   description?: string;
@@ -51,10 +51,12 @@ export default function SectionHeading({
       ref={ref}
       className={`sh-head flex flex-col ${align === "center" ? "items-center text-center" : ""} mb-12 md:mb-16`}
     >
-      <div className="sh-el flex items-center gap-3 mb-6">
-        <div className="w-8 h-px bg-[#0047BB]" />
-        <span className={`eyebrow ${dark ? "text-[#60a5fa]" : "text-[#0047BB]"}`}>{eyebrow}</span>
-      </div>
+      {eyebrow && (
+        <div className="sh-el flex items-center gap-3 mb-6">
+          <div className="w-8 h-px bg-[#0047BB]" />
+          <span className={`eyebrow ${dark ? "text-[#60a5fa]" : "text-[#0047BB]"}`}>{eyebrow}</span>
+        </div>
+      )}
       <h2
         className={`sh-el heading ${dark ? "text-white" : "text-[#0f172a]"} max-w-3xl`}
         style={{ fontSize: "var(--fs-h2)" }}
