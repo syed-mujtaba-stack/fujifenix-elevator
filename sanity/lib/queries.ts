@@ -107,7 +107,9 @@ export const categoryQuery = `
     title,
     "slug": slug.current,
     description,
-    image
+    image,
+    seoTitle,
+    seoDescription
   }
 `
 

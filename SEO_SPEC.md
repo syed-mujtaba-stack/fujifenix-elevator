@@ -1,5 +1,7 @@
 # 🔍 Fuji Fenix Elevator — SEO Specification v2.0
 
+> **⚠️ v3.0 UPDATE (Sept 2026):** The client **strictly forbids a blog**. Section 3.2 (Content Hub Plan) and its blog-related items are **cancelled**. See **[SEO_ROADMAP.md](./SEO_ROADMAP.md)** for the current plan — content now lives in FAQ sections, enriched category pages, and permanent landing pages (client-approved).
+
 ## 📌 Goal
 Achieve **top-3 rankings** for high-intent elevator/escalator commercial keywords, build topical authority across vertical transportation, and implement technical SEO best practices to maximize organic traffic and conversions.
 

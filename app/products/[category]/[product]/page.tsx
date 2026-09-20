@@ -17,6 +17,7 @@ import { HERO_HEADINGS } from "@/app/data/content";
 import ProductDetailContent from "./ProductDetailContent";
 import { StructuredData } from "@/app/components/StructuredData";
 import { productSchema, faqSchema, breadcrumbSchema } from "@/lib/structured-data";
+import { resolveStructuredImageUrl } from "@/app/lib/safeImageUrl";
 
 export const revalidate = 60;
 
@@ -39,6 +40,9 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
     title: seoTitle,
     description: seoDesc,
     keywords: [p.title, p.category, "Elevator", "Fuji Fenix", p.categorySlug],
+    alternates: {
+      canonical: `/products/${p.categorySlug}/${p.slug}`,
+    },
     openGraph: {
       title: seoTitle,
       description: seoDesc,
@@ -72,8 +76,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const structuredData = productSchema({
     title: p.title,
     description: p.description || p.tagline || p.category,
-    image: p.image as string,
+    image: resolveStructuredImageUrl(p.image),
     category: p.category,
+    categorySlug: p.categorySlug,
     features: p.features || [],
     keyFeatures: p.keyFeatures || [],
     slug: p.slug,

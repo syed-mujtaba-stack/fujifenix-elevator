@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -117,6 +118,9 @@ export default function RootLayout({
         </main>
         <Footer />
         <FloatingCTA />
+
+        {/* Google Analytics 4 */}
+        <GoogleAnalytics gaId="G-K8N55C390S" />
       </body>
     </html>
   );

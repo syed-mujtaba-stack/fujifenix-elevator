@@ -1,3 +1,6 @@
+import { urlFor } from "@/sanity/lib/image";
+import type { SanityImageSource } from "@sanity/image-url";
+
 /**
  * Normalizes image paths to URL-safe static assets on Linux/Hostinger hosting environments.
  * Prevents 404s caused by ampersands (&), commas, single quotes, or complex URI encodings on Linux web servers.
@@ -47,4 +50,38 @@ export function getSafeImageUrl(rawSrc: string | null | undefined): string {
   }
 
   return src;
+}
+
+/**
+ * Resolves an image source (Sanity asset, absolute URL, local path, or gallery filename)
+ * into an absolute URL-safe string for use in JSON-LD structured data.
+ * Returns undefined when nothing usable is found (caller can then fall back).
+ */
+export function resolveStructuredImageUrl(rawSrc: unknown): string | undefined {
+  if (!rawSrc) return undefined;
+
+  // Sanity image asset reference
+  if (typeof rawSrc === "object") {
+    try {
+      return urlFor(rawSrc as SanityImageSource)
+        .width(1200)
+        .auto("format")
+        .url();
+    } catch {
+      return undefined;
+    }
+  }
+
+  if (typeof rawSrc !== "string") return undefined;
+
+  const src = rawSrc.trim();
+  if (!src) return undefined;
+
+  // Already absolute (CDN or external)
+  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  // Already a local public path
+  if (src.startsWith("/")) return src;
+
+  // File-name style (e.g. "Passenger Elevator Cabin.png") → safe mapping or local path
+  return getSafeImageUrl(src);
 }

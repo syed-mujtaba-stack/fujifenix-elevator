@@ -7,7 +7,7 @@ export function organizationSchema() {
     name: "Shanghai Fuji Fenix Elevator Co Ltd.",
     alternateName: "FUJI FENIX",
     url: "https://fujifenix.com",
-    logo: "https://fujifenix.com/logo.png",
+    logo: "https://fujifenix.com/logo.svg",
     description: "Total Solution for Vertical Transportation",
     address: {
       "@type": "PostalAddress",
@@ -71,7 +71,7 @@ export function localBusinessSchema() {
       },
     ],
     priceRange: "$$$",
-    image: "https://fujifenix.com/factory.jpg",
+    image: "https://fujifenix.com/building-exterior.jpg",
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Elevator & Escalator Solutions",
@@ -92,37 +92,28 @@ export function productSchema(product: {
   description: string;
   image?: string;
   category?: string;
+  categorySlug?: string;
   features?: string[];
   keyFeatures?: string[];
   slug: string;
   tagline?: string;
 }) {
+  const url = product.categorySlug
+    ? `https://fujifenix.com/products/${product.categorySlug}/${product.slug}`
+    : `https://fujifenix.com/products/${product.slug}`;
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.title,
     description: product.description,
-    image: product.image || `https://fujifenix.com/products/${product.slug}/hero.jpg`,
+    image: product.image || `https://fujifenix.com${url}`,
     brand: {
       "@type": "Brand",
       name: "Fuji Fenix",
-      logo: "https://fujifenix.com/logo.png",
+      logo: "https://fujifenix.com/logo.svg",
     },
     category: product.category,
-    offers: {
-      "@type": "Offer",
-      availability: "https://schema.org/InStock",
-      url: `https://fujifenix.com/products/${product.slug}`,
-      priceCurrency: "CNY",
-      price: "0",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      reviewCount: "127",
-      bestRating: "5",
-      worstRating: "1",
-    },
     additionalProperty: (product.features || []).map((f) => ({
       "@type": "PropertyValue",
       name: "Feature",
@@ -166,13 +157,5 @@ export function websiteSchema() {
     name: "Fuji Fenix Elevator",
     url: "https://fujifenix.com",
     description: "Total Solution for Vertical Transportation",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: "https://fujifenix.com/search?q={search_term_string}",
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }

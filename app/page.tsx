@@ -12,6 +12,7 @@ import { safeFetch } from "@/sanity/lib/client";
 import { featuredProductsQuery, type SanityProductItem } from "@/sanity/lib/queries";
 import { StructuredData } from "./components/StructuredData";
 import { productSchema } from "@/lib/structured-data";
+import { resolveStructuredImageUrl } from "@/app/lib/safeImageUrl";
 
 export const revalidate = 60;
 
@@ -32,8 +33,9 @@ export default async function Home() {
           schema={productSchema({
             title: product.title,
             description: product.description || "",
-            image: product.image as string,
+            image: resolveStructuredImageUrl(product.image),
             category: product.category,
+            categorySlug: product.categorySlug,
             features: product.features || [],
             slug: product.slug,
           })}

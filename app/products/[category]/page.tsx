@@ -13,6 +13,7 @@ import PageHero from "@/app/components/PageHero";
 import CategoryContent from "./CategoryContent";
 import { StructuredData } from "@/app/components/StructuredData";
 import { productSchema } from "@/lib/structured-data";
+import { resolveStructuredImageUrl } from "@/app/lib/safeImageUrl";
 
 export const revalidate = 60;
 
@@ -35,6 +36,9 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
     title: seoTitle,
     description: seoDesc,
     keywords: [cat.title, "Elevator", "Fuji Fenix", cat.description?.slice(0, 50) ?? ""],
+    alternates: {
+      canonical: `/products/${cat.slug}`,
+    },
     openGraph: {
       title: seoTitle,
       description: seoDesc,
@@ -63,8 +67,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   const productSchemaList = products.slice(0, 4).map((product: any) => productSchema({
     title: product.title,
     description: product.description || cat.title,
-    image: product.image as string,
+    image: resolveStructuredImageUrl(product.image),
     category: cat.title,
+    categorySlug: product.categorySlug ?? cat.slug,
     features: product.features || [],
     slug: product.slug,
   }));
