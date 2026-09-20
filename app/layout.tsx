@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     "Dumbwaiters", "Stair Lifts", "Auto Car Parking Systems",
     "Platform Lifts", "Circular Elevators", "Marine Elevators",
   ],
-  verification: { google: "_lyP_5XzuopzWMBocBBwd_qswXf2k5XZ94DK9St3AuI" },
+  verification: { google: "QCYK7KIg9f2yKjSAsu63MtlI0zIRtadlunap1k7rzJY" },
   openGraph: {
     type: "website",
     locale: "en_US",
