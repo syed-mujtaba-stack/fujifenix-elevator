@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export const product = defineType({
   name: 'product',
@@ -48,7 +48,7 @@ export const product = defineType({
       title: 'Product Gallery (local image paths)',
       type: 'array',
       of: [
-        defineField({
+        defineArrayMember({
           name: 'galleryImage',
           title: 'Gallery Image',
           type: 'object',
@@ -75,7 +75,7 @@ export const product = defineType({
       title: 'Technical Specifications',
       type: 'array',
       of: [
-        defineField({
+        defineArrayMember({
           name: 'specGroup',
           title: 'Specification Group',
           type: 'object',
@@ -104,7 +104,7 @@ export const product = defineType({
               title: 'Specifications',
               type: 'array',
               of: [
-                defineField({
+                defineArrayMember({
                   name: 'spec',
                   title: 'Specification',
                   type: 'object',
@@ -124,7 +124,7 @@ export const product = defineType({
       title: 'Technical Drawings (local image paths)',
       type: 'array',
       of: [
-        defineField({
+        defineArrayMember({
           name: 'drawing',
           title: 'Technical Drawing',
           type: 'object',

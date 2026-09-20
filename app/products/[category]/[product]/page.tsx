@@ -15,6 +15,8 @@ import ProductSidebar from "@/app/components/ProductSidebar";
 import { PRODUCT_IMAGE_OVERRIDES } from "@/app/data/productImageOverrides";
 import { HERO_HEADINGS } from "@/app/data/content";
 import ProductDetailContent from "./ProductDetailContent";
+import { StructuredData } from "@/app/components/StructuredData";
+import { productSchema, faqSchema, breadcrumbSchema } from "@/lib/structured-data";
 
 export const revalidate = 60;
 
@@ -31,9 +33,18 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   const { product } = await params;
   const p = await safeFetch<SanityProductDetail | null>(productQuery, { slug: product }, null);
   if (!p) return {};
+  const seoTitle = p.seoTitle || `${p.title} | Fuji Fenix Elevator`;
+  const seoDesc = p.seoDescription || `${p.title} — ${p.description?.slice(0, 150) ?? "Elevator system from Fuji Fenix"}`;
   return {
-    title: p.title,
-    description: p.description ?? `${p.title} from Fuji Fenix Elevator.`,
+    title: seoTitle,
+    description: seoDesc,
+    keywords: [p.title, p.category, "Elevator", "Fuji Fenix", p.categorySlug],
+    openGraph: {
+      title: seoTitle,
+      description: seoDesc,
+      images: p.image ? [urlFor(p.image).width(1200).auto("format").url()] : ["/og-home.jpg"],
+    },
+    twitter: { card: "summary_large_image", title: seoTitle, description: seoDesc },
   };
 }
 
@@ -51,8 +62,31 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const heroHeading = (HERO_HEADINGS[p.slug] ?? p.title).toUpperCase();
   const currentHref = `/products/${p.categorySlug}/${p.slug}`;
 
+  const breadcrumbItems = [
+    { name: "Home", url: "https://fujifenix.com" },
+    { name: "Products", url: "https://fujifenix.com/products" },
+    { name: p.category, url: `https://fujifenix.com/products/${p.categorySlug}` },
+    { name: p.title, url: currentHref },
+  ];
+
+  const structuredData = productSchema({
+    title: p.title,
+    description: p.description || p.tagline || p.category,
+    image: p.image as string,
+    category: p.category,
+    features: p.features || [],
+    keyFeatures: p.keyFeatures || [],
+    slug: p.slug,
+    tagline: p.tagline ?? undefined,
+  });
+
   return (
     <>
+      {/* Structured Data */}
+      <StructuredData schema={structuredData} />
+      {p.faq && p.faq.length > 0 && <StructuredData schema={faqSchema(p.faq)} />}
+      <StructuredData schema={{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: breadcrumbItems.map((item, i) => ({ "@type": "ListItem", position: i + 1, name: item.name, item: item.url })) }} />
+
       <PageHero
         eyebrow={p.category?.toUpperCase() ?? "PRODUCT"}
         title={[heroHeading]}

@@ -1,0 +1,48 @@
+{
+  "name": "Fuji Fenix Elevator",
+  "short_name": "Fuji Fenix",
+  "description": "Total Solution for Vertical Transportation — Elevators & Escalators",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0047BB",
+  "orientation": "any",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Products",
+      "url": "/products",
+      "description": "Browse our elevator range",
+      "icons": [{ "src": "/icons/products-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Contact",
+      "url": "/contact",
+      "description": "Get a quote",
+      "icons": [{ "src": "/icons/contact-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "preferRelatedApplications": false
+}

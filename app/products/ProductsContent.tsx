@@ -32,10 +32,13 @@ interface ProductData {
   categorySlug: string;
 }
 
-const cardImage = (product: ProductData) =>
-  product.image
+const cardImage = (product: ProductData) => {
+  const src = product.image
     ? urlFor(product.image).width(900).auto("format").url()
     : product.gallery?.[0]?.src ?? FALLBACK_IMAGE;
+  const isLocal = src.startsWith("/") && !src.startsWith("//");
+  return { src, isLocal };
+};
 
 function CategoryAccordion({
   category,
@@ -253,9 +256,10 @@ export default function ProductsContent({ categories, products }: { categories: 
                 <Link key={product._id} href={`/products/${product.categorySlug}/${product.slug}`} className="product-card group block rounded-sm border border-slate-200 bg-white p-2 shadow-[0_8px_24px_rgba(15,23,42,0.035)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_16px_32px_rgba(15,23,42,0.09)]">
                   <div className="relative aspect-[4/3] overflow-hidden bg-white">
                     <Image
-                      src={cardImage(product)}
+                      src={cardImage(product).src}
                       alt={product.title}
                       fill
+                      unoptimized={cardImage(product).isLocal}
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 300px"
                     />

@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard
+Disallow: /_next/
+Disallow: /admin/
+
+Sitemap: https://fujifenix.com/sitemap.xml
+
+# Block tracking/analytics params
+Clean-param: * /products/
+
+# Crawl-delay for heavy endpoints
+User-agent: Googlebot
+Crawl-delay: 1
+
+User-agent: Bingbot
+Crawl-delay: 1

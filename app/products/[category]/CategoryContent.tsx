@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHeading from "@/app/components/SectionHeading";
 import { urlFor } from "@/sanity/lib/image";
+import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -93,7 +94,7 @@ export default function CategoryContent({ category, products }: Props) {
                 <div className="relative overflow-hidden aspect-[4/3] bg-[#f1f5f9]">
                   {(p.image || p.gallery?.[0]?.src) ? (
                     <Image
-                      src={p.image ? urlFor(p.image).width(900).auto("format").url() : p.gallery?.[0]?.src ?? "/hero-elevator.jpg"}
+                      src={p.image ? urlFor(p.image).width(900).auto("format").url() : getSafeImageUrl(p.gallery?.[0]?.src)}
                       alt={p.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"

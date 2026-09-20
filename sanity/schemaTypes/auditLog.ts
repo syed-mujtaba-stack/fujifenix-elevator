@@ -37,8 +37,8 @@ export const auditLog = defineType({
     defineField({
       name: 'metadata',
       title: 'Metadata',
-      type: 'object',
-      fields: [],
+      type: 'text',
+      description: 'JSON formatted metadata details',
     }),
     defineField({
       name: 'ipAddress',

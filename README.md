@@ -40,20 +40,53 @@ npm run lint
 ```
 app/
   ├── components/          # Reusable React components
-  ├── page.tsx            # Home page
-  ├── layout.tsx          # Root layout
+  ├── page.tsx            # Home page (with Product schema)
+  ├── layout.tsx          # Root layout (Structured Data, preconnects)
+  ├── sitemap.ts          # Dynamic XML sitemap (Next.js 16 native)
+  ├── opengraph-image.tsx # OG image generator
   ├── (routes)/           # Dynamic routes (products, services, etc.)
   ├── actions/            # Server actions (contact form)
   ├── data/               # Static content & configuration
-  └── studio/             # Sanity Studio integration
-
+  ├── components/         # Shared + page-specific React components
+  │   ├── StructuredData.tsx  # JSON-LD schema components
+  │   ├── ui/               # Reusable UI (Button, Input, Table, etc.)
+  │   └── admin/            # Admin layout (Sidebar, TopBar)
+  └── studio/             # Sanity Studio
 sanity/
-  ├── schemaTypes/        # Content schema (Product, Category)
+  ├── schemaTypes/        # Content schema (8 document types + SEO fields)
   ├── lib/                # GROQ queries, Sanity client
   └── structure.ts        # Studio structure configuration
-
-public/                    # Static assets (product images)
+public/
+  ├── robots.txt          # Crawl configuration
+  ├── manifest.json       # PWA manifest
+  ├── sw.js               # Service Worker (PWA + Push)
+  └── icons/              # PWA icons
 ```
+
+## 🔍 SEO Implementation (Phase 1 & 2 Complete)
+
+### ✅ What's Implemented
+- **Dynamic XML Sitemap** (`app/sitemap.ts`) — All pages, categories, products
+- **robots.txt** (`public/robots.txt`) — Proper crawl configuration
+- **JSON-LD Structured Data** (`app/components/StructuredData.tsx`) — Organization, LocalBusiness, WebSite, Product, FAQ, BreadcrumbList schemas
+- **Dynamic Meta Tags** — Per-page SEO titles & descriptions from Sanity
+- **OG Image Generator** (`app/opengraph-image.tsx`) — Dynamic OG images
+- **Preconnect Hints** — CDN, fonts, analytics
+- **Security Headers** — CSP, X-Frame-Options, Referrer-Policy via `next.config.mjs`
+- **PWA Support** — Manifest, Service Worker, Push notifications
+- **Sanity SEO Fields** — `seoTitle`, `seoDescription`, `faq` added to Product & Category schemas
+
+### 🔧 Schema Fields Added to Sanity
+| Document Type | SEO Fields |
+|---|---|
+| Product | `seoTitle`, `seoDescription`, `faq`, `isFeatured` |
+| Category | `seoTitle`, `seoDescription` |
+
+### 📈 Next Steps
+1. **Verify Google Search Console** — Submit sitemap, check coverage
+2. **Phase 3**: Breadcrumbs component, hreflang, blog structure
+3. **Phase 4**: Analytics (GA4), Core Web Vitals monitoring
+4. **Phase 5**: PWA polish, performance optimization
 
 ## 🛠️ Technology Stack
 

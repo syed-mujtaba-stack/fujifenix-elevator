@@ -35,5 +35,18 @@ export const category = defineType({
       title: 'Order',
       type: 'number',
     }),
+    defineField({
+      name: 'seoTitle',
+      title: 'SEO Title',
+      type: 'string',
+      validation: (rule) => rule.max(60),
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'SEO Meta Description',
+      type: 'text',
+      rows: 3,
+      validation: (rule) => rule.max(160),
+    }),
   ],
 })

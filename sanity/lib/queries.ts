@@ -35,6 +35,8 @@ export interface SanityProductItem {
   gallery: GalleryImage[] | null;
   category: string;
   categorySlug: string;
+  seoTitle: string | null;
+  seoDescription: string | null;
 }
 
 export interface SanityProductDetail extends SanityProductItem {
@@ -51,6 +53,9 @@ export interface SanityProductDetail extends SanityProductItem {
   tagline: string | null;
   configurationNote: string | null;
   related: { _id: string; title: string; slug: string; category: string; image: unknown; gallery: { src: string; alt: string }[] | null }[] | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  faq: { question: string; answer: string }[] | null;
 }
 
 export interface SanityCategoryItem {
@@ -60,6 +65,8 @@ export interface SanityCategoryItem {
   description: string | null;
   image: unknown;
   productCount: number;
+  seoTitle: string | null;
+  seoDescription: string | null;
 }
 
 const galleryProjection = `
@@ -88,7 +95,9 @@ export const categoriesQuery = `
     "slug": slug.current,
     description,
     image,
-    "productCount": count(*[_type == "product" && category._ref == ^._id])
+    "productCount": count(*[_type == "product" && category._ref == ^._id]),
+    seoTitle,
+    seoDescription
   }
 `
 
@@ -112,7 +121,9 @@ export const productsByCategoryQuery = `
     image,
     ${galleryProjection}
     "category": category->title,
-    "categorySlug": category->slug.current
+    "categorySlug": category->slug.current,
+    seoTitle,
+    seoDescription
   }
 `
 
@@ -134,7 +145,10 @@ export const productQuery = `
       "category": category->title,
       image,
       "gallery": gallery[] { src, alt }
-    }
+    },
+    seoTitle,
+    seoDescription,
+    faq
   }
 `
 
@@ -148,7 +162,9 @@ export const featuredProductsQuery = `
     image,
     ${galleryProjection}
     "category": category->title,
-    "categorySlug": category->slug.current
+    "categorySlug": category->slug.current,
+    seoTitle,
+    seoDescription
   }
 `
 
@@ -157,10 +173,12 @@ export const allProductsQuery = `
     _id,
     title,
     "slug": slug.current,
-  description,
-  image,
-  ${galleryProjection}
+    description,
+    image,
+    ${galleryProjection}
     "category": category->title,
-    "categorySlug": category->slug.current
+    "categorySlug": category->slug.current,
+    seoTitle,
+    seoDescription
   }
 `

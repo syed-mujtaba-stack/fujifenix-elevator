@@ -55,11 +55,16 @@ export const adminUser = defineType({
       type: 'object',
       hidden: true,
       fields: [
-        { name: 'endpoint', type: 'string' },
-        { name: 'keys', type: 'object', fields: [
-          { name: 'p256dh', type: 'string' },
-          { name: 'auth', type: 'string' },
-        ]},
+        defineField({ name: 'endpoint', title: 'Endpoint', type: 'string' }),
+        defineField({
+          name: 'keys',
+          title: 'Keys',
+          type: 'object',
+          fields: [
+            defineField({ name: 'p256dh', title: 'P256DH', type: 'string' }),
+            defineField({ name: 'auth', title: 'Auth', type: 'string' }),
+          ],
+        }),
       ],
     }),
   ],
