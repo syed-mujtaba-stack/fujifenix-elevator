@@ -1,38 +1,25 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
+export const alt = "Fuji Fenix Elevator";
+export const size = {
+  width: 1200,
+  height: 630,
+};
+export const contentType = "image/png";
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const title = searchParams.get("title") ?? "Fuji Fenix Elevator";
-  const subtitle = searchParams.get("subtitle") ?? "Total Solution for Vertical Transportation";
-  const type = searchParams.get("type") ?? "product"; // product, category, home
-
-  const bgColors: Record<string, string> = {
-    home: "#0f172a",
-    product: "#0f172a",
-    category: "#0047BB",
-  };
-  const accentColors: Record<string, string> = {
-    home: "#0047BB",
-    product: "#60a5fa",
-    category: "#fff",
-  };
-
-  const bg = bgColors[type] ?? bgColors.home;
-  const accent = accentColors[type] ?? accentColors.home;
-
+export default async function Image() {
   return new ImageResponse(
     (
       <div
         style={{
-          width: "1200px",
-          height: "630px",
+          width: "100%",
+          height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          backgroundColor: bg,
+          backgroundColor: "#0f172a",
           padding: "60px 80px",
           fontFamily: "sans-serif",
         }}
@@ -45,7 +32,7 @@ export async function GET(req: Request) {
             left: 0,
             right: 0,
             height: "6px",
-            backgroundColor: accent,
+            backgroundColor: "#0047BB",
           }}
         />
 
@@ -56,7 +43,7 @@ export async function GET(req: Request) {
               width: "48px",
               height: "48px",
               borderRadius: "4px",
-              backgroundColor: accent,
+              backgroundColor: "#0047BB",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -84,13 +71,13 @@ export async function GET(req: Request) {
             letterSpacing: "-0.03em",
           }}
         >
-          {title.length > 40 ? `${title.slice(0, 37)}...` : title}
+          Fuji Fenix Elevator
         </h1>
 
         {/* Subtitle */}
         <p
           style={{
-            color: accent,
+            color: "#60a5fa",
             fontSize: "22px",
             fontWeight: 500,
             marginTop: "16px",
@@ -98,7 +85,7 @@ export async function GET(req: Request) {
             opacity: 0.9,
           }}
         >
-          {subtitle}
+          Total Solution for Vertical Transportation
         </p>
 
         {/* Decorative element */}
@@ -107,12 +94,14 @@ export async function GET(req: Request) {
             marginTop: "40px",
             width: "120px",
             height: "4px",
-            backgroundColor: accent,
+            backgroundColor: "#0047BB",
             opacity: 0.5,
           }}
         />
       </div>
     ),
-    { width: 1200, height: 630 }
+    {
+      ...size,
+    }
   );
 }
