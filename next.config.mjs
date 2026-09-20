@@ -16,6 +16,17 @@ const nextConfig = {
     contentDispositionType: "inline",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  async redirects() {
+    return [
+      // Legacy URLs from the previous website — 308 permanent redirects to current pages.
+      // Preserves link equity and removes old URLs from Google's index.
+      { source: "/home-elevators{/}?", destination: "/products/elevators", permanent: true },
+      { source: "/passenger-elevators{/}?", destination: "/products/elevators/passenger-elevator-cabin", permanent: true },
+      { source: "/escalators{/}?", destination: "/products/escalators-moving-walks", permanent: true },
+      { source: "/moving-walks{/}?", destination: "/products/escalators-moving-walks", permanent: true },
+      { source: "/home{/}?", destination: "/", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
