@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
 import { urlFor } from "@/sanity/lib/image";
+import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,7 +36,7 @@ interface ProductData {
 const cardImage = (product: ProductData) => {
   const src = product.image
     ? urlFor(product.image).width(900).auto("format").url()
-    : product.gallery?.[0]?.src ?? FALLBACK_IMAGE;
+    : getSafeImageUrl(product.gallery?.[0]?.src);
   const isLocal = src.startsWith("/") && !src.startsWith("//");
   return { src, isLocal };
 };

@@ -6,6 +6,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { urlFor } from "@/sanity/lib/image";
+import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,7 +32,7 @@ const FEATURED = (products: FeaturedProduct[]) =>
     specs: p.features ?? [],
     img: p.image
       ? urlFor(p.image).width(1600).auto("format").url()
-      : p.gallery?.[0]?.src ?? "/hero-elevator.jpg",
+      : getSafeImageUrl(p.gallery?.[0]?.src),
     imgAlt: p.title,
   }));
 
