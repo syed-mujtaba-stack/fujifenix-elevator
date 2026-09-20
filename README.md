@@ -2,217 +2,187 @@
 
 **Total Solution for Vertical Transportation**
 
-A modern web platform for [Fuji Fenix Elevator](https://fujifenix.com) — a leading manufacturer and solution provider of advanced elevator and escalator systems. Built with Next.js, Sanity CMS, and cutting-edge animation technologies.
+Modern web platform for [Fuji Fenix Elevator](https://fujifenix.com) — a leading manufacturer and solution provider of advanced elevator and escalator systems. Built with **Next.js 16 (App Router)**, **Sanity CMS**, and modern animation technologies (GSAP + Framer Motion).
+
+> ⚠️ **Client constraint:** No blog. No new public-facing sections. All SEO work stays invisible to visitors (metadata, redirects, JSON-LD, sitemap, canonicals).
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or yarn
+- Node.js 18+
+- npm
 
 ### Installation & Development
 
 ```bash
-# Install dependencies
+# Install dependencies (postinstall runs scripts/force-wasm.js automatically)
 npm install
 
+# Copy env template & fill in values (see .env.local.example)
 # Run development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
 ### Build & Production
 
 ```bash
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Run linting
+npm run build   # uses SWC WASM fallback (force-wasm.js) — GLIBC/ELF build warnings are expected
+npm start       # or: node server.js (Hostinger uses this)
 npm run lint
 ```
+
+> **Do NOT run `npm audit fix --force`** — it breaks `otplib` (2FA) and `recharts`.
+
+---
 
 ## 📋 Project Structure
 
 ```
 app/
-  ├── components/          # Reusable React components
-  ├── page.tsx            # Home page (with Product schema)
-  ├── layout.tsx          # Root layout (Structured Data, preconnects)
-  ├── sitemap.ts          # Dynamic XML sitemap (Next.js 16 native)
-  ├── opengraph-image.tsx # OG image generator
-  ├── (routes)/           # Dynamic routes (products, services, etc.)
-  ├── actions/            # Server actions (contact form)
-  ├── data/               # Static content & configuration
-  ├── components/         # Shared + page-specific React components
-  │   ├── StructuredData.tsx  # JSON-LD schema components
-  │   ├── ui/               # Reusable UI (Button, Input, Table, etc.)
-  │   └── admin/            # Admin layout (Sidebar, TopBar)
-  └── studio/             # Sanity Studio
+  ├── page.tsx               # Home (JSON-LD, hero, product showcase)
+  ├── layout.tsx             # Root layout — metadata, GA4, GSC verification, structured data
+  ├── sitemap.ts             # Dynamic XML sitemap (Next.js native)
+  ├── opengraph-image.tsx    # Dynamic OG image
+  ├── not-found.tsx          # 404 (robots: noindex)
+  ├── products/              # /products, /products/[category], /products/[category]/[product]
+  ├── services/ solutions/ projects/ about/ contact/ cta/
+  ├── actions/               # Server actions (contact form)
+  ├── data/                  # Static content & configuration
+  ├── components/            # Public-site React components (ProductShowcase, Hero, …)
+  ├── lib/                   # safeImageUrl (gallery path normalization)
+  ├── studio/                # Sanity Studio route
+  ├── dashboard/             # Admin dashboard (protected)
+  ├── api/                   # Backend routes (auth, socket, inquiries, popups, analytics)
+  └── (auth)/                # Auth flow (login, 2FA)
+components/
+  ├── admin/                 # Admin layout (Sidebar, TopBar)
+  └── ui/                    # shadcn-style kit (Button, Card, Input, Select, Table, …)
+lib/                         # auth (NextAuth), socket, structured-data, utils
 sanity/
-  ├── schemaTypes/        # Content schema (8 document types + SEO fields)
-  ├── lib/                # GROQ queries, Sanity client
-  └── structure.ts        # Studio structure configuration
+  ├── schemaTypes/           # product, category, adminUser, auditLog, inquiry, popup, pushSubscription
+  └── lib/                   # client, queries (GROQ), image, live, env, structure
+scripts/
+  ├── force-wasm.js          # Build-time SWC WASM fallback (required — do not remove)
+  └── archive/               # One-time Sanity data/seed scripts (already run)
 public/
-  ├── robots.txt          # Crawl configuration
-  ├── manifest.json       # PWA manifest
-  ├── sw.js               # Service Worker (PWA + Push)
-  └── icons/              # PWA icons
+  ├── robots.txt             # Crawl rules + sitemap reference
+  ├── sw.js                  # Service worker (RSC/navigation-safe fetch handling)
+  └── Elevators/…            # Local product imagery
+server.js                    # Production server (Hostinger)
 ```
 
-## 🔍 SEO Implementation (Phase 1 & 2 Complete)
+---
 
-### ✅ What's Implemented
-- **Dynamic XML Sitemap** (`app/sitemap.ts`) — All pages, categories, products
-- **robots.txt** (`public/robots.txt`) — Proper crawl configuration
-- **JSON-LD Structured Data** (`app/components/StructuredData.tsx`) — Organization, LocalBusiness, WebSite, Product, FAQ, BreadcrumbList schemas
-- **Dynamic Meta Tags** — Per-page SEO titles & descriptions from Sanity
-- **OG Image Generator** (`app/opengraph-image.tsx`) — Dynamic OG images
-- **Preconnect Hints** — CDN, fonts, analytics
-- **Security Headers** — CSP, X-Frame-Options, Referrer-Policy via `next.config.mjs`
-- **PWA Support** — Manifest, Service Worker, Push notifications
-- **Sanity SEO Fields** — `seoTitle`, `seoDescription`, `faq` added to Product & Category schemas
+## 🔧 Environment Variables
 
-### 🔧 Schema Fields Added to Sanity
-| Document Type | SEO Fields |
-|---|---|
-| Product | `seoTitle`, `seoDescription`, `faq`, `isFeatured` |
-| Category | `seoTitle`, `seoDescription` |
+Copy `.env.local.example` → `.env.local` (`.env*` is gitignored).
 
-### 📈 Next Steps
-1. **Verify Google Search Console** — Submit sitemap, check coverage
-2. **Phase 3**: Breadcrumbs component, hreflang, blog structure
-3. **Phase 4**: Analytics (GA4), Core Web Vitals monitoring
-4. **Phase 5**: PWA polish, performance optimization
+| Variable | Required | Purpose |
+|---|---|---|
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | ✅ | Sanity project ID |
+| `NEXT_PUBLIC_SANITY_DATASET` | ✅ | Sanity dataset (production) |
+| `NEXT_PUBLIC_SANITY_API_VERSION` | ✅ | Sanity API version |
+| `SANITY_API_TOKEN` | ✅ | Server-side Sanity token (admin auth) |
+| `NEXT_PUBLIC_SITE_URL` | – | Sitemap base URL (defaults to https://fujifenix.com) |
+| `NEXT_PUBLIC_GA_ID` | ✅ | GA4 ID (`G-K8N55C390S`) — also hardcoded in `layout.tsx` |
+| `FORMSPREE_ENDPOINT` | – | Contact form endpoint |
+| `NEXT_PUBLIC_SOCKET_URL` | – | Socket.io URL (defaults to wss://socket.fujifenix.com) |
+
+---
 
 ## 🛠️ Technology Stack
 
 | Category | Technology |
 |----------|-----------|
-| **Framework** | Next.js 16.3.0 |
-| **UI Library** | React 19.2.8 |
-| **CMS** | Sanity 5.31.1 |
-| **Styling** | Tailwind CSS 4, styled-components 6.5.3 |
-| **Animation** | GSAP 3.15.0, Framer Motion 13.0.0 |
-| **Language** | TypeScript 5 |
+| **Framework** | Next.js 16.3.5 (App Router, `output: 'standalone'`) |
+| **UI** | React 19, TypeScript, Tailwind CSS 4, styled-components |
+| **CMS** | Sanity 5.31 |
+| **Animation** | GSAP 3.15, Framer Motion 13 |
+| **Auth** | NextAuth v5 + 2FA (TOTP via otplib) + bcryptjs |
+| **Realtime** | Socket.io (real-time admin notifications) |
+| **Forms** | react-hook-form + Zod |
+| **Analytics** | GA4 (`G-K8N55C390S`) + recharts (dashboard) |
 
-## 📦 Key Features
+---
 
-### Content Management
-- **Sanity CMS**: Headless content management with visual editing
-- **Product Schema**: Title, description, features, images, categories
-- **Category Organization**: Grouped product management with ordering
-- **Dynamic Routes**: Category and product detail pages generated from Sanity
+## 🧭 Routes
 
-### Frontend
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Advanced Animations**: GSAP ScrollTrigger, Framer Motion for entrance effects
-- **Image Optimization**: Sanity Image URL with hotspot support
-- **Internationalization**: Google Translate widget for multi-language support
-- **Server-Side Rendering**: Static generation with 60-second revalidation
+### Public (marketing site)
+- `/` — Home (hero, capabilities, product showcase, stats)
+- `/products`, `/products/[category]`, `/products/[category]/[product]`
+- `/services` · `/solutions` · `/projects` · `/about` · `/contact`
+- `/studio` — Sanity Studio
+- Legacy URLs (`/home-elevators`, `/passenger-elevators`, `/escalators`, `/moving-walks`, `/home`) → **308 permanent redirects** to current pages
 
-### Pages
-- **Home** (`/`) - Hero, capabilities, brand statement, product showcase
-- **Products** (`/products`, `/products/[category]`, `/products/[category]/[product]`)
-- **Services** (`/services`)
-- **Solutions** (`/solutions`)
-- **About** (`/about`)
-- **Projects** (`/projects`)
-- **Contact** (`/contact`) - Form with server action
-- **Sanity Studio** (`/studio`) - Content management interface
+### Admin (`/dashboard` — protected, NextAuth + 2FA)
+- `/dashboard` — Overview
+- `/dashboard/products` (+ `/new`, `/[id]`) — Product management
+- `/dashboard/inquiries` (+ `/[id]`) — Contact form inbox
+- `/dashboard/popups` (+ `/new`) — Popup/banner management
+- `/dashboard/analytics` — Traffic/product analytics
+- `/dashboard/settings` (+ `/users`) — Settings & admin users
+- `/login` — Admin sign-in
 
-## 🎨 Design Components
+> **Admin revamp is planned (v2 — privacy/security-first, roles, audit log, sessions).**
+> It is **planning only — no admin work has started**. See `ADMIN_DASHBOARD_PLAN.md`.
 
-Core reusable components:
-- `Hero.tsx` - Landing hero section
-- `Navbar.tsx` / `MobileMenu.tsx` - Navigation
-- `ProductShowcase.tsx` - Product gallery with filtering
-- `ProjectsShowcase.tsx` - Portfolio showcase
-- `AnimatedText.tsx` - Text animation effects
-- `ImageReveal.tsx` - Image reveal animations
-- `PageTransition.tsx` - Page transition effects
-- `HorizontalSolutions.tsx` - Horizontal scrolling section
+---
 
-## 📊 Content & Data
+## 🔍 SEO Status (Complete — Invisible to visitors)
 
-### Company Info
-- **Name**: Fuji Fenix Elevator
-- **Headquarters**: Shanghai, China
-- **Contact**: info@fujifenix.com | +86 157 5725 3279
+Implemented and verified:
+- **Sitemap** `app/sitemap.ts` — auto-generated (no blog)
+- **robots.txt** — crawl rules + sitemap ref
+- **JSON-LD** — Organization, LocalBusiness, WebSite, Product, FAQ, BreadcrumbList
+- **Per-page metadata** — titles/descriptions from Sanity, canonical URLs
+- **GA4** `G-K8N55C390S` + **Google Search Console** verification tag in `layout.tsx`
+- **308 redirects** for 5 legacy URLs (link equity preserved)
+- **Image safety** — `lib/safeImageUrl` normalizes gallery paths (fixes `_next/image` 400s)
+- **404** — `robots: noindex`
+- **Security headers** — CSP-friendly set in `next.config.mjs`
 
-### Metrics
-- 6,847+ Happy Customers
-- 100% Client Satisfaction
-- 3,240+ Projects Completed
+Full roadmap & spec: `SEO_ROADMAP.md`, `SEO_SPEC.md`.
 
-### Product Categories
-- Passenger Elevators
-- Freight Elevators
-- Home Elevators
-- Sightseeing Elevators
-- Escalators
-- Hospital Elevators
-- Car Elevators
-- Accessories
+---
 
-## 🔧 Development Workflow
+## 🚀 Deployment (Hostinger)
 
-### Edit Home Page
-Modify `app/page.tsx` to change the home page layout and components.
+This project deploys on **Hostinger VPS** (git pull → `npm install` → `npm run build` → `node server.js`), **not Vercel**.
 
-### Add New Products
-1. Go to Sanity Studio: `http://localhost:3000/studio`
-2. Create a new "Product" document
-3. Fill in title, slug, category, description, features, and image
-4. Publish the document
-5. The product will automatically appear in the product catalog (ISR revalidation in 60 seconds)
+Follow the step-by-step guide in **[`HOSTINGER-DEPLOY.md`](HOSTINGER-DEPLOY.md)** — incl. required **disabling Hostinger cache** (RSC/`?_rsc=` 400 fixes) and optional CDN setup.
 
-### Create New Page
-1. Create a new folder in `app/` (e.g., `app/new-page/`)
-2. Add `page.tsx` with your content
-3. Next.js automatically creates the route
+---
 
-### Update Static Content
-Edit `app/data/content.ts` for company info, contact details, and static text.
+## 📚 Docs Index
 
-## 🚀 Deployment
+| Doc | Purpose |
+|---|---|
+| [`HOSTINGER-DEPLOY.md`](HOSTINGER-DEPLOY.md) | Live deploy guide + cache setup |
+| [`SEO_ROADMAP.md`](SEO_ROADMAP.md) | Current SEO roadmap (v3) |
+| [`SEO_SPEC.md`](SEO_SPEC.md) | SEO implementation spec |
+| [`ADMIN_DASHBOARD_PLAN.md`](ADMIN_DASHBOARD_PLAN.md) | Admin revamp plan v2 (privacy-first) — planning only |
 
-### Deploy on Vercel (Recommended)
+---
 
-```bash
-# Push to GitHub
-git push origin main
+## 🎨 Key Frontend Components
 
-# Deploy from Vercel Dashboard
-# Connect your GitHub repo to Vercel
-```
+- `Hero.tsx` — landing hero
+- `Navbar.tsx` / `MobileMenu.tsx` — navigation
+- `ProductShowcase.tsx` — product gallery with filtering & safe image URLs
+- `HorizontalSolutions.tsx` — horizontal scroll section
+- `ProjectsShowcase.tsx` — portfolio showcase
+- `AnimatedText.tsx` / `ImageReveal.tsx` / `PageTransition.tsx` — animations
 
-**Environment Variables** (set in Vercel):
-```
-NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
-NEXT_PUBLIC_SANITY_DATASET=production
-NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
-```
-
-### Other Deployment Options
-- **Netlify**: Next.js plugin support
-- **Self-hosted**: Build with `npm run build` and run `npm start`
-
-## 📖 Learn More
-
-- [Next.js Docs](https://nextjs.org/docs)
-- [Sanity Documentation](https://www.sanity.io/docs)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [GSAP](https://gsap.com/docs/)
-- [Framer Motion](https://www.framer.com/motion/)
+---
 
 ## 📝 License
 
-Proprietary - Fuji Fenix Elevator
+Proprietary — Fuji Fenix Elevator.
 
 ## 🤝 Support
 
-For support or inquiries, contact us at **info@fujifenix.com** or visit our website.
+For support or inquiries: **info@fujifenix.com** or [fujifenix.com](https://fujifenix.com).
