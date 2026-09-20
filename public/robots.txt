@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
+# Optimized images must remain crawlable for Google Images (this specific rule
+# overrides the more general /_next/ disallow below).
+Allow: /_next/image
 Disallow: /api/
 Disallow: /studio/
 Disallow: /login
@@ -8,6 +11,7 @@ Disallow: /_next/
 Disallow: /admin/
 
 Sitemap: https://fujifenix.com/sitemap.xml
+Sitemap: https://fujifenix.com/sitemap-images.xml
 
 # Block tracking/analytics params
 Clean-param: * /products/

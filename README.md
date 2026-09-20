@@ -136,6 +136,7 @@ Copy `.env.local.example` → `.env.local` (`.env*` is gitignored).
 
 Implemented and verified:
 - **Sitemap** `app/sitemap.ts` — auto-generated (no blog)
+- **Image sitemap** `app/sitemap-images.xml` — all product gallery/drawing images + key static visuals (Google Images)
 - **robots.txt** — crawl rules + sitemap ref
 - **JSON-LD** — Organization, LocalBusiness, WebSite, Product, FAQ, BreadcrumbList
 - **Per-page metadata** — titles/descriptions from Sanity, canonical URLs
