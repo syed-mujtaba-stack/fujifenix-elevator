@@ -79,6 +79,26 @@ node server.js
 
 ---
 
+## Step 6: Disable Cache (REQUIRED for Next.js)
+
+Hostinger's built-in page cache / CDN does **not** understand Next.js RSC requests
+(`?_rsc=...`) and can return **400 Bad Request** on client-side navigation, with a
+`__cpo=` parameter in the URL. Fix this in hPanel:
+
+1. hPanel → **Websites** → your site → **Node.js**
+2. Turn **OFF** the built-in **Cache** option for the application
+3. Also check **Website → Cache settings** (LiteSpeed/other) → disable or exclude:
+   - `/_next/*`
+   - any URL containing `_rsc`
+4. **Purge/Clean all caches**
+5. Restart the Node.js app
+6. Test in **Incognito mode** (Ctrl/Cmd+Shift+N) without browser extensions
+
+> Symptoms if cache is still on: `GET /...?_rsc=... 400 (Bad Request)`,
+> `__cpo=base64(https://server-ip)` in failing requests, broken client-side navigation.
+
+---
+
 ## Access
 
 - **Website**: `https://yourdomain.com`

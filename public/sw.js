@@ -1,14 +1,10 @@
 // Fuji Fenix Elevator — Service Worker (PWA)
 // Install: navigator.serviceWorker.register('/sw.js')
-// Strategy: Cache-first for static, Network-first for API
+// Strategy: Cache-first for static, Network-first for API, Network-only for navigations & RSC
 
-const CACHE_NAME = 'fujifenix-v1';
+const CACHE_NAME = 'fujifenix-v2';
 const STATIC_ASSETS = [
   '/',
-  '/products',
-  '/about',
-  '/services',
-  '/contact',
   '/sitemap.xml',
   '/manifest.json',
 ];
@@ -16,7 +12,7 @@ const STATIC_ASSETS = [
 // Install — cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS)).catch(() => {})
   );
   self.skipWaiting();
 });
@@ -31,25 +27,40 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch — Cache-first for static, Network-first for API
+// Fetch — Cache-first for static, Network-first for API, Network-only for navigations & RSC
 self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
+  const request = event.request;
+  const url = new URL(request.url);
+
+  // Next.js RSC payload requests — NEVER cache or serve from cache (breaks client-side routing)
+  const isRSC =
+    request.headers.get('RSC') === '1' ||
+    request.headers.get('Next-Router-State-Tree') !== null ||
+    url.searchParams.has('_rsc');
+
+  // HTML navigations & RSC requests — always network, fallback to cached shell only offline
+  if (request.mode === 'navigate' || isRSC) {
+    event.respondWith(
+      fetch(request).catch(() => caches.match('/'))
+    );
+    return;
+  }
 
   // API requests — Network first, fallback to cache
   if (url.pathname.startsWith('/api/') || url.hostname === 'cdn.sanity.io') {
     event.respondWith(
-      fetch(event.request)
+      fetch(request)
         .then((response) => {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
           return response;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => caches.match(request))
     );
   } else {
     // Static assets — Cache first, fallback to network
     event.respondWith(
-      caches.match(event.request).then((cached) => cached || fetch(event.request))
+      caches.match(request).then((cached) => cached || fetch(request))
     );
   }
 });
