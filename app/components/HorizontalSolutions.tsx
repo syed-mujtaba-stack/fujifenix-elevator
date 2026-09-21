@@ -198,7 +198,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                   alt={sol.imgAlt}
                   fill
                   className="object-cover"
-                  sizes="100vw"
+                  sizes="(max-width: 1438px) 40vw, 575px"
                 />
               </div>
               <div>

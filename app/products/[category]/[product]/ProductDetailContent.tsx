@@ -213,7 +213,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                     fill
                     priority
                     className="object-contain"
-                    sizes="(max-width: 1024px) 100vw, 46vw"
+                    sizes="(max-width: 639px) calc(100vw - 96px), (max-width: 767px) calc(100vw - 112px), (max-width: 1023px) calc(100vw - 192px), (max-width: 1335px) calc((100vw - 416px) / 2), 460px"
                   />
                 </div>
               ) : (

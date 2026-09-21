@@ -71,7 +71,7 @@ export default function SolutionsContent() {
                     src={seg.image}
                     alt={`Fuji Fenix ${seg.title.toLowerCase()} vertical transportation solutions`}
                     className="w-full min-h-[420px]"
-                    sizes="52vw"
+                    sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(100vw - 80px), (max-width: 1439px) calc((100vw - 112px) * 0.52), 690px"
                     parallax
                   />
                 </div>
