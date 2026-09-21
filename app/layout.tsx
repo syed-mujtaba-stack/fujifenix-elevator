@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import FloatingCTA from "./components/FloatingCTA";
 import PageTransition from "./components/PageTransition";
 import PageLoader from "./components/PageLoader";
+import AnimatedWhiteBackground from "./components/AnimatedWhiteBackground";
 import { StructuredData } from "./components/StructuredData";
 import {
   organizationSchema,
@@ -80,6 +81,9 @@ export default function RootLayout({
         className="min-h-full flex flex-col font-sans bg-white text-[#0F172A] selection:bg-[#0047BB] selection:text-white overflow-x-hidden"
         suppressHydrationWarning
       >
+        {/* Global animated white background (behind everything, subtle) */}
+        <AnimatedWhiteBackground />
+
         {/* Performance: Preconnect hints */}
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />

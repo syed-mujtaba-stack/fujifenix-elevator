@@ -147,6 +147,83 @@
 }
 
 /* =============================================
+   ANIMATED WHITE BACKGROUND (Global, subtle)
+   Soft light drift on pure white — replaces the
+   old blueprint grid. CSS-only, zero JS.
+============================================= */
+.bg-anim-glow {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.bg-anim-glow--a {
+  width: min(64vw, 720px);
+  height: min(64vw, 720px);
+  left: -12%;
+  top: -16%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 71, 187, 0.09) 0%,
+    rgba(0, 71, 187, 0.03) 45%,
+    transparent 68%
+  );
+  animation: bg-anim-a 26s ease-in-out infinite alternate;
+}
+
+.bg-anim-glow--b {
+  width: min(56vw, 640px);
+  height: min(56vw, 640px);
+  right: -16%;
+  top: 18%;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.08) 0%,
+    rgba(59, 130, 246, 0.02) 48%,
+    transparent 70%
+  );
+  animation: bg-anim-b 34s ease-in-out infinite alternate;
+}
+
+.bg-anim-glow--c {
+  width: min(52vw, 600px);
+  height: min(52vw, 600px);
+  left: 26%;
+  bottom: -18%;
+  background: radial-gradient(
+    circle,
+    rgba(71, 85, 105, 0.06) 0%,
+    rgba(71, 85, 105, 0.02) 50%,
+    transparent 72%
+  );
+  animation: bg-anim-c 40s ease-in-out infinite alternate;
+}
+
+@keyframes bg-anim-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(5vw, 4vh, 0) scale(1.1); }
+  to   { transform: translate3d(-3vw, 6vh, 0) scale(0.95); }
+}
+
+@keyframes bg-anim-b {
+  from { transform: translate3d(0, 0, 0) scale(1.04); }
+  50%  { transform: translate3d(-4vw, -3vh, 0) scale(0.94); }
+  to   { transform: translate3d(3vw, 5vh, 0) scale(1.12); }
+}
+
+@keyframes bg-anim-c {
+  from { transform: translate3d(0, 0, 0) scale(0.96); }
+  to   { transform: translate3d(4vw, -5vh, 0) scale(1.14); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-anim-glow {
+    animation: none !important;
+  }
+}
+
+/* =============================================
    CLIP-PATH ANIMATIONS
 ============================================= */
 .clip-left  { clip-path: inset(0 100% 0 0); }
