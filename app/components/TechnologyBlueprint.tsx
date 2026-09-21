@@ -108,7 +108,7 @@ export default function TechnologyBlueprint() {
             {ENGINEERING_PILLARS.map((f, i) => (
               <div
                 key={f.num}
-                className={`tech-feature flex gap-5 py-8 ${i < ENGINEERING_PILLARS.length - 1 ? "border-b border-slate-100" : ""}`}
+                className="tech-feature flex gap-5 py-8"
               >
                 <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1">{f.num}</div>
                 <div>

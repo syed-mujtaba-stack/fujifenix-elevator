@@ -76,7 +76,7 @@ export default function WhyFujiFenix() {
           <div className="lg:w-[62%]">
             {SERVICES.map((reason, i) => (
               <div key={reason.num}>
-                <div className="h-px bg-slate-200" />
+                {/* line removed — no grey divider */}
                 <div className="why-item flex gap-8 py-10 md:py-12">
                   <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1 w-8">{reason.num}</div>
                   <div>
@@ -93,7 +93,7 @@ export default function WhyFujiFenix() {
                 </div>
               </div>
             ))}
-            <div className="h-px bg-slate-200" />
+            {/* line removed — no grey divider */}
           </div>
         </div>
       </div>

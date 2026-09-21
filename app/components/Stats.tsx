@@ -61,11 +61,7 @@ export default function Stats({ items, dark = false }: StatsProps) {
       {items.map((stat, i) => (
         <div
           key={stat.label}
-          className={`stats-item flex-1 flex flex-col items-center justify-center py-14 text-center ${
-            i < items.length - 1
-              ? "sm:border-r border-b sm:border-b-0 border-slate-100"
-              : ""
-          } hover:bg-[#f8fafc] transition-colors duration-300 group`}
+          className="stats-item flex-1 flex flex-col items-center justify-center py-14 text-center hover:bg-[#f8fafc] transition-colors duration-300 group"
         >
           <span
             className={`display ${

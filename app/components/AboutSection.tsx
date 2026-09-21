@@ -136,14 +136,12 @@ export default function AboutSection() {
       </div>
 
       {/* Stats row — large numbers, thin dividers, NO cards */}
-      <div className="about-stats bg-white border-t border-slate-100">
+      <div className="about-stats bg-white">
         <div className="flex flex-col sm:flex-row">
           {STATS.map(({ end, suffix, label }, i) => (
             <div
               key={label}
-              className={`about-stat flex-1 flex flex-col items-center justify-center py-14 text-center
-                ${i < STATS.length - 1 ? "sm:border-r border-b sm:border-b-0 border-slate-100" : ""}
-                hover:bg-[#f8fafc] transition-colors duration-300 group`}
+              className="about-stat flex-1 flex flex-col items-center justify-center py-14 text-center hover:bg-[#f8fafc] transition-colors duration-300 group"
             >
               <span
                 className="display text-[#0f172a] group-hover:text-[#0047BB] transition-colors duration-300 leading-none mb-3"

@@ -30,7 +30,7 @@ export default function CapabilitiesStrip() {
   }, []);
 
   return (
-    <section ref={ref} className="bg-[#f8fafc] border-y border-slate-100">
+    <section ref={ref} className="bg-[#f8fafc]">
       {/*
         Padding:
         • px-4  (≥ 0px)   — 16px each side on smallest phones
@@ -53,8 +53,8 @@ export default function CapabilitiesStrip() {
                 "py-5 sm:py-6 lg:py-2",
                 /* horizontal padding only kicks in on desktop */
                 "lg:px-10",
-                /* separator lines */
-                i > 0 ? "border-t border-slate-100 lg:border-t-0 lg:border-l" : "",
+                /* no separator lines */
+                "",
                 /* remove outer edges on desktop */
                 i === 0 ? "lg:pl-0" : "",
                 i === CAPABILITIES_STRIP.length - 1 ? "lg:pr-0" : "",

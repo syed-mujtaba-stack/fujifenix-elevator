@@ -35,7 +35,7 @@ function EngineeringApproach() {
   }, []);
 
   return (
-    <section ref={ref} className="bg-[#f8fafc] border-t border-slate-100">
+    <section ref={ref} className="bg-[#f8fafc]">
       <div className="container-gutter py-20 md:py-28">
         <div className="flex flex-col lg:flex-row gap-14 lg:gap-20">
           <div className="lg:w-[46%]">
@@ -56,9 +56,7 @@ function EngineeringApproach() {
               {ENGINEERING_PILLARS.map((pillar, i) => (
                 <div
                   key={pillar.num}
-                  className={`eng-item flex gap-5 py-7 pr-6 ${
-                    i % 2 === 0 ? "sm:border-r sm:border-slate-100 sm:pr-8" : ""
-                  } ${i < ENGINEERING_PILLARS.length - 2 ? "border-b border-slate-100" : ""}`}
+                  className="eng-item flex gap-5 py-7 pr-6"
                 >
                   <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1">{pillar.num}</div>
                   <div>
@@ -125,7 +123,6 @@ function Capabilities() {
           <div className="lg:w-[62%]">
             {SERVICES.map((service) => (
               <div key={service.num}>
-                <div className="h-px bg-slate-200" />
                 <div className="cap-list-item flex gap-8 py-8 md:py-10">
                   <div className="eyebrow text-[#0047BB] flex-shrink-0 pt-1 w-8">{service.num}</div>
                   <div>
@@ -142,7 +139,6 @@ function Capabilities() {
                 </div>
               </div>
             ))}
-            <div className="h-px bg-slate-200" />
           </div>
         </div>
       </div>
@@ -211,7 +207,7 @@ export default function AboutContent() {
       <Capabilities />
 
       {/* Stats */}
-      <section className="bg-white border-t border-slate-100">
+      <section className="bg-white">
         <Stats items={[...STATS]} />
       </section>
     </>

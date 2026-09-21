@@ -129,7 +129,7 @@ function ServiceOfferings() {
           {/* Offering rows */}
           <div className="lg:w-[66%]">
             {SERVICE_OFFERINGS.map((s, i) => (
-              <div key={s.title} className="border-t border-slate-200">
+              <div key={s.title}>
                 <article
                   className={`svc-row group grid grid-cols-[auto_1fr] md:grid-cols-[auto_auto_1fr] items-start gap-x-5 md:gap-x-8 py-8 md:py-10 px-2 md:px-4 -mx-2 md:-mx-4 transition-colors duration-300 hover:bg-[#f8fafc] ${
                     i === 0 ? "" : ""
@@ -171,7 +171,6 @@ function ServiceOfferings() {
                 </article>
               </div>
             ))}
-            <div className="border-t border-slate-200" />
           </div>
         </div>
       </div>
@@ -217,7 +216,7 @@ function ProcessTimeline() {
   }, []);
 
   return (
-    <section ref={ref} className="bg-[#f8fafc] border-t border-slate-100 overflow-hidden">
+    <section ref={ref} className="bg-[#f8fafc] overflow-hidden">
       <div className="container-gutter py-20 md:py-28">
         <SectionHeading
           eyebrow="HOW WE WORK"
@@ -226,9 +225,6 @@ function ProcessTimeline() {
         />
 
         <div className="proc-grid relative">
-          {/* Connector line (desktop) */}
-          <div className="proc-line hidden lg:block absolute top-[22px] left-0 right-0 h-px bg-slate-300" />
-
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-y-10 gap-x-8">
             {SERVICE_PROCESS.map((p) => (
               <li key={p.step} className="proc-step relative lg:pr-4">
@@ -357,7 +353,7 @@ function ServicesCTA() {
   }, []);
 
   return (
-    <section ref={ref} className="bg-white border-b border-slate-100">
+    <section ref={ref} className="bg-white">
       <div className="container-gutter py-20 md:py-28 text-center">
         <div className="cta-el mx-auto mb-8 flex items-center justify-center gap-3">
           <div className="w-8 h-px bg-[#0047BB]" />

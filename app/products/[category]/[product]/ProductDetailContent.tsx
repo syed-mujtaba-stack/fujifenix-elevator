@@ -73,7 +73,7 @@ interface ProductData {
 
 function SectionCta() {
   return (
-    <div className="mt-14 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
+    <div className="mt-14 flex flex-wrap items-center gap-4 pt-8">
       <span className="eyebrow mr-auto text-slate-400">NEED MORE DETAILS?</span>
       <WeChatQRButton />
       <Link
@@ -184,7 +184,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
 
   return (
     <>
-      <div className="bg-white border-b border-slate-100">
+      <div className="bg-white">
         <div className="container-gutter py-4">
           <nav className="flex flex-wrap items-center gap-2 text-sm" aria-label="Breadcrumb">
             <Link href="/" className="group inline-flex items-center gap-1.5 text-slate-500 hover:text-[#0047BB] transition-colors">
@@ -257,7 +257,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       </section>
 
       {product.keyFeatures && product.keyFeatures.length > 0 && (
-        <section className="bg-white border-t border-slate-100">
+        <section className="bg-white">
           <div className="container-gutter py-16 md:py-20">
             <div className="mb-12 md:mb-16 flex items-center gap-3">
               <div className="w-8 h-px bg-[#0047BB]" />
@@ -276,7 +276,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {product.applications && product.applications.length > 0 && (
-        <section className="bg-[#f8fafc] border-t border-slate-100">
+        <section className="bg-[#f8fafc]">
           <div className="container-gutter py-10 md:py-14">
             <div className="mb-10 md:mb-12 flex items-center gap-3">
               <div className="w-8 h-px bg-[#0047BB]" />
@@ -294,7 +294,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {product.capacities && product.capacities.length > 0 && (
-        <section className="bg-white border-t border-slate-100">
+        <section className="bg-white">
           <div className="container-gutter py-16 md:py-20">
             <div className="mb-12 md:mb-16 flex items-center gap-3">
               <div className="w-8 h-px bg-[#0047BB]" />
@@ -312,7 +312,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {product.design && product.design.length > 0 && (
-        <section className="bg-[#f8fafc] border-t border-slate-100">
+        <section className="bg-[#f8fafc]">
           <div className="container-gutter py-16 md:py-20">
             <div className="mb-12 md:mb-16 flex items-center gap-3">
               <div className="w-8 h-px bg-[#0047BB]" />
@@ -330,7 +330,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {product.operation && (
-        <section className="bg-white border-t border-slate-100">
+        <section className="bg-white">
           <div className="container-gutter py-16 md:py-20">
             <div className="mb-12 md:mb-16 flex items-center gap-3">
               <div className="w-8 h-px bg-[#0047BB]" />
@@ -341,14 +341,14 @@ export default function ProductDetailContent({ product }: { product: ProductData
         </section>
       )}
 
-      <section className="bg-[#f8fafc] border-t border-slate-100">
+      <section className="bg-[#f8fafc]">
         <div className="container-gutter py-8 space-y-4">
           <Disclaimer text={product.configurationNote || "Configured according to project requirements, building layout, capacity, and applicable standards."} />
         </div>
       </section>
 
       {product.designedFor && product.designedFor.length > 0 && (
-        <section className="bg-white border-t border-slate-100">
+        <section className="bg-white">
           <div className="container-gutter py-16 md:py-20">
             <div className="mb-12 md:mb-16 flex items-center gap-3">
               <div className="w-8 h-px bg-[#0047BB]" />
@@ -376,7 +376,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                 .map((key) => galleryImages.find((g) => g._key === key))
                 .filter(Boolean) as GalleryImage[];
               return (
-                <section key={group._key ?? group.title} className="bg-white border-t border-slate-100">
+                <section key={group._key ?? group.title} className="bg-white">
                   <div className="container-gutter py-16 md:py-20">
                     <div className="mb-8">
                       <h2 className="heading text-[#0f172a] mb-3" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>{group.title}</h2>
@@ -411,7 +411,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
               );
             })}
             {typeGroups.length > 0 && (
-              <section className="bg-[#f8fafc] border-t border-slate-100">
+              <section className="bg-[#f8fafc]">
                 <div className="container-gutter py-12 md:py-16">
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {typeGroups.map((group) => (
@@ -429,7 +429,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       })()}
 
       {product.disclaimer && (
-        <section className="bg-[#f8fafc] border-t border-slate-100">
+        <section className="bg-[#f8fafc]">
           <div className="container-gutter py-8">
             <Disclaimer text={product.disclaimer} />
           </div>
@@ -437,7 +437,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {product.specGroups && product.specGroups.some((g) => g.sectionImages && g.sectionImages.length > 0) && (
-        <section className="bg-white border-t border-slate-100">
+        <section className="bg-white">
           <div className="container-gutter py-12 flex flex-wrap items-center gap-6">
             <Link href="/contact" className="group inline-flex items-center gap-3 border border-[#0047BB] bg-[#0047BB] px-6 py-4 eyebrow text-white transition-all duration-200 hover:bg-transparent hover:text-[#0047BB]">
               REQUEST TECHNICAL SPECIFICATION
@@ -449,7 +449,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {product.tagline && (
-        <section className="bg-[#f8fafc] border-t border-slate-100">
+        <section className="bg-[#f8fafc]">
           <div className="container-gutter py-10 text-center">
             <p className="heading text-[#0f172a]" style={{ fontSize: "20px", letterSpacing: "0.02em" }}>{product.tagline}</p>
           </div>
@@ -457,7 +457,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {!hasSections && galleryRest.length > 0 && (
-        <section className="bg-white border-t border-slate-100">
+        <section className="bg-white">
           <div className="container-gutter py-16 md:py-20">
             <SectionHeading
               eyebrow="PRODUCT GALLERY"
@@ -479,7 +479,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
       )}
 
       {related.length > 0 && (
-        <section className="bg-white border-t border-slate-100">
+        <section className="bg-white">
           <div className="container-gutter py-16 md:py-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
               <SectionHeading eyebrow="MORE PRODUCTS" title="EXPLORE THE\nFULL RANGE" />

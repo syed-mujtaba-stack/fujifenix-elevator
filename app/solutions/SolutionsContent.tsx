@@ -61,7 +61,7 @@ export default function SolutionsContent() {
       {/* Segments */}
       <section ref={ref} className="bg-white">
         {SOLUTIONS.map((seg, i) => (
-          <div key={seg.slug} className="border-t border-slate-100">
+          <div key={seg.slug}>
             <div className="container-gutter py-16 md:py-20">
               <div
                 className={`flex flex-col ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} gap-12 lg:gap-20 items-center`}

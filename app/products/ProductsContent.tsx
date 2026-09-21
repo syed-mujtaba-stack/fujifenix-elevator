@@ -243,7 +243,7 @@ export default function ProductsContent({ categories, products }: { categories: 
           </aside>
 
           <div className="min-w-0 flex-1">
-            <div className="mb-7 flex flex-col gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mb-7 flex flex-col gap-3 pb-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <span className="eyebrow text-[#0047BB]">{selectedCategory ? categories.find((category) => category.slug === selectedCategory)?.title : "ALL PRODUCTS"}</span>
                 <p className="mt-2 text-sm text-slate-500">Engineered systems and components for every vertical transportation project.</p>

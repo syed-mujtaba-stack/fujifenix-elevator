@@ -93,7 +93,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
             <div className="w-8 h-px bg-[#0047BB]" />
             <span className="eyebrow text-[#0047BB]">WHAT WE BUILD</span>
           </div>
-          <div className="flex items-end justify-between border-b border-slate-100 pb-4">
+          <div className="flex items-end justify-between pb-4">
             <h2
               className="heading text-[#0f172a]"
               style={{ fontSize: "var(--fs-h2)" }}
@@ -117,10 +117,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
               <div
                 key={i}
                 className="flex-shrink-0 flex flex-row bg-white h-full px-4"
-                style={{
-                  width: "min(80vw, 1150px)",
-                  borderRight: "1px solid #f1f5f9",
-                }}
+                style={{ width: "min(80vw, 1150px)" }}
               >
                 {/* Image — 50% */}
                 <div className="w-[50%] relative overflow-hidden h-full" style={{ minHeight: "200px" }}>
@@ -178,7 +175,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
       {/* MOBILE VIEW: Clean Vertical Stack                 */}
       {/* ================================================= */}
       <div className="block md:hidden bg-white">
-        <div className="px-6 pt-16 pb-8 border-b border-slate-100">
+        <div className="px-6 pt-16 pb-8">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-px bg-[#0047BB]" />
             <span className="eyebrow text-[#0047BB]">WHAT WE BUILD</span>

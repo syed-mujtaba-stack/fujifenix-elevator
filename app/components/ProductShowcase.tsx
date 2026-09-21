@@ -92,7 +92,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
   return (
     <section ref={ref} id="products" className="bg-[#f8fafc]">
       {/* Section header */}
-      <div className="ps-head container-gutter pt-24 pb-16 border-b border-slate-100">
+      <div className="ps-head container-gutter pt-24 pb-16">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-8 h-px bg-[#0047BB]" />
           <span className="eyebrow text-[#0047BB]">OUR PRODUCTS</span>
@@ -124,7 +124,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
         return (
           <div
             key={i}
-            className={`product-block flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} bg-white border-b border-slate-100`}
+            className={`product-block flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} bg-white`}
             style={{ minHeight: "70vh" }}
           >
             {/* Image */}

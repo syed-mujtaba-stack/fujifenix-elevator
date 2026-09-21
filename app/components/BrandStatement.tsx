@@ -80,9 +80,6 @@ export default function BrandStatement() {
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-slate-100 mb-14" />
-
         {/* Editorial paragraph row */}
         <div className="bs-para flex flex-col md:flex-row gap-10 md:gap-20">
           <p className="body-text max-w-lg border-l-2 border-[#0047BB]/20 pl-6 text-slate-600">

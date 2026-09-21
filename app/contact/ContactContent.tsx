@@ -186,7 +186,7 @@ export default function ContactContent() {
                   </div>
                 </div>
               </div>
-              <div className="mt-12 border-t border-slate-100 pt-8 flex flex-col gap-3">
+              <div className="mt-12 pt-8 flex flex-col gap-3">
                 <Link href="/products" className="eyebrow text-slate-500 hover:text-[#0047BB] transition-colors">
                   EXPLORE OUR PRODUCTS
                 </Link>
