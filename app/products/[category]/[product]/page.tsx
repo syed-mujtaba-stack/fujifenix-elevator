@@ -17,7 +17,7 @@ import { HERO_HEADINGS } from "@/app/data/content";
 import ProductDetailContent from "./ProductDetailContent";
 import { StructuredData } from "@/app/components/StructuredData";
 import { productSchema, faqSchema, breadcrumbSchema } from "@/lib/structured-data";
-import { resolveStructuredImageUrl } from "@/app/lib/safeImageUrl";
+import { resolveStructuredImageUrl, getSafeImageUrl } from "@/app/lib/safeImageUrl";
 
 export const revalidate = 60;
 
@@ -62,7 +62,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   if (!p) return notFound();
 
   const overrideImage = PRODUCT_IMAGE_OVERRIDES[p.slug];
-  const heroImage = overrideImage ?? (p.image ? urlFor(p.image).width(1920).auto("format").url() : "/hero-elevator.jpg");
+  const heroImage = overrideImage
+    ? getSafeImageUrl(overrideImage)
+    : p.image
+      ? urlFor(p.image).width(1920).auto("format").url()
+      : "/hero-elevator.jpg";
   const heroHeading = (HERO_HEADINGS[p.slug] ?? p.title).toUpperCase();
   const currentHref = `/products/${p.categorySlug}/${p.slug}`;
 

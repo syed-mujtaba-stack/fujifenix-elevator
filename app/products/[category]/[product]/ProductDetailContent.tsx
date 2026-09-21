@@ -161,15 +161,12 @@ export default function ProductDetailContent({ product }: { product: ProductData
   }));
   const overrideImage = PRODUCT_IMAGE_OVERRIDES[product.slug];
 
-  // Local public paths have spaces/special chars that can't be optimized by next/image
-  const isLocalPath = (src: string) => src.startsWith("/") && !src.startsWith("//");
-
   const heroImage = overrideImage
-    ? { src: getSafeImageUrl(overrideImage), alt: product.title, isLocal: true }
+    ? { src: getSafeImageUrl(overrideImage), alt: product.title }
     : product.image
-      ? { src: urlFor(product.image).width(1200).auto("format").url(), alt: product.title, isLocal: false }
+      ? { src: urlFor(product.image).width(1200).auto("format").url(), alt: product.title }
       : galleryImages[0]
-        ? { src: galleryImages[0].src, alt: galleryImages[0].alt, isLocal: true }
+        ? { src: galleryImages[0].src, alt: galleryImages[0].alt }
         : null;
 
   const galleryRest = product.image ? galleryImages : galleryImages.slice(1);
@@ -214,8 +211,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                     src={heroImage.src}
                     alt={heroImage.alt || product.title || "Product image"}
                     fill
-                    priority={!heroImage.isLocal}
-                    unoptimized={heroImage.isLocal}
+                    priority
                     className="object-contain"
                     sizes="(max-width: 1024px) 100vw, 46vw"
                   />
@@ -389,7 +385,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 mb-12">
                         {sectionImgs.map((img) => (
                           <button key={img._key ?? img.src} type="button" onClick={() => setZoom({ src: img.src, alt: img.alt })} aria-label={`View larger: ${img.alt}`} className="gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full aspect-[3/4]">
-                            <Image src={img.src} alt={img.alt || group.title} fill quality={85} unoptimized className="p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] object-cover" sizes="(max-width: 768px) 50vw, 33vw" />
+                            <Image src={img.src} alt={img.alt || group.title} fill quality={85} className="p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] object-cover" sizes="(max-width: 768px) 50vw, 33vw" />
                             <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">ZOOM ⤢</span>
                           </button>
                         ))}
@@ -471,7 +467,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
             <div className="gal-grid grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 [grid-auto-rows:1fr]">
               {galleryRest.map((img) => (
                 <button key={img._key ?? img.src} type="button" onClick={() => setZoom({ src: img.src, alt: img.alt })} aria-label={`View larger: ${img.alt}`} className={`gal-item group relative ${galleryRest.length === 1 ? 'col-span-full aspect-[2/1]' : 'aspect-[2/3]'} bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full`}>
-                  <Image src={img.src} alt={img.alt || product.title || "Product image"} fill quality={85} unoptimized className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${galleryRest.length === 1 ? 'object-contain' : 'object-cover'}`} style={img._key === 'grid-ceiling' ? { objectPosition: 'top' } : undefined} sizes="(max-width: 768px) 50vw, 33vw" />
+                  <Image src={img.src} alt={img.alt || product.title || "Product image"} fill quality={85} className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${galleryRest.length === 1 ? 'object-contain' : 'object-cover'}`} style={img._key === 'grid-ceiling' ? { objectPosition: 'top' } : undefined} sizes="(max-width: 768px) 50vw, 33vw" />
                   <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">ZOOM ⤢</span>
                 </button>
               ))}
