@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "End-to-end elevator and escalator services — manufacturing, installation, modernization, preventive maintenance, and 24/7 emergency response, built to the highest international safety standards.",
+  alternates: {
+    canonical: "https://fujifenix.com/services",
+  },
 };
 
 export default function ServicesPage() {

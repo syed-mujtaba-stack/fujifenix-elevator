@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Contact Fuji Fenix Elevator — Shanghai, China. Reach us by phone or email to discuss your next vertical transportation project.",
+  alternates: {
+    canonical: "https://fujifenix.com/contact",
+  },
 };
 
 export default function ContactPage() {

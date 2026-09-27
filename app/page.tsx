@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: "Fuji Fenix Elevator | Elevator & Escalator Solutions",
   description:
     "Fuji Fenix Elevator is a leading provider of elevator and escalator solutions, combining advanced technology with precision engineering for residential, commercial, healthcare, and infrastructure projects.",
+  alternates: {
+    canonical: "https://fujifenix.com",
+  },
 };
 
 export default async function Home() {

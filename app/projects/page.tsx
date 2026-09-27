@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Projects",
   description:
     "Explore a selection of Fuji Fenix vertical transportation installations — high-rise towers, retail complexes, executive offices, and luxury residences delivered worldwide.",
+  alternates: {
+    canonical: "https://fujifenix.com/projects",
+  },
 };
 
 export default function ProjectsPage() {

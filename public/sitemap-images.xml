@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Homepage Main Image -->
+  <url>
+    <loc>https://fujifenix.com</loc>
+    <image:image>
+      <image:loc>/og-home.jpg</image:loc>
+      <image:caption>Fuji Fenix Elevator - Homepage</image:caption>
+    </image:image>
+  </url>
+
+  <!-- About Page Images -->
+  <url>
+    <loc>https://fujifenix.com/about</loc>
+    <image:image>
+      <image:loc>/about-lobby.jpg</image:loc>
+      <image:caption>Fuji Fenix Elevator - About Us</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Services Page Images -->
+  <url>
+    <loc>https://fujifenix.com/services</loc>
+    <image:image>
+      <image:loc>/building-exterior.jpg</image:loc>
+      <image:caption>Fuji Fenix Elevator - Services</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Solutions Page Images -->
+  <url>
+    <loc>https://fujifenix.com/solutions</loc>
+    <image:image>
+      <image:loc>/hero-elevator.jpg</image:loc>
+      <image:caption>Fuji Fenix Elevator - Solutions</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Contact Page Images -->
+  <url>
+    <loc>https://fujifenix.com/contact</loc>
+    <image:image>
+      <image:loc>/about-lobby.jpg</image:loc>
+      <image:caption>Fuji Fenix Elevator - Contact</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Projects Page Images -->
+  <url>
+    <loc>https://fujifenix.com/projects</loc>
+    <image:image>
+      <image:loc>/hero-elevator.jpg</image:loc>
+      <image:caption>Fuji Fenix Elevator - Projects</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Products Page Images -->
+  <url>
+    <loc>https://fujifenix.com/products</loc>
+    <image:image>
+      <image:loc>/hero-elevator.jpg</image:loc>
+      <image:caption>Fuji Fenix Elevator - Products</image:caption>
+    </image:image>
+  </url>
+</urlset>

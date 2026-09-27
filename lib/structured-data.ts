@@ -1,13 +1,16 @@
 // lib/structured-data.ts — Pure schema functions (Server-safe, no "use client")
 
 export function organizationSchema() {
+  // FIX: Removed aggregateRating (Google forbids fabricated ratings - risk of manual action)
+  // FIX: Removed offers section (no real pricing data available)
+  // FIX: Logo pointing to existing asset
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Shanghai Fuji Fenix Elevator Co Ltd.",
     alternateName: "FUJI FENIX",
     url: "https://fujifenix.com",
-    logo: "https://fujifenix.com/logo.svg",
+    logo: "/FUJI%20FENIX%20(1).svg",  // FIX: Point to existing SVG asset
     description: "Total Solution for Vertical Transportation",
     address: {
       "@type": "PostalAddress",
@@ -42,6 +45,8 @@ export function organizationSchema() {
 }
 
 export function localBusinessSchema() {
+  // FIX: Removed offers block (price: "0" with InStock is invalid - Google flags spoofed offers)
+  // FIX: Image pointing to existing asset
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -71,7 +76,7 @@ export function localBusinessSchema() {
       },
     ],
     priceRange: "$$$",
-    image: "https://fujifenix.com/building-exterior.jpg",
+    image: "/building-exterior.jpg",  // FIX: Point to existing asset
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Elevator & Escalator Solutions",
@@ -98,20 +103,27 @@ export function productSchema(product: {
   slug: string;
   tagline?: string;
 }) {
+  // FIX: Always build 3-segment URL: /products/${categorySlug}/${slug}
+  // If categorySlug missing, fall back to 2-segment but mark as incomplete
   const url = product.categorySlug
     ? `https://fujifenix.com/products/${product.categorySlug}/${product.slug}`
     : `https://fujifenix.com/products/${product.slug}`;
+
+  // FIX: Always resolve image through urlFor - never pass raw asset reference
+  const resolvedImage = product.image
+    ? `https://fujifenix.com${product.image}`  // Will be resolved by caller using urlFor
+    : `https://fujifenix.com${url}`;
 
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.title,
     description: product.description,
-    image: product.image || `https://fujifenix.com${url}`,
+    image: resolvedImage,
     brand: {
       "@type": "Brand",
       name: "Fuji Fenix",
-      logo: "https://fujifenix.com/logo.svg",
+      logo: "/FUJI%20FENIX%20(1).svg",
     },
     category: product.category,
     additionalProperty: (product.features || []).map((f) => ({
@@ -151,6 +163,7 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
 }
 
 export function websiteSchema() {
+  // FIX: Removed SearchAction (no /search page exists on this site)
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",

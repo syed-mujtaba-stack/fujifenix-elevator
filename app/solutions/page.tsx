@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Solutions",
   description:
     "Industry-specific vertical transportation solutions from Fuji Fenix — precision-engineered for residential, commercial, healthcare, and infrastructure projects worldwide.",
+  alternates: {
+    canonical: "https://fujifenix.com/solutions",
+  },
 };
 
 export default function SolutionsPage() {

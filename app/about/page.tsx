@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "About Us",
   description:
     "Fuji Fenix Elevator is a leading manufacturer of advanced elevator and escalator systems, combining cutting-edge technology with precision engineering for residential, commercial, healthcare, and infrastructure projects worldwide.",
+  alternates: {
+    canonical: "https://fujifenix.com/about",
+  },
 };
 
 export default function AboutPage() {
