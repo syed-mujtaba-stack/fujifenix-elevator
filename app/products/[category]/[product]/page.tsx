@@ -30,29 +30,68 @@ export async function generateStaticParams() {
   return products.map((p) => ({ category: p.category, product: p.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ category: string; product: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string; product: string }>;
+}): Promise<Metadata> {
   const { product } = await params;
   const p = await safeFetch<SanityProductDetail | null>(productQuery, { slug: product }, null);
   if (!p) return {};
+
   const seoTitle = p.seoTitle || `${p.title} | Fuji Fenix Elevator`;
-  const seoDesc = p.seoDescription || `${p.title} — ${p.description?.slice(0, 150) ?? "Elevator system from Fuji Fenix"}`;
+  const seoDesc =
+    p.seoDescription ||
+    `${p.title} — ${p.description?.slice(0, 150) ?? "Precision engineered vertical transportation system from Fuji Fenix Elevator."}`;
+
+  const ogImage = p.image
+    ? urlFor(p.image).width(1200).height(630).auto("format").url()
+    : "https://fujifenix.com/og-home.jpg";
+
   return {
     title: seoTitle,
     description: seoDesc,
-    keywords: [p.title, p.category, "Elevator", "Fuji Fenix", p.categorySlug],
+    keywords: [
+      p.title,
+      p.category,
+      `${p.title} manufacturer`,
+      `${p.title} specifications`,
+      "Elevator",
+      "Fuji Fenix",
+      p.categorySlug,
+      "China Elevator Exporter",
+    ],
     alternates: {
-      canonical: `/products/${p.categorySlug}/${p.slug}`,
+      canonical: `https://fujifenix.com/products/${p.categorySlug}/${p.slug}`,
     },
     openGraph: {
       title: seoTitle,
       description: seoDesc,
-      images: p.image ? [urlFor(p.image).width(1200).auto("format").url()] : ["/og-home.jpg"],
+      url: `https://fujifenix.com/products/${p.categorySlug}/${p.slug}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${p.title} by Fuji Fenix Elevator`,
+        },
+      ],
+      type: "website",
     },
-    twitter: { card: "summary_large_image", title: seoTitle, description: seoDesc },
+    twitter: {
+      card: "summary_large_image",
+      title: seoTitle,
+      description: seoDesc,
+      images: [ogImage],
+    },
   };
 }
 
-export default async function ProductDetailPage({ params }: { params: Promise<{ category: string; product: string }> }) {
+export default async function ProductDetailPage({
+  params,
+}: {
+  params: Promise<{ category: string; product: string }>;
+}) {
   const { product } = await params;
   const [p, categories, allProducts] = await Promise.all([
     safeFetch<SanityProductDetail | null>(productQuery, { slug: product }, null),
@@ -74,7 +113,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     { name: "Home", url: "https://fujifenix.com" },
     { name: "Products", url: "https://fujifenix.com/products" },
     { name: p.category, url: `https://fujifenix.com/products/${p.categorySlug}` },
-    { name: p.title, url: currentHref },
+    { name: p.title, url: `https://fujifenix.com${currentHref}` },
   ];
 
   const structuredData = productSchema({
@@ -89,12 +128,34 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     tagline: p.tagline ?? undefined,
   });
 
+  // Default product FAQs if not entered in Sanity CMS
+  const defaultProductFaqs = [
+    {
+      question: `What safety codes and certifications does the ${p.title} comply with?`,
+      answer: `The ${p.title} complies fully with EN81-20/50 European safety norms, CE directives, and ISO 9001:2015 manufacturing standards. It incorporates multi-beam light curtain door protection, speed limiter safety gears, and automatic battery rescue systems.`,
+    },
+    {
+      question: `Can the shaft dimensions and car interior of ${p.title} be customized?`,
+      answer: `Yes, Fuji Fenix provides bespoke engineering for shaft layouts, pit depth, overhead clearance, and car finishes including hairline stainless steel, panoramic glass, luxury ceilings, and floor patterns tailored to architectural blueprints.`,
+    },
+    {
+      question: `What drive mechanism powers the ${p.title}?`,
+      answer: `It is driven by a high-efficiency permanent magnet synchronous gearless machine (PMSM) paired with VVVF inverter control, ensuring smooth acceleration, precise floor leveling, and reduced power consumption.`,
+    },
+  ];
+
+  const productFaqs = p.faq && p.faq.length > 0 ? p.faq : defaultProductFaqs;
+
   return (
     <>
-      {/* Structured Data */}
+      {/* Structured Data: Product */}
       <StructuredData schema={structuredData} />
-      {p.faq && p.faq.length > 0 && <StructuredData schema={faqSchema(p.faq)} />}
-      <StructuredData schema={{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: breadcrumbItems.map((item, i) => ({ "@type": "ListItem", position: i + 1, name: item.name, item: item.url })) }} />
+
+      {/* Structured Data: FAQ Schema */}
+      <StructuredData schema={faqSchema(productFaqs)} />
+
+      {/* Structured Data: Breadcrumbs */}
+      <StructuredData schema={breadcrumbSchema(breadcrumbItems)} />
 
       <PageHero
         eyebrow={p.category?.toUpperCase() ?? "PRODUCT"}

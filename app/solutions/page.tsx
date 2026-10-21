@@ -1,12 +1,35 @@
 import type { Metadata } from "next";
 import PageHero from "@/app/components/PageHero";
 import SolutionsContent from "./SolutionsContent";
+
 export const metadata: Metadata = {
-  title: "Solutions",
+  title: "Industry Elevator Solutions | Residential, Commercial & Healthcare | Fuji Fenix",
   description:
-    "Industry-specific vertical transportation solutions from Fuji Fenix — precision-engineered for residential, commercial, healthcare, and infrastructure projects worldwide.",
+    "Tailored vertical transportation solutions from Fuji Fenix Elevator: high-rise office towers, residential towers, luxury villas, healthcare hospitals, retail malls, and public transit.",
+  keywords: [
+    "Elevator Solutions",
+    "Commercial Elevator Solutions",
+    "Residential Elevator Systems",
+    "Hospital Elevator Solutions",
+    "Transit Hub Elevators",
+    "Villa Lift Solutions",
+  ],
   alternates: {
     canonical: "https://fujifenix.com/solutions",
+  },
+  openGraph: {
+    title: "Industry Vertical Transportation Solutions | Fuji Fenix",
+    description:
+      "Engineered vertical transportation tailored for residential, commercial, medical, and industrial building projects.",
+    url: "https://fujifenix.com/solutions",
+    images: ["https://fujifenix.com/hero-elevator.jpg"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Industry Vertical Transportation Solutions | Fuji Fenix",
+    description:
+      "Engineered vertical transportation tailored for residential, commercial, medical, and industrial building projects.",
   },
 };
 

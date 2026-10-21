@@ -3,11 +3,33 @@ import PageHero from "@/app/components/PageHero";
 import ServicesContent from "./ServicesContent";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Elevator Installation, Modernization & Maintenance Services | Fuji Fenix",
   description:
-    "End-to-end elevator and escalator services — manufacturing, installation, modernization, preventive maintenance, and 24/7 emergency response, built to the highest international safety standards.",
+    "Comprehensive lifecycle elevator and escalator services: precision manufacturing, turnkey installation, complete system modernization, 24/7 maintenance, and emergency response.",
+  keywords: [
+    "Elevator Services",
+    "Elevator Modernization",
+    "Elevator Maintenance",
+    "Elevator Installation",
+    "Escalator Maintenance",
+    "Vertical Transportation Services",
+  ],
   alternates: {
     canonical: "https://fujifenix.com/services",
+  },
+  openGraph: {
+    title: "Elevator Services & Modernization | Fuji Fenix",
+    description:
+      "End-to-end vertical transportation services: engineering, installation, modernization, and preventative maintenance.",
+    url: "https://fujifenix.com/services",
+    images: ["https://fujifenix.com/building-exterior.jpg"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Elevator Services & Modernization | Fuji Fenix",
+    description:
+      "End-to-end vertical transportation services: engineering, installation, modernization, and preventative maintenance.",
   },
 };
 
