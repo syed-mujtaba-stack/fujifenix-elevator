@@ -104,25 +104,49 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   </div>`;
 
   return (
-    <> {/* Structured Data */}
-    {productSchemaList.length > 0 && <StructuredData schema={{ "@context": "https://schema.org", "@type": "ItemList", itemListElement: productSchemaList.map((schema: any, i: number) => ({ position: i + 1, ...schema })) }} />}
-    <StructuredData schema={{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: breadcrumbItems.map((item, i) => ({ "@type": "ListItem", position: i + 1, name: item.name, item: item.url })) }} />
+    <>
+      {/* Structured Data */}
+      {productSchemaList.length > 0 && (
+        <StructuredData
+          schema={{
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            itemListElement: productSchemaList.map((schema: any, i: number) => ({
+              position: i + 1,
+              ...schema,
+            })),
+          }}
+        />
+      )}
+      <StructuredData
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: breadcrumbItems.map((item, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: item.name,
+            item: item.url,
+          })),
+        }}
+      />
 
-    {/* SEO Rich Intro Content Above Product Grid */}
-    <div dangerouslySetInnerHTML={{ __html: seoIntro }} />
+      {/* SEO Rich Intro Content Above Product Grid */}
+      <div dangerouslySetInnerHTML={{ __html: seoIntro }} />
 
-    <PageHero
-      eyebrow="PRODUCT CATEGORY"
-      title={[cat.title.toUpperCase()]}
-      description={cat.seoDescription ?? cat.description ?? `${products.length} products in this category.`}
-      image={heroImage}
-      breadcrumb="PRODUCTS"
-      breadcrumbHref="/products"
-      titleBlue
-    />
-    <CategoryContent
-      category={{ title: cat.title, slug: cat.slug, description: cat.description }}
-      products={products}
-    />
+      <PageHero
+        eyebrow="PRODUCT CATEGORY"
+        title={[cat.title.toUpperCase()]}
+        description={cat.seoDescription ?? cat.description ?? `${products.length} products in this category.`}
+        image={heroImage}
+        breadcrumb="PRODUCTS"
+        breadcrumbHref="/products"
+        titleBlue
+      />
+      <CategoryContent
+        category={{ title: cat.title, slug: cat.slug, description: cat.description }}
+        products={products}
+      />
+    </>
   );
 }
