@@ -35,7 +35,7 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-hook-form": "^7.51.2",
-    "recharts": "^2.12.7",
+    "recharts": "^3.10.1",
     "sanity": "^5.31.1",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",

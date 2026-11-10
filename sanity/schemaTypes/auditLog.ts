@@ -10,7 +10,14 @@ export const auditLog = defineType({
       title: 'Action',
       type: 'string',
       options: {
-        list: ['create', 'update', 'delete', 'login', 'logout', 'password_change', '2fa_setup', '2fa_disable'],
+        list: [
+          'login', 'login_failed', 'logout', 'logout_all',
+          'create', 'update', 'delete',
+          'password_change', '2fa_setup', '2fa_disable',
+          'session_revoke', 'session_revoke_all',
+          'role_change', 'user_create', 'user_update', 'user_deactivate', 'user_activate',
+          'export', 'settings_update', 'profile_update', 'push_subscribe', 'push_unsubscribe',
+        ],
       },
       validation: (rule) => rule.required(),
     }),
@@ -19,7 +26,9 @@ export const auditLog = defineType({
       title: 'Entity Type',
       type: 'string',
       options: {
-        list: ['product', 'category', 'inquiry', 'popup', 'adminUser', 'settings'],
+        list: [
+          'product', 'category', 'inquiry', 'popup', 'adminUser', 'adminSession', 'settings', 'auth', 'push',
+        ],
       },
       validation: (rule) => rule.required(),
     }),
@@ -33,6 +42,11 @@ export const auditLog = defineType({
       title: 'Admin User',
       type: 'reference',
       to: [{ type: 'adminUser' }],
+    }),
+    defineField({
+      name: 'sessionId',
+      title: 'Session ID',
+      type: 'string',
     }),
     defineField({
       name: 'metadata',
@@ -57,4 +71,10 @@ export const auditLog = defineType({
       initialValue: () => new Date().toISOString(),
     }),
   ],
+  preview: {
+    select: {
+      title: 'action',
+      subtitle: 'entityType',
+    },
+  },
 })

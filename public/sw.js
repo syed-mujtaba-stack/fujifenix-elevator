@@ -1,104 +1,105 @@
-// Fuji Fenix Elevator — Service Worker (PWA)
-// Install: navigator.serviceWorker.register('/sw.js')
-// Strategy: Cache-first for static, Network-first for API, Network-only for navigations & RSC
+/* Fuji Fenix Admin — service worker (Phase D) */
+/* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = 'fujifenix-v2';
-const STATIC_ASSETS = [
-  '/',
-  '/sitemap.xml',
-  '/manifest.json',
-];
+const CACHE_NAME = "ff-admin-v1";
+const STATIC_CACHE = "ff-admin-static-v1";
 
-// Install — cache static assets
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS)).catch(() => {})
-  );
+self.addEventListener("install", (event) => {
   self.skipWaiting();
-});
-
-// Activate — clean old caches
-self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+    caches.open(STATIC_CACHE).then((cache) =>
+      cache.addAll([
+        // Core app shell — the public pages are network-first, only a few
+        // lightweight, stable assets are pre-cached to keep installs snappy.
+        "/manifest.webmanifest",
+      ])
     )
   );
-  self.clients.claim();
 });
 
-// Fetch — Cache-first for static, Network-first for API, Network-only for navigations & RSC
-self.addEventListener('fetch', (event) => {
-  const request = event.request;
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME && k !== STATIC_CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
+});
+
+/** Network-first with cache fallback for navigations/fetches. */
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (request.method !== "GET") return;
+
   const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
 
-  // Next.js RSC payload requests — NEVER cache or serve from cache (breaks client-side routing)
-  const isRSC =
-    request.headers.get('RSC') === '1' ||
-    request.headers.get('Next-Router-State-Tree') !== null ||
-    url.searchParams.has('_rsc');
-
-  // HTML navigations & RSC requests — always network, fallback to cached shell only offline
-  if (request.mode === 'navigate' || isRSC) {
+  // Pre-cached static assets: cache-first.
+  if (url.pathname.startsWith("/_next/static/") || url.pathname === "/manifest.webmanifest") {
     event.respondWith(
-      fetch(request).catch(() => caches.match('/'))
+      caches.match(request).then(
+        (cached) =>
+          cached ||
+          fetch(request).then((response) => {
+            if (response.ok) {
+              const copy = response.clone();
+              caches.open(STATIC_CACHE).then((cache) => cache.put(request, copy));
+            }
+            return response;
+          })
+      )
     );
     return;
   }
 
-  // API requests — Network first, fallback to cache
-  if (url.pathname.startsWith('/api/') || url.hostname === 'cdn.sanity.io') {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          return response;
-        })
-        .catch(() => caches.match(request))
-    );
-  } else {
-    // Static assets — Cache first, fallback to network
-    event.respondWith(
-      caches.match(request).then((cached) => cached || fetch(request))
-    );
-  }
+  // Everything else: network-first, fall back to cache (enables offline shell).
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        if (response.ok && (request.mode === "navigate" || url.pathname.endsWith(".css") || url.pathname.endsWith(".js"))) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        }
+        return response;
+      })
+      .catch(() => caches.match(request).then((cached) => cached || caches.match("/")))
+  );
 });
 
-// Push notification handler
-self.addEventListener('push', (event) => {
-  const data = event.data?.json() ?? { title: 'Fuji Fenix', body: 'New update!' };
+/* ── Web Push (Phase D) ─────────────────────────────────────────── */
+
+self.addEventListener("push", (event) => {
+  let data = { title: "Fuji Fenix Admin", body: "You have a new notification.", url: "/dashboard" };
+  try {
+    const parsed = event.data ? event.data.json() : {};
+    data = { title: parsed.title || data.title, body: parsed.body || "", url: parsed.url || "/dashboard", tag: parsed.tag };
+  } catch {
+    /* keep defaults */
+  }
+
   event.waitUntil(
-    self.registration.showNotification(data.title ?? 'Fuji Fenix Elevator', {
-      body: data.body ?? '',
-      icon: '/icons/icon-192x192.png',
-      badge: '/icons/icon-96x96.png',
-      vibrate: [200, 100, 200],
-      data: { url: data.url ?? '/' },
-      actions: [
-        { action: 'view', title: 'View' },
-        { action: 'dismiss', title: 'Dismiss' },
-      ],
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: "/icons/icon.svg",
+      badge: "/icons/icon.svg",
+      tag: data.tag || "admin",
+      data: { url: data.url },
     })
   );
 });
 
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  if (event.action === 'dismiss') return;
+  const url = (event.notification.data && event.notification.data.url) || "/dashboard";
   event.waitUntil(
-    clients.openWindow(event.notification.data?.url ?? '/')
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+      for (const client of clients) {
+        if ("focus" in client) {
+          client.navigate(url);
+          return client.focus();
+        }
+      }
+      return self.clients.openWindow(url);
+    })
   );
-});
-
-// Background sync for offline form submissions
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'contact-form') {
-    event.waitUntil(
-      // Retry contact form submission
-      clients.matchAll().then((clients) => {
-        clients.forEach((client) => client.postMessage({ type: 'retry-contact' }));
-      })
-    );
-  }
 });

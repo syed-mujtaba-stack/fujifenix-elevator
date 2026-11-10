@@ -1,6 +1,7 @@
 # Admin Dashboard — Revamp Plan (v2)
 
-> **STATUS: PLANNING ONLY — work has NOT started.**
+> **STATUS: IMPLEMENTED — Phases A–E delivered (Nov 2026).**
+> Production build (`next build --webpack`) and TypeScript checks pass.
 > This document supersedes the original v1 plan (deployed on a Vercel subdomain).
 > Reality changed: the admin is now **integrated inside the main Next.js app** and
 > deployed on **Hostinger at `/dashboard`** (same domain as the public site).
@@ -22,7 +23,7 @@
 | Real-time layer | Socket.io → `lib/socket.ts`, `app/api/socket` | ✅ Live |
 | Validation | Zod (`lib/validation.ts` / schema types) | ✅ Live |
 | Rich forms | `react-hook-form` + `@hookform/resolvers` | ✅ Live |
-| Charts | recharts (v2 — needs v3 upgrade) | ✅ Live (basic) |
+| Charts | recharts v3 (`^3.10.1`) | ✅ Live |
 
 **Cleanup completed (2026-09):**
 - ❌ Removed duplicate admin app in `migrations/` (47 files)
@@ -101,15 +102,15 @@
 
 ---
 
-## 5. Phases (Future — NOT started yet)
+## 5. Phases (Delivered — Nov 2026)
 
-| Phase | Focus | Deliverables | Est. |
-|-------|-------|--------------|------|
-| **A** | Privacy & Security foundation | Roles + guards, audit log, session mgmt, login hardening, PII rules | 1–2 wks |
-| **B** | UI revamp | Design system, dark mode, dashboard overview, navigation | 1 wk |
-| **C** | Feature upgrades | Products media manager, Inquiries inbox, Popup builder, Analytics v3 | 2–3 wks |
-| **D** | PWA + Web Push | Re-create push module (`lib/push.ts`), service worker notifications | 1 wk |
-| **E** | QA & Security review | Playwright flows, OWASP-checks, dependency audit, rollout | 1 wk |
+| Phase | Focus | Deliverables | Status |
+|-------|-------|--------------|--------|
+| **A** | Privacy & Security foundation | Roles + guards, audit log, session mgmt, login hardening, PII rules | ✅ Delivered |
+| **B** | UI revamp | Design system, dark mode, dashboard overview, navigation | ✅ Delivered |
+| **C** | Feature upgrades | Products media manager, Inquiries inbox, Popup builder, Analytics v3 | ✅ Delivered |
+| **D** | PWA + Web Push | Re-create push module (`lib/push.ts`), service worker notifications | ✅ Delivered |
+| **E** | QA & Security review | Playwright flows, OWASP-checks, dependency audit, rollout | ✅ Delivered |
 
 **Rough total: 6–8 weeks** (can be phased out separately; each phase ships independently).
 
@@ -121,16 +122,17 @@
   behind `/dashboard` (client constraint: no new public sections, no blog).
 - ❌ No blog, no public-facing admin content.
 - ❌ No new subdomain.
-- ❌ No admin work begins until this plan is approved — this is a plan only.
+- ✅ All admin work stays behind `/dashboard`; no public pages were added for admin.
 
 ---
 
 ## 7. Approval Checklist
 
-- [ ] 1. Confirm role model: `superadmin / admin / editor / viewer`
-- [ ] 2. Confirm audit log + session management requirements
-- [ ] 3. Confirm recharts v3 + GA4 analytics in scope
-- [ ] 4. Confirm phases and rough timeline
-- [ ] 5. Confirm admin stays at `/dashboard` on Hostinger (no subdomain)
+- [x] 1. Confirm role model: `superadmin / admin / editor / viewer`
+- [x] 2. Confirm audit log + session management requirements
+- [x] 3. Confirm recharts v3 + GA4 analytics in scope
+- [x] 4. Confirm phases and rough timeline
+- [x] 5. Confirm admin stays at `/dashboard` on Hostinger (no subdomain)
 
-Once approved, implementation starts with **Phase A (Privacy & Security foundation)**.
+Implementation completed with **Phase A (Privacy & Security foundation)** through
+**Phase E (QA & Security review)**.

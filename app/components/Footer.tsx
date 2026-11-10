@@ -15,6 +15,7 @@ export default function Footer() {
   const companyLinks = [
     { label: "About Fuji Fenix", href: "/about" },
     { label: "Our Products", href: "/products" },
+    { label: "Global Markets", href: "/markets" },
     { label: "Services", href: "/services" },
     { label: "Solutions", href: "/solutions" },
     { label: "Projects", href: "/projects" },

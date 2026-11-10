@@ -1,246 +1,268 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from '@/lib/utils'
-import { 
-  Bell, 
-  Menu, 
-  X, 
-  Sun, 
-  Moon, 
-  Search, 
-  User, 
-  Settings, 
-  LogOut,
+import { usePathname, useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
+import {
+  Menu,
+  Bell,
+  Sun,
+  Moon,
+  Monitor,
+  ChevronDown,
+  Settings,
+  Keyboard,
   Shield,
-  Download,
-  Upload,
-  MessageSquare,
-  Package,
-  SquarePen,
-} from "lucide-react"
-import { signOut, useSession } from "next-auth/react"
-import { Button } from '@/components/ui/Button'
-import { Badge } from '@/components/ui/Badge'
+  LogOut,
+  KeyRound,
+  ScrollText,
+  MonitorSmartphone,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useAdminTheme, type AdminTheme } from "@/components/admin/ThemeProvider";
+import { ROLE_LABELS, type AdminRole } from "@/lib/roles";
+import { auditLogout } from "@/lib/actions/settings";
 
-export function TopBar({ onMenuClick, isSidebarOpen }: { onMenuClick: () => void; isSidebarOpen: boolean }) {
-  const { data: session } = useSession()
-  const [notificationsOpen, setNotificationsOpen] = useState(false)
-  const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const notificationsRef = useRef<HTMLDivElement>(null)
-  const userMenuRef = useRef<HTMLDivElement>(null)
-  const searchRef = useRef<HTMLDivElement>(null)
+interface TopBarProps {
+  onMenuClick: () => void;
+  inquiryCount: number;
+  user: { name?: string | null; email?: string | null; role: AdminRole };
+  mustChangePassword?: boolean;
+}
 
-  // Mock notifications
-  const notifications = [
-    { id: 1, type: 'inquiry', title: 'New inquiry received', message: 'John Smith - Passenger Elevator quote request', time: '2 min ago', unread: true },
-    { id: 2, type: 'product', title: 'Product updated', message: 'Passenger Elevator Cabin specifications updated', time: '15 min ago', unread: true },
-    { id: 3, type: 'popup', title: 'Popup scheduled', message: 'Summer promotion popup will go live tomorrow', time: '1 hour ago', unread: false },
-    { id: 4, type: 'system', title: 'System backup completed', message: 'Daily backup completed successfully', time: '3 hours ago', unread: false },
-  ]
+const TITLES: Array<{ match: RegExp; title: string }> = [
+  { match: /^\/dashboard\/products\/new$/, title: "New Product" },
+  { match: /^\/dashboard\/products\/.+/, title: "Edit Product" },
+  { match: /^\/dashboard\/products/, title: "Products" },
+  { match: /^\/dashboard\/inquiries\/.+/, title: "Inquiry Detail" },
+  { match: /^\/dashboard\/inquiries/, title: "Inquiries" },
+  { match: /^\/dashboard\/popups\/new/, title: "New Popup" },
+  { match: /^\/dashboard\/popups\/.+/, title: "Edit Popup" },
+  { match: /^\/dashboard\/popups/, title: "Popups" },
+  { match: /^\/dashboard\/analytics/, title: "Analytics" },
+  { match: /^\/dashboard\/settings\/users/, title: "Admin Users" },
+  { match: /^\/dashboard\/settings\/audit/, title: "Audit Log" },
+  { match: /^\/dashboard\/settings\/sessions/, title: "Sessions" },
+  { match: /^\/dashboard\/settings/, title: "Settings" },
+  { match: /^\/dashboard$/, title: "Dashboard" },
+];
 
-  const unreadCount = notifications.filter(n => n.unread).length
+function pageTitle(pathname: string) {
+  for (const t of TITLES) if (t.match.test(pathname)) return t.title;
+  return "Admin";
+}
+
+const THEME_OPTIONS: { value: AdminTheme; icon: typeof Sun; label: string }[] = [
+  { value: "light", icon: Sun, label: "Light" },
+  { value: "dark", icon: Moon, label: "Dark" },
+  { value: "system", icon: Monitor, label: "System" },
+];
+
+export function AdminTopBar({ onMenuClick, inquiryCount, user, mustChangePassword }: TopBarProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { theme, setTheme } = useAdminTheme();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (notificationsRef.current && !notificationsRef.current.contains(event.target as Node)) {
-        setNotificationsOpen(false)
+    const onClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+        setThemeOpen(false);
       }
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
-        setUserMenuOpen(false)
-      }
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setSearchQuery("")
-      }
-    }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  // Close menus on route change.
+  useEffect(() => {
+    setMenuOpen(false);
+    setThemeOpen(false);
+  }, [pathname]);
+
+  const handleSignOut = async () => {
+    setSigningOut(true);
+    try {
+      await auditLogout();
+    } catch {
+      /* audit must never block sign-out */
+    }
+    await signOut({ callbackUrl: "/login" });
+  };
+
+  const initials = (user.name || user.email || "A")
+    .split(" ")
+    .map((p) => p[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
-    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-200">
-      <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-        {/* Left side */}
-        <div className="flex items-center gap-4">
-          {/* Mobile menu button */}
+    <header className="sticky top-0 z-30 bg-white/85 dark:bg-[#0b1220]/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+      <div className="flex items-center gap-3 px-4 sm:px-6 h-16">
+        <button
+          onClick={onMenuClick}
+          className="lg:hidden p-2 -ml-1 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+          aria-label="Open sidebar"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        <h1 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100">
+          {pageTitle(pathname)}
+        </h1>
+
+        {/* Command shortcut hint (search is on list pages) */}
+        <button
+          onClick={() => router.push("/dashboard/products?q=")}
+          className="hidden md:flex items-center gap-2 ml-4 px-3 py-1.5 rounded-lg text-sm text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 transition-colors"
+        >
+          <Keyboard className="w-3.5 h-3.5" />
+          <span className="text-xs">Search products…</span>
+        </button>
+
+        <div className="flex-1" />
+
+        {/* Notification bell */}
+        <Link
+          href="/dashboard/inquiries?status=new"
+          className="relative p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          aria-label={`${inquiryCount} new inquiries`}
+        >
+          <Bell className="w-5 h-5" />
+          {inquiryCount > 0 && (
+            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 grid place-items-center rounded-full bg-red-500 text-white text-[10px] font-bold">
+              {inquiryCount > 99 ? "99+" : inquiryCount}
+            </span>
+          )}
+        </Link>
+
+        {/* Theme + user menus (shared outside-click boundary) */}
+        <div className="relative flex items-center" ref={menuRef}>
           <button
-            onClick={onMenuClick}
-            className="lg:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-            aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isSidebarOpen}
+            onClick={() => {
+              setThemeOpen((v) => !v);
+              setMenuOpen(false);
+            }}
+            className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            aria-label="Toggle theme"
           >
-            {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {theme === "dark" ? <Moon className="w-5 h-5" /> : theme === "light" ? <Sun className="w-5 h-5" /> : <Monitor className="w-5 h-5" />}
+          </button>
+          {themeOpen && (
+            <div className="absolute right-14 top-full mt-2 w-40 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0e1626] shadow-xl p-1.5 z-50">
+              {THEME_OPTIONS.map((opt) => {
+                const Icon = opt.icon;
+                const active = theme === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    onClick={() => {
+                      setTheme(opt.value);
+                      setThemeOpen(false);
+                    }}
+                    className={cn(
+                      "w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors",
+                      active
+                        ? "bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
+                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    )}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          <button
+            onClick={() => {
+              setMenuOpen((v) => !v);
+              setThemeOpen(false);
+            }}
+            className="flex items-center gap-2.5 pl-1.5 pr-2.5 py-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <span className="grid place-items-center w-8 h-8 rounded-full bg-[#0047BB] text-white text-xs font-bold">
+              {initials}
+            </span>
+            <span className="hidden sm:block text-left leading-tight">
+              <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100 max-w-[160px] truncate">
+                {user.name || "Admin"}
+              </span>
+              <span className="block text-[11px] text-slate-500 dark:text-slate-400">{ROLE_LABELS[user.role]}</span>
+            </span>
+            <ChevronDown className="w-4 h-4 text-slate-400 hidden sm:block" />
           </button>
 
-          {/* Search */}
-          <div className="relative hidden sm:block" ref={searchRef}>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" aria-hidden="true" />
-              <input
-                type="search"
-                placeholder="Search products, inquiries, popups..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-64 sm:w-80 pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-[#0f172a] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0047BB] focus:border-transparent transition-all"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Right side */}
-        <div className="flex items-center gap-2">
-          {/* Notifications */}
-          <div className="relative" ref={notificationsRef}>
-            <button
-              onClick={() => { setNotificationsOpen(!notificationsOpen); setUserMenuOpen(false); }}
-              className={cn(
-                'relative p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors',
-                notificationsOpen && 'bg-slate-100 text-[#0047BB]'
-              )}
-              aria-label="Notifications"
-              aria-expanded={notificationsOpen}
-            >
-              <Bell className="w-5 h-5" />
-              {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-xs font-medium rounded-full flex items-center justify-center">
-                  {unreadCount > 9 ? '9+' : unreadCount}
-                </span>
-              )}
-            </button>
-
-            <AnimatePresence mode="popLayout">
-              {notificationsOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute right-0 top-full mt-2 w-96 bg-white rounded-xl border border-slate-200 shadow-lg overflow-hidden"
-                >
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
-                    <h3 className="font-semibold text-[#0f172a]">Notifications</h3>
-                    <Button variant="ghost" size="sm" className="p-1">Mark all read</Button>
-                  </div>
-                  <div className="max-h-96 overflow-y-auto">
-                    {notifications.map((notification) => (
-                      <div
-                        key={notification.id}
-                        className={cn(
-                          'px-4 py-3 border-b border-slate-100 hover:bg-slate-50 transition-colors',
-                          notification.unread && 'bg-blue-50/50'
-                        )}
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className={cn(
-                            'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0',
-                            notification.type === 'inquiry' && 'bg-blue-100 text-blue-600',
-                            notification.type === 'product' && 'bg-green-100 text-green-600',
-                            notification.type === 'popup' && 'bg-purple-100 text-purple-600',
-                            notification.type === 'system' && 'bg-slate-100 text-slate-600',
-                          )}>
-                            {notification.type === 'inquiry' && <MessageSquare className="w-4 h-4" />}
-                            {notification.type === 'product' && <Package className="w-4 h-4" />}
-                            {notification.type === 'popup' && <SquarePen className="w-4 h-4" />}
-                            {notification.type === 'system' && <Shield className="w-4 h-4" />}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className={cn('text-sm font-medium', notification.unread && 'font-semibold')} 
-                               style={{ color: notification.unread ? '#0f172a' : '#334155' }}>
-                              {notification.title}
-                            </p>
-                            <p className="text-sm text-slate-500 truncate mt-0.5">{notification.message}</p>
-                            <p className="text-xs text-slate-400 mt-1">{notification.time}</p>
-                          </div>
-                          {notification.unread && (
-                            <span className="w-2 h-2 bg-[#0047BB] rounded-full mt-2 flex-shrink-0" />
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                    {notifications.length === 0 && (
-                      <div className="px-4 py-8 text-center text-slate-500">
-                        No notifications
-                      </div>
-                    )}
-                  </div>
-                  <div className="px-4 py-3 border-t border-slate-200">
-                    <Link
-                      href="/dashboard/notifications"
-                      className="block text-center text-sm text-[#0047BB] hover:text-[#003A94] font-medium"
-                    >
-                      View all notifications
-                    </Link>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* User Menu */}
-          <div className="relative" ref={userMenuRef}>
-            <button
-              onClick={() => { setUserMenuOpen(!userMenuOpen); setNotificationsOpen(false); }}
-              className={cn(
-                'flex items-center gap-2 p-2 rounded-lg hover:bg-slate-100 transition-colors',
-                userMenuOpen && 'bg-slate-100'
-              )}
-              aria-label="User menu"
-              aria-expanded={userMenuOpen}
-            >
-              <div className="w-8 h-8 bg-[#0047BB] rounded-full flex items-center justify-center text-white font-medium">
-                {session?.user?.name?.[0]?.toUpperCase() || session?.user?.email?.[0]?.toUpperCase() || 'A'}
+          {menuOpen && (
+            <div className="absolute right-0 mt-2 w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0e1626] shadow-xl p-1.5 z-50">
+              <div className="px-3 py-2.5 border-b border-slate-100 dark:border-slate-800">
+                <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{user.name || "Admin"}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{user.email || ""}</p>
               </div>
-              <span className="hidden md:block text-sm font-medium text-[#0f172a]">
-                {session?.user?.name || 'Admin'}
-              </span>
-            </button>
-
-            <AnimatePresence mode="popLayout">
-              {userMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl border border-slate-200 shadow-lg overflow-hidden"
+              <div className="py-1">
+                <MenuLink href="/dashboard/settings" icon={Settings} label="Profile & Security" />
+                <MenuLink href="/dashboard/settings/sessions" icon={MonitorSmartphone} label="My Sessions" />
+                {user.role === "superadmin" && (
+                  <>
+                    <MenuLink href="/dashboard/settings/users" icon={Shield} label="Admin Users" />
+                    <MenuLink href="/dashboard/settings/audit" icon={ScrollText} label="Audit Log" />
+                  </>
+                )}
+              </div>
+              <div className="border-t border-slate-100 dark:border-slate-800 pt-1">
+                <button
+                  onClick={handleSignOut}
+                  disabled={signingOut}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors disabled:opacity-50"
                 >
-                  <div className="px-4 py-3 border-b border-slate-200">
-                    <p className="text-sm font-medium text-[#0f172a]">{session?.user?.name || 'Admin'}</p>
-                    <p className="text-xs text-slate-400 capitalize">{session?.user?.role}</p>
-                  </div>
-                  <nav className="py-2">
-                    <Link
-                      href="/dashboard/settings"
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#0f172a] transition-colors"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      <Settings className="w-4 h-4" />
-                      Settings
-                    </Link>
-                    <Link
-                      href="/dashboard/profile"
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#0f172a] transition-colors"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      <User className="w-4 h-4" />
-                      Profile
-                    </Link>
-                    <button
-                      onClick={() => signOut({ callbackUrl: '/login' })}
-                      className="flex items-center gap-3 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Sign Out
-                    </button>
-                  </nav>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                  <LogOut className="w-4 h-4" />
+                  {signingOut ? "Signing out…" : "Sign out"}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
+
+      {mustChangePassword && (
+        <div className="px-4 sm:px-6 pb-3">
+          <Link
+            href="/dashboard/settings"
+            className="flex items-center gap-2.5 rounded-xl border border-amber-300 dark:border-amber-500/40 bg-amber-50 dark:bg-amber-500/10 px-4 py-2.5 text-sm text-amber-800 dark:text-amber-200"
+          >
+            <KeyRound className="w-4 h-4 shrink-0" />
+            Your password was set by an administrator. Please change it before continuing critical work.
+            <span className="ml-auto font-semibold underline underline-offset-2">Change password</span>
+          </Link>
+        </div>
+      )}
     </header>
-  )
+  );
+}
+
+function MenuLink({
+  href,
+  icon: Icon,
+  label,
+}: {
+  href: string;
+  icon: typeof Settings;
+  label: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+    >
+      <Icon className="w-4 h-4" />
+      {label}
+    </Link>
+  );
 }

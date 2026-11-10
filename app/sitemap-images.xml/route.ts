@@ -4,6 +4,12 @@ import {
   getSafeImageUrl,
   resolveStructuredImageUrl,
 } from "@/app/lib/safeImageUrl";
+import {
+  MARKETS,
+  marketFocusPath,
+  marketPath,
+} from "@/lib/markets";
+import { PRODUCT_FOCUSES } from "@/lib/product-focuses";
 
 export const revalidate = 3600;
 
@@ -106,6 +112,50 @@ export async function GET() {
   ];
 
   for (const page of staticPages) {
+    entries.push(renderImages(page.page, page.images));
+  }
+
+  // International market programme — hub, country pages and product-focus pages.
+  const marketPages: { page: string; images: ImageEntry[] }[] = [
+    {
+      page: `${BASE_URL}/markets`,
+      images: [
+        {
+          loc: absoluteUrl("/realistic-earth.jpg"),
+          title: "Fuji Fenix elevator and escalator markets",
+          caption:
+            "Elevator and escalator supply for international projects across Asia, the Middle East and Africa.",
+        },
+      ],
+    },
+    ...MARKETS.map((market) => ({
+      page: `${BASE_URL}${marketPath(market.slug)}`,
+      images: [
+        {
+          loc: absoluteUrl(market.heroImage),
+          title: `Elevators and escalators for ${market.country}`,
+          caption: market.metaDescription,
+        },
+      ],
+    })),
+    ...MARKETS.flatMap((market) =>
+      market.focuses.map((focusSlug) => {
+        const focus = PRODUCT_FOCUSES[focusSlug];
+        return {
+          page: `${BASE_URL}${marketFocusPath(market.slug, focus.slug)}`,
+          images: [
+            {
+              loc: absoluteUrl(focus.image),
+              title: `${focus.title} for ${market.country}`,
+              caption: focus.summary,
+            },
+          ],
+        };
+      })
+    ),
+  ];
+
+  for (const page of marketPages) {
     entries.push(renderImages(page.page, page.images));
   }
 

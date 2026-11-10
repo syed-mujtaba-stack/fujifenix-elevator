@@ -11,7 +11,17 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-  const error = searchParams.get("error");
+  const rawError = searchParams.get("error");
+
+  // Friendly messages for codes set by the dashboard layout / auth flows.
+  const ERROR_LABELS: Record<string, string> = {
+    sessionrevoked:
+      "Your session has expired or was revoked (possibly from another device). Please sign in again.",
+    deactivated: "This account has been deactivated. Contact a superadmin to restore access.",
+    AccessDenied: "You don't have permission to access that page. Sign in with an admin account.",
+    CredentialsSignin: "Invalid email or password.",
+  };
+  const error = rawError ? (ERROR_LABELS[rawError] ?? rawError) : null;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
