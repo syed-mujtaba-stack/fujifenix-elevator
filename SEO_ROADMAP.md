@@ -142,6 +142,14 @@ alternates: {
 ```
 > ⚠️ Note: Google Translate widget content is **NOT indexed** as translated pages. True multilingual pages need real `/zh/`, `/ar/` routes. Recommend long-term: 2–3 key languages (EN, ZH, AR/ES) with real translated pages for top 10 products.
 
+### Market landing pages (delivered Nov 2026)
+- `/markets` hub + **17 country pages** + **68 country × product pages**, statically generated from `lib/markets.ts` and `lib/product-focuses.ts`.
+- Markets: China and India (priority); Pakistan, UAE, Saudi Arabia, Kenya, Ethiopia, South Africa, Nigeria and Tanzania (Wave 1); Bangladesh, Qatar, Oman, Kuwait and Indonesia (Wave 2); Malaysia and Vietnam (Wave 3).
+- Each country page has a unique intro, demand drivers, project types, buyer segments, logistics, compliance context and FAQs. Each country × product page adds a market-specific product note, local FAQs and shipping/compliance context.
+- Canonicals use `alternates.languages` with only `en` + `x-default`. No translated hreflang is emitted until real translated routes exist.
+- Schema: `Service`, `FAQPage`, `BreadcrumbList`, `WebPage` and `ItemList`. All market URLs and images are included in `sitemap.xml` and `sitemap-images.xml`.
+- To add a market: add one object to `MARKETS` (with its four focuses). Routes, navigation cards, sitemap and image sitemap update automatically.
+
 ### Local SEO
 - **Google Business Profile** — verify Shanghai location, category "Elevator Manufacturer", photos, weekly posts. (Not set up yet — critical for brand + local pack.)
 - NAP consistency (already in schema — keep address identical everywhere).

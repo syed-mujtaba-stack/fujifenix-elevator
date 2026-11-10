@@ -1,204 +1,167 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from '@/lib/utils'
-import { 
-  LayoutDashboard, 
-  Package, 
-  MessageSquare, 
-  SquarePen, 
-  BarChart3, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Package,
+  MessageSquare,
+  SquarePen,
+  TrendingUp,
   Users,
-  ChevronLeft,
-  ChevronRight,
-  LogOut,
-  Menu,
+  ScrollText,
+  MonitorSmartphone,
+  Settings,
   X,
-  Bell,
-  User,
-  Shield,
-} from "lucide-react"
-import { signOut, useSession } from "next-auth/react"
-import { Button } from '@/components/ui/Button'
+  type LucideIcon,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { ROLE_LABELS, type AdminRole } from "@/lib/roles";
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Products', href: '/dashboard/products', icon: Package },
-  { name: 'Inquiries', href: '/dashboard/inquiries', icon: MessageSquare },
-  { name: 'Popups', href: '/dashboard/popups', icon: SquarePen },
-  { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
-  { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-]
+export interface AdminNavItem {
+  label: string;
+  href: string;
+  icon: "dashboard" | "products" | "inquiries" | "popups" | "analytics" | "users" | "audit" | "sessions" | "settings";
+  badge?: number | null;
+}
 
-const adminNavigation = [
-  { name: 'Admin Users', href: '/dashboard/settings/users', icon: Users, roles: ['superadmin'] },
-]
+const ICONS: Record<AdminNavItem["icon"], LucideIcon> = {
+  dashboard: LayoutDashboard,
+  products: Package,
+  inquiries: MessageSquare,
+  popups: SquarePen,
+  analytics: TrendingUp,
+  users: Users,
+  audit: ScrollText,
+  sessions: MonitorSmartphone,
+  settings: Settings,
+};
 
-export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const pathname = usePathname()
-  const { data: session } = useSession()
-  const [collapsed, setCollapsed] = useState(false)
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  nav: AdminNavItem[];
+  role: AdminRole;
+  userName?: string | null;
+}
+
+const GROUPS: { title: string; keys: AdminNavItem["icon"][] }[] = [
+  { title: "Overview", keys: ["dashboard"] },
+  { title: "Manage", keys: ["products", "inquiries", "popups", "analytics"] },
+  { title: "Security", keys: ["users", "audit", "sessions"] },
+  { title: "Account", keys: ["settings"] },
+];
+
+export function AdminSidebar({ isOpen, onClose, nav, role, userName }: SidebarProps) {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  const isActive = (href: string) => {
+    if (href === "/dashboard") return pathname === "/dashboard";
+    return pathname.startsWith(href);
+  };
+
+  const byIcon = (icon: AdminNavItem["icon"]) => nav.find((n) => n.icon === icon);
+  const has = (icon: AdminNavItem["icon"]) => Boolean(byIcon(icon));
 
   return (
     <>
-      {/* Overlay for mobile */}
-      <AnimatePresence mode="popLayout">
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
-            onClick={onClose}
-            aria-hidden="true"
-          />
-        )}
-      </AnimatePresence>
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-slate-950/50 backdrop-blur-sm lg:hidden z-40"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
 
-      {/* Sidebar */}
-      <motion.aside
-        initial={{ x: -280 }}
-        animate={{ x: isOpen ? 0 : (collapsed ? -72 : -280) }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+      <aside
         className={cn(
-          'fixed left-0 top-0 z-50 h-full bg-white border-r border-slate-200',
-          'flex flex-col',
-          'lg:translate-x-0 lg:static lg:z-auto',
-          collapsed ? 'w-18' : 'w-72'
+          "fixed left-0 top-0 bottom-0 w-64 bg-[#071324] text-slate-300 z-50",
+          "transition-transform duration-300 shadow-2xl border-r border-white/5",
+          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
-        role="navigation"
-        aria-label="Admin navigation"
+        aria-label="Admin sidebar"
       >
-        {/* Logo / Brand */}
-        <div className={cn(
-          'flex items-center justify-between h-16 px-4 border-b border-slate-200',
-          'flex-shrink-0'
-        )}>
-          {!collapsed && (
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#0047BB] rounded-lg flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-[#0f172a] text-lg">FUJI FENIX</span>
-            </Link>
-          )}
+        {/* Brand */}
+        <div className="h-16 flex items-center justify-between px-5 border-b border-white/5">
+          <Link href="/dashboard" onClick={onClose} className="flex items-center gap-2.5 group">
+            <span className="grid place-items-center w-8 h-8 rounded-lg bg-[#0047BB] text-white font-black tracking-tight text-sm">
+              FF
+            </span>
+            <span className="leading-tight">
+              <span className="block text-white text-sm font-bold tracking-wide">Fuji Fenix</span>
+              <span className="block text-[11px] text-slate-400 uppercase tracking-widest">Admin</span>
+            </span>
+          </Link>
           <button
-            onClick={() => setCollapsed(!collapsed)}
-            className={cn(
-              'p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100',
-              'transition-colors flex-shrink-0',
-              collapsed && 'ml-auto'
-            )}
-            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            aria-expanded={!collapsed}
+            onClick={onClose}
+            className="lg:hidden p-1.5 rounded-md hover:bg-white/10 text-slate-300"
+            aria-label="Close sidebar"
           >
-            {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1" aria-label="Main navigation">
-          {navigation.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={onClose}
-                className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-lg',
-                  'transition-all duration-200',
-                  'focus:outline-none focus:ring-2 focus:ring-[#0047BB] focus:ring-offset-2',
-                  isActive
-                    ? 'bg-blue-50 text-[#0047BB] font-medium'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-[#0f172a]',
-                  collapsed && 'justify-center'
-                )}
-                aria-current={isActive ? 'page' : undefined}
-                title={collapsed ? item.name : undefined}
-              >
-                <item.icon className={cn('w-5 h-5 flex-shrink-0', isActive && 'text-[#0047BB]')} aria-hidden="true" />
-                {!collapsed && <span className="truncate">{item.name}</span>}
-              </Link>
-            )
-          })}
+        {/* Nav */}
+        <nav className="px-3 py-4 space-y-6 overflow-y-auto max-h-[calc(100vh-10rem)]">
+          {GROUPS.filter((g) => g.keys.some(has)).map((group) => (
+            <div key={group.title}>
+              <p className="px-3 mb-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                {group.title}
+              </p>
+              <ul className="space-y-0.5">
+                {group.keys
+                  .map(byIcon)
+                  .filter(Boolean)
+                  .map((item) => {
+                    const Icon = ICONS[item!.icon];
+                    return (
+                      <li key={item!.href}>
+                        <Link
+                          href={item!.href}
+                          onClick={onClose}
+                          className={cn(
+                            "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium",
+                            "transition-colors duration-150",
+                            isActive(item!.href)
+                              ? "bg-[#0047BB] text-white shadow-[0_4px_16px_rgba(0,71,187,0.45)]"
+                              : "text-slate-400 hover:text-white hover:bg-white/5"
+                          )}
+                        >
+                          <Icon className="w-[18px] h-[18px]" />
+                          <span className="flex-1">{item!.label}</span>
+                          {item!.badge ? (
+                            <span className="min-w-[20px] h-5 px-1.5 grid place-items-center rounded-full bg-red-500 text-white text-[11px] font-semibold">
+                              {item!.badge > 99 ? "99+" : item!.badge}
+                            </span>
+                          ) : null}
+                        </Link>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          ))}
         </nav>
 
-        {/* Admin-only navigation */}
-        {session?.user?.role === 'superadmin' && (
-          <nav className="px-2 space-y-1 pb-4" aria-label="Admin navigation">
-            {adminNavigation.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={onClose}
-                  className={cn(
-                    'flex items-center gap-3 px-3 py-2.5 rounded-lg',
-                    'transition-all duration-200',
-                    'focus:outline-none focus:ring-2 focus:ring-[#0047BB] focus:ring-offset-2',
-                    isActive
-                      ? 'bg-purple-50 text-purple-700 font-medium'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-[#0f172a]',
-                    collapsed && 'justify-center'
-                  )}
-                  aria-current={isActive ? 'page' : undefined}
-                  title={collapsed ? item.name : undefined}
-                >
-                  <item.icon className={cn('w-5 h-5 flex-shrink-0', isActive && 'text-purple-700')} aria-hidden="true" />
-                  {!collapsed && <span className="truncate">{item.name}</span>}
-                </Link>
-              )
-            })}
-          </nav>
-        )}
-
-        {/* Bottom - User menu */}
-        <div className={cn(
-          'p-4 border-t border-slate-200 flex-shrink-0',
-          collapsed && 'px-2'
-        )}>
-          {!collapsed && session?.user && (
-            <div className="flex items-center gap-3 px-2">
-              <div className="w-8 h-8 bg-[#0047BB] rounded-full flex items-center justify-center text-white font-medium">
-                {session.user.name?.[0]?.toUpperCase() || session.user.email?.[0]?.toUpperCase() || 'A'}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[#0f172a] truncate">{session.user.name || 'Admin'}</p>
-                <p className="text-xs text-slate-400 truncate capitalize">{session.user.role}</p>
-              </div>
-            </div>
-          )}
-
-          {!collapsed ? (
-            <div className="space-y-2 mt-4">
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-2"
-                onClick={() => signOut({ callbackUrl: '/login' })}
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Sign Out</span>
-              </Button>
-            </div>
-          ) : (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="mx-auto mt-4"
-              onClick={() => signOut({ callbackUrl: '/login' })}
-              aria-label="Sign out"
-            >
-              <LogOut className="w-5 h-5 text-slate-500" />
-            </Button>
-          )}
+        {/* Footer */}
+        <div className="absolute bottom-0 inset-x-0 border-t border-white/5 p-4">
+          <div className="flex items-center justify-between text-[11px] text-slate-500">
+            <span className="truncate max-w-[70%]">{userName ?? "Admin"}</span>
+            <span className="shrink-0 px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400 uppercase tracking-wider">
+              {ROLE_LABELS[role]}
+            </span>
+          </div>
         </div>
-      </motion.aside>
+      </aside>
     </>
-  )
+  );
 }

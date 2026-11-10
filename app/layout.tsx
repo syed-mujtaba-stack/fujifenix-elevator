@@ -68,7 +68,8 @@ export const metadata: Metadata = {
     languages: {
       'x-default': 'https://fujifenix.com',
       en: 'https://fujifenix.com',
-      zh: 'https://fujifenix.com/zh',
+      // No `zh` hreflang until a real translated /zh page exists (avoids pointing
+      // crawlers at a 404 and fake locale signals).
     }
   },
 };
@@ -97,6 +98,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* PWA (Phase D) — admin installable + offline shell */}
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <meta name="theme-color" content="#0047BB" />
+        <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
 
         {/* Structured Data — Global */}
         <StructuredData schema={organizationSchema()} />

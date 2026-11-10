@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+/* Class-based dark mode for the admin area: toggling `.dark` on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Admin dark theme tokens */
+:root {
+  --admin-surface: #ffffff;
+  --admin-surface-soft: #f8fafc;
+  --admin-border: #e2e8f0;
+  --admin-text: #0f172a;
+  --admin-text-muted: #64748b;
+}
+
+.dark {
+  --admin-surface: #0b1220;
+  --admin-surface-soft: #0e1626;
+  --admin-border: #1e293b;
+  --admin-text: #e2e8f0;
+  --admin-text-muted: #94a3b8;
+}
+
 /* =============================================
    FUJI FENIX — Global Design System
    Premium Architectural / Editorial

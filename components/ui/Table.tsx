@@ -8,7 +8,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
     <div className="w-full overflow-x-auto">
       <table
         ref={ref}
-        className={cn('w-full text-sm text-left text-slate-600', className)}
+        className={cn('w-full text-sm text-left text-slate-600 dark:text-slate-400', className)}
         {...props}
       />
     </div>
@@ -21,7 +21,7 @@ export const TableHeader = forwardRef<HTMLTableSectionElement, React.HTMLAttribu
   ({ className, ...props }, ref) => (
     <thead
       ref={ref}
-      className={cn('bg-slate-50 border-b border-slate-200', className)}
+      className={cn('bg-slate-50 border-b border-slate-200 dark:bg-slate-800/50 dark:border-slate-700', className)}
       {...props}
     />
   )
@@ -33,7 +33,7 @@ export const TableBody = forwardRef<HTMLTableSectionElement, React.HTMLAttribute
   ({ className, ...props }, ref) => (
     <tbody
       ref={ref}
-      className={cn('divide-y divide-slate-100', className)}
+      className={cn('divide-y divide-slate-100 dark:divide-slate-800', className)}
       {...props}
     />
   )
@@ -45,7 +45,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTM
   ({ className, ...props }, ref) => (
     <tr
       ref={ref}
-      className={cn('hover:bg-slate-50/50 transition-colors', className)}
+      className={cn('hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors', className)}
       {...props}
     />
   )
@@ -57,7 +57,7 @@ export const TableHead = forwardRef<HTMLTableCellElement, React.ThHTMLAttributes
   ({ className, ...props }, ref) => (
     <th
       ref={ref}
-      className={cn('px-4 py-3 font-semibold text-slate-500 uppercase tracking-wider', className)}
+      className={cn('px-4 py-3 font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider', className)}
       {...props}
     />
   )

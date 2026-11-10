@@ -8,9 +8,9 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'default', children, ...props }, ref) => {
     const variants = {
-      default: 'bg-white border border-slate-200',
-      bordered: 'bg-white border-2 border-slate-200',
-      elevated: 'bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] border border-slate-100',
+      default: 'bg-white border border-slate-200 dark:bg-[#0e1626] dark:border-slate-800',
+      bordered: 'bg-white border-2 border-slate-200 dark:bg-[#0e1626] dark:border-slate-700',
+      elevated: 'bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] border border-slate-100 dark:bg-[#0e1626] dark:border-slate-800 dark:shadow-black/20',
     }
 
     return (
@@ -29,7 +29,7 @@ Card.displayName = 'Card'
 
 export const CardHeader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('px-6 py-4 border-b border-slate-100', className)} {...props} />
+    <div ref={ref} className={cn('px-6 py-4 border-b border-slate-100 dark:border-slate-800', className)} {...props} />
   )
 )
 
@@ -39,7 +39,7 @@ export const CardTitle = forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTM
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn('text-lg font-semibold text-[#0f172a]', className)}
+      className={cn('text-lg font-semibold text-[#0f172a] dark:text-slate-100', className)}
       {...props}
     />
   )

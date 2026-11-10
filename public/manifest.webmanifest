@@ -1,0 +1,21 @@
+{
+  "name": "Fuji Fenix Elevator — Admin",
+  "short_name": "FF Admin",
+  "description": "Administration portal for Fuji Fenix Elevator — products, inquiries, popups and analytics.",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#071324",
+  "theme_color": "#0047BB",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "en"
+}

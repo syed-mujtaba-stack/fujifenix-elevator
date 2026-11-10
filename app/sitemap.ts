@@ -1,7 +1,15 @@
 import { MetadataRoute } from "next";
 import { client } from "@/sanity/lib/client";
+import {
+  MARKETS,
+  MARKET_CONTENT_UPDATED,
+  marketFocusPath,
+  marketPath,
+} from "@/lib/markets";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://fujifenix.com";
+const BASE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://fujifenix.com"
+).replace(/\/+$/, "");
 
 export const revalidate = 3600;
 
@@ -99,5 +107,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages];
+  // International market programme: hub + country pages + country x product pages.
+  const marketLastMod = new Date(MARKET_CONTENT_UPDATED);
+
+  const marketHub: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/markets`,
+      lastModified: marketLastMod,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+  ];
+
+  const marketPages: MetadataRoute.Sitemap = MARKETS.map((market) => ({
+    url: `${BASE_URL}${marketPath(market.slug)}`,
+    lastModified: marketLastMod,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  const marketFocusPages: MetadataRoute.Sitemap = MARKETS.flatMap((market) =>
+    market.focuses.map((focus) => ({
+      url: `${BASE_URL}${marketFocusPath(market.slug, focus)}`,
+      lastModified: marketLastMod,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }))
+  );
+
+  return [
+    ...staticPages,
+    ...marketHub,
+    ...categoryPages,
+    ...productPages,
+    ...marketPages,
+    ...marketFocusPages,
+  ];
 }

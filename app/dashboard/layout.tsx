@@ -1,45 +1,65 @@
-"use client";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { AdminShell, type ShellUser } from "@/components/admin/AdminShell";
+import type { AdminNavItem } from "@/components/admin/Sidebar";
+import { adminClient } from "@/sanity/lib/server";
+import { isSessionValid, hasPermission, type AdminRole } from "@/lib/admin";
 
-import { useState, useEffect } from "react";
-import { Sidebar } from '@/components/admin/Sidebar'
-import { TopBar } from '@/components/admin/TopBar'
-import { SessionProvider } from "next-auth/react"
-import { cn } from '@/lib/utils'
+/**
+ * Server-side gate for the entire /dashboard area.
+ *
+ * 1. Authenticated? (cookie)                                              → middleware handles.
+ * 2. Session document still valid (not revoked, not expired)?             → here.
+ * 3. Account still active + current role read from the database?          → here.
+ *
+ * The database is authoritative for role + active status so demotion or
+ * deactivation takes effect on the next navigation — not only on re-login.
+ */
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    redirect("/login");
+  }
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const valid = await isSessionValid((session.user as any).sessionId as string | undefined);
+  if (!valid) {
+    redirect("/login?error=sessionrevoked");
+  }
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  const user = await adminClient.fetch<
+    { role: string; isActive: boolean; name: string | null; mustChangePassword?: boolean } | null
+  >(`*[_type == "adminUser" && _id == $id][0] { role, isActive, name, mustChangePassword }`, {
+    id: session.user.id,
+  });
 
-  // Close sidebar on route change (mobile)
-  useEffect(() => {
-    if (isMobile) setSidebarOpen(false)
-  }, [isMobile])
+  if (!user || !user.isActive) {
+    redirect("/login?error=deactivated");
+  }
+
+  const role = user.role as AdminRole;
+
+  const newInquiryCount = await adminClient.fetch<number>(`count(*[_type == "inquiry" && status == "new"])`);
+
+  const nav: AdminNavItem[] = [];
+  if (hasPermission(role, "products.read")) nav.push({ label: "Products", href: "/dashboard/products", icon: "products" });
+  if (hasPermission(role, "inquiries.aggregate"))
+    nav.push({ label: "Inquiries", href: "/dashboard/inquiries", icon: "inquiries", badge: newInquiryCount });
+  if (hasPermission(role, "popups.read")) nav.push({ label: "Popups", href: "/dashboard/popups", icon: "popups" });
+  if (hasPermission(role, "analytics.read")) nav.push({ label: "Analytics", href: "/dashboard/analytics", icon: "analytics" });
+  if (hasPermission(role, "users.read")) nav.push({ label: "Admin Users", href: "/dashboard/settings/users", icon: "users" });
+  if (hasPermission(role, "audit.read")) nav.push({ label: "Audit Log", href: "/dashboard/settings/audit", icon: "audit" });
+  if (hasPermission(role, "sessions.read")) nav.push({ label: "Sessions", href: "/dashboard/settings/sessions", icon: "sessions" });
+  nav.push({ label: "Settings", href: "/dashboard/settings", icon: "settings" });
+
+  const shellUser: ShellUser = {
+    name: user.name,
+    email: session.user.email,
+    role,
+  };
 
   return (
-    <SessionProvider>
-      <div className="min-h-screen bg-[#071324]">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <div className={cn(
-          'lg:ml-64 transition-all duration-300',
-          'min-h-screen flex flex-col'
-        )}>
-          <TopBar onMenuClick={() => setSidebarOpen(true)} isSidebarOpen={sidebarOpen} />
-          <main className="flex-1 p-4 sm:p-6 lg:p-8">
-            {children}
-          </main>
-        </div>
-      </div>
-    </SessionProvider>
-  )
+    <AdminShell nav={nav} user={shellUser} inquiryCount={newInquiryCount} mustChangePassword={user.mustChangePassword}>
+      {children}
+    </AdminShell>
+  );
 }

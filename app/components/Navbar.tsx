@@ -693,7 +693,9 @@ export default function Navbar() {
               {/* Nav links */}
               <ul className="flex items-center list-none m-0 p-0" style={{ gap: "clamp(16px, 2vw, 32px)" }}>
                 {NAV_LINKS.map((l) => {
-                  const active = pathname === l.href || (l.href === "/" && pathname === "/");
+                  const active =
+                    pathname === l.href ||
+                    (l.href !== "/" && pathname.startsWith(`${l.href}/`));
                   const isProducts = l.href === "/products";
                   return (
                     <li
