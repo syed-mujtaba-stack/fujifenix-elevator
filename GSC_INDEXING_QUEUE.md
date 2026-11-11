@@ -1,6 +1,8 @@
 # GSC indexing queue — fujifenix.com
 
-Priority-ordered list of every indexable URL for Google Search Console > URL Inspection > **Request indexing**.
+Priority-ordered list of the highest-value indexable URLs for Google Search Console > URL Inspection > **Request indexing**.
+
+Product and category pages from Sanity are not listed here; they stay covered by `sitemap.xml`. Request those manually only when a specific product launch needs faster indexing.
 
 ## Sitemaps to submit first
 
