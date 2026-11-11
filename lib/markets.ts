@@ -2,12 +2,13 @@
  * International market data for the /markets SEO programme.
  *
  * The markets below are the validated target markets from the Fuji Fenix
- * Global SEO & International Market Growth Strategy (Nov 2026):
- *   Priority: China, India
- *   Wave 1:   Pakistan, UAE, Saudi Arabia, Kenya, Ethiopia, South Africa,
- *             Nigeria, Tanzania
- *   Wave 2:   Bangladesh, Qatar, Oman, Kuwait, Indonesia
- *   Wave 3:   Malaysia, Vietnam
+ * Global SEO & International Market Growth Strategy (Nov 2026). Business
+ * priority is defined in lib/market-priority.ts:
+ *   Tier 1: Pakistan, UAE, Saudi Arabia, Kenya, Ethiopia, South Africa,
+ *           Nigeria, Tanzania  (export sourcing and regional supply)
+ *   Tier 2: Bangladesh, Qatar, Oman, Kuwait, Indonesia  (B2B discovery)
+ *   Tier 3: Malaysia, Vietnam, Thailand, Philippines  (validated expansion)
+ *   Manufacturing / Asia priority: China, India, Japan, South Korea, Singapore
  *
  * Every market has its own intro, demand drivers, logistics, compliance notes,
  * FAQs and product focus copy so country pages are not near-duplicate pages.
@@ -26,7 +27,7 @@ import {
   type MarketPriorityTier,
 } from "@/lib/market-priority";
 
-export const MARKET_CONTENT_UPDATED = "2026-11-10";
+export const MARKET_CONTENT_UPDATED = "2026-11-11";
 
 export type MarketWave = "priority" | 1 | 2 | 3;
 
