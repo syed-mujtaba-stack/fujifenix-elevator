@@ -10,6 +10,7 @@ import PageTransition from "./components/PageTransition";
 import PageLoader from "./components/PageLoader";
 import AnimatedWhiteBackground from "./components/AnimatedWhiteBackground";
 import { StructuredData } from "./components/StructuredData";
+import CountrySuggestion from "./components/CountrySuggestion";
 import {
   organizationSchema,
   localBusinessSchema,
@@ -63,15 +64,12 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
-  alternates: {
-    canonical: "https://fujifenix.com",
-    languages: {
-      'x-default': 'https://fujifenix.com',
-      en: 'https://fujifenix.com',
-      // No `zh` hreflang until a real translated /zh page exists (avoids pointing
-      // crawlers at a 404 and fake locale signals).
-    }
+  other: {
+    "applicable-device": "pc,mobile",
   },
+  // Canonical + hreflang are declared per page. Declaring a canonical here
+  // would be inherited by every route that does not override it (e.g. /cta),
+  // pointing those pages at the homepage.
 };
 
 export default function RootLayout({
@@ -93,11 +91,10 @@ export default function RootLayout({
         {/* Global animated white background (behind everything, subtle) */}
         <AnimatedWhiteBackground />
 
-        {/* Performance: Preconnect hints */}
+        {/* Performance: Preconnect hints (next/font self-hosts the fonts,
+            so no Google Fonts preconnects are needed) */}
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {/* PWA (Phase D) — admin installable + offline shell */}
         <link rel="manifest" href="/manifest.webmanifest" />
@@ -136,6 +133,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <FloatingCTA />
+        <CountrySuggestion />
 
         {/* Google Analytics 4 */}
         <GoogleAnalytics gaId="G-K8N55C390S" />

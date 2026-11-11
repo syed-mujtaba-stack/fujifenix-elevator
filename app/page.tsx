@@ -8,6 +8,7 @@ import TechnologyBlueprint from "./components/TechnologyBlueprint";
 import ProductShowcase from "./components/ProductShowcase";
 import ProjectsShowcase from "./components/ProjectsShowcase";
 import WhyFujiFenix from "./components/WhyFujiFenix";
+import PriorityMarkets from "./components/PriorityMarkets";
 import { safeFetch } from "@/sanity/lib/client";
 import { featuredProductsQuery, type SanityProductItem } from "@/sanity/lib/queries";
 import { StructuredData } from "./components/StructuredData";
@@ -37,6 +38,10 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://fujifenix.com",
+    languages: {
+      en: "https://fujifenix.com",
+      "x-default": "https://fujifenix.com",
+    },
   },
   openGraph: {
     title: "Fuji Fenix Elevator | Global Elevator & Escalator Manufacturer",
@@ -94,6 +99,7 @@ export default async function Home() {
         <ProductShowcase products={products} />
         <ProjectsShowcase />
         <WhyFujiFenix />
+        <PriorityMarkets />
       </main>
     </>
   );

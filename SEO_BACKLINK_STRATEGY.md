@@ -48,17 +48,18 @@ Create/claim these profiles with consistent NAP:
 
 | Platform | URL | SEO Value |
 |---|---|---|
-| **LinkedIn Company Page** | linkedin.com/company/fujifenix | High - DA 97, passes authority |
-| **YouTube Channel** | youtube.com/fujifenix | Medium - Video rich snippet opportunity |
-| **Facebook Page** | facebook.com/fujifenix | Medium - Social signal |
-| **Instagram** | instagram.com/fujifenix | Low - Traffic referral |
+| **Instagram** | instagram.com/fujifenix | Medium - Brand discovery & referral traffic |
+| **Threads** | threads.com/@fujifenix | Low - Social signal |
+| **Facebook** | facebook.com/profile.php?id=61596154745650 | Medium - Social signal |
+| **X** | x.com/fujifenix | Low - Social signal |
+| **LinkedIn** | linkedin.com/in/fuji-fenix-219525441 | High - DA 97, passes authority |
 | **Google Business Profile** | google.com/business | **Critical for Local SEO** |
 | **SlideShare** (for specs docs) | slideshare.net | Low - Document distribution |
 
 **Action:** 
-- Ensure LinkedIn company page has same NAP as website
-- Upload factory installation videos to YouTube
-- Embed YouTube videos on product pages (rich snippet opportunity)
+- Keep every social profile's NAP and website link consistent with the site
+- Publish project photos and installation updates to Instagram, Threads, Facebook, and LinkedIn
+- Add the same five profile URLs to the Organization `sameAs` array whenever profiles change
 
 ---
 

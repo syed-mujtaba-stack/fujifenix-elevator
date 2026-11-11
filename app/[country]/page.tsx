@@ -4,33 +4,35 @@ import { notFound } from "next/navigation";
 import PageHero from "@/app/components/PageHero";
 import { StructuredData } from "@/app/components/StructuredData";
 import {
-  getMarket,
+  getMarketByCode,
   getRelatedMarkets,
   MARKETS,
   marketFocusPath,
   marketPath,
-  waveLabel,
+  marketPriorityLabel,
 } from "@/lib/markets";
 import {
   absoluteUrl,
+  countryLanguageTag,
   marketMetadata,
   marketServiceSchema,
   webPageSchema,
 } from "@/lib/market-seo";
 import { PRODUCT_FOCUSES } from "@/lib/product-focuses";
 import { breadcrumbSchema, faqSchema } from "@/lib/structured-data";
-import Breadcrumbs from "../_components/Breadcrumbs";
-import CtaBand from "../_components/CtaBand";
-import FaqList from "../_components/FaqList";
-import FocusCard from "../_components/FocusCard";
-import MarketCard from "../_components/MarketCard";
-import MarketNote from "../_components/MarketNote";
-import SectionTitle from "../_components/SectionTitle";
+import Breadcrumbs from "@/app/markets/_components/Breadcrumbs";
+import CtaBand from "@/app/markets/_components/CtaBand";
+import FaqList from "@/app/markets/_components/FaqList";
+import FocusCard from "@/app/markets/_components/FocusCard";
+import MarketCard from "@/app/markets/_components/MarketCard";
+import MarketNav from "@/app/markets/_components/MarketNav";
+import MarketNote from "@/app/markets/_components/MarketNote";
+import SectionTitle from "@/app/markets/_components/SectionTitle";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return MARKETS.map((market) => ({ country: market.slug }));
+  return MARKETS.map((market) => ({ country: market.code.toLowerCase() }));
 }
 
 export async function generateMetadata({
@@ -39,7 +41,7 @@ export async function generateMetadata({
   params: Promise<{ country: string }>;
 }): Promise<Metadata> {
   const { country } = await params;
-  const market = getMarket(country);
+  const market = getMarketByCode(country);
   return market ? marketMetadata(market) : {};
 }
 
@@ -72,7 +74,7 @@ export default async function CountryMarketPage({
   params: Promise<{ country: string }>;
 }) {
   const { country } = await params;
-  const market = getMarket(country);
+  const market = getMarketByCode(country);
   if (!market) notFound();
 
   const focuses = market.focuses
@@ -88,7 +90,7 @@ export default async function CountryMarketPage({
 
   const snapshot = [
     { label: "Region", value: market.region },
-    { label: "Programme", value: waveLabel(market.wave) },
+    { label: "Priority tier", value: marketPriorityLabel(market) },
     { label: "Currency", value: market.currency },
     { label: "Languages", value: market.languages.join(", ") },
     { label: "Shipping ports", value: market.logistics.ports },
@@ -106,11 +108,13 @@ export default async function CountryMarketPage({
           description: market.metaDescription,
           path: marketPath(market.slug),
           about: `Elevator and escalator supply for ${market.country}`,
+          language: countryLanguageTag(market.code),
+          image: market.heroImage,
         })}
       />
 
       <PageHero
-        eyebrow={`${waveLabel(market.wave)} · ${market.region}`}
+        eyebrow={`${marketPriorityLabel(market)} · ${market.region}`}
         title={market.headline}
         description={market.metaDescription}
         image={market.heroImage}
@@ -127,6 +131,8 @@ export default async function CountryMarketPage({
           { label: market.country },
         ]}
       />
+
+      <MarketNav currentCode={market.code} />
 
       {/* Overview */}
       <section className="bg-white py-16 md:py-24">

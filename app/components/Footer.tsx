@@ -4,7 +4,9 @@ import Link from "next/link";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { CONTACT } from "@/app/data/content";
+import { PRIORITY_TIER_MARKETS, priorityMarketHref } from "@/lib/market-priority";
 import Logo from "./Logo";
+import SocialLinks from "./SocialLinks";
 import WeChatQRButton from "./WeChatQR";
 
 export default function Footer() {
@@ -39,6 +41,12 @@ export default function Footer() {
               Combining advanced technology with precision engineering to deliver world-class vertical
               transportation systems.
             </p>
+            <div className="mt-8">
+              <div className="eyebrow text-slate-500 mb-4" style={{ fontSize: "10px" }}>
+                FOLLOW FUJI FENIX
+              </div>
+              <SocialLinks variant="dark" />
+            </div>
           </div>
 
           <Link
@@ -117,6 +125,31 @@ export default function Footer() {
               <WeChatQRButton variant="dark" label="WECHAT" className="!px-4 !py-2.5" />
             </li>
           </ul>
+        </div>
+      </div>
+
+      {/* Priority markets */}
+      <div className="px-6 md:px-10 lg:px-14 py-8 border-b border-white/5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="eyebrow text-slate-500 text-[10px]">KEY MARKETS</div>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            {PRIORITY_TIER_MARKETS[1].map((market) => (
+              <Link
+                key={market.slug}
+                href={priorityMarketHref(market.code)}
+                className="text-slate-400 hover:text-white transition-colors duration-200"
+                style={{ fontSize: "12px" }}
+              >
+                {market.shortName}
+              </Link>
+            ))}
+            <Link
+              href="/markets"
+              className="eyebrow text-[#60a5fa] text-[10px] hover:text-white transition-colors duration-200"
+            >
+              ALL MARKETS &rarr;
+            </Link>
+          </div>
         </div>
       </div>
 

@@ -110,6 +110,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // International market programme: hub + country pages + country x product pages.
   const marketLastMod = new Date(MARKET_CONTENT_UPDATED);
 
+  /**
+   * hreflang alternates for a country-targeted English page.
+   *
+   * The page is English content targeted at one country, so the alternates are
+   * `en-<CODE>` (self), the generic `en` and `x-default`. No translated
+   * language alternates are emitted because translated pages do not exist —
+   * Google Translate is a client-side overlay only.
+   */
+  const languageAlternates = (path: string, code: string) => {
+    const url = `${BASE_URL}${path}`;
+    return {
+      languages: {
+        en: url,
+        [`en-${code.toUpperCase()}`]: url,
+        "x-default": url,
+      },
+    };
+  };
+
   const marketHub: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/markets`,
@@ -119,20 +138,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const marketPages: MetadataRoute.Sitemap = MARKETS.map((market) => ({
-    url: `${BASE_URL}${marketPath(market.slug)}`,
-    lastModified: marketLastMod,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
-
-  const marketFocusPages: MetadataRoute.Sitemap = MARKETS.flatMap((market) =>
-    market.focuses.map((focus) => ({
-      url: `${BASE_URL}${marketFocusPath(market.slug, focus)}`,
+  const marketPages: MetadataRoute.Sitemap = MARKETS.map((market) => {
+    const path = marketPath(market.slug);
+    return {
+      url: `${BASE_URL}${path}`,
       lastModified: marketLastMod,
       changeFrequency: "monthly" as const,
-      priority: 0.7,
-    }))
+      priority: 0.8,
+      alternates: languageAlternates(path, market.code),
+    };
+  });
+
+  const marketFocusPages: MetadataRoute.Sitemap = MARKETS.flatMap((market) =>
+    market.focuses.map((focus) => {
+      const path = marketFocusPath(market.slug, focus);
+      return {
+        url: `${BASE_URL}${path}`,
+        lastModified: marketLastMod,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+        alternates: languageAlternates(path, market.code),
+      };
+    })
   );
 
   return [

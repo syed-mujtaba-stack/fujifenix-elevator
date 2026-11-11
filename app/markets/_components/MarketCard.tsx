@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { marketPath, waveLabel, type Market } from "@/lib/markets";
+import { marketPath, marketPriorityLabel, type Market } from "@/lib/markets";
 
 export default function MarketCard({ market }: { market: Market }) {
   return (
@@ -10,7 +10,7 @@ export default function MarketCard({ market }: { market: Market }) {
       <div className="flex items-start justify-between gap-3">
         <span className="eyebrow text-[#0047BB]">{market.region}</span>
         <span className="rounded-full border border-slate-200 px-2.5 py-1 text-[9.5px] font-bold uppercase tracking-[0.14em] text-slate-500">
-          {waveLabel(market.wave)}
+          {marketPriorityLabel(market)}
         </span>
       </div>
 

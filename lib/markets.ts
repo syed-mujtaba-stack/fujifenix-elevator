@@ -20,8 +20,13 @@
  */
 
 import type { FocusSlug } from "@/lib/product-focuses";
+import {
+  PRIORITY_TIER_COPY,
+  PRIORITY_TIER_MARKETS,
+  type MarketPriorityTier,
+} from "@/lib/market-priority";
 
-export const MARKET_CONTENT_UPDATED = "2026-11-06";
+export const MARKET_CONTENT_UPDATED = "2026-11-10";
 
 export type MarketWave = "priority" | 1 | 2 | 3;
 
@@ -466,8 +471,8 @@ export const MARKETS: Market[] = [
     languages: ["Arabic", "English"],
     heroImage: "/building-exterior.jpg",
     heroAlt: "High-rise development in a modern city",
-    headline: ["ELEVATORS & ESCALATORS", "FOR UAE PROJECTS"],
-    metaTitle: "Elevator & Escalator Supplier in UAE | Fuji Fenix",
+    headline: ["ELEVATORS & ESCALATORS", "FOR UAE & DUBAI PROJECTS"],
+    metaTitle: "Elevator & Escalator Supplier in UAE & Dubai | Fuji Fenix",
     metaDescription:
       "Fuji Fenix supplies passenger, panoramic, home and high-speed elevators plus escalators for towers, hotels, malls and villas across Dubai, Abu Dhabi and the UAE.",
     intro: [
@@ -2190,6 +2195,626 @@ export const MARKETS: Market[] = [
       "home lift Tanzania",
     ],
   },
+
+  {
+    slug: "japan",
+    country: "Japan",
+    shortName: "Japan",
+    code: "JP",
+    region: "East Asia",
+    wave: 2,
+    currency: "JPY",
+    languages: ["Japanese", "English"],
+    heroImage: "/hero-elevator.jpg",
+    heroAlt: "Modern elevator installation for a Japanese high-rise project",
+    headline: ["ELEVATORS & ESCALATORS", "FOR JAPAN PROJECTS"],
+    metaTitle: "Elevator & Escalator Supplier in Japan | Fuji Fenix",
+    metaDescription:
+      "Fuji Fenix supplies passenger, high-speed, hospital and home elevators for Japanese redevelopment, office, healthcare and residential projects, with engineering documentation and export support.",
+    intro: [
+      "Japan's major cities are rebuilding ageing stock while adding high-rise offices and transit-linked mixed-use districts. Redevelopment in Tokyo and Osaka, hospital upgrades and compact urban housing all depend on vertical transportation that is quiet, reliable and precisely engineered.",
+      "Fuji Fenix supports Japanese developers, contractors and vertical transport consultants with passenger, high-speed, hospital bed and home elevators. Equipment is configured to the project specification and the applicable Japanese building and lift requirements, with installation and inspection handled through the appointed local partner.",
+    ],
+    cities: ["Tokyo", "Osaka", "Yokohama", "Nagoya", "Fukuoka", "Sapporo"],
+    demandDrivers: [
+      {
+        title: "Urban redevelopment",
+        description:
+          "Tokyo, Osaka and Yokohama redevelopment projects replace ageing buildings with taller, denser mixed-use schemes that need efficient core transport and quiet operation.",
+      },
+      {
+        title: "High-rise offices and towers",
+        description:
+          "Headquarters and mixed-use towers require high-speed systems, group control and ride quality suitable for large tenant populations.",
+      },
+      {
+        title: "Healthcare and an ageing population",
+        description:
+          "Hospitals, clinics and care facilities specify bed lifts with priority controls, hygienic finishes and dependable access for patients and staff.",
+      },
+      {
+        title: "Compact residential projects",
+        description:
+          "Land constraints and multi-generation housing support demand for home lifts and space-efficient MRL passenger systems.",
+      },
+    ],
+    projectTypes: [
+      "Redevelopment and mixed-use districts",
+      "High-rise office and residential towers",
+      "Hospitals, clinics and care facilities",
+      "Hotels and transit-linked developments",
+      "Villas and multi-storey homes",
+    ],
+    buyerSegments: [
+      "Developers and redevelopment associations",
+      "General contractors and EPC companies",
+      "MEP and vertical transport consultants",
+      "Elevator distributors and service companies",
+    ],
+    logistics: {
+      ports: "Tokyo, Yokohama, Kobe and Osaka",
+      note:
+        "Port selection follows the project location and construction programme. Export packing, technical documentation and phased site delivery are coordinated with the contractor and freight forwarder.",
+    },
+    compliance: [
+      {
+        standard: "Building Standards Act",
+        note:
+          "Japanese building and fire requirements influence shaft design, lobby protection, emergency operation and accessibility. The applicable route is confirmed with the project consultant and building official.",
+      },
+      {
+        standard: "Japanese Industrial Standards (JIS)",
+        note:
+          "Where JIS references are specified, the project documentation package is aligned to the applicable requirements. Final acceptance criteria are agreed with the local inspector.",
+      },
+      {
+        standard: "Project specification",
+        note:
+          "Seismic, acoustic, finish and energy requirements specific to the building are incorporated into the approved layout and interface drawings.",
+      },
+    ],
+    focuses: [
+      "passenger-elevators",
+      "high-speed-elevators",
+      "hospital-elevators",
+      "home-elevators",
+    ],
+    focusNotes: {
+      "passenger-elevators":
+        "Passenger elevators for Japanese redevelopment and residential projects are configured for quiet travel, accurate levelling and efficient cores in constrained city sites. Machine-room-less layouts help preserve valuable floor area.",
+      "high-speed-elevators":
+        "High-speed elevators for Tokyo and Osaka towers combine gearless traction, VVVF drives and group control to manage large tenant populations and long travel distances.",
+      "hospital-elevators":
+        "Hospital bed elevators for Japanese healthcare projects are specified with stretcher access, priority operation and easy-clean finishes suited to clinical environments.",
+      "home-elevators":
+        "Home lifts for Japanese multi-storey houses and villas use compact equipment and customised cabins, with a site survey confirming shaft, pit and overhead dimensions before manufacture.",
+    },
+    faqs: [
+      {
+        question: "Does Fuji Fenix supply elevators to projects in Japan?",
+        answer:
+          "Yes. We supply engineered elevator systems to Japanese projects through developers, contractors and local partners. Installation, inspection and building approvals are coordinated with the appointed local team.",
+      },
+      {
+        question: "Which standards apply to Japanese lift projects?",
+        answer:
+          "Projects are designed around the Building Standards Act, the specified JIS references and the building's own specification. The final compliance and inspection matrix is confirmed with the project consultant and local authority.",
+      },
+      {
+        question: "Can high-speed elevators be supplied for Tokyo towers?",
+        answer:
+          "Yes. High-speed gearless systems with VVVF drive and group or destination control can be configured for tall buildings, with speed and handling capacity confirmed through traffic analysis.",
+      },
+      {
+        question: "Are home lifts suitable for Japanese houses?",
+        answer:
+          "Compact home elevators can suit multi-storey houses and villas where a site survey confirms the shaft, pit, overhead and power requirements. MRL and structure-mounted options reduce building work where space is limited.",
+      },
+    ],
+    related: ["south-korea", "china", "singapore"],
+    keywords: [
+      "elevator supplier Japan",
+      "passenger elevator Tokyo",
+      "high-speed elevator Japan",
+      "hospital elevator Japan",
+    ],
+  },
+
+  {
+    slug: "south-korea",
+    country: "South Korea",
+    shortName: "South Korea",
+    code: "KR",
+    region: "East Asia",
+    wave: 2,
+    currency: "KRW",
+    languages: ["Korean", "English"],
+    heroImage: "/about-lobby.jpg",
+    heroAlt: "Premium elevator lobby for a Korean commercial tower",
+    headline: ["ELEVATORS & ESCALATORS", "FOR KOREA PROJECTS"],
+    metaTitle: "Elevator & Escalator Supplier in South Korea | Fuji Fenix",
+    metaDescription:
+      "Fuji Fenix supplies passenger, high-speed, hospital and escalator systems for South Korean apartment, office, healthcare and transit projects, with engineering and export support.",
+    intro: [
+      "South Korea combines dense apartment districts, a competitive office market and continuing transit and healthcare investment. Seoul and Busan are adding high-rise mixed-use schemes while older residential complexes are rebuilt with higher specifications.",
+      "Fuji Fenix supports Korean developers, contractors and elevator partners with passenger, high-speed, hospital and escalator systems. Equipment is engineered to the project brief and the applicable Korean lift requirements, with installation and inspection delivered through the appointed local partner.",
+    ],
+    cities: ["Seoul", "Busan", "Incheon", "Daegu", "Daejeon", "Gwangju"],
+    demandDrivers: [
+      {
+        title: "Apartment reconstruction",
+        description:
+          "Housing reconstruction and new residential districts require reliable passenger lift cores, group control and finishes suited to competitive apartment sales.",
+      },
+      {
+        title: "Office and mixed-use towers",
+        description:
+          "Seoul and Busan towers specify high-speed systems, destination control and smooth ride quality for large working populations.",
+      },
+      {
+        title: "Healthcare investment",
+        description:
+          "Hospitals and medical centres need bed elevators with priority controls, hygienic finishes and service planning for critical departments.",
+      },
+      {
+        title: "Transit and retail",
+        description:
+          "Rail extensions, malls and public buildings require escalators built for high footfall and continuous daily operation.",
+      },
+    ],
+    projectTypes: [
+      "Apartment complexes and residential towers",
+      "Office and mixed-use towers",
+      "Hospitals and medical centres",
+      "Metro, rail and transit projects",
+      "Shopping malls and retail centres",
+    ],
+    buyerSegments: [
+      "Housing developers and reconstruction associations",
+      "General contractors",
+      "MEP and vertical transport consultants",
+      "Elevator distributors and service companies",
+    ],
+    logistics: {
+      ports: "Busan, Incheon and Gwangyang",
+      note:
+        "Equipment is shipped through the port best suited to the project's inland destination. Export packing, documentation and delivery sequencing are agreed with the contractor and forwarder.",
+    },
+    compliance: [
+      {
+        standard: "Elevator Safety Control Act",
+        note:
+          "Korean lift safety, installation and inspection requirements apply to the project. The approval route is managed by the appointed local installer and confirmed with the authority.",
+      },
+      {
+        standard: "Korean Industrial Standards (KS)",
+        note:
+          "Where KS references are specified, product and test documentation is prepared to support the project's acceptance process.",
+      },
+      {
+        standard: "Building and fire requirements",
+        note:
+          "Fire-fighting lift, lobby protection, accessibility and emergency operation requirements are incorporated where the building and local code require them.",
+      },
+    ],
+    focuses: [
+      "passenger-elevators",
+      "high-speed-elevators",
+      "hospital-elevators",
+      "escalators",
+    ],
+    focusNotes: {
+      "passenger-elevators":
+        "Passenger elevators for Korean apartment and mixed-use projects are configured for efficient peaks, durable finishes and quiet operation in dense residential cores.",
+      "high-speed-elevators":
+        "High-speed systems for Seoul and Busan office towers use gearless traction, VVVF drives and group or destination control to reduce waiting times across tall buildings.",
+      "hospital-elevators":
+        "Hospital bed elevators for Korean medical projects are specified with stretcher access, priority operation and hygienic, easy-clean finishes.",
+      escalators:
+        "Escalators for Korean transit, retail and public buildings are selected for high passenger volumes, continuous duty and integration with the architectural design.",
+    },
+    faqs: [
+      {
+        question: "Does Fuji Fenix supply elevators to South Korea?",
+        answer:
+          "Yes. We supply engineered elevator and escalator systems to Korean projects through developers, contractors and local partners. Installation and statutory inspection are coordinated with the appointed local team.",
+      },
+      {
+        question: "Which Korean requirements apply to lift projects?",
+        answer:
+          "The Elevator Safety Control Act, any specified KS references and the building's fire and accessibility requirements apply. The final compliance matrix is confirmed with the project consultant and inspection body.",
+      },
+      {
+        question: "Can you support apartment reconstruction projects?",
+        answer:
+          "Yes. Passenger lift packages can be configured for residential towers, including group control, cabin finishes and documentation for the project's approval and construction schedule.",
+      },
+      {
+        question: "Are escalators available for transit and retail projects?",
+        answer:
+          "Yes. Escalators can be specified for metro, rail, mall and public building projects with heavy-duty drives, safety features and finishes suited to the location.",
+      },
+    ],
+    related: ["japan", "china", "singapore"],
+    keywords: [
+      "elevator supplier South Korea",
+      "elevator supplier Seoul",
+      "high-speed elevator Korea",
+      "escalator supplier Korea",
+    ],
+  },
+
+  {
+    slug: "singapore",
+    country: "Singapore",
+    shortName: "Singapore",
+    code: "SG",
+    region: "Southeast Asia",
+    wave: 2,
+    currency: "SGD",
+    languages: ["English", "Mandarin Chinese", "Malay", "Tamil"],
+    heroImage: "/building-exterior.jpg",
+    heroAlt: "High-rise commercial development in Singapore",
+    headline: ["ELEVATORS & ESCALATORS", "FOR SINGAPORE PROJECTS"],
+    metaTitle: "Elevator & Escalator Supplier in Singapore | Fuji Fenix",
+    metaDescription:
+      "Fuji Fenix supplies passenger, high-speed, hospital and escalator systems for Singapore's high-rise, transit, healthcare and mixed-use developments, with full engineering documentation.",
+    intro: [
+      "Singapore's development model favours high-density, transit-connected projects with demanding standards for safety, accessibility and whole-life performance. Redevelopment, MRT expansion and healthcare capacity keep vertical transportation in constant demand.",
+      "Fuji Fenix supports Singaporean developers, contractors and consultants with passenger, high-speed, hospital and escalator systems. Equipment is engineered to the project specification and Singapore's building and lift requirements, with installation and inspection delivered through the appointed local partner.",
+    ],
+    cities: ["Marina Bay", "Jurong", "Punggol", "Tampines", "Woodlands"],
+    demandDrivers: [
+      {
+        title: "High-density redevelopment",
+        description:
+          "Residential, commercial and mixed-use redevelopment requires efficient lift cores, accurate levelling and finishes that meet the project's positioning.",
+      },
+      {
+        title: "MRT and transit expansion",
+        description:
+          "New stations and interchanges need escalators and moving walks designed for continuous heavy use and public safety.",
+      },
+      {
+        title: "Healthcare capacity",
+        description:
+          "Hospitals and medical campuses specify bed elevators with priority controls, hygienic finishes and service access planning.",
+      },
+      {
+        title: "Retail and hospitality",
+        description:
+          "Malls, hotels and integrated resorts need escalators, panoramic lifts and a smooth passenger experience across high-traffic areas.",
+      },
+    ],
+    projectTypes: [
+      "High-rise residential and mixed-use developments",
+      "MRT stations and transit infrastructure",
+      "Hospitals and healthcare campuses",
+      "Shopping malls and integrated developments",
+      "Hotels and commercial towers",
+    ],
+    buyerSegments: [
+      "Developers and property owners",
+      "Main contractors",
+      "MEP and vertical transport consultants",
+      "Elevator distributors and service companies",
+    ],
+    logistics: {
+      ports: "Port of Singapore",
+      note:
+        "Equipment is shipped through Singapore and delivered to site against the construction programme. Packing, documentation and just-in-time delivery sequencing are agreed with the contractor.",
+    },
+    compliance: [
+      {
+        standard: "BCA requirements",
+        note:
+          "Building and Construction Authority requirements influence lift design, accessibility and the approval process. The submission route is managed by the appointed local installer.",
+      },
+      {
+        standard: "SS 550",
+        note:
+          "The Singapore code of practice for electric passenger and goods lifts is commonly referenced. Applicability is confirmed with the project consultant.",
+      },
+      {
+        standard: "Fire Code",
+        note:
+          "Fire-fighting lift, lobby protection, signage and emergency operation requirements are incorporated where the project requires them.",
+      },
+    ],
+    focuses: [
+      "passenger-elevators",
+      "high-speed-elevators",
+      "hospital-elevators",
+      "escalators",
+    ],
+    focusNotes: {
+      "passenger-elevators":
+        "Passenger elevators for Singapore's high-density developments are configured for efficient handling capacity, smooth ride quality and durable finishes suited to heavy daily use.",
+      "high-speed-elevators":
+        "High-speed systems for Singapore towers use gearless traction, VVVF drives and group control to support tall commercial and mixed-use cores.",
+      "hospital-elevators":
+        "Hospital bed elevators for Singapore healthcare projects include stretcher access, priority controls and hygienic finishes for clinical environments.",
+      escalators:
+        "Escalators for Singapore's MRT stations, malls and public buildings are specified for continuous heavy duty, passenger safety and design integration.",
+    },
+    faqs: [
+      {
+        question: "Does Fuji Fenix supply elevators to Singapore?",
+        answer:
+          "Yes. We supply engineered elevator and escalator systems to Singaporean projects through developers, contractors and local partners. Installation and BCA-related approvals are coordinated with the appointed local team.",
+      },
+      {
+        question: "Which standards are commonly referenced in Singapore?",
+        answer:
+          "BCA requirements, SS 550 and the Fire Code are commonly referenced for lift projects. The final compliance and submission matrix is confirmed with the project consultant and local installer.",
+      },
+      {
+        question: "Can you supply escalators for MRT stations?",
+        answer:
+          "Yes. Escalators and moving walks can be configured for transit projects with heavy-duty drives, monitoring features and finishes suited to station architecture.",
+      },
+      {
+        question: "Are high-speed elevators available for Singapore towers?",
+        answer:
+          "Yes. High-speed gearless systems with group or destination control can be configured for tall buildings, with speed and capacity confirmed through traffic analysis.",
+      },
+    ],
+    related: ["malaysia", "indonesia", "thailand"],
+    keywords: [
+      "elevator supplier Singapore",
+      "escalator supplier Singapore",
+      "high-speed elevator Singapore",
+      "hospital elevator Singapore",
+    ],
+  },
+
+  {
+    slug: "thailand",
+    country: "Thailand",
+    shortName: "Thailand",
+    code: "TH",
+    region: "Southeast Asia",
+    wave: 3,
+    currency: "THB",
+    languages: ["Thai", "English"],
+    heroImage: "/panoramic.jpg",
+    heroAlt: "Panoramic elevator and modern architectural development in Thailand",
+    headline: ["ELEVATORS & ESCALATORS", "FOR THAILAND PROJECTS"],
+    metaTitle: "Elevator & Escalator Supplier in Thailand | Fuji Fenix",
+    metaDescription:
+      "Fuji Fenix supplies passenger, home, hospital and escalator systems for Bangkok, Phuket and Thailand-wide residential, hospitality, healthcare and retail projects.",
+    intro: [
+      "Thailand's construction market spans Bangkok condominiums, tourism-led hospitality projects, private healthcare and regional retail centres. Each segment has different expectations for passenger flow, cabin finish and operating cost.",
+      "Fuji Fenix supports Thai developers, contractors and elevator partners with passenger, home, hospital and escalator systems. Equipment is configured to the project specification and the applicable Thai building requirements, with installation and inspection delivered through the appointed local partner.",
+    ],
+    cities: ["Bangkok", "Chiang Mai", "Phuket", "Pattaya", "Khon Kaen"],
+    demandDrivers: [
+      {
+        title: "Bangkok condominium supply",
+        description:
+          "Residential towers need efficient passenger cores, quiet operation and finishes that support sales in a competitive condominium market.",
+      },
+      {
+        title: "Tourism and hospitality",
+        description:
+          "Hotels and resorts in Bangkok, Phuket and Pattaya specify panoramic lifts, smooth ride quality and interiors coordinated with the guest experience.",
+      },
+      {
+        title: "Private healthcare",
+        description:
+          "Hospitals and clinics, including medical tourism facilities, require bed elevators with priority controls and hygienic finishes.",
+      },
+      {
+        title: "Retail and regional development",
+        description:
+          "Malls and mixed-use centres across Thailand need escalators sized for high footfall and long operating hours.",
+      },
+    ],
+    projectTypes: [
+      "Condominium and residential towers",
+      "Hotels, resorts and serviced apartments",
+      "Hospitals and medical centres",
+      "Shopping malls and retail centres",
+      "Mixed-use and transit-linked developments",
+    ],
+    buyerSegments: [
+      "Property developers",
+      "Main contractors",
+      "MEP and vertical transport consultants",
+      "Elevator distributors and service companies",
+    ],
+    logistics: {
+      ports: "Laem Chabang, Bangkok and Map Ta Phut",
+      note:
+        "Equipment is shipped through the port best suited to the project location and delivered against the construction programme. Export packing, customs documentation and inland delivery are agreed per order.",
+    },
+    compliance: [
+      {
+        standard: "Building Control Act",
+        note:
+          "Thai building and fire requirements influence shaft design, lobby protection and emergency operation. The approval route is confirmed with the project consultant and local authority.",
+      },
+      {
+        standard: "Thai Industrial Standards (TIS)",
+        note:
+          "Where TIS references are specified, the documentation package is prepared to support the project's acceptance process.",
+      },
+      {
+        standard: "Local authority permits",
+        note:
+          "Installation, inspection and operating permits are handled through the appointed local partner under the relevant municipal or provincial process.",
+      },
+    ],
+    focuses: [
+      "passenger-elevators",
+      "home-elevators",
+      "hospital-elevators",
+      "escalators",
+    ],
+    focusNotes: {
+      "passenger-elevators":
+        "Passenger elevators for Thai condominiums and commercial buildings are configured for efficient peaks, quiet operation and finishes suited to the project's market positioning.",
+      "home-elevators":
+        "Home lifts for Thai villas and multi-storey houses combine compact equipment, customised cabins and residential safety features, with feasibility confirmed by site survey.",
+      "hospital-elevators":
+        "Hospital bed elevators for Thai healthcare projects are specified with stretcher access, priority controls and easy-clean finishes for clinical use.",
+      escalators:
+        "Escalators for Thai malls, hotels and transport buildings are selected for high footfall, continuous duty and integration with the interior design.",
+    },
+    faqs: [
+      {
+        question: "Does Fuji Fenix supply elevators to Thailand?",
+        answer:
+          "Yes. We supply engineered elevator and escalator systems to Thai projects through developers, contractors and local partners. Installation, inspection and local permits are coordinated with the appointed team.",
+      },
+      {
+        question: "Which standards apply to Thai lift projects?",
+        answer:
+          "The Building Control Act, any specified TIS references and local authority requirements apply. The final compliance and permit matrix is confirmed with the project consultant and local partner.",
+      },
+      {
+        question: "Are villa lifts available in Thailand?",
+        answer:
+          "Yes. Compact home elevators are available for villas, resorts and multi-storey houses, subject to a site survey confirming shaft, pit, overhead and power requirements.",
+      },
+      {
+        question: "Can you supply panoramic lifts for hotels?",
+        answer:
+          "Yes. Glass and semi-glass cabins, feature lighting and finishes can be developed with the architect and confirmed against structural and safety requirements.",
+      },
+    ],
+    related: ["vietnam", "malaysia", "singapore"],
+    keywords: [
+      "elevator supplier Thailand",
+      "elevator supplier Bangkok",
+      "villa lift Thailand",
+      "escalator supplier Thailand",
+    ],
+  },
+
+  {
+    slug: "philippines",
+    country: "Philippines",
+    shortName: "Philippines",
+    code: "PH",
+    region: "Southeast Asia",
+    wave: 3,
+    currency: "PHP",
+    languages: ["Filipino", "English"],
+    heroImage: "/escalator.jpg",
+    heroAlt: "Escalator installation for a Philippine retail and transit project",
+    headline: ["ELEVATORS & ESCALATORS", "FOR PHILIPPINES PROJECTS"],
+    metaTitle: "Elevator & Escalator Supplier in the Philippines | Fuji Fenix",
+    metaDescription:
+      "Fuji Fenix supplies passenger, home, hospital and freight elevators plus escalators for Metro Manila, Cebu and Davao residential, BPO, healthcare and retail projects.",
+    intro: [
+      "The Philippines combines a fast-growing BPO office market, dense residential condominium development, expanding healthcare capacity and large retail formats. Metro Manila and regional cities such as Cebu and Davao continue to add vertical capacity.",
+      "Fuji Fenix supports Philippine developers, contractors and elevator partners with passenger, home, hospital and freight elevators, plus escalators. Equipment is configured to the project specification and the applicable Philippine building requirements, with installation and permits handled through the appointed local partner.",
+    ],
+    cities: ["Metro Manila", "Cebu", "Davao", "Clark", "Iloilo"],
+    demandDrivers: [
+      {
+        title: "BPO and office towers",
+        description:
+          "Office developments need efficient passenger cores, group control and reliable operation across long daily shifts.",
+      },
+      {
+        title: "Residential condominiums",
+        description:
+          "Dense condominium projects require space-efficient passenger lifts, durable finishes and dependable service access.",
+      },
+      {
+        title: "Healthcare expansion",
+        description:
+          "Hospitals and clinics specify bed elevators with stretcher access, priority controls and hygienic finishes.",
+      },
+      {
+        title: "Retail and logistics",
+        description:
+          "Malls, warehouses and distribution facilities need escalators and freight lifts sized for high throughput and heavy goods movement.",
+      },
+    ],
+    projectTypes: [
+      "BPO and office towers",
+      "Residential condominiums",
+      "Hospitals and clinics",
+      "Shopping malls and retail centres",
+      "Warehouses and logistics facilities",
+    ],
+    buyerSegments: [
+      "Property developers",
+      "Main contractors",
+      "MEP and vertical transport consultants",
+      "Elevator distributors and service companies",
+    ],
+    logistics: {
+      ports: "Manila, Cebu and Subic",
+      note:
+        "Port selection follows the project location and construction schedule. Export packing, customs documentation and inland delivery are coordinated with the contractor and freight forwarder.",
+    },
+    compliance: [
+      {
+        standard: "National Building Code (PD 1096)",
+        note:
+          "Building, fire and accessibility requirements influence shaft design, lobby protection and emergency operation. The applicable route is confirmed with the project consultant and local building official.",
+      },
+      {
+        standard: "Philippine Electrical Code",
+        note:
+          "Power supply, protection and emergency operation requirements are coordinated with the project's electrical consultant and the local utility.",
+      },
+      {
+        standard: "Local government permits",
+        note:
+          "Installation, inspection and operating permits are handled through the appointed local partner under the relevant city or municipal process.",
+      },
+    ],
+    focuses: [
+      "passenger-elevators",
+      "home-elevators",
+      "hospital-elevators",
+      "freight-elevators",
+    ],
+    focusNotes: {
+      "passenger-elevators":
+        "Passenger elevators for Philippine condominium and BPO projects are configured for efficient peaks, durable finishes and dependable operation in high-usage buildings.",
+      "home-elevators":
+        "Home lifts for Philippine villas and multi-storey houses combine compact equipment, customised cabins and residential safety features, subject to site survey.",
+      "hospital-elevators":
+        "Hospital bed elevators for Philippine healthcare projects include stretcher access, priority operation and hygienic, easy-clean finishes.",
+      "freight-elevators":
+        "Freight lifts for Philippine warehouses and retail back-of-house are engineered around pallet sizes, trolley loads and the handling equipment used on site.",
+    },
+    faqs: [
+      {
+        question: "Does Fuji Fenix supply elevators to the Philippines?",
+        answer:
+          "Yes. We supply engineered elevator and escalator systems to Philippine projects through developers, contractors and local partners. Installation and local permits are coordinated with the appointed team.",
+      },
+      {
+        question: "Which requirements apply to Philippine lift projects?",
+        answer:
+          "The National Building Code, Philippine Electrical Code and local government permit requirements apply, together with the project specification. The final compliance matrix is confirmed with the consultant and local authority.",
+      },
+      {
+        question: "Are freight lifts available for warehouses?",
+        answer:
+          "Yes. Freight elevators can be configured for pallets, trolleys, equipment and heavy goods, with load ratings and platform dimensions confirmed during engineering.",
+      },
+      {
+        question: "Can you supply home lifts for existing houses?",
+        answer:
+          "In many cases yes, subject to a site survey. Compact MRL systems or self-supporting structures can reduce building work where space is limited.",
+      },
+    ],
+    related: ["vietnam", "indonesia", "malaysia"],
+    keywords: [
+      "elevator supplier Philippines",
+      "elevator supplier Manila",
+      "freight elevator Philippines",
+      "home lift Philippines",
+    ],
+  },
 ];
 
 export const WAVE_ORDER: MarketWave[] = ["priority", 1, 2, 3];
@@ -2206,6 +2831,70 @@ export function getMarketsByWave(wave: MarketWave): Market[] {
   return MARKETS.filter((market) => market.wave === wave);
 }
 
+/**
+ * Business priority tier for a market, based on the Nov 2026 growth plan.
+ * Returns null for markets that sit outside the three explicit priority tiers
+ * (China, India, Japan, South Korea and Singapore).
+ */
+export function getPriorityTier(market: Market): MarketPriorityTier | null {
+  for (const tier of [1, 2, 3] as const) {
+    if (PRIORITY_TIER_MARKETS[tier].some((entry) => entry.slug === market.slug)) {
+      return tier;
+    }
+  }
+  return null;
+}
+
+/** Markets in a priority tier, in the order defined by the growth plan. */
+export function getPriorityMarkets(tier: MarketPriorityTier): Market[] {
+  return PRIORITY_TIER_MARKETS[tier]
+    .map((entry) => getMarket(entry.slug))
+    .filter((market): market is Market => Boolean(market));
+}
+
+/** Priority markets that offer a specific product focus. */
+export function getPriorityMarketsForFocus(
+  focus: FocusSlug,
+  tiers: MarketPriorityTier[] = [1, 2]
+): Market[] {
+  const seen = new Set<string>();
+  const result: Market[] = [];
+
+  for (const tier of tiers) {
+    for (const market of getPriorityMarkets(tier)) {
+      if (!market.focuses.includes(focus) || seen.has(market.slug)) continue;
+      seen.add(market.slug);
+      result.push(market);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Priority-tier label used on cards and country pages. Markets outside the
+ * three explicit tiers fall back to their programme label.
+ */
+export function marketPriorityLabel(market: Market): string {
+  const tier = getPriorityTier(market);
+  if (tier) return PRIORITY_TIER_COPY[tier].label;
+  return market.wave === "priority" ? "Priority market" : "Asia priority market";
+}
+
+/** All markets ordered by business priority, then by the original dataset order. */
+export function getMarketsInPriorityOrder(): Market[] {
+  const rank = new Map<string, number>();
+  ([1, 2, 3] as const).forEach((tier) => {
+    PRIORITY_TIER_MARKETS[tier].forEach((entry, index) => {
+      rank.set(entry.slug, tier * 100 + index);
+    });
+  });
+
+  return [...MARKETS].sort(
+    (a, b) => (rank.get(a.slug) ?? 9999) - (rank.get(b.slug) ?? 9999)
+  );
+}
+
 export function getRegionOrder(): MarketRegion[] {
   return ["East Asia", "South Asia", "Middle East", "Southeast Asia", "Africa"];
 }
@@ -2214,12 +2903,70 @@ export function getMarketsForFocus(focus: FocusSlug): Market[] {
   return MARKETS.filter((market) => market.focuses.includes(focus));
 }
 
+/**
+ * Canonical country URL, keyed by ISO 3166-1 alpha-2 code:
+ *   china -> /cn, pakistan -> /pk, uae -> /ae, japan -> /jp
+ *
+ * Country-code paths are the indexable URLs. The older /markets/<slug>
+ * routes 308-redirect to these from `proxy.ts`.
+ */
 export function marketPath(slug: string): string {
-  return `/markets/${slug}`;
+  const market = getMarket(slug);
+  return `/${(market?.code ?? slug).toLowerCase()}`;
 }
 
 export function marketFocusPath(marketSlug: string, focusSlug: FocusSlug): string {
+  return `${marketPath(marketSlug)}/${focusSlug}`;
+}
+
+/** Legacy URL retained only so inbound links can be redirected. */
+export function legacyMarketPath(slug: string): string {
+  return `/markets/${slug}`;
+}
+
+/** Legacy URL retained only so inbound links can be redirected. */
+export function legacyMarketFocusPath(
+  marketSlug: string,
+  focusSlug: FocusSlug
+): string {
   return `/markets/${marketSlug}/${focusSlug}`;
+}
+
+export function getMarketByCode(code: string): Market | undefined {
+  const normalized = code.trim().toUpperCase();
+  return MARKETS.find((market) => market.code === normalized);
+}
+
+/** The /markets hub stays indexable; /markets/<slug> redirects to /<code>. */
+export function isCountryCodePathSegment(segment: string): boolean {
+  return Boolean(getMarketByCode(segment));
+}
+
+/** Asia is the primary growth region for the international programme. */
+export const ASIA_REGIONS: MarketRegion[] = [
+  "East Asia",
+  "South Asia",
+  "Southeast Asia",
+  "Middle East",
+];
+
+export function isAsiaMarket(market: Market): boolean {
+  return ASIA_REGIONS.includes(market.region);
+}
+
+export function getAsiaMarkets(): Market[] {
+  const order = getRegionOrder();
+  return [...MARKETS]
+    .filter(isAsiaMarket)
+    .sort(
+      (a, b) =>
+        order.indexOf(a.region) - order.indexOf(b.region) ||
+        a.country.localeCompare(b.country)
+    );
+}
+
+export function getAsiaMarketsForFocus(focus: FocusSlug): Market[] {
+  return getAsiaMarkets().filter((market) => market.focuses.includes(focus));
 }
 
 export function getRelatedMarkets(market: Market): Market[] {
