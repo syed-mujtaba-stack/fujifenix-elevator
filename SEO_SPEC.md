@@ -119,9 +119,11 @@ Implement **schema.org** markup for every page type:
     "availableLanguage": ["en", "zh", "hi", "ar", "es"]
   }],
   "sameAs": [
-    "https://www.linkedin.com/company/fujifenix",
-    "https://www.facebook.com/fujifenix",
-    "https://www.youtube.com/fujifenix"
+    "https://www.instagram.com/fujifenix/",
+    "https://www.threads.com/@fujifenix",
+    "https://www.facebook.com/profile.php?id=61596154745650&sk=directory_links",
+    "https://x.com/fujifenix",
+    "https://www.linkedin.com/in/fuji-fenix-219525441/"
   ]
 }
 ```

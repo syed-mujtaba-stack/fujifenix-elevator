@@ -1,5 +1,7 @@
 // lib/structured-data.ts — Pure schema functions (Server-safe, no "use client")
 
+import { SOCIAL_URLS } from "./social";
+
 const BASE_URL = "https://fujifenix.com";
 
 export function organizationSchema() {
@@ -42,12 +44,7 @@ export function organizationSchema() {
         availableLanguage: ["en", "zh"],
       },
     ],
-    sameAs: [
-      "https://www.linkedin.com/company/fujifenix",
-      "https://www.facebook.com/fujifenix",
-      "https://www.youtube.com/fujifenix",
-      "https://www.instagram.com/fujifenix",
-    ],
+    sameAs: [...SOCIAL_URLS],
   };
 }
 

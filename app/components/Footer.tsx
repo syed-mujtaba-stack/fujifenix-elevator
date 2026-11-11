@@ -5,6 +5,7 @@ import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { CONTACT } from "@/app/data/content";
 import Logo from "./Logo";
+import SocialLinks from "./SocialLinks";
 import WeChatQRButton from "./WeChatQR";
 
 export default function Footer() {
@@ -39,6 +40,12 @@ export default function Footer() {
               Combining advanced technology with precision engineering to deliver world-class vertical
               transportation systems.
             </p>
+            <div className="mt-8">
+              <div className="eyebrow text-slate-500 mb-4" style={{ fontSize: "10px" }}>
+                FOLLOW FUJI FENIX
+              </div>
+              <SocialLinks variant="dark" />
+            </div>
           </div>
 
           <Link

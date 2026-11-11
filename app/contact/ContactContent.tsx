@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import SectionHeading from "@/app/components/SectionHeading";
+import SocialLinks from "@/app/components/SocialLinks";
 import WeChatQRButton from "@/app/components/WeChatQR";
 import ContactForm from "./ContactForm";
 import { CONTACT, COMPANY } from "@/app/data/content";
@@ -193,6 +194,12 @@ export default function ContactContent() {
                 <Link href="/solutions" className="eyebrow text-slate-500 hover:text-[#0047BB] transition-colors">
                   INDUSTRY SOLUTIONS
                 </Link>
+              </div>
+              <div className="mt-10 pt-8 border-t border-slate-200">
+                <div className="eyebrow text-slate-400 mb-4" style={{ fontSize: "11px" }}>
+                  FOLLOW FUJI FENIX
+                </div>
+                <SocialLinks variant="light" />
               </div>
             </div>
 
