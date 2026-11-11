@@ -8,6 +8,7 @@ import {
 } from "@/lib/product-focuses";
 import {
   MARKETS,
+  getAsiaMarkets,
   getMarketsByWave,
   getRegionOrder,
   waveLabel,
@@ -32,7 +33,7 @@ const PATH = "/markets";
 export const metadata: Metadata = {
   title: { absolute: "Global Elevator & Escalator Markets | Fuji Fenix" },
   description:
-    "Explore Fuji Fenix elevator and escalator supply for 17 international markets across Asia, the Middle East and Africa. Country pages, product solutions and project support.",
+    "Explore Fuji Fenix elevator and escalator supply for 22 international markets, with Asia as the priority region. Country pages, product solutions and project support.",
   alternates: {
     canonical: PATH,
     languages: { en: PATH, "x-default": PATH },
@@ -73,7 +74,7 @@ const HUB_FAQS = [
   {
     question: "Which countries does Fuji Fenix supply elevators and escalators to?",
     answer:
-      "Our current market programme covers China, India, Pakistan, the UAE, Saudi Arabia, Kenya, Ethiopia, South Africa, Nigeria, Tanzania, Bangladesh, Qatar, Oman, Kuwait, Indonesia, Malaysia and Vietnam. Projects in other countries can be reviewed on request, subject to logistics and service coverage.",
+      "Our market programme covers 22 countries, with Asia as the priority region. In Asia this includes China, India, Pakistan, Bangladesh, Japan, South Korea, Singapore, Malaysia, Thailand, the Philippines, Indonesia, Vietnam, the UAE, Saudi Arabia, Qatar, Oman and Kuwait. The programme also covers Kenya, Ethiopia, South Africa, Nigeria and Tanzania. Projects in other countries can be reviewed on request, subject to logistics and service coverage.",
   },
   {
     question: "Can equipment be configured to local standards?",
@@ -168,9 +169,11 @@ export default function MarketsPage() {
     }))
     .filter((entry) => entry.markets.length > 0);
 
+  const asiaMarkets = getAsiaMarkets();
+
   const stats = [
     { value: `${MARKETS.length}`, label: "Target markets" },
-    { value: `${regions.length}`, label: "Regions covered" },
+    { value: `${asiaMarkets.length}`, label: "Asia markets" },
     { value: "1", label: "Shanghai base" },
     { value: `${FOCUS_ORDER.length}`, label: "Product focuses" },
   ];
@@ -280,6 +283,26 @@ export default function MarketsPage() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Asia priority */}
+      <section className="border-t border-slate-200 bg-white py-16 md:py-24">
+        <div className="container-gutter mx-auto max-w-[1440px]">
+          <SectionTitle
+            eyebrow="Asia priority"
+            title="Asia is our primary international region"
+            description="China is our manufacturing base. India, Pakistan, the Gulf and Southeast Asia are the fastest-growing demand centres for elevators, escalators and moving walks. Country pages explain the local project types, standards and shipping routes for each market."
+          />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {asiaMarkets.map((market) => (
+              <MarketCard key={market.slug} market={market} />
+            ))}
+          </div>
+          <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
+            {asiaMarkets.length} Asian markets · East Asia, South Asia, Southeast
+            Asia and the Middle East
+          </p>
         </div>
       </section>
 

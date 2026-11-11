@@ -6,7 +6,8 @@ import PageHero from "@/app/components/PageHero";
 import { StructuredData } from "@/app/components/StructuredData";
 import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
 import {
-  getMarket,
+  getAsiaMarketsForFocus,
+  getMarketByCode,
   getRelatedMarkets,
   MARKETS,
   marketFocusPath,
@@ -14,6 +15,7 @@ import {
 } from "@/lib/markets";
 import {
   absoluteUrl,
+  countryLanguageTag,
   marketFocusMetadata,
   marketFocusServiceSchema,
   webPageSchema,
@@ -24,19 +26,20 @@ import {
   type ProductFocus,
 } from "@/lib/product-focuses";
 import { breadcrumbSchema, faqSchema } from "@/lib/structured-data";
-import Breadcrumbs from "../../_components/Breadcrumbs";
-import CtaBand from "../../_components/CtaBand";
-import FaqList from "../../_components/FaqList";
-import FocusCard from "../../_components/FocusCard";
-import MarketNote from "../../_components/MarketNote";
-import SectionTitle from "../../_components/SectionTitle";
+import Breadcrumbs from "@/app/markets/_components/Breadcrumbs";
+import CtaBand from "@/app/markets/_components/CtaBand";
+import FaqList from "@/app/markets/_components/FaqList";
+import FocusCard from "@/app/markets/_components/FocusCard";
+import MarketNav from "@/app/markets/_components/MarketNav";
+import MarketNote from "@/app/markets/_components/MarketNote";
+import SectionTitle from "@/app/markets/_components/SectionTitle";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
   return MARKETS.flatMap((market) =>
     market.focuses.map((focus) => ({
-      country: market.slug,
+      country: market.code.toLowerCase(),
       focus,
     }))
   );
@@ -45,8 +48,8 @@ export function generateStaticParams() {
 function resolveFocus(
   country: string,
   focusSlug: string
-): { market: NonNullable<ReturnType<typeof getMarket>>; focus: ProductFocus } | null {
-  const market = getMarket(country);
+): { market: NonNullable<ReturnType<typeof getMarketByCode>>; focus: ProductFocus } | null {
+  const market = getMarketByCode(country);
   const focus = PRODUCT_FOCUSES[focusSlug as FocusSlug];
   if (!market || !focus || !market.focuses.includes(focus.slug)) return null;
   return { market, focus };
@@ -77,6 +80,9 @@ export default async function MarketFocusPage({
   const otherFocuses = market.focuses
     .filter((slug) => slug !== focus.slug)
     .map((slug) => PRODUCT_FOCUSES[slug]);
+  const asiaMarkets = getAsiaMarketsForFocus(focus.slug).filter(
+    (entry) => entry.slug !== market.slug
+  );
 
   const faqs = [...focus.faqs, ...market.faqs.slice(0, 3)];
 
@@ -101,6 +107,8 @@ export default async function MarketFocusPage({
           description: focusNote,
           path: marketFocusPath(market.slug, focus.slug),
           about: `${focus.title} for ${market.country}`,
+          language: countryLanguageTag(market.code),
+          image: focus.image,
         })}
       />
 
@@ -126,6 +134,8 @@ export default async function MarketFocusPage({
           { label: focus.shortTitle },
         ]}
       />
+
+      <MarketNav currentCode={market.code} />
 
       {/* Product-market intro */}
       <section className="bg-white py-16 md:py-24">
@@ -357,6 +367,33 @@ export default async function MarketFocusPage({
                   kicker={market.shortName}
                 />
               ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Same product across Asia (internal linking for the priority region) */}
+      {asiaMarkets.length > 0 ? (
+        <section className="border-t border-slate-200 bg-slate-50 py-14 md:py-16">
+          <div className="container-gutter mx-auto max-w-[1440px]">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <span className="eyebrow text-[#0047BB]">Asia network</span>
+                <h2 className="heading mt-2 text-[clamp(20px,2.2vw,26px)] text-[#0f172a]">
+                  {focus.shortTitle} in other Asian markets
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {asiaMarkets.map((entry) => (
+                  <Link
+                    key={entry.slug}
+                    href={marketFocusPath(entry.slug, focus.slug)}
+                    className="border border-slate-200 bg-white px-3 py-2 text-[11px] font-bold uppercase tracking-[0.1em] text-slate-600 transition-colors hover:border-[#0047BB] hover:text-[#0047BB]"
+                  >
+                    {entry.shortName}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>

@@ -1,11 +1,123 @@
+# robots.txt — Fuji Fenix (https://fujifenix.com)
+#
+# Public marketing pages are open to every search engine. Admin, Studio,
+# account and API routes are excluded. /_next/static/ and /_next/image/ stay
+# crawlable: Google, Bing and Baidu need the CSS, JS and optimised images to
+# render and index the pages correctly.
+
 User-agent: *
 Allow: /
-Allow: /_next/image
+Allow: /_next/static/
+Allow: /_next/image/
+Disallow: /api/
+Disallow: /studio/
+Disallow: /studio
+Disallow: /login
+Disallow: /dashboard/
+Disallow: /dashboard
+Disallow: /admin/
+
+# Google
+User-agent: Googlebot
+Allow: /
+Allow: /_next/static/
+Allow: /_next/image/
 Disallow: /api/
 Disallow: /studio/
 Disallow: /login
-Disallow: /dashboard
-Disallow: /_next/
+Disallow: /dashboard/
+Disallow: /admin/
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /_next/image/
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Allow: /_next/static/
+Allow: /_next/image/
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Baidu (China)
+User-agent: Baiduspider
+Allow: /
+Allow: /_next/static/
+Allow: /_next/image/
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+Disallow: /admin/
+
+User-agent: Baiduspider-image
+Allow: /
+Allow: /_next/image/
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+
+# Sogou (China)
+User-agent: Sogou web spider
+Allow: /
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+Disallow: /admin/
+
+# 360 Search (China)
+User-agent: 360Spider
+Allow: /
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Shenma / Yisou (China mobile)
+User-agent: Yisouspider
+Allow: /
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Naver (South Korea)
+User-agent: Yeti
+Allow: /
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Daum / Kakao (South Korea)
+User-agent: Daum
+Allow: /
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+Disallow: /api/
+Disallow: /studio/
+Disallow: /login
+Disallow: /dashboard/
 Disallow: /admin/
 
 Sitemap: https://fujifenix.com/sitemap.xml

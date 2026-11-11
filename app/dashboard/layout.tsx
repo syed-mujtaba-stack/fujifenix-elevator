@@ -1,9 +1,20 @@
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { AdminShell, type ShellUser } from "@/components/admin/AdminShell";
 import type { AdminNavItem } from "@/components/admin/Sidebar";
 import { adminClient } from "@/sanity/lib/server";
 import { isSessionValid, hasPermission, type AdminRole } from "@/lib/admin";
+
+export const metadata: Metadata = {
+  title: "Admin",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: { index: false, follow: false },
+  },
+};
 
 /**
  * Server-side gate for the entire /dashboard area.

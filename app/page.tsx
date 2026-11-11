@@ -37,6 +37,10 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://fujifenix.com",
+    languages: {
+      en: "https://fujifenix.com",
+      "x-default": "https://fujifenix.com",
+    },
   },
   openGraph: {
     title: "Fuji Fenix Elevator | Global Elevator & Escalator Manufacturer",

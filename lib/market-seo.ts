@@ -1,11 +1,12 @@
 /**
- * SEO helpers for the /markets programme.
+ * SEO helpers for the international market programme.
  *
- * Canonicals are relative (metadataBase is configured in app/layout.tsx).
- * hreflang deliberately lists only English + x-default: there are no
- * indexable translated market pages yet, and adding unsupported language
- * alternates would be incorrect. Add locale paths here only when real
- * translated pages exist.
+ * Country pages use ISO 3166-1 alpha-2 URLs (/cn, /pk, /ae) and are
+ * English-language pages targeted at a specific country. hreflang therefore
+ * uses `en-<CODE>` plus the generic `en` and `x-default` fallbacks. No
+ * language alternates are emitted for languages that do not have real
+ * translated pages (Google Translate is a client-side overlay, not an
+ * indexable locale).
  */
 
 import type { Metadata } from "next";
@@ -31,11 +32,17 @@ export function absoluteImage(src: string): string {
   return encodeURI(`${SITE_URL}${path}`);
 }
 
-function marketAlternates(path: string): Metadata["alternates"] {
+/** BCP 47 language-region tag for country-targeted English pages. */
+export function countryLanguageTag(code: string): string {
+  return `en-${code.toUpperCase()}`;
+}
+
+function marketAlternates(path: string, code: string): Metadata["alternates"] {
   return {
     canonical: path,
     languages: {
       en: path,
+      [countryLanguageTag(code)]: path,
       "x-default": path,
     },
   };
@@ -49,10 +56,10 @@ export function marketMetadata(market: Market): Metadata {
     title: { absolute: market.metaTitle },
     description: market.metaDescription,
     keywords: market.keywords,
-    alternates: marketAlternates(path),
+    alternates: marketAlternates(path, market.code),
     openGraph: {
       type: "website",
-      locale: "en_US",
+      locale: `en_${market.code}`,
       url: path,
       siteName: "Fuji Fenix Elevator",
       title: market.metaTitle,
@@ -68,6 +75,7 @@ export function marketMetadata(market: Market): Metadata {
     },
     twitter: {
       card: "summary_large_image",
+      site: "@fujifenix",
       title: market.metaTitle,
       description: market.metaDescription,
       images: [image],
@@ -86,6 +94,8 @@ export function marketMetadata(market: Market): Metadata {
     other: {
       "geo.region": market.code,
       "geo.placename": market.country,
+      "content-language": "en",
+      "applicable-device": "pc,mobile",
     },
   };
 }
@@ -96,7 +106,9 @@ export function marketFocusMetadata(
 ): Metadata {
   const path = marketFocusPath(market.slug, focus.slug);
   const title = `${focus.shortTitle} for ${market.shortName} Projects | Fuji Fenix`;
-  const description = `${focus.title} for ${market.country} projects by Fuji Fenix. Engineered configurations, technical drawings and export supply for ${market.cities[0]} and beyond.`;
+  const description = `${focus.title} for ${market.country} projects by Fuji Fenix. Engineered configurations, technical drawings and export supply for ${market.cities
+    .slice(0, 3)
+    .join(", ")} and beyond.`;
   const image = absoluteImage(focus.image);
 
   return {
@@ -104,13 +116,16 @@ export function marketFocusMetadata(
     description,
     keywords: [
       ...focus.keywords.map((keyword) => `${keyword} ${market.shortName}`),
+      ...market.cities.slice(0, 3).map(
+        (city) => `${focus.shortTitle.toLowerCase()} ${city}`
+      ),
       `${focus.shortTitle.toLowerCase()} ${market.country}`,
       `elevator supplier ${market.shortName}`,
     ],
-    alternates: marketAlternates(path),
+    alternates: marketAlternates(path, market.code),
     openGraph: {
       type: "website",
-      locale: "en_US",
+      locale: `en_${market.code}`,
       url: path,
       siteName: "Fuji Fenix Elevator",
       title,
@@ -126,6 +141,7 @@ export function marketFocusMetadata(
     },
     twitter: {
       card: "summary_large_image",
+      site: "@fujifenix",
       title,
       description,
       images: [image],
@@ -144,6 +160,8 @@ export function marketFocusMetadata(
     other: {
       "geo.region": market.code,
       "geo.placename": market.country,
+      "content-language": "en",
+      "applicable-device": "pc,mobile",
     },
   };
 }
@@ -153,6 +171,8 @@ export function webPageSchema(input: {
   description: string;
   path: string;
   about?: string;
+  language?: string;
+  image?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -160,8 +180,16 @@ export function webPageSchema(input: {
     name: input.name,
     description: input.description,
     url: absoluteUrl(input.path),
-    inLanguage: "en",
+    inLanguage: input.language ?? "en",
     ...(input.about ? { about: input.about } : {}),
+    ...(input.image
+      ? {
+          primaryImageOfPage: {
+            "@type": "ImageObject",
+            url: absoluteImage(input.image),
+          },
+        }
+      : {}),
     isPartOf: {
       "@type": "WebSite",
       name: "Fuji Fenix Elevator",
@@ -188,6 +216,7 @@ export function marketServiceSchema(market: Market) {
       "Elevator and escalator manufacturing, engineering and export supply",
     description: market.metaDescription,
     url: absoluteUrl(marketPath(market.slug)),
+    inLanguage: countryLanguageTag(market.code),
     areaServed: {
       "@type": "Country",
       name: market.country,
@@ -218,6 +247,7 @@ export function marketFocusServiceSchema(
     category: focus.category,
     description: `${focus.summary} Supplied for projects in ${market.country}.`,
     url: absoluteUrl(marketFocusPath(market.slug, focus.slug)),
+    inLanguage: countryLanguageTag(market.code),
     areaServed: {
       "@type": "Country",
       name: market.country,
@@ -250,6 +280,7 @@ export function marketItemListSchema(markets: Market[]) {
     })),
   };
 }
+
 
 export function focusLinksForMarket(
   market: Market,

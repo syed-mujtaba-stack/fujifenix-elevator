@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Start Your Project",
   description:
     "Start your vertical transportation project with Fuji Fenix Elevator. Share your requirements and get a tailored solution.",
+  alternates: {
+    canonical: "/cta",
+  },
 };
 
 export default function CtaPage() {

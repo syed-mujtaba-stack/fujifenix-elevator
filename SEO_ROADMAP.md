@@ -129,26 +129,38 @@ Reuse the existing page structure (`/services`, `/solutions`, `/projects`) to ad
 
 ## Part D — International / Local SEO (P2)
 
-### Hreflang (interim)
-Site uses Google Translate widget for 60+ languages. Interim approach — add in `layout.tsx`:
-```tsx
-alternates: {
-  languages: {
-    'x-default': 'https://fujifenix.com',
-    en: 'https://fujifenix.com',
-    zh: 'https://fujifenix.com/zh',
-  }
-}
-```
-> ⚠️ Note: Google Translate widget content is **NOT indexed** as translated pages. True multilingual pages need real `/zh/`, `/ar/` routes. Recommend long-term: 2–3 key languages (EN, ZH, AR/ES) with real translated pages for top 10 products.
+### Hreflang
 
-### Market landing pages (delivered Nov 2026)
-- `/markets` hub + **17 country pages** + **68 country × product pages**, statically generated from `lib/markets.ts` and `lib/product-focuses.ts`.
-- Markets: China and India (priority); Pakistan, UAE, Saudi Arabia, Kenya, Ethiopia, South Africa, Nigeria and Tanzania (Wave 1); Bangladesh, Qatar, Oman, Kuwait and Indonesia (Wave 2); Malaysia and Vietnam (Wave 3).
-- Each country page has a unique intro, demand drivers, project types, buyer segments, logistics, compliance context and FAQs. Each country × product page adds a market-specific product note, local FAQs and shipping/compliance context.
-- Canonicals use `alternates.languages` with only `en` + `x-default`. No translated hreflang is emitted until real translated routes exist.
-- Schema: `Service`, `FAQPage`, `BreadcrumbList`, `WebPage` and `ItemList`. All market URLs and images are included in `sitemap.xml` and `sitemap-images.xml`.
-- To add a market: add one object to `MARKETS` (with its four focuses). Routes, navigation cards, sitemap and image sitemap update automatically.
+Hreflang is emitted per page in `app/layout.tsx`/`generateMetadata` and inside `sitemap.xml`:
+
+- `en` — generic English
+- `en-<CODE>` — country-targeted English (e.g. `en-AE`, `en-CN`, `en-JP`)
+- `x-default` — fallback
+
+`x-default` is self-referencing for country pages. No `zh`/`ar`/`ja` alternates are emitted until real translated routes exist: Google Translate widget content is **NOT** indexed as translated pages, and pointing hreflang at a non-existent `/zh` URL would be incorrect. If real translations are added later, add the locale routes and extend `countryLanguageTag()` + `sitemap.ts`.
+
+### International market programme (Nov 2026)
+
+**Canonical URL structure.** Country markets live on ISO 3166-1 alpha-2 country-code paths:
+
+| Region | Markets (URL) |
+|---|---|
+| East Asia | China `/cn`, Japan `/jp`, South Korea `/kr` |
+| South Asia | India `/in`, Pakistan `/pk`, Bangladesh `/bd` |
+| Southeast Asia | Singapore `/sg`, Malaysia `/my`, Thailand `/th`, Philippines `/ph`, Indonesia `/id`, Vietnam `/vn` |
+| Middle East | UAE `/ae`, Saudi Arabia `/sa`, Qatar `/qa`, Oman `/om`, Kuwait `/kw` |
+| Africa | Kenya `/ke`, Ethiopia `/et`, South Africa `/za`, Nigeria `/ng`, Tanzania `/tz` |
+
+- `/markets` is the indexable hub. `/markets/<slug>` and `/markets/<slug>/<focus>` are **308 permanent redirects** to `/<code>` and `/<code>/<focus>` — the country-code URL is the only indexable version. The redirect runs in `proxy.ts` before rendering, so it is a real HTTP 308 (invalid legacy slugs return 404).
+- **22 country pages + 88 country × product pages**, statically generated from `lib/markets.ts` and `lib/product-focuses.ts`.
+- Every country page has a unique intro, demand drivers, project types, buyer segments, logistics, compliance context, FAQs and keyword set. Every country × product page adds a market-specific product note, local FAQs and shipping/compliance context.
+- **Asia is the primary region.** `getAsiaMarkets()` drives the Asia section on the hub and the "Asia network" cross-links on every country × product page.
+- Canonical + hreflang: `en`, `en-<CODE>` (e.g. `en-AE`) and self-referencing `x-default`. No translated-language hreflang is emitted because translated pages do not exist — Google Translate is a client-side overlay only.
+- Country metadata adds `geo.region`, `geo.placename`, `content-language`, `applicable-device` and country `og:locale`.
+- Schema: `Service` (with `areaServed` country + `inLanguage`), `FAQPage`, `BreadcrumbList`, `WebPage` and `ItemList`. All market URLs and images are included in `sitemap.xml` (with `xhtml:link` alternates) and `sitemap-images.xml`.
+- **Geo suggestion, never a redirect.** `app/api/geo/route.ts` reads `x-vercel-ip-country` / `cf-ipcountry` / `x-country-code`; `app/components/CountrySuggestion.tsx` shows a dismissible card in the bottom-left. It is skipped on `/dashboard`, `/login` and `/studio`, and dismissal is stored in `localStorage` (`ff-geo-suggestion-dismissed`).
+- **China / regional search engines.** `public/robots.txt` explicitly allows Baiduspider, Sogou, 360Spider, Yisouspider, Naver Yeti, Daum, Bingbot and YandexBot, and keeps `/_next/static/` and `/_next/image/` crawlable so pages render for crawlers.
+- To add a market: add one object to `MARKETS` (with its country code and focuses). Routes, navigation, redirects, sitemap and image sitemap update automatically.
 
 ### Local SEO
 - **Google Business Profile** — verify Shanghai location, category "Elevator Manufacturer", photos, weekly posts. (Not set up yet — critical for brand + local pack.)
