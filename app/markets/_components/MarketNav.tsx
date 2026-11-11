@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { MARKETS, marketPath } from "@/lib/markets";
+import {
+  getMarketsInPriorityOrder,
+  marketPath,
+} from "@/lib/markets";
 
 /**
  * Compact country switcher used on market pages.
@@ -28,7 +31,7 @@ export default function MarketNav({
           >
             All
           </Link>
-          {MARKETS.map((market) => {
+          {getMarketsInPriorityOrder().map((market) => {
             const active = market.code === currentCode?.toUpperCase();
             return (
               <Link

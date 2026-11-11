@@ -8,12 +8,16 @@ import {
 } from "@/lib/product-focuses";
 import {
   MARKETS,
-  getAsiaMarkets,
-  getMarketsByWave,
+  getMarket,
+  getMarketsInPriorityOrder,
+  getPriorityMarkets,
   getRegionOrder,
-  waveLabel,
-  type MarketWave,
+  type Market,
 } from "@/lib/markets";
+import {
+  PRIORITY_TIER_COPY,
+  type MarketPriorityTier,
+} from "@/lib/market-priority";
 import {
   absoluteImage,
   absoluteUrl,
@@ -33,7 +37,7 @@ const PATH = "/markets";
 export const metadata: Metadata = {
   title: { absolute: "Global Elevator & Escalator Markets | Fuji Fenix" },
   description:
-    "Explore Fuji Fenix elevator and escalator supply for 22 international markets, with Asia as the priority region. Country pages, product solutions and project support.",
+    "Fuji Fenix supplies elevators and escalators across 22 markets, with priority export focus on Pakistan, the UAE and Dubai, Saudi Arabia, Kenya, Ethiopia, South Africa, Nigeria and Tanzania. Country pages cover product solutions, standards and shipping routes.",
   alternates: {
     canonical: PATH,
     languages: { en: PATH, "x-default": PATH },
@@ -45,7 +49,7 @@ export const metadata: Metadata = {
     siteName: "Fuji Fenix Elevator",
     title: "Global Elevator & Escalator Markets | Fuji Fenix",
     description:
-      "Manufacturer-backed elevator and escalator supply for priority markets across Asia, the Middle East and Africa.",
+      "Manufacturer-backed elevator and escalator supply for priority export markets across South Asia, the Gulf and Africa, plus validated Asia expansion markets.",
     images: [
       {
         url: absoluteImage("/realistic-earth.jpg"),
@@ -74,7 +78,7 @@ const HUB_FAQS = [
   {
     question: "Which countries does Fuji Fenix supply elevators and escalators to?",
     answer:
-      "Our market programme covers 22 countries, with Asia as the priority region. In Asia this includes China, India, Pakistan, Bangladesh, Japan, South Korea, Singapore, Malaysia, Thailand, the Philippines, Indonesia, Vietnam, the UAE, Saudi Arabia, Qatar, Oman and Kuwait. The programme also covers Kenya, Ethiopia, South Africa, Nigeria and Tanzania. Projects in other countries can be reviewed on request, subject to logistics and service coverage.",
+      "Our market programme covers 22 countries. Tier 1 priority export markets are Pakistan, the UAE (including Dubai), Saudi Arabia, Kenya, Ethiopia, South Africa, Nigeria and Tanzania. Tier 2 market-specific B2B focus markets are Bangladesh, Qatar, Oman, Kuwait and Indonesia. Malaysia, Vietnam, Thailand and the Philippines form the validated expansion tier. China is our manufacturing base, and India, Japan, South Korea and Singapore remain Asia priority markets. Projects in other countries can be reviewed on request, subject to logistics and service coverage.",
   },
   {
     question: "Can equipment be configured to local standards?",
@@ -125,35 +129,18 @@ const PROCESS = [
   },
 ];
 
-const WAVE_COPY: Record<
-  MarketWave,
-  { eyebrow: string; title: string; description: string }
-> = {
-  priority: {
-    eyebrow: "Manufacturing & priority markets",
-    title: "Where we build and prioritise",
-    description:
-      "China is our manufacturing base and a priority market. India is a priority growth market for residential, healthcare and transit development.",
-  },
-  1: {
-    eyebrow: "First wave",
-    title: "Wave 1 markets",
-    description:
-      "Fuji Fenix's first market wave focuses on South Asia, the Gulf and Africa, where developer, contractor and distributor demand is strongest.",
-  },
-  2: {
-    eyebrow: "Second wave",
-    title: "Wave 2 markets",
-    description:
-      "Wave 2 adds selected South Asian and Gulf markets with clear product demand, established logistics links and a partner-led delivery model.",
-  },
-  3: {
-    eyebrow: "Third wave",
-    title: "Wave 3 markets",
-    description:
-      "Wave 3 extends the programme into Southeast Asia based on search demand, competitive opportunity and project requirements.",
-  },
-};
+/**
+ * Manufacturing base and Asia priority markets that sit outside the three
+ * explicit export tiers. They stay visible on the hub but do not dilute the
+ * tier 1–3 targeting story.
+ */
+const ASIA_PRIORITY_SLUGS = [
+  "china",
+  "india",
+  "japan",
+  "south-korea",
+  "singapore",
+] as const;
 
 export default function MarketsPage() {
   const breadcrumbs = [
@@ -169,13 +156,30 @@ export default function MarketsPage() {
     }))
     .filter((entry) => entry.markets.length > 0);
 
-  const asiaMarkets = getAsiaMarkets();
+  const priorityMarkets: Record<MarketPriorityTier, Market[]> = {
+    1: getPriorityMarkets(1),
+    2: getPriorityMarkets(2),
+    3: getPriorityMarkets(3),
+  };
+
+  const asiaPriorityMarkets = ASIA_PRIORITY_SLUGS.map((slug) =>
+    getMarket(slug)
+  ).filter((market): market is Market => Boolean(market));
 
   const stats = [
     { value: `${MARKETS.length}`, label: "Target markets" },
-    { value: `${asiaMarkets.length}`, label: "Asia markets" },
-    { value: "1", label: "Shanghai base" },
-    { value: `${FOCUS_ORDER.length}`, label: "Product focuses" },
+    {
+      value: `${priorityMarkets[1].length}`,
+      label: PRIORITY_TIER_COPY[1].statLabel,
+    },
+    {
+      value: `${priorityMarkets[2].length}`,
+      label: PRIORITY_TIER_COPY[2].statLabel,
+    },
+    {
+      value: `${priorityMarkets[3].length}`,
+      label: PRIORITY_TIER_COPY[3].statLabel,
+    },
   ];
 
   return (
@@ -184,7 +188,7 @@ export default function MarketsPage() {
         schema={breadcrumbSchema(breadcrumbs)}
       />
       <StructuredData
-        schema={marketItemListSchema(MARKETS)}
+        schema={marketItemListSchema(getMarketsInPriorityOrder())}
       />
       <StructuredData
         schema={faqSchema(HUB_FAQS)}
@@ -202,7 +206,7 @@ export default function MarketsPage() {
       <PageHero
         eyebrow="GLOBAL MARKETS"
         title={["ELEVATORS & ESCALATORS", "FOR INTERNATIONAL PROJECTS"]}
-        description="Manufacturer-backed vertical transportation for developers, contractors and distributors across Asia, the Middle East and Africa — engineered in Shanghai and delivered to project."
+        description="Manufacturer-backed vertical transportation for developers, contractors and distributors across priority export markets in South Asia, the Gulf and Africa — engineered in Shanghai and delivered to project."
         image="/realistic-earth.jpg"
         imageAlt="Global elevator and escalator supply markets"
         breadcrumb="MARKETS"
@@ -286,34 +290,16 @@ export default function MarketsPage() {
         </div>
       </section>
 
-      {/* Asia priority */}
-      <section className="border-t border-slate-200 bg-white py-16 md:py-24">
-        <div className="container-gutter mx-auto max-w-[1440px]">
-          <SectionTitle
-            eyebrow="Asia priority"
-            title="Asia is our primary international region"
-            description="China is our manufacturing base. India, Pakistan, the Gulf and Southeast Asia are the fastest-growing demand centres for elevators, escalators and moving walks. Country pages explain the local project types, standards and shipping routes for each market."
-          />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {asiaMarkets.map((market) => (
-              <MarketCard key={market.slug} market={market} />
-            ))}
-          </div>
-          <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
-            {asiaMarkets.length} Asian markets · East Asia, South Asia, Southeast
-            Asia and the Middle East
-          </p>
-        </div>
-      </section>
-
-      {/* Market waves */}
-      {(["priority", 1, 2, 3] as MarketWave[]).map((wave) => {
-        const markets = getMarketsByWave(wave);
-        const copy = WAVE_COPY[wave];
+      {/* Priority target markets */}
+      {([1, 2, 3] as MarketPriorityTier[]).map((tier) => {
+        const markets = priorityMarkets[tier];
+        const copy = PRIORITY_TIER_COPY[tier];
         return (
           <section
-            key={String(wave)}
-            className="border-t border-slate-200 bg-slate-50 py-16 md:py-20"
+            key={tier}
+            className={`border-t border-slate-200 py-16 md:py-20 ${
+              tier === 2 ? "bg-slate-50" : "bg-white"
+            }`}
           >
             <div className="container-gutter mx-auto max-w-[1440px]">
               <SectionTitle
@@ -328,12 +314,32 @@ export default function MarketsPage() {
               </div>
               <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
                 {markets.length} {markets.length === 1 ? "market" : "markets"} ·{" "}
-                {waveLabel(wave)}
+                {copy.label}
               </p>
             </div>
           </section>
         );
       })}
+
+      {/* Manufacturing base & remaining Asia priority markets */}
+      <section className="border-t border-slate-200 bg-slate-50 py-16 md:py-20">
+        <div className="container-gutter mx-auto max-w-[1440px]">
+          <SectionTitle
+            eyebrow="Manufacturing base & Asia priority"
+            title="Shanghai manufacturing, Asia growth"
+            description="China is our manufacturing base. India, Japan, South Korea and Singapore remain Asia priority markets alongside the export tiers above."
+          />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {asiaPriorityMarkets.map((market) => (
+              <MarketCard key={market.slug} market={market} />
+            ))}
+          </div>
+          <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
+            {asiaPriorityMarkets.length} markets · Manufacturing base and Asia
+            priority
+          </p>
+        </div>
+      </section>
 
       {/* Product focus */}
       <section className="bg-white py-16 md:py-24">

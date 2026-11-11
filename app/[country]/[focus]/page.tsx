@@ -6,7 +6,7 @@ import PageHero from "@/app/components/PageHero";
 import { StructuredData } from "@/app/components/StructuredData";
 import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
 import {
-  getAsiaMarketsForFocus,
+  getPriorityMarketsForFocus,
   getMarketByCode,
   getRelatedMarkets,
   MARKETS,
@@ -80,7 +80,7 @@ export default async function MarketFocusPage({
   const otherFocuses = market.focuses
     .filter((slug) => slug !== focus.slug)
     .map((slug) => PRODUCT_FOCUSES[slug]);
-  const asiaMarkets = getAsiaMarketsForFocus(focus.slug).filter(
+  const priorityMarkets = getPriorityMarketsForFocus(focus.slug).filter(
     (entry) => entry.slug !== market.slug
   );
 
@@ -372,19 +372,19 @@ export default async function MarketFocusPage({
         </section>
       ) : null}
 
-      {/* Same product across Asia (internal linking for the priority region) */}
-      {asiaMarkets.length > 0 ? (
+      {/* Same product across priority markets (internal linking for tier 1 & 2) */}
+      {priorityMarkets.length > 0 ? (
         <section className="border-t border-slate-200 bg-slate-50 py-14 md:py-16">
           <div className="container-gutter mx-auto max-w-[1440px]">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
               <div>
-                <span className="eyebrow text-[#0047BB]">Asia network</span>
+                <span className="eyebrow text-[#0047BB]">Priority markets</span>
                 <h2 className="heading mt-2 text-[clamp(20px,2.2vw,26px)] text-[#0f172a]">
-                  {focus.shortTitle} in other Asian markets
+                  {focus.shortTitle} in other priority markets
                 </h2>
               </div>
               <div className="flex flex-wrap gap-2">
-                {asiaMarkets.map((entry) => (
+                {priorityMarkets.map((entry) => (
                   <Link
                     key={entry.slug}
                     href={marketFocusPath(entry.slug, focus.slug)}

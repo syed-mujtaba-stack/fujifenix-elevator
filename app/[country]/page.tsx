@@ -9,7 +9,7 @@ import {
   MARKETS,
   marketFocusPath,
   marketPath,
-  waveLabel,
+  marketPriorityLabel,
 } from "@/lib/markets";
 import {
   absoluteUrl,
@@ -90,7 +90,7 @@ export default async function CountryMarketPage({
 
   const snapshot = [
     { label: "Region", value: market.region },
-    { label: "Programme", value: waveLabel(market.wave) },
+    { label: "Priority tier", value: marketPriorityLabel(market) },
     { label: "Currency", value: market.currency },
     { label: "Languages", value: market.languages.join(", ") },
     { label: "Shipping ports", value: market.logistics.ports },
@@ -114,7 +114,7 @@ export default async function CountryMarketPage({
       />
 
       <PageHero
-        eyebrow={`${waveLabel(market.wave)} · ${market.region}`}
+        eyebrow={`${marketPriorityLabel(market)} · ${market.region}`}
         title={market.headline}
         description={market.metaDescription}
         image={market.heroImage}

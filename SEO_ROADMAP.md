@@ -154,7 +154,13 @@ Hreflang is emitted per page in `app/layout.tsx`/`generateMetadata` and inside `
 - `/markets` is the indexable hub. `/markets/<slug>` and `/markets/<slug>/<focus>` are **308 permanent redirects** to `/<code>` and `/<code>/<focus>` — the country-code URL is the only indexable version. The redirect runs in `proxy.ts` before rendering, so it is a real HTTP 308 (invalid legacy slugs return 404).
 - **22 country pages + 88 country × product pages**, statically generated from `lib/markets.ts` and `lib/product-focuses.ts`.
 - Every country page has a unique intro, demand drivers, project types, buyer segments, logistics, compliance context, FAQs and keyword set. Every country × product page adds a market-specific product note, local FAQs and shipping/compliance context.
-- **Asia is the primary region.** `getAsiaMarkets()` drives the Asia section on the hub and the "Asia network" cross-links on every country × product page.
+- **Business priority tiers (Nov 2026 growth plan).** `lib/market-priority.ts` defines the targeting order separately from the programme `wave`:
+  - **Tier 1 — priority export markets:** Pakistan `/pk`, UAE `/ae` (incl. Dubai), Saudi Arabia `/sa`, Kenya `/ke`, Ethiopia `/et`, South Africa `/za`, Nigeria `/ng`, Tanzania `/tz`. Focus: manufacturer/export sourcing, regional elevator and escalator supply, product and application demand.
+  - **Tier 2 — market-specific B2B focus:** Bangladesh `/bd`, Qatar `/qa`, Oman `/om`, Kuwait `/kw`, Indonesia `/id`. Focus: market-specific B2B discovery and relevant product solutions.
+  - **Tier 3 — validated expansion:** Malaysia `/my`, Vietnam `/vn`, Thailand `/th`, Philippines `/ph`. Expansion is validated by search demand, competition, partner coverage and lead quality.
+  - **Manufacturing base / Asia priority:** China `/cn`, India `/in`, Japan `/jp`, South Korea `/kr`, Singapore `/sg` stay visible on the hub without diluting the export tiers.
+  - The tiers drive the home-page priority-market band (`app/components/PriorityMarkets.tsx`), the site-wide footer "Key markets" row, hub sections, `MarketCard`/country-page labels, priority-ordered `MarketNav`, tier 1–2 cross-links on country × product pages, and Organization `areaServed`.
+  - Dubai is targeted through the UAE page H1, title and metadata (no separate city doorway page).
 - Canonical + hreflang: `en`, `en-<CODE>` (e.g. `en-AE`) and self-referencing `x-default`. No translated-language hreflang is emitted because translated pages do not exist — Google Translate is a client-side overlay only.
 - Country metadata adds `geo.region`, `geo.placename`, `content-language`, `applicable-device` and country `og:locale`.
 - Schema: `Service` (with `areaServed` country + `inLanguage`), `FAQPage`, `BreadcrumbList`, `WebPage` and `ItemList`. All market URLs and images are included in `sitemap.xml` (with `xhtml:link` alternates) and `sitemap-images.xml`.

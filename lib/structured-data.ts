@@ -1,6 +1,7 @@
 // lib/structured-data.ts — Pure schema functions (Server-safe, no "use client")
 
 import { SOCIAL_URLS } from "./social";
+import { PRIORITY_TIER_MARKETS } from "./market-priority";
 
 const BASE_URL = "https://fujifenix.com";
 
@@ -15,6 +16,16 @@ export function organizationSchema() {
     logo: `${BASE_URL}/FUJI%20FENIX%20(1).svg`,
     image: `${BASE_URL}/building-exterior.jpg`,
     description: "Total Solution for Vertical Transportation — High-performance passenger elevators, panoramic lifts, freight elevators, and escalators.",
+    areaServed: [
+      ...PRIORITY_TIER_MARKETS[1].map((market) => ({
+        "@type": "Country",
+        name: market.name,
+      })),
+      ...PRIORITY_TIER_MARKETS[2].map((market) => ({
+        "@type": "Country",
+        name: market.name,
+      })),
+    ],
     address: {
       "@type": "PostalAddress",
       streetAddress: "Building 2, No. 315 Weichang Road",

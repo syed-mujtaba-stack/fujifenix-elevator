@@ -20,6 +20,11 @@
  */
 
 import type { FocusSlug } from "@/lib/product-focuses";
+import {
+  PRIORITY_TIER_COPY,
+  PRIORITY_TIER_MARKETS,
+  type MarketPriorityTier,
+} from "@/lib/market-priority";
 
 export const MARKET_CONTENT_UPDATED = "2026-11-10";
 
@@ -466,8 +471,8 @@ export const MARKETS: Market[] = [
     languages: ["Arabic", "English"],
     heroImage: "/building-exterior.jpg",
     heroAlt: "High-rise development in a modern city",
-    headline: ["ELEVATORS & ESCALATORS", "FOR UAE PROJECTS"],
-    metaTitle: "Elevator & Escalator Supplier in UAE | Fuji Fenix",
+    headline: ["ELEVATORS & ESCALATORS", "FOR UAE & DUBAI PROJECTS"],
+    metaTitle: "Elevator & Escalator Supplier in UAE & Dubai | Fuji Fenix",
     metaDescription:
       "Fuji Fenix supplies passenger, panoramic, home and high-speed elevators plus escalators for towers, hotels, malls and villas across Dubai, Abu Dhabi and the UAE.",
     intro: [
@@ -2824,6 +2829,70 @@ export function getMarket(slug: string): Market | undefined {
 
 export function getMarketsByWave(wave: MarketWave): Market[] {
   return MARKETS.filter((market) => market.wave === wave);
+}
+
+/**
+ * Business priority tier for a market, based on the Nov 2026 growth plan.
+ * Returns null for markets that sit outside the three explicit priority tiers
+ * (China, India, Japan, South Korea and Singapore).
+ */
+export function getPriorityTier(market: Market): MarketPriorityTier | null {
+  for (const tier of [1, 2, 3] as const) {
+    if (PRIORITY_TIER_MARKETS[tier].some((entry) => entry.slug === market.slug)) {
+      return tier;
+    }
+  }
+  return null;
+}
+
+/** Markets in a priority tier, in the order defined by the growth plan. */
+export function getPriorityMarkets(tier: MarketPriorityTier): Market[] {
+  return PRIORITY_TIER_MARKETS[tier]
+    .map((entry) => getMarket(entry.slug))
+    .filter((market): market is Market => Boolean(market));
+}
+
+/** Priority markets that offer a specific product focus. */
+export function getPriorityMarketsForFocus(
+  focus: FocusSlug,
+  tiers: MarketPriorityTier[] = [1, 2]
+): Market[] {
+  const seen = new Set<string>();
+  const result: Market[] = [];
+
+  for (const tier of tiers) {
+    for (const market of getPriorityMarkets(tier)) {
+      if (!market.focuses.includes(focus) || seen.has(market.slug)) continue;
+      seen.add(market.slug);
+      result.push(market);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Priority-tier label used on cards and country pages. Markets outside the
+ * three explicit tiers fall back to their programme label.
+ */
+export function marketPriorityLabel(market: Market): string {
+  const tier = getPriorityTier(market);
+  if (tier) return PRIORITY_TIER_COPY[tier].label;
+  return market.wave === "priority" ? "Priority market" : "Asia priority market";
+}
+
+/** All markets ordered by business priority, then by the original dataset order. */
+export function getMarketsInPriorityOrder(): Market[] {
+  const rank = new Map<string, number>();
+  ([1, 2, 3] as const).forEach((tier) => {
+    PRIORITY_TIER_MARKETS[tier].forEach((entry, index) => {
+      rank.set(entry.slug, tier * 100 + index);
+    });
+  });
+
+  return [...MARKETS].sort(
+    (a, b) => (rank.get(a.slug) ?? 9999) - (rank.get(b.slug) ?? 9999)
+  );
 }
 
 export function getRegionOrder(): MarketRegion[] {
