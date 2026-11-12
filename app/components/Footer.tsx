@@ -165,6 +165,45 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Development credit */}
+      <div className="px-6 md:px-10 lg:px-14 py-6 border-t border-white/5">
+        <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+          <p
+            className="text-center text-slate-500 sm:text-left"
+            style={{ fontSize: "12px" }}
+          >
+            <span className="eyebrow mr-2 text-slate-500 text-[10px]">
+              DEVELOPED BY
+            </span>
+            <a
+              href="https://yusraateeq-portfolio.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-300 hover:text-white transition-colors duration-200"
+              aria-label="Yusra Ateeq portfolio"
+            >
+              Yusra Ateeq
+            </a>
+            <span className="text-slate-600"> and </span>
+            <a
+              href="https://www.syedmujtabaabbas.xyz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-300 hover:text-white transition-colors duration-200"
+              aria-label="Syed Mujtaba Abbas portfolio"
+            >
+              Syed Mujtaba Abbas
+            </a>
+          </p>
+          <Link
+            href="/developers"
+            className="eyebrow text-[#60a5fa] text-[10px] hover:text-white transition-colors duration-200"
+          >
+            DEVELOPER DETAILS &rarr;
+          </Link>
+        </div>
+      </div>
+
       {/* Zanderio AI chat widget */}
       <Script
         src="https://cdn.zanderio.ai/widget/loader.js"
