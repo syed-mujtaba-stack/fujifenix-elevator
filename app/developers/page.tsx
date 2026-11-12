@@ -547,11 +547,10 @@ export default function DevelopersPage() {
                       href={developer.portfolio}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${developer.name} portfolio`}
+                      aria-label={`Visit ${developer.name}'s portfolio`}
                       className="inline-flex flex-shrink-0 items-center gap-2 bg-[#0047BB] px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition-colors duration-200 hover:bg-[#003a99]"
                     >
-                      Portfolio
-                      <span aria-hidden="true">&nearr;</span>
+                      Visit the Portfolio
                     </a>
                   </div>
                 </div>
