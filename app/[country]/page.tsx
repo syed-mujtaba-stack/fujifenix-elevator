@@ -238,13 +238,24 @@ export default async function CountryMarketPage({
               Looking for a product outside this priority list? The full range
               is available for project-specific review.
             </p>
-            <Link
-              href="/products"
-              className="inline-flex shrink-0 items-center gap-2 border-b border-[#0047BB] pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[#0047BB] transition-opacity hover:opacity-70"
-            >
-              Browse all products
-              <span aria-hidden="true">&rarr;</span>
-            </Link>
+            <div className="flex flex-col items-start gap-3 sm:items-end">
+              {market.slug === "china" ? (
+                <Link
+                  href="/blog/elevator-manufacturer-china-shanghai"
+                  className="inline-flex shrink-0 items-center gap-2 border-b border-[#0047BB] pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[#0047BB] transition-opacity hover:opacity-70"
+                >
+                  Read the China manufacturer guide
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              ) : null}
+              <Link
+                href="/products"
+                className="inline-flex shrink-0 items-center gap-2 border-b border-slate-300 pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 transition-colors hover:border-[#0047BB] hover:text-[#0047BB]"
+              >
+                Browse all products
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

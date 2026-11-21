@@ -33,7 +33,7 @@
 | **Canonical tags** | 🔴 High | No `alternates.canonical` in any `generateMetadata` |
 | **Hreflang** | 🟡 Medium | Google Translate widget exists but no hreflang tags |
 | **Visible breadcrumb navigation** | 🟡 Medium | Schema present, but no visible breadcrumb UI for users |
-| **Blog / content hub** | 🔴 High | Biggest organic growth lever — zero informational content |
+| ~~**Blog / content hub**~~ | ✅ Added Nov 2026 | `app/blog/page.tsx`, `app/blog/[slug]/page.tsx`, `lib/blog-data.ts` — see Part C update |
 | **Image sitemap** | 🟡 Medium | Not present |
 | **404 / soft-404 handling** | 🟡 Medium | `error.tsx` exists, but no custom 404 page for crawl |
 | **Accurate `lastmod` in sitemap** | 🟡 Low | Uses `new Date()` everywhere |
@@ -94,11 +94,12 @@ Create `app/not-found.tsx` with 404 status, useful links, and search suggestion 
 
 ## Part C — Content Strategy (P1, biggest ranking lever)
 
-> **Client constraints (strict):**
-> ❌ No blog.
-> ❌ **No new visible sections on the website.** Layout/design must stay exactly as-is. All SEO content improvements must be **invisible** (metadata, schema, sitemap) or added **inside existing sections** only.
+> **Client constraints (updated 22 Nov 2026):**
+> ✅ The earlier "no blog" constraint has been **superseded by an explicit client request** for a blog and single-article pages with images, SEO and keyword targeting.
+> ❌ **No new visible sections on existing service/product pages.** Design and functionality stay as-is; new content lives on the dedicated `/blog` routes.
+> ❌ No translation routes, no fake hreflang, no city doorway pages and no unconfirmed local-office/manufacturing claims.
 
-For a B2B elevator exporter, **on-page depth + FAQ content + dedicated landing pages** are how you win top-3 rankings without a blog.
+For a B2B elevator exporter, **on-page depth + FAQ content + dedicated landing pages + targeted editorial guides** are how you win long-tail rankings. The blog articles target distinct buyer questions and link back to product and market pages.
 
 ### 1. FAQ content (deferred — needs client approval on placement)
 - FAQ fields + visible FAQ sections were **built then removed** per client's "no new sections" rule.
@@ -124,6 +125,14 @@ Reuse the existing page structure (`/services`, `/solutions`, `/projects`) to ad
 ### 4. On-page refresh (existing pages)
 - **Home**: single clear H1 with "Elevator & Escalator Manufacturer", Manufacturing/Why-Us section linking to About + products.
 - **Services/Solutions**: unique metadata, one H1, 600+ words, internal links to relevant product categories.
+
+### 5. Blog / editorial content (added 22 Nov 2026)
+- `/blog` index with a featured guide, article cards, FAQ and `CollectionPage` + `ItemList` schema.
+- `/blog/[slug]` articles with hero and inline images, focused metadata, `BlogPosting` schema, breadcrumbs, FAQ, takeaways and internal links.
+- Content vocabulary lives in `lib/blog-data.ts`; per-article keywords target market, product, buyer-intent and technical terms.
+- Blog URLs are in `sitemap.xml` and `sitemap-images.xml`; `robots.txt` already allows them through `Allow: /`.
+- Navbar (`app/data/content.ts`) and footer (`app/components/Footer.tsx`) link to `/blog` so crawlers discover articles from every page.
+- **China-first priority (client request, 22 Nov 2026):** `/blog/elevator-manufacturer-china-shanghai` is the featured article. It targets `elevator manufacturer China`, `Shanghai elevator supplier`, `China elevator exporter` and Chinese-language Baidu terms. `/cn`, `/cn/passenger-elevators`, `/markets` and the markets hub link to it; GSC queue starts with a China-first block. No Chinese translation routes were created — the terms are inside the English article only.
 
 ---
 

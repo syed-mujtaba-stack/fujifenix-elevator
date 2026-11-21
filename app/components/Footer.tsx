@@ -21,6 +21,7 @@ export default function Footer() {
     { label: "Services", href: "/services" },
     { label: "Solutions", href: "/solutions" },
     { label: "Projects", href: "/projects" },
+    { label: "Blog & Guides", href: "/blog" },
   ];
 
   return (

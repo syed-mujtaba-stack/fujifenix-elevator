@@ -302,13 +302,29 @@ export default function MarketsPage() {
                   </div>
                 ))}
               </div>
-              <Link
-                href="/contact"
-                className="mt-8 inline-flex items-center gap-2 border-b border-[#0047BB] pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[#0047BB] transition-opacity hover:opacity-70"
-              >
-                Discuss a project in another market
-                <span aria-hidden="true">&rarr;</span>
-              </Link>
+              <div className="mt-8 flex flex-col items-start gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 border-b border-[#0047BB] pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[#0047BB] transition-opacity hover:opacity-70"
+                >
+                  Discuss a project in another market
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+                <Link
+                  href="/blog/elevator-manufacturer-china-shanghai"
+                  className="inline-flex items-center gap-2 border-b border-[#0047BB] pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[#0047BB] transition-opacity hover:opacity-70"
+                >
+                  Read the China manufacturer guide
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+                <Link
+                  href="/blog/elevator-supplier-pakistan-uae-saudi-arabia"
+                  className="inline-flex items-center gap-2 border-b border-slate-300 pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 transition-colors hover:border-[#0047BB] hover:text-[#0047BB]"
+                >
+                  Read the supplier guide
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

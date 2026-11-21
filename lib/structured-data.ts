@@ -221,3 +221,81 @@ export function websiteSchema() {
     },
   };
 }
+
+/**
+ * Blog article schema. Used only on /blog/[slug] pages where the full article
+ * is visible to users — never on category or market pages.
+ */
+export function blogPostingSchema(post: {
+  title: string;
+  description: string;
+  path: string;
+  image: string;
+  datePublished: string;
+  dateModified: string;
+  author: string;
+  category: string;
+  keywords: string[];
+  about?: string[];
+}) {
+  const url = `${BASE_URL}${post.path}`;
+  const image = post.image.startsWith("http")
+    ? post.image
+    : `${BASE_URL}${post.image.startsWith("/") ? "" : "/"}${post.image}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: post.title,
+    description: post.description,
+    image,
+    url,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    author: {
+      "@type": "Organization",
+      name: post.author,
+      url: BASE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: "Shanghai Fuji Fenix Elevator Co Ltd.",
+      url: BASE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${BASE_URL}/FUJI%20FENIX%20(1).svg`,
+      },
+    },
+    datePublished: post.datePublished,
+    dateModified: post.dateModified,
+    inLanguage: "en",
+    articleSection: post.category,
+    keywords: post.keywords.join(", "),
+    about: (post.about ?? []).map((name) => ({
+      "@type": "Thing",
+      name,
+    })),
+  };
+}
+
+/** Collection page schema for the blog index. */
+export function blogCollectionSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${BASE_URL}/blog#collection`,
+    url: `${BASE_URL}/blog`,
+    name: "Fuji Fenix Elevator Blog",
+    description:
+      "Practical guides for buyers, architects and contractors specifying elevators, escalators and moving walks for international projects.",
+    inLanguage: "en",
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+    },
+  };
+}

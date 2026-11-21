@@ -16,7 +16,16 @@ Product and category pages from Sanity are not listed here; they stay covered by
 - GSC allows roughly 10-15 request-indexing actions per property per day. Work through the batches in order and stop when the quota UI appears.
 - `www.fujifenix.com` 308-redirects to `fujifenix.com`; use a **Domain property** so both hosts are covered.
 
-Total URLs: **129** | 11 batches of up to 12.
+Total URLs: **135** | 12 batches of up to 12. Blog URLs were added after the client requested editorial content on 22 Nov 2026; the China manufacturer guide was added as the China-first priority on the same date.
+
+## China-first priority (do this before Batch 1)
+
+> The client asked for China ranking first. The `/cn` and `/blog` URLs already appear in later batches — they are repeated here so the China sequence is done first. Only the China article is a new URL.
+
+- [ ] https://fujifenix.com/blog/elevator-manufacturer-china-shanghai - _China manufacturer guide (new)_
+- [ ] https://fujifenix.com/cn - _China market page (already in Batch 9)_
+- [ ] https://fujifenix.com/cn/passenger-elevators - _China focus page (already in Batch 10)_
+- [ ] https://fujifenix.com/blog - _Blog hub (already in Batch 12)_
 
 ## Batch 1 (day 1)
 
@@ -179,3 +188,12 @@ Total URLs: **129** | 11 batches of up to 12.
 - [ ] https://fujifenix.com/jp/home-elevators - _Asia priority focus_
 - [ ] https://fujifenix.com/kr/escalators - _Asia priority focus_
 - [ ] https://fujifenix.com/sg/escalators - _Asia priority focus_
+
+## Batch 12 (day 12 — blog)
+<!-- Added 22 Nov 2026 after the client requested an editorial content hub. -->
+
+- [ ] https://fujifenix.com/blog - _Blog hub_
+- [ ] https://fujifenix.com/blog/elevator-supplier-pakistan-uae-saudi-arabia - _Market guide (China guide is in the China-first block)_
+- [ ] https://fujifenix.com/blog/passenger-home-freight-elevators - _Product guide_
+- [ ] https://fujifenix.com/blog/escalators-moving-walks-guide - _Product guide_
+- [ ] https://fujifenix.com/blog/elevator-export-documents-checklist - _Project guide_

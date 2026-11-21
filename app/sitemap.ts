@@ -10,6 +10,7 @@ import {
   PRIORITY_TIER_MARKETS,
   type MarketPriorityTier,
 } from "@/lib/market-priority";
+import { BLOG_POSTS, BLOG_UPDATED, blogPath } from "@/lib/blog-data";
 
 const BASE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://fujifenix.com"
@@ -188,6 +189,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  // Editorial guides: hub + every article. These are indexable content pages,
+  // not market doorways, so they carry a single generic English alternate.
+  const blogPages: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: new Date(BLOG_UPDATED),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    ...BLOG_POSTS.map((post) => ({
+      url: `${BASE_URL}${blogPath(post.slug)}`,
+      lastModified: new Date(post.dateModified),
+      changeFrequency: "monthly" as const,
+      // China is the client's first ranking priority; sitemap priority is only
+      // a crawl signal, not a ranking factor, but it keeps this guide first.
+      priority: post.slug === "elevator-manufacturer-china-shanghai" ? 0.8 : 0.6,
+    })),
+  ];
+
   const marketPages: MetadataRoute.Sitemap = ORDERED_MARKETS.map((market) => {
     const path = marketPath(market.slug);
     const tier = priorityTier(market.slug);
@@ -245,6 +265,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...tier1.countries,
     ...tier1.focuses,
     ...staticPages.slice(1),
+    ...blogPages,
     ...categoryPages,
     ...productPages,
     ...tier2.countries,

@@ -10,6 +10,7 @@ import {
   marketPath,
 } from "@/lib/markets";
 import { PRODUCT_FOCUSES } from "@/lib/product-focuses";
+import { BLOG_POSTS, blogPath } from "@/lib/blog-data";
 
 export const revalidate = 3600;
 
@@ -157,6 +158,36 @@ export async function GET() {
 
   for (const page of marketPages) {
     entries.push(renderImages(page.page, page.images));
+  }
+
+  // Blog hub + article hero/inline images for Google Images.
+  entries.push(
+    renderImages(
+      `${BASE_URL}/blog`,
+      BLOG_POSTS.map((post) => ({
+        loc: absoluteUrl(post.heroImage),
+        title: post.title,
+        caption: post.description,
+      }))
+    )
+  );
+
+  for (const post of BLOG_POSTS) {
+    const images: ImageEntry[] = [
+      {
+        loc: absoluteUrl(post.heroImage),
+        title: post.title,
+        caption: post.description,
+      },
+      ...post.sections
+        .filter((section) => Boolean(section.image))
+        .map((section) => ({
+          loc: absoluteUrl(section.image!.src),
+          title: section.image!.alt,
+          caption: section.image!.caption,
+        })),
+    ];
+    entries.push(renderImages(`${BASE_URL}${blogPath(post.slug)}`, images));
   }
 
   // Product pages — Sanity main image + gallery + technical drawings
