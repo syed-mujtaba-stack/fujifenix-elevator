@@ -199,6 +199,10 @@ High-intent B2B keywords need authority:
 | Review Google Translate widget impact on CLS/core | 🟡 Medium | Low |
 | Caching layer on Sanity fetch (SWR/ISR beyond 60s for heavy pages) | 🟡 Medium | Medium |
 
+### Self-hosted image delivery (Hostinger vs Vercel)
+
+Sanity images already arrive as CDN-optimized URLs (`urlFor(...).auto("format")`). Routing them through the built-in `/_next/image` optimizer makes a self-hosted Node server fetch the remote asset, re-encode it and cache it locally on every cache miss — fast on Vercel's edge, slow on Hostinger. `app/lib/sanityImage.ts` now supplies a per-image loader for Sanity URLs only, so the browser requests the exact `w`/`q` variant directly from `cdn.sanity.io` (with `preconnect` already in `app/layout.tsx`). Local `/public` images keep the Next.js optimizer; their cache TTL was raised from 60s to 7 days.
+
 ---
 
 ## Part G — Measurement & Success (P2)

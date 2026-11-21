@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { urlFor } from "@/sanity/lib/image";
 import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
+import { imageLoaderFor } from "@/app/lib/sanityImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -132,6 +133,7 @@ export default function ProductShowcase({ products }: { products: FeaturedProduc
               <Image
                 src={product.img}
                 alt={product.imgAlt}
+                loader={imageLoaderFor(product.img)}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 55vw"

@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
 import { urlFor } from "@/sanity/lib/image";
 import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
+import { imageLoaderFor } from "@/app/lib/sanityImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -257,6 +258,7 @@ export default function ProductsContent({ categories, products }: { categories: 
                     <Image
                       src={cardImage(product)}
                       alt={product.title}
+                      loader={imageLoaderFor(cardImage(product))}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 300px"

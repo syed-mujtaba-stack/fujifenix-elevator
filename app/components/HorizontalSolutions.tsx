@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { urlFor } from "@/sanity/lib/image";
 import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
+import { imageLoaderFor } from "@/app/lib/sanityImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -124,6 +125,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                   <Image
                     src={sol.img}
                     alt={sol.imgAlt}
+                    loader={imageLoaderFor(sol.img)}
                     fill
                     className="object-cover"
                     sizes="44vw"
@@ -196,6 +198,7 @@ export default function HorizontalSolutions({ products }: { products: SolutionPr
                 <Image
                   src={sol.img}
                   alt={sol.imgAlt}
+                  loader={imageLoaderFor(sol.img)}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1438px) 40vw, 575px"

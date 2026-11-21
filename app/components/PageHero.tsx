@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
+import { imageLoaderFor } from "@/app/lib/sanityImage";
 
 interface PageHeroProps {
   eyebrow: string;
@@ -66,6 +67,7 @@ export default function PageHero({
         <Image
           src={image}
           alt={imageAlt}
+          loader={imageLoaderFor(image)}
           fill
           priority
           className="object-cover"
