@@ -132,7 +132,7 @@ Reuse the existing page structure (`/services`, `/solutions`, `/projects`) to ad
 - Content vocabulary lives in `lib/blog-data.ts`; per-article keywords target market, product, buyer-intent and technical terms.
 - Blog URLs are in `sitemap.xml` and `sitemap-images.xml`; `robots.txt` already allows them through `Allow: /`.
 - Navbar (`app/data/content.ts`) and footer (`app/components/Footer.tsx`) link to `/blog` so crawlers discover articles from every page.
-- **China-first priority (client request, 22 Nov 2026):** `/blog/elevator-manufacturer-china-shanghai` is the featured article. It targets `elevator manufacturer China`, `Shanghai elevator supplier`, `China elevator exporter` and Chinese-language Baidu terms. `/cn`, `/cn/passenger-elevators`, `/markets` and the markets hub link to it; GSC queue starts with a China-first block. No Chinese translation routes were created — the terms are inside the English article only.
+- **China-first priority on Google only (client request, 22 Nov 2026):** `/blog/elevator-manufacturer-china-shanghai` is the featured article. It targets English Google queries: `elevator manufacturer China`, `Shanghai elevator supplier`, `China elevator exporter`, `escalator manufacturer China`, `elevator factory Shanghai`. `/cn`, `/cn/passenger-elevators`, `/markets` and the markets hub link to it; the Google Search Console queue starts with a China-first block. No Chinese translation routes and no Baidu-specific targeting or submission are included at this stage.
 
 ---
 
@@ -176,7 +176,7 @@ Hreflang is emitted per page in `app/layout.tsx`/`generateMetadata` and inside `
 - Country metadata adds `geo.region`, `geo.placename`, `content-language`, `applicable-device` and country `og:locale`.
 - Schema: `Service` (with `areaServed` country + `inLanguage`), `FAQPage`, `BreadcrumbList`, `WebPage` and `ItemList`. All market URLs and images are included in `sitemap.xml` (with `xhtml:link` alternates) and `sitemap-images.xml`.
 - **Geo suggestion, never a redirect.** `app/api/geo/route.ts` reads `x-vercel-ip-country` / `cf-ipcountry` / `x-country-code`; `app/components/CountrySuggestion.tsx` shows a dismissible card in the bottom-left. It is skipped on `/dashboard`, `/login` and `/studio`, and dismissal is stored in `localStorage` (`ff-geo-suggestion-dismissed`).
-- **China / regional search engines.** `public/robots.txt` explicitly allows Baiduspider, Sogou, 360Spider, Yisouspider, Naver Yeti, Daum, Bingbot and YandexBot, and keeps `/_next/static/` and `/_next/image/` crawlable so pages render for crawlers.
+- **Regional crawlers.** `public/robots.txt` explicitly allows Baiduspider, Sogou, 360Spider, Yisouspider, Naver Yeti, Daum, Bingbot and YandexBot, and keeps `/_next/static/` and `/_next/image/` crawlable so pages render for crawlers. Active work is Google-only: no Baidu Webmaster submission or Chinese-language keyword targeting is in scope for now.
 - To add a market: add one object to `MARKETS` (with its country code and focuses). Routes, navigation, redirects, sitemap and image sitemap update automatically.
 
 ### Local SEO
