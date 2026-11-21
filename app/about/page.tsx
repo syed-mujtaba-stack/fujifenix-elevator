@@ -1,18 +1,35 @@
 import type { Metadata } from "next";
 import PageHero from "@/app/components/PageHero";
 import AboutContent from "./AboutContent";
+import {
+  BRAND_KEYWORDS,
+  GLOBAL_MARKET_KEYWORDS,
+  MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "About Us | Fuji Fenix Elevator Manufacturer",
   description:
     "Learn about Fuji Fenix Elevator — a premier manufacturer of high-performance passenger elevators, escalators, and moving walks engineered in Shanghai with global quality certifications.",
-  keywords: [
-    "About Fuji Fenix",
-    "Elevator Manufacturer Shanghai",
-    "Elevator Company China",
-    "Fuji Fenix History",
-    "Vertical Transportation Engineering",
-  ],
+  keywords: seoKeywords(
+    BRAND_KEYWORDS,
+    GLOBAL_MARKET_KEYWORDS,
+    MARKET_KEYWORDS,
+    [
+      "About Fuji Fenix",
+      "Fuji Fenix history",
+      "elevator manufacturer Shanghai",
+      "elevator company China",
+      "Shanghai elevator factory",
+      "vertical transportation engineering",
+      "elevator manufacturing expertise",
+      "elevator quality control",
+      "elevator research and development",
+      "global elevator manufacturer",
+      "elevator export experience",
+    ]
+  ),
   alternates: {
     canonical: "https://fujifenix.com/about",
   },

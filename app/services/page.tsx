@@ -1,19 +1,27 @@
 import type { Metadata } from "next";
 import PageHero from "@/app/components/PageHero";
 import ServicesContent from "./ServicesContent";
+import {
+  BRAND_KEYWORDS,
+  SERVICE_KEYWORDS,
+  TECHNICAL_KEYWORDS,
+  BUYER_INTENT_KEYWORDS,
+  MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "Elevator Installation, Modernization & Maintenance Services | Fuji Fenix",
   description:
     "Comprehensive lifecycle elevator and escalator services: precision manufacturing, turnkey installation, complete system modernization, 24/7 maintenance, and emergency response.",
-  keywords: [
-    "Elevator Services",
-    "Elevator Modernization",
-    "Elevator Maintenance",
-    "Elevator Installation",
-    "Escalator Maintenance",
-    "Vertical Transportation Services",
-  ],
+  keywords: seoKeywords(
+    BRAND_KEYWORDS,
+    SERVICE_KEYWORDS,
+    TECHNICAL_KEYWORDS,
+    BUYER_INTENT_KEYWORDS,
+    MARKET_KEYWORDS,
+    ["elevator services", "escalator services", "24/7 elevator support"]
+  ),
   alternates: {
     canonical: "https://fujifenix.com/services",
   },

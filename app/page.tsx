@@ -14,6 +14,14 @@ import { featuredProductsQuery, type SanityProductItem } from "@/sanity/lib/quer
 import { StructuredData } from "./components/StructuredData";
 import { itemListSchema } from "@/lib/structured-data";
 import { resolveStructuredImageUrl } from "@/app/lib/safeImageUrl";
+import {
+  BRAND_KEYWORDS,
+  PRODUCT_KEYWORDS,
+  APPLICATION_KEYWORDS,
+  BUYER_INTENT_KEYWORDS,
+  MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 
 export const revalidate = 60;
 
@@ -23,19 +31,14 @@ export const metadata: Metadata = {
   },
   description:
     "Fuji Fenix Elevator is a world-leading manufacturer of passenger elevators, panoramic lifts, freight elevators, home elevators, and commercial escalators. Engineered in Shanghai for global safety, reliability, and architectural excellence.",
-  keywords: [
-    "Elevator Manufacturer",
-    "Escalator Supplier",
-    "Passenger Elevators China",
-    "Commercial Elevators",
-    "Villa Home Elevators",
-    "Panoramic Glass Lifts",
-    "Hospital Bed Elevators",
-    "Freight Goods Lifts",
-    "Elevator Modernization",
-    "Fuji Elevator Factory",
-    "Shanghai Fuji Fenix Elevator",
-  ],
+  keywords: seoKeywords(
+    BRAND_KEYWORDS,
+    PRODUCT_KEYWORDS,
+    APPLICATION_KEYWORDS,
+    BUYER_INTENT_KEYWORDS,
+    MARKET_KEYWORDS,
+    ["global elevator manufacturer", "elevator export partner", "vertical transportation manufacturer"]
+  ),
   alternates: {
     canonical: "https://fujifenix.com",
     languages: {

@@ -1,19 +1,33 @@
 import type { Metadata } from "next";
 import PageHero from "@/app/components/PageHero";
 import SolutionsContent from "./SolutionsContent";
+import {
+  BRAND_KEYWORDS,
+  PRODUCT_KEYWORDS,
+  APPLICATION_KEYWORDS,
+  MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "Industry Elevator Solutions | Residential, Commercial & Healthcare | Fuji Fenix",
   description:
     "Tailored vertical transportation solutions from Fuji Fenix Elevator: high-rise office towers, residential towers, luxury villas, healthcare hospitals, retail malls, and public transit.",
-  keywords: [
-    "Elevator Solutions",
-    "Commercial Elevator Solutions",
-    "Residential Elevator Systems",
-    "Hospital Elevator Solutions",
-    "Transit Hub Elevators",
-    "Villa Lift Solutions",
-  ],
+  keywords: seoKeywords(
+    BRAND_KEYWORDS,
+    PRODUCT_KEYWORDS,
+    APPLICATION_KEYWORDS,
+    MARKET_KEYWORDS,
+    [
+      "elevator solutions",
+      "commercial elevator solutions",
+      "residential elevator systems",
+      "hospital elevator solutions",
+      "transit hub elevators",
+      "villa lift solutions",
+      "building vertical transportation planning",
+    ]
+  ),
   alternates: {
     canonical: "https://fujifenix.com/solutions",
   },

@@ -11,6 +11,14 @@ import ProductsContent from "./ProductsContent";
 import { StructuredData } from "@/app/components/StructuredData";
 import { itemListSchema } from "@/lib/structured-data";
 import { resolveStructuredImageUrl } from "@/app/lib/safeImageUrl";
+import {
+  BRAND_KEYWORDS,
+  PRODUCT_KEYWORDS,
+  APPLICATION_KEYWORDS,
+  BUYER_INTENT_KEYWORDS,
+  MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 
 export const revalidate = 60;
 
@@ -18,17 +26,19 @@ export const metadata: Metadata = {
   title: "Commercial & Residential Elevators, Escalators | Fuji Fenix Products",
   description:
     "Explore the complete vertical transportation portfolio from Fuji Fenix Elevator. High-speed passenger elevators, panoramic glass lifts, hospital bed lifts, heavy freight elevators, escalators, and moving walks.",
-  keywords: [
-    "Elevator Products",
-    "Passenger Elevators",
-    "Commercial Elevators",
-    "Villa Home Elevators",
-    "Panoramic Elevators",
-    "Hospital Elevators",
-    "Freight Lifts",
-    "Escalators and Moving Walks",
-    "Elevator Manufacturer Catalog",
-  ],
+  keywords: seoKeywords(
+    BRAND_KEYWORDS,
+    PRODUCT_KEYWORDS,
+    APPLICATION_KEYWORDS,
+    BUYER_INTENT_KEYWORDS,
+    MARKET_KEYWORDS,
+    [
+      "elevator products",
+      "elevator manufacturer catalog",
+      "escalators and moving walks",
+      "vertical transportation product range",
+    ]
+  ),
   alternates: {
     canonical: "https://fujifenix.com/products",
   },

@@ -16,6 +16,15 @@ import {
   localBusinessSchema,
   websiteSchema,
 } from "@/lib/structured-data";
+import {
+  BRAND_KEYWORDS,
+  PRODUCT_KEYWORDS,
+  TECHNICAL_KEYWORDS,
+  BUYER_INTENT_KEYWORDS,
+  MARKET_KEYWORDS,
+  GLOBAL_MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -37,17 +46,14 @@ export const metadata: Metadata = {
   },
   description:
     "Fuji Fenix Elevator is a leading provider of elevator and escalator solutions, combining advanced technology with precision engineering for residential, commercial, healthcare, and infrastructure projects.",
-  keywords: [
-    "Fuji Fenix Elevator", "Elevator Manufacturer", "Escalator Manufacturer",
-    "Passenger Elevators", "Home Elevators", "High Speed Elevators",
-    "Panoramic Elevators", "Hospital Bed Elevators", "Freight Elevators",
-    "Escalators", "Moving Walks", "Platform Screen Doors",
-    "MRL Elevators", "Elevator Modernization", "China Elevator Exporter",
-    "Shanghai Elevator Factory", "Vertical Transportation",
-    "Elevator Installation", "Elevator Maintenance", "Car Elevators",
-    "Dumbwaiters", "Stair Lifts", "Auto Car Parking Systems",
-    "Platform Lifts", "Circular Elevators", "Marine Elevators",
-  ],
+  keywords: seoKeywords(
+    BRAND_KEYWORDS,
+    PRODUCT_KEYWORDS,
+    TECHNICAL_KEYWORDS,
+    BUYER_INTENT_KEYWORDS,
+    GLOBAL_MARKET_KEYWORDS,
+    MARKET_KEYWORDS
+  ),
   verification: { google: "QCYK7KIg9f2yKjSAsu63MtlI0zIRtadlunap1k7rzJY" },
   openGraph: {
     type: "website",

@@ -13,6 +13,14 @@ import PageHero from "@/app/components/PageHero";
 import CategoryContent from "./CategoryContent";
 import { StructuredData } from "@/app/components/StructuredData";
 import { productSchema, itemListSchema, faqSchema, breadcrumbSchema } from "@/lib/structured-data";
+import {
+  BRAND_KEYWORDS,
+  PRODUCT_KEYWORDS,
+  APPLICATION_KEYWORDS,
+  BUYER_INTENT_KEYWORDS,
+  MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 import { resolveStructuredImageUrl } from "@/app/lib/safeImageUrl";
 
 export const revalidate = 60;
@@ -48,15 +56,23 @@ export async function generateMetadata({
   return {
     title: seoTitle,
     description: seoDesc,
-    keywords: [
-      `${catTitle} Elevators`,
-      `${catTitle} Manufacturer`,
-      `${catTitle} Supplier China`,
-      `Commercial ${catTitle}`,
-      "Fuji Fenix Elevator",
-      "Vertical Transportation Systems",
-      "Shanghai Elevator Factory",
-    ],
+    keywords: seoKeywords(
+      BRAND_KEYWORDS,
+      PRODUCT_KEYWORDS,
+      APPLICATION_KEYWORDS,
+      BUYER_INTENT_KEYWORDS,
+      MARKET_KEYWORDS,
+      [
+        `${catTitle} elevators`,
+        `${catTitle} manufacturer`,
+        `${catTitle} supplier China`,
+        `commercial ${catTitle}`,
+        `${catTitle} exporter`,
+        `${catTitle} price`,
+        `custom ${catTitle}`,
+        `${catTitle} project supplier`,
+      ]
+    ),
     alternates: {
       canonical: `https://fujifenix.com/products/${cat.slug}`,
     },

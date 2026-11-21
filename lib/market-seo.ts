@@ -11,8 +11,13 @@
 
 import type { Metadata } from "next";
 import type { Market } from "@/lib/markets";
-import { marketFocusPath, marketPath } from "@/lib/markets";
-import type { FocusSlug, ProductFocus } from "@/lib/product-focuses";
+import { getPriorityTier, marketFocusPath, marketPath } from "@/lib/markets";
+import {
+  PRODUCT_FOCUSES,
+  type FocusSlug,
+  type ProductFocus,
+} from "@/lib/product-focuses";
+import { BUYER_INTENT_KEYWORDS, seoKeywords } from "@/lib/seo-keywords";
 
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://fujifenix.com"
@@ -30,6 +35,74 @@ export function absoluteImage(src: string): string {
   if (/^https?:\/\//i.test(src)) return src;
   const path = src.startsWith("/") ? src : `/${src}`;
   return encodeURI(`${SITE_URL}${path}`);
+}
+
+/** Country-specific keyword expansion for a market page. */
+function expandedMarketKeywords(market: Market): string[] {
+  const tier = getPriorityTier(market);
+
+  return seoKeywords(
+    market.keywords,
+    [
+      `elevator supplier ${market.country}`,
+      `elevator manufacturer ${market.country}`,
+      `elevator exporter ${market.country}`,
+      `escalator supplier ${market.country}`,
+      `escalators in ${market.country}`,
+      `elevators in ${market.country}`,
+      `vertical transportation ${market.country}`,
+      `elevator supplier ${market.shortName}`,
+      `elevator projects ${market.country}`,
+      `${market.region} elevator supplier`,
+      ...market.cities.slice(0, 4).map((city) => `elevator supplier ${city}`),
+      ...market.projectTypes
+        .slice(0, 3)
+        .map((type) => `elevators for ${type.toLowerCase()}`),
+      ...market.buyerSegments
+        .slice(0, 2)
+        .map((segment) => `elevator supplier for ${segment.toLowerCase()}`),
+      "elevator price quote",
+      "elevator export documentation",
+      "bulk elevator supplier",
+      ...(tier
+        ? [
+            `tier ${tier} elevator market ${market.shortName}`,
+            `elevator export market ${market.shortName}`,
+          ]
+        : []),
+    ],
+    market.focuses.flatMap(
+      (slug) => PRODUCT_FOCUSES[slug]?.keywords ?? []
+    )
+  );
+}
+
+/** Keyword expansion for a country × product focus page. */
+function expandedFocusKeywords(market: Market, focus: ProductFocus): string[] {
+  const focusName = focus.shortTitle.toLowerCase();
+
+  return seoKeywords(
+    focus.keywords.map((keyword) => `${keyword} ${market.shortName}`),
+    focus.keywords.map((keyword) => `${keyword} ${market.country}`),
+    [
+      `${focusName} ${market.country}`,
+      `${focusName} exporter ${market.country}`,
+      `${focusName} supplier ${market.shortName}`,
+      `${focusName} price ${market.shortName}`,
+      `${focusName} installation ${market.country}`,
+      `${focusName} projects ${market.country}`,
+      `elevator supplier ${market.shortName}`,
+      `escalator supplier ${market.country}`,
+      `vertical transportation ${market.country}`,
+      ...market.cities.slice(0, 4).map(
+        (city) => `${focusName} ${city}`
+      ),
+      "elevator export documentation",
+      "elevator project supplier",
+      "elevator price quote",
+    ],
+    BUYER_INTENT_KEYWORDS.slice(0, 8)
+  );
 }
 
 /** BCP 47 language-region tag for country-targeted English pages. */
@@ -55,7 +128,7 @@ export function marketMetadata(market: Market): Metadata {
   return {
     title: { absolute: market.metaTitle },
     description: market.metaDescription,
-    keywords: market.keywords,
+    keywords: expandedMarketKeywords(market),
     alternates: marketAlternates(path, market.code),
     openGraph: {
       type: "website",
@@ -114,14 +187,7 @@ export function marketFocusMetadata(
   return {
     title: { absolute: title },
     description,
-    keywords: [
-      ...focus.keywords.map((keyword) => `${keyword} ${market.shortName}`),
-      ...market.cities.slice(0, 3).map(
-        (city) => `${focus.shortTitle.toLowerCase()} ${city}`
-      ),
-      `${focus.shortTitle.toLowerCase()} ${market.country}`,
-      `elevator supplier ${market.shortName}`,
-    ],
+    keywords: expandedFocusKeywords(market, focus),
     alternates: marketAlternates(path, market.code),
     openGraph: {
       type: "website",
