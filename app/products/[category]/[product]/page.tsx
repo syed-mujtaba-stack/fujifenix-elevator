@@ -18,6 +18,15 @@ import ProductDetailContent from "./ProductDetailContent";
 import { StructuredData } from "@/app/components/StructuredData";
 import { productSchema, faqSchema, breadcrumbSchema } from "@/lib/structured-data";
 import { resolveStructuredImageUrl, getSafeImageUrl } from "@/app/lib/safeImageUrl";
+import {
+  BRAND_KEYWORDS,
+  PRODUCT_KEYWORDS,
+  APPLICATION_KEYWORDS,
+  TECHNICAL_KEYWORDS,
+  BUYER_INTENT_KEYWORDS,
+  MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 
 export const revalidate = 60;
 
@@ -51,16 +60,26 @@ export async function generateMetadata({
   return {
     title: seoTitle,
     description: seoDesc,
-    keywords: [
-      p.title,
-      p.category,
-      `${p.title} manufacturer`,
-      `${p.title} specifications`,
-      "Elevator",
-      "Fuji Fenix",
-      p.categorySlug,
-      "China Elevator Exporter",
-    ],
+    keywords: seoKeywords(
+      BRAND_KEYWORDS,
+      PRODUCT_KEYWORDS,
+      APPLICATION_KEYWORDS,
+      TECHNICAL_KEYWORDS,
+      BUYER_INTENT_KEYWORDS,
+      MARKET_KEYWORDS,
+      [
+        p.title,
+        p.category,
+        p.categorySlug,
+        `${p.title} manufacturer`,
+        `${p.title} specifications`,
+        `${p.title} supplier`,
+        `${p.title} exporter`,
+        `${p.title} price`,
+        `${p.title} installation`,
+        `${p.category} exporter China`,
+      ]
+    ),
     alternates: {
       canonical: `https://fujifenix.com/products/${p.categorySlug}/${p.slug}`,
     },

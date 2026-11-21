@@ -1,18 +1,34 @@
 import type { Metadata } from "next";
 import PageHero from "@/app/components/PageHero";
 import ContactContent from "./ContactContent";
+import {
+  BRAND_KEYWORDS,
+  SERVICE_KEYWORDS,
+  BUYER_INTENT_KEYWORDS,
+  MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "Contact Fuji Fenix Elevator | Request a Quote & Engineering Consultation",
   description:
     "Get in touch with Fuji Fenix Elevator in Shanghai, China. Request price quotes, technical specifications, hoistway layout drawings, or after-sales elevator support.",
-  keywords: [
-    "Contact Fuji Fenix",
-    "Elevator Price Quote",
-    "Elevator Manufacturer Contact",
-    "Shanghai Elevator Factory Contact",
-    "Elevator Supplier Inquiries",
-  ],
+  keywords: seoKeywords(
+    BRAND_KEYWORDS,
+    SERVICE_KEYWORDS,
+    BUYER_INTENT_KEYWORDS,
+    MARKET_KEYWORDS,
+    [
+      "contact Fuji Fenix",
+      "elevator price quote",
+      "elevator manufacturer contact",
+      "Shanghai elevator factory contact",
+      "elevator supplier inquiries",
+      "request elevator quotation",
+      "elevator technical consultation",
+      "escalator quote request",
+    ]
+  ),
   alternates: {
     canonical: "https://fujifenix.com/contact",
   },

@@ -25,6 +25,14 @@ import {
   webPageSchema,
 } from "@/lib/market-seo";
 import { breadcrumbSchema, faqSchema } from "@/lib/structured-data";
+import {
+  BRAND_KEYWORDS,
+  PRODUCT_KEYWORDS,
+  BUYER_INTENT_KEYWORDS,
+  MARKET_KEYWORDS,
+  GLOBAL_MARKET_KEYWORDS,
+  seoKeywords,
+} from "@/lib/seo-keywords";
 import Breadcrumbs from "./_components/Breadcrumbs";
 import CtaBand from "./_components/CtaBand";
 import FaqList from "./_components/FaqList";
@@ -38,6 +46,22 @@ export const metadata: Metadata = {
   title: { absolute: "Global Elevator & Escalator Markets | Fuji Fenix" },
   description:
     "Fuji Fenix supplies elevators and escalators across 22 markets, with priority export focus on Pakistan, the UAE and Dubai, Saudi Arabia, Kenya, Ethiopia, South Africa, Nigeria and Tanzania. Country pages cover product solutions, standards and shipping routes.",
+  keywords: seoKeywords(
+    BRAND_KEYWORDS,
+    PRODUCT_KEYWORDS,
+    BUYER_INTENT_KEYWORDS,
+    MARKET_KEYWORDS,
+    GLOBAL_MARKET_KEYWORDS,
+    [
+      "global elevator markets",
+      "international elevator markets",
+      "escalator export markets",
+      "country elevator pages",
+      "priority export markets",
+      "elevator market guide",
+      "22 elevator markets",
+    ]
+  ),
   alternates: {
     canonical: PATH,
     languages: { en: PATH, "x-default": PATH },
