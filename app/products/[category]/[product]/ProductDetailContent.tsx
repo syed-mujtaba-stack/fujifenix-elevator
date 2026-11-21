@@ -10,6 +10,7 @@ import WeChatQRButton from "@/app/components/WeChatQR";
 import { urlFor } from "@/sanity/lib/image";
 import { PRODUCT_IMAGE_OVERRIDES } from "@/app/data/productImageOverrides";
 import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
+import { imageLoaderFor } from "@/app/lib/sanityImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,6 +43,11 @@ interface RelatedProduct {
   image: unknown;
   gallery: { src: string; alt: string }[] | null;
 }
+
+const relatedImage = (p: RelatedProduct) =>
+  p.image
+    ? urlFor(p.image).width(800).auto("format").url()
+    : getSafeImageUrl(p.gallery?.[0]?.src);
 
 interface ProductData {
   _id: string;
@@ -210,6 +216,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                   <Image
                     src={heroImage.src}
                     alt={heroImage.alt || product.title || "Product image"}
+                    loader={imageLoaderFor(heroImage.src)}
                     fill
                     priority
                     className="object-contain"
@@ -385,7 +392,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 mb-12">
                         {sectionImgs.map((img) => (
                           <button key={img._key ?? img.src} type="button" onClick={() => setZoom({ src: img.src, alt: img.alt })} aria-label={`View larger: ${img.alt}`} className="gal-item group relative bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full aspect-[3/4]">
-                            <Image src={img.src} alt={img.alt || group.title} fill quality={85} className="p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] object-cover" sizes="(max-width: 768px) 50vw, 33vw" />
+                            <Image src={img.src} alt={img.alt || group.title} loader={imageLoaderFor(img.src)} fill quality={85} className="p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] object-cover" sizes="(max-width: 768px) 50vw, 33vw" />
                             <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">ZOOM ⤢</span>
                           </button>
                         ))}
@@ -467,7 +474,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
             <div className="gal-grid grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 [grid-auto-rows:1fr]">
               {galleryRest.map((img) => (
                 <button key={img._key ?? img.src} type="button" onClick={() => setZoom({ src: img.src, alt: img.alt })} aria-label={`View larger: ${img.alt}`} className={`gal-item group relative ${galleryRest.length === 1 ? 'col-span-full aspect-[2/1]' : 'aspect-[2/3]'} bg-[#f8fafc] border border-slate-100 overflow-hidden cursor-zoom-in h-full`}>
-                  <Image src={img.src} alt={img.alt || product.title || "Product image"} fill quality={85} className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${galleryRest.length === 1 ? 'object-contain' : 'object-cover'}`} style={img._key === 'grid-ceiling' ? { objectPosition: 'top' } : undefined} sizes="(max-width: 768px) 50vw, 33vw" />
+                  <Image src={img.src} alt={img.alt || product.title || "Product image"} loader={imageLoaderFor(img.src)} fill quality={85} className={`p-3 md:p-5 transition-transform duration-500 group-hover:scale-[1.04] ${galleryRest.length === 1 ? 'object-contain' : 'object-cover'}`} style={img._key === 'grid-ceiling' ? { objectPosition: 'top' } : undefined} sizes="(max-width: 768px) 50vw, 33vw" />
                   <span className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#0047BB] opacity-0 group-hover:opacity-100 transition-opacity">ZOOM ⤢</span>
                 </button>
               ))}
@@ -494,8 +501,9 @@ export default function ProductDetailContent({ product }: { product: ProductData
                   <div className="relative overflow-hidden aspect-[4/3] bg-[#e2e8f0]">
                     {(p.image || p.gallery?.[0]?.src) ? (
                       <Image
-                        src={p.image ? urlFor(p.image).width(800).auto("format").url() : getSafeImageUrl(p.gallery?.[0]?.src)}
+                        src={relatedImage(p)}
                         alt={p.gallery?.[0]?.alt || p.title || "Product image"}
+                        loader={imageLoaderFor(relatedImage(p))}
                         fill
                         priority={!!p.image}
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -530,7 +538,7 @@ export default function ProductDetailContent({ product }: { product: ProductData
         <div role="dialog" aria-modal="true" aria-label={zoom.alt} className="fixed inset-0 z-[100] bg-[#071324]/95 flex items-center justify-center p-4 md:p-10" onClick={() => setZoom(null)}>
           <button type="button" onClick={() => setZoom(null)} aria-label="Close" className="absolute top-5 right-5 z-10 flex h-11 w-11 items-center justify-center border border-white/30 text-white text-lg transition-colors hover:bg-white hover:text-[#071324]">✕</button>
           <div className="relative w-full h-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
-            <Image src={zoom.src} alt={zoom.alt || product.title || "Product image"} fill className="object-contain" sizes="100vw" />
+            <Image src={zoom.src} alt={zoom.alt || product.title || "Product image"} loader={imageLoaderFor(zoom.src)} fill className="object-contain" sizes="100vw" />
           </div>
         </div>
       )}

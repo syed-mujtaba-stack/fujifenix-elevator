@@ -11,7 +11,10 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 48, 96, 192],
-    minimumCacheTTL: 60,
+    // Local images still use the optimizer on self-hosted servers; cache them
+    // longer so repeat requests never trigger a re-encode. Sanity images use a
+    // direct CDN loader (see app/lib/sanityImage.ts) and bypass this entirely.
+    minimumCacheTTL: 604800,
     dangerouslyAllowSVG: true,
     contentDispositionType: "inline",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

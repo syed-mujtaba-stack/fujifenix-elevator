@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHeading from "@/app/components/SectionHeading";
 import { urlFor } from "@/sanity/lib/image";
 import { getSafeImageUrl } from "@/app/lib/safeImageUrl";
+import { imageLoaderFor } from "@/app/lib/sanityImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +28,11 @@ interface Props {
   category: { title: string; slug: string; description: string | null };
   products: CategoryProduct[];
 }
+
+const cardImage = (p: CategoryProduct) =>
+  p.image
+    ? urlFor(p.image).width(900).auto("format").url()
+    : getSafeImageUrl(p.gallery?.[0]?.src);
 
 export default function CategoryContent({ category, products }: Props) {
   const ref = useRef<HTMLElement>(null);
@@ -94,8 +100,9 @@ export default function CategoryContent({ category, products }: Props) {
                 <div className="relative overflow-hidden aspect-[4/3] bg-[#f1f5f9]">
                   {(p.image || p.gallery?.[0]?.src) ? (
                     <Image
-                      src={p.image ? urlFor(p.image).width(900).auto("format").url() : getSafeImageUrl(p.gallery?.[0]?.src)}
+                      src={cardImage(p)}
                       alt={p.title}
+                      loader={imageLoaderFor(cardImage(p))}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
